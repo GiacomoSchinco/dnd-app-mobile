@@ -49,15 +49,6 @@ export default function ThemePicker() {
                       <Badge variant="solid" size="sm" color={t.colors.success}>Attivo</Badge>
                     )}
                   </View>
-                  {/* Palette preview */}
-                  <View style={{ flexDirection: 'row', gap: 4, marginTop: 10 }}>
-                    <View style={{ width: 20, height: 20, borderRadius: 6, backgroundColor: item.theme.colors.background, borderWidth: 1, borderColor: item.theme.colors.border }} />
-                    <View style={{ width: 20, height: 20, borderRadius: 6, backgroundColor: item.theme.colors.accent }} />
-                    <View style={{ width: 20, height: 20, borderRadius: 6, backgroundColor: item.theme.colors.success }} />
-                    <View style={{ width: 20, height: 20, borderRadius: 6, backgroundColor: item.theme.colors.warning }} />
-                    <View style={{ width: 20, height: 20, borderRadius: 6, backgroundColor: item.theme.colors.danger }} />
-                    <View style={{ width: 20, height: 20, borderRadius: 6, backgroundColor: item.theme.colors.card, borderWidth: 1, borderColor: item.theme.colors.cardBorder }} />
-                  </View>
                 </Card.Body>
               </Card>
             </Pressable>

@@ -13,17 +13,6 @@ export default function SettingsScreen() {
       <ScreenHeader title="⚙️ Impostazioni" />
       <View style={{ gap: 16 }}>
         <ThemePicker />
-
-        <Card variant="outlined">
-          <Card.Body>
-            <Text style={{ color: t.colors.foreground, fontSize: t.typography.md, fontWeight: t.typography.semibold }}>
-              Tema corrente
-            </Text>
-            <Text style={{ color: t.colors.foregroundSecondary, fontSize: t.typography.sm, marginTop: 4 }}>
-              Tocca un tema sopra per cambiarlo
-            </Text>
-          </Card.Body>
-        </Card>
         <Button variant="outline" size="lg" fullWidth onPress={() => Alert.alert('Esporta', 'PDF generato!')}>
           📤 Esporta scheda
         </Button>
