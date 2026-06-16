@@ -13,7 +13,8 @@
    └── custom/          ← COMPONENTI MIEI
        ├── AppNavigator.tsx   ← Tab navigator (Home, Dadi, Impostazioni)
        ├── ScreenHeader.tsx   ← Titolo schermata con tema
-       ├── DiceButton.tsx     ← Pulsante dado singolo
+       ├── DiceRoller.tsx     ← Dado animato con Reanimated
+       ├── DiceButton.tsx     ← Pulsante dado semplice (non usato)
        └── ThemePicker.tsx    ← Selettore temi
 
 📁 screens/
@@ -22,7 +23,12 @@
    └── SettingsScreen.tsx → Impostazioni + cambio tema
 
 📁 assets/
-   └── logo.png
+   ├── logo.png
+   └── icon/
+       ├── dice/          ← d4.svg · d6.svg · d8.svg · d10.svg · d12.svg · d20.svg
+       ├── class/         ← barbarian.svg · wizard.svg · etc. (13 classi)
+       ├── schoolspell/   ← abjuration.svg · conjuration.svg · etc. (8 scuole)
+       └── stats/         ← icon_strength.svg · icon_dexterity.svg · etc. (6 statistiche)
 
 📄 App.tsx               → Solo providers + AppNavigator
 📄 APPUNTI.md            ← Questo file (appunti personali)
@@ -84,7 +90,6 @@ npm run web        # Avvia su browser
 - I colori vanno sempre presi dal tema con `useTokens()` — mai hardcodati
 - I componenti nuovi vanno in `components/custom/`
 - Le pagine/viste vanno in `screens/`
-- I file `AGENTS.md` e `CLAUDE.md` sono per l'AI — non cancellarli
 - `APPUNTI.md` sono appunti personali — tenerlo aggiornato
 - Prism UI supporta cambio tema runtime (tramite ThemePicker o `setTheme()`)
 - Per il TypeScript: quando usi `useTheme()`,serve un cast perché il context è js puro

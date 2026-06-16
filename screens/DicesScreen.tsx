@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { useTokens } from '../components/ui/prism-provider';
 import ScreenHeader from '../components/custom/ScreenHeader';
-import DiceButton from '../components/custom/DiceButton';
+import DiceRoller from '../components/custom/DiceRoller';
 
 export default function DicesScreen() {
   const t = useTokens();
 
   return (
-    <View style={styles.diceContainer}>
+    <View style={[styles.diceContainer, { backgroundColor: t.colors.background }]}>
       <ScreenHeader title="🎲 Lancia i dadi" />
       <View style={styles.diceGrid}>
         {[
@@ -18,7 +18,7 @@ export default function DicesScreen() {
           { name: 'd12', sides: 12 },
           { name: 'd20', sides: 20 },
         ].map((d) => (
-          <DiceButton key={d.name} name={d.name} sides={d.sides} />
+          <DiceRoller key={d.name} name={d.name} sides={d.sides} />
         ))}
       </View>
     </View>
