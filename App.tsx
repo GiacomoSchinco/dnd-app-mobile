@@ -1,26 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PrismProvider } from './components/ui/prism-provider';
-import { Button } from './components/ui/button';
+import AppNavigator from './components/custom/AppNavigator';
+
+// Scegli il tema che preferisci:
+import theme from './components/ui/themes/obsidian'; // 🌑 Obsidian (dark viola)
+// import theme from './components/ui/themes/default'; // ☀️ Default Apple (chiaro)
+// import theme from './components/ui/themes/neon';     // 💚 Neon (verde glow)
+// import theme from './components/ui/themes/stone';    // 🪨 Stone (marrone caldo)
 
 export default function App() {
   return (
-    <PrismProvider>
-      <View style={styles.container}>
-        <Button variant="solid" size="lg" onPress={() => alert('Ciao!')}>
-          Premi qui
-        </Button>
-        <StatusBar style="auto" />
-      </View>
-    </PrismProvider>
+    <SafeAreaProvider>
+      <PrismProvider theme={theme}>
+        <AppNavigator />
+      </PrismProvider>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
