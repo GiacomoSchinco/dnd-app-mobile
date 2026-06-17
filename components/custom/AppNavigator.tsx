@@ -13,9 +13,10 @@ export default function AppNavigator() {
   const isDark = t.colors.background.startsWith('#0');
 
   return (
-    <View style={{ flex: 1, backgroundColor: t.colors.background, paddingTop: insets.top }}>
+    <View style={{ flex: 1, backgroundColor: t.colors.background, paddingTop: insets.top , paddingBottom: insets.bottom }}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Tabs
+        position="top"
         tabs={[
           { label: '🏠 Home', content: <HomeScreen /> },
           { label: '🎲 Dadi', content: <DicesScreen /> },
