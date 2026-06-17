@@ -1,17 +1,16 @@
-import { ScrollView, View, Text, Alert } from 'react-native';
-import { useTokens } from '../components/ui/prism-provider';
+import { ScrollView, View, Alert } from 'react-native';
+import { useScreenStyles, spacing } from '../utils/styles';
 import { Button } from '../components/ui/button';
-import { Card } from '../components/ui/card';
 import ScreenHeader from '../components/custom/ScreenHeader';
 import ThemePicker from '../components/custom/ThemePicker';
 
 export default function SettingsScreen() {
-  const t = useTokens();
+  const s = useScreenStyles();
 
   return (
-    <ScrollView style={{ flex: 1, padding: 24 }} showsVerticalScrollIndicator={false}>
-      <ScreenHeader title="⚙️ Impostazioni" />
-      <View style={{ gap: 16 }}>
+    <ScrollView style={s.screen} showsVerticalScrollIndicator={false}>
+      <View style={{ padding: spacing[6], gap: spacing[4] }}>
+        <ScreenHeader title="⚙️ Impostazioni" />
         <ThemePicker />
         <Button variant="outline" size="lg" fullWidth onPress={() => Alert.alert('Esporta', 'PDF generato!')}>
           📤 Esporta scheda

@@ -1,42 +1,19 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { useTokens } from '../components/ui/prism-provider';
+import { spacing, fontSizes } from '../utils/styles';
 
 export default function HomeScreen() {
   const t = useTokens();
 
   return (
-    <View style={[styles.container, { backgroundColor: t.colors.background }]}>
-      <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
-      <Text style={[styles.title, { color: t.colors.foreground }]}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: spacing[6], backgroundColor: t.colors.background }}>
+      <Image source={require('../assets/logo.png')} style={{ width: 140, height: 140, marginBottom: spacing[6] }} resizeMode="contain" />
+      <Text style={{ fontSize: fontSizes['3xl'], fontWeight: '800', textAlign: 'center', color: t.colors.foreground }}>
         DungeonCraft
       </Text>
-      <Text style={[styles.subtitle, { color: t.colors.foregroundSecondary }]}>
+      <Text style={{ fontSize: fontSizes.md, marginTop: spacing[2], textAlign: 'center', color: t.colors.foregroundSecondary }}>
         Il tuo compagno di avventure
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-  },
-  logo: {
-    width: 140,
-    height: 140,
-    marginBottom: 24,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '800',
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 16,
-    marginTop: 8,
-    textAlign: 'center',
-  },
-});

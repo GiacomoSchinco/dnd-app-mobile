@@ -1,134 +1,209 @@
-import { useState, useCallback } from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { useState, useCallback, useEffect } from 'react';
+import { View } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withSpring,
-  withSequence,
   withTiming,
+  withSequence,
+  withDelay,
   Easing,
-  runOnJS,
 } from 'react-native-reanimated';
-import { useTokens } from '../ui/prism-provider';
-import DndIcon from './DndIcon';
+import { spacing } from '../../utils/styles';
+import {
+  DiceType,
+  DICE_COLORS,
+  executeRoll,
+  RollResult,
+} from '../../utils/dice';
+import DiceTypeGrid from './DiceTypeGrid';
+import StepperControl from './StepperControl';
+import RollButton from './RollButton';
+import ResultBreakdown from './ResultBreakdown';
 
 type Props = {
-  name: string;
-  sides: number;
+  initialType?: DiceType;
+  initialQuantity?: number;
 };
 
-const DICE_COLORS: Record<string, string> = {
-  d4: '#EF4444',
-  d6: '#22C55E',
-  d8: '#3B82F6',
-  d10: '#F59E0B',
-  d12: '#8B5CF6',
-  d20: '#EC4899',
-};
+export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }: Props) {
+  // ── Configuration state ──────────────────────────────────────────
+  const [diceType, setDiceType] = useState<DiceType>(initialType);
+  const [quantity, setQuantity] = useState<number>(initialQuantity);
+  const [modifier, setModifier] = useState<number>(0);
 
-export default function DiceRoller({ name, sides }: Props) {
-  const t = useTokens();
-  const [result, setResult] = useState<number | null>(null);
+  // ── Roll state ───────────────────────────────────────────────────
+  const [lastResult, setLastResult] = useState<RollResult | null>(null);
   const [rolling, setRolling] = useState(false);
 
-  const rotate = useSharedValue(0);
-  const scale = useSharedValue(1);
-  const translateY = useSharedValue(0);
+  // ── Animation shared values ──────────────────────────────────────
+  const rotateValue = useSharedValue(0);
+  const shakeX = useSharedValue(0);
+  const shakeY = useSharedValue(0);
+  const scaleValue = useSharedValue(1);
+  const glowOpacity = useSharedValue(0);
+  const resultScale = useSharedValue(0);
 
-  const roll = useCallback(() => {
-    if (rolling) return;
-    setRolling(true);
-    setResult(null);
-
-    rotate.value = 0;
-    scale.value = 1;
-    translateY.value = 0;
-
-    const finalResult = Math.floor(Math.random() * sides) + 1;
-
-    rotate.value = withSequence(
-      ...Array.from({ length: 6 }).flatMap(() => [
-        withTiming(-15, { duration: 60, easing: Easing.inOut(Easing.quad) }),
-        withTiming(15, { duration: 60, easing: Easing.inOut(Easing.quad) }),
-      ]),
-      withTiming(360 * 2, { duration: 400, easing: Easing.out(Easing.back ) }),
-      withSpring(0, { damping: 10, stiffness: 100 })
-    );
-
-    scale.value = withSequence(
-      withTiming(0.85, { duration: 300 }),
-      withSpring(1.15, { damping: 8, stiffness: 150 }),
-      withSpring(1, { damping: 12, stiffness: 200 })
-    );
-
-    translateY.value = withSequence(
-      withTiming(-20, { duration: 200 }),
-      withTiming(0, { duration: 200 }),
-    );
-
-    setTimeout(() => {
-      setResult(finalResult);
-      setRolling(false);
-    }, 1800);
-  }, [sides, rolling]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
+  // ── Animated style ───────────────────────────────────────────────
+  const diceAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
-      { rotate: `${rotate.value}deg` },
-      { scale: scale.value },
-      { translateY: translateY.value },
+      { rotate: `${rotateValue.value}deg` },
+      { translateX: shakeX.value },
+      { translateY: shakeY.value },
+      { scale: scaleValue.value },
     ],
   }));
 
-  const color = DICE_COLORS[name] || t.colors.accent;
+  // ── Animate result number when it appears ────────────────────────
+  useEffect(() => {
+    if (lastResult && !rolling) {
+      resultScale.value = withSequence(
+        withTiming(1.5, { duration: 200, easing: Easing.out(Easing.quad) }),
+        withTiming(1, { duration: 200, easing: Easing.in(Easing.quad) })
+      );
+    }
+  }, [lastResult, rolling]);
+
+  // ── Roll logic ───────────────────────────────────────────────────
+  const roll = useCallback(() => {
+    if (rolling) return;
+
+    setRolling(true);
+    setLastResult(null);
+
+    rotateValue.value = 0;
+    shakeX.value = 0;
+    shakeY.value = 0;
+    scaleValue.value = 1;
+    glowOpacity.value = 0;
+    resultScale.value = 0;
+
+    scaleValue.value = withTiming(1.1, { duration: 150, easing: Easing.out(Easing.quad) });
+
+    const rotations = 3 + Math.floor(Math.random() * 2);
+    rotateValue.value = withDelay(
+      100,
+      withTiming(rotations * 360, {
+        duration: 600 + Math.random() * 200,
+        easing: Easing.out(Easing.cubic),
+      })
+    );
+
+    const shakeIntensity = 8 + Math.random() * 4;
+    shakeX.value = withSequence(
+      withTiming(shakeIntensity, { duration: 50 }),
+      withTiming(-shakeIntensity, { duration: 50 }),
+      withTiming(shakeIntensity * 0.7, { duration: 50 }),
+      withTiming(-shakeIntensity * 0.7, { duration: 50 }),
+      withTiming(shakeIntensity * 0.3, { duration: 50 }),
+      withTiming(-shakeIntensity * 0.3, { duration: 50 }),
+      withTiming(0, { duration: 50 })
+    );
+
+    glowOpacity.value = withSequence(
+      withTiming(0.3, { duration: 200 }),
+      withTiming(0, { duration: 100 }),
+      withTiming(0.2, { duration: 200 }),
+      withTiming(0, { duration: 100 })
+    );
+
+    const result = executeRoll({ type: diceType, quantity, mode: 'normal', modifier });
+
+    setTimeout(() => {
+      setLastResult(result);
+      setRolling(false);
+
+      scaleValue.value = withSequence(
+        withTiming(1.2, { duration: 100 }),
+        withTiming(1, { duration: 200, easing: Easing.bounce })
+      );
+
+      glowOpacity.value = withSequence(
+        withTiming(0.4, { duration: 100 }),
+        withTiming(0, { duration: 300 })
+      );
+    }, 800);
+  }, [diceType, quantity, modifier, rolling, rotateValue, shakeX, shakeY, scaleValue, glowOpacity, resultScale]);
+
+  // ── Quantity controls ────────────────────────────────────────────
+  const canDecreaseQuantity = quantity > 1;
+  const canIncreaseQuantity = quantity < 99;
+
+  const changeQuantity = useCallback((delta: number) => {
+    setQuantity((q) => Math.max(1, Math.min(99, q + delta)));
+  }, []);
+
+  // ── Modifier controls ────────────────────────────────────────────
+  const changeModifier = useCallback((delta: number) => {
+    setModifier((m) => Math.max(-99, Math.min(99, m + delta)));
+  }, []);
+
+  // ── Reset ────────────────────────────────────────────────────────
+  const reset = useCallback(() => {
+    setLastResult(null);
+    setQuantity(1);
+    setModifier(0);
+  }, []);
+
+  // ── Dice type change ─────────────────────────────────────────────
+  const diceTypeChanged = useCallback(
+    (newType: DiceType) => {
+      if (newType === diceType) return;
+
+      scaleValue.value = withSequence(
+        withTiming(0.8, { duration: 150 }),
+        withTiming(0, { duration: 150 })
+      );
+
+      setTimeout(() => {
+        setDiceType(newType);
+        scaleValue.value = withSequence(
+          withTiming(1.2, { duration: 150 }),
+          withTiming(1, { duration: 150, easing: Easing.bounce })
+        );
+      }, 300);
+    },
+    [diceType, scaleValue]
+  );
+
+  // ── Style helpers ────────────────────────────────────────────────
+  const selectedColor = DICE_COLORS[diceType];
 
   return (
-    <Pressable onPress={roll} disabled={rolling}>
-      <Animated.View
-        style={[
-          styles.dice,
-          {
-            backgroundColor: color + '20',
-            borderColor: color,
-            shadowColor: color,
-          },
-          animatedStyle,
-        ]}
-      >
-        {result !== null && !rolling ? (
-          <Text style={[styles.result, { color }]}>{result}</Text>
-        ) : (
-          <DndIcon name={name as any} size={44} color={color} />
-        )}
-        <Text style={[styles.label, { color: t.colors.foregroundTertiary }]}>
-          {name}
-        </Text>
-      </Animated.View>
-    </Pressable>
+    <View style={{ alignItems: 'center', gap: spacing[4], padding: spacing[4] }}>
+      <DiceTypeGrid selected={diceType} onSelect={diceTypeChanged} />
+
+      <View style={{ flexDirection: 'row', justifyContent: 'center', gap: spacing[4] }}>
+        <StepperControl
+          label="Quantità"
+          value={quantity}
+          onChange={changeQuantity}
+          canDecrement={canDecreaseQuantity}
+          canIncrement={canIncreaseQuantity}
+        />
+        <StepperControl
+          label="Modificatore"
+          value={modifier}
+          onChange={changeModifier}
+          formatValue={(v) => (v > 0 ? `+${v}` : String(v))}
+        />
+      </View>
+
+      <RollButton
+        onPress={roll}
+        disabled={rolling}
+        rolling={rolling}
+        diceType={diceType}
+        animatedStyle={diceAnimatedStyle}
+        selectedColor={selectedColor}
+      />
+
+      {lastResult && !rolling && (
+        <ResultBreakdown
+          result={lastResult}
+          selectedColor={selectedColor}
+          onReset={reset}
+        />
+      )}
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  dice: {
-    width: 90,
-    height: 90,
-    borderRadius: 20,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 12,
-    elevation: 8,
-  },
-  label: {
-    fontSize: 10,
-    fontWeight: '600',
-    position: 'absolute',
-    bottom: 8,
-  },
-  result: {
-    fontSize: 34,
-    fontWeight: '800',
-  },
-});

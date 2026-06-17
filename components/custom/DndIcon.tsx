@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
-function svg(xml, color) {
+function svg(xml:any, color:any) {
   return xml.replace(/fill="#000"/g, 'fill="' + color + '"');
 }
 

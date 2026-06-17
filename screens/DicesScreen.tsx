@@ -1,43 +1,15 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { useTokens } from '../components/ui/prism-provider';
+import { ScrollView } from 'react-native';
+import { useScreenStyles } from '../utils/styles';
 import ScreenHeader from '../components/custom/ScreenHeader';
 import DiceRoller from '../components/custom/DiceRoller';
 
 export default function DicesScreen() {
-  const t = useTokens();
+  const s = useScreenStyles();
 
   return (
-    <View style={[styles.diceContainer, { backgroundColor: t.colors.background }]}>
+    <ScrollView style={s.screen} contentContainerStyle={s.scrollContent}>
       <ScreenHeader title="🎲 Lancia i dadi" />
-      <View style={styles.diceGrid}>
-        {[
-          { name: 'd4', sides: 4 },
-          { name: 'd6', sides: 6 },
-          { name: 'd8', sides: 8 },
-          { name: 'd10', sides: 10 },
-          { name: 'd12', sides: 12 },
-          { name: 'd20', sides: 20 },
-        ].map((d) => (
-          <DiceRoller key={d.name} name={d.name} sides={d.sides} />
-        ))}
-      </View>
-    </View>
+      <DiceRoller initialType="d20" initialQuantity={1} />
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  diceContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  diceGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 12,
-    width: '100%',
-    maxWidth: 300,
-  },
-});
