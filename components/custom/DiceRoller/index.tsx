@@ -8,13 +8,13 @@ import Animated, {
   withDelay,
   Easing,
 } from 'react-native-reanimated';
-import { spacing } from '../../utils/styles';
+import { spacing } from '../../../utils/styles';
 import {
   DiceType,
   DICE_COLORS,
   executeRoll,
   RollResult,
-} from '../../utils/dice';
+} from '../../../utils/dice';
 import DiceTypeGrid from './DiceTypeGrid';
 import StepperControl from './StepperControl';
 import RollButton from './RollButton';

@@ -1,6 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { useTokens } from '../ui/prism-provider';
-import { spacing, radius, fontSizes } from '../../utils/styles';
+import { useTokens } from '../../ui/prism-provider';
+import { spacing, radius, fontSizes } from '../../../utils/styles';
 
 type Props = {
   label: string;

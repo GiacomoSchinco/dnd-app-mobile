@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { useTokens } from '../ui/prism-provider';
-import { spacing, radius, fontSizes } from '../../utils/styles';
-import { RollResult, formatRollNotation } from '../../utils/dice';
+import { useTokens } from '../../ui/prism-provider';
+import { spacing, radius, fontSizes } from '../../../utils/styles';
+import { RollResult, formatRollNotation } from '../../../utils/dice';
 
 type Props = {
   result: RollResult;

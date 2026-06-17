@@ -1,7 +1,7 @@
 import { View, Pressable, StyleSheet } from 'react-native';
-import { spacing, radius } from '../../utils/styles';
-import DndIcon from './DndIcon';
-import { DiceType, DICE_TYPES, DICE_COLORS } from '../../utils/dice';
+import { spacing, radius } from '../../../utils/styles';
+import DndIcon from '../DndIcon';
+import { DiceType, DICE_TYPES, DICE_COLORS } from '../../../utils/dice';
 
 type Props = {
   selected: DiceType;
