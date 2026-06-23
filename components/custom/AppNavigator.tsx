@@ -5,6 +5,7 @@ import { useTokens } from '../ui/prism-provider';
 import Tabs from '../ui/tabs';
 import HomeScreen from '../../screens/HomeScreen';
 import DicesScreen from '../../screens/DicesScreen';
+import SpellsScreen from '../../screens/SpellsScreen';
 import SettingsScreen from '../../screens/SettingsScreen';
 
 export default function AppNavigator() {
@@ -20,6 +21,7 @@ export default function AppNavigator() {
         tabs={[
           { label: '🏠 Home', content: <HomeScreen /> },
           { label: '🎲 Dadi', content: <DicesScreen /> },
+          { label: '✨ Magie', content: <SpellsScreen /> },
           { label: '⚙️', content: <SettingsScreen /> },
         ]}
       />
