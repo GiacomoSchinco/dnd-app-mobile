@@ -1,9 +1,11 @@
 import { View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
-function svg(xml:any, color:any) {
-  return xml.replace(/fill="#000"/g, 'fill="' + color + '"')
-            .replace(/fill="#fff"/g, 'fill="' + color + '"');
+function svg(xml: string, color: string) {
+  return xml
+    .replace(/(fill)="(?:#000|#000000|black)"/gi, `fill="${color}"`)
+    .replace(/(fill)="(?:#fff|#ffffff|white)"/gi, `fill="${color}"`)
+    .replace(/(stroke)="(?:#000|#000000)"/gi, `stroke="${color}"`);
 }
 
 const DICE_SVGS: Record<string, string> = {

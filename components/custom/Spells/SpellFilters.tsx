@@ -2,8 +2,10 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
 import { spacing, fontSizes, radius } from '../../../utils/styles';
-import { ClassName, CLASS_LABELS, getSchoolColor, getLevelCounts } from './types';
+import { ClassName, CLASS_LABELS, SCHOOL_COLORS, getSchoolColor, getLevelCounts } from './types';
 import { useMemo } from 'react';
+
+const SCHOOL_KEYS = Object.keys(SCHOOL_COLORS);
 
 type Props = {
   search: string;
@@ -59,7 +61,7 @@ export default function SpellFilters({
                   paddingHorizontal: spacing[2.5],
                   paddingVertical: spacing[1],
                   borderRadius: radius.full,
-                  backgroundColor: active ? getSchoolColor(Object.keys({})[lvl % 8] || 'abjuration') : t.colors.backgroundSecondary,
+                  backgroundColor: active ? getSchoolColor(SCHOOL_KEYS[lvl % SCHOOL_KEYS.length]) : t.colors.backgroundSecondary,
                   borderWidth: 1,
                   borderColor: active ? 'transparent' : t.colors.border,
                 }}

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { mmkvStorage } from './mmkv-storage';
+import { fileSystemStorage } from './file-system-storage';
 
 export interface SpellSlot {
   max: number;
@@ -34,30 +34,42 @@ interface CharacterState {
   restoreSpellSlots: (level?: number) => void; // if level omitted, restores all (Long Rest)
 }
 
-// Default spell slots based on level for simple D&D 5e caster progression
+// Default spell slots based on D&D 5e full caster progression (Wizard, Cleric, Druid, Sorcerer)
 const getDefaultSpellSlots = (level: number): Record<number, SpellSlot> => {
-  // Simple progression helper
   const slots: Record<number, SpellSlot> = {};
   for (let i = 1; i <= 9; i++) {
     slots[i] = { max: 0, current: 0 };
   }
-  
-  if (level >= 1) slots[1] = { max: 2, current: 2 };
-  if (level >= 2) slots[1] = { max: 3, current: 3 };
-  if (level >= 3) {
-    slots[1] = { max: 4, current: 4 };
-    slots[2] = { max: 2, current: 2 };
+
+  // Full D&D 5e progression table
+  const progression: Record<number, Record<number, number>> = {
+    1:  { 1: 2 },
+    2:  { 1: 3 },
+    3:  { 1: 4, 2: 2 },
+    4:  { 1: 4, 2: 3 },
+    5:  { 1: 4, 2: 3, 3: 2 },
+    6:  { 1: 4, 2: 3, 3: 3 },
+    7:  { 1: 4, 2: 3, 3: 3, 4: 1 },
+    8:  { 1: 4, 2: 3, 3: 3, 4: 2 },
+    9:  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 1 },
+    10: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 },
+    11: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1 },
+    12: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1 },
+    13: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1 },
+    14: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1 },
+    15: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1 },
+    16: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1 },
+    17: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1 },
+    18: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 1, 7: 1, 8: 1, 9: 1 },
+    19: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 2, 7: 1, 8: 1, 9: 1 },
+    20: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 2, 7: 2, 8: 1, 9: 1 },
+  };
+
+  const lvlSlots = progression[level] || {};
+  for (const [lvl, max] of Object.entries(lvlSlots)) {
+    slots[Number(lvl)] = { max, current: max };
   }
-  if (level >= 4) {
-    slots[1] = { max: 4, current: 4 };
-    slots[2] = { max: 3, current: 3 };
-  }
-  if (level >= 5) {
-    slots[1] = { max: 4, current: 4 };
-    slots[2] = { max: 3, current: 3 };
-    slots[3] = { max: 2, current: 2 };
-  }
-  // Simplified for prototype, but fully extensible
+
   return slots;
 };
 
@@ -204,7 +216,7 @@ export const useCharacterStore = create<CharacterState>()(
     }),
     {
       name: 'dungeon-craft-characters',
-      storage: createJSONStorage(() => mmkvStorage),
+      storage: createJSONStorage(() => fileSystemStorage),
     }
   )
 );

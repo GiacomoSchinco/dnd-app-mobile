@@ -36,6 +36,17 @@ export default function ResultBreakdown({ result, selectedColor, onReset }: Prop
         ))}
       </View>
 
+      {/* Total */}
+      <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: spacing[2] }}>
+        <Text style={{ fontSize: fontSizes['2xl'], fontWeight: '800', color: t.colors.foreground }}>
+          {result.total}
+        </Text>
+        <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundTertiary }}>
+          = {result.rolls.join(' + ')}
+          {result.modifier !== 0 && (result.modifier > 0 ? ` + ${result.modifier}` : ` - ${Math.abs(result.modifier)}`)}
+        </Text>
+      </View>
+
       {/* Modifier */}
       {result.modifier !== 0 && (
         <Text style={[styles.modifier, { color: t.colors.foregroundTertiary }]}>

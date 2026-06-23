@@ -79,12 +79,11 @@ export function useScreenStyles() {
       color: t.colors.foregroundTertiary,
     } as const,
 
-    /** Stepper button (circular ±) */
+    /** Stepper button (circular ±) — usa backgroundColor dal tema, non hardcoded */
     stepperBtn: {
       width: 32,
       height: 32,
       borderRadius: 16,
-      backgroundColor: '#333',
       alignItems: 'center',
       justifyContent: 'center',
     } as const,

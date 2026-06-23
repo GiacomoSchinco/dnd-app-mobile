@@ -149,6 +149,11 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
     (newType: DiceType) => {
       if (newType === diceType) return;
 
+      setLastResult(null);
+      setQuantity(1);
+      setModifier(0);
+      resultScale.value = 0;
+
       scaleValue.value = withSequence(
         withTiming(0.8, { duration: 150 }),
         withTiming(0, { duration: 150 })
@@ -162,7 +167,7 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
         );
       }, 300);
     },
-    [diceType, scaleValue]
+    [diceType, scaleValue, resultScale]
   );
 
   // ── Style helpers ────────────────────────────────────────────────

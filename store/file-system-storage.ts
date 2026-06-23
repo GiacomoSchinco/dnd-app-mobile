@@ -4,7 +4,7 @@ import { StateStorage } from 'zustand/middleware';
 const STORAGE_DIR = `${FileSystem.documentDirectory}zustand/`;
 
 // Adapter per collegare expo-file-system al middleware persist di Zustand
-export const mmkvStorage: StateStorage = {
+export const fileSystemStorage: StateStorage = {
   setItem: async (name, value) => {
     const dir = STORAGE_DIR;
     await FileSystem.makeDirectoryAsync(dir, { intermediates: true });

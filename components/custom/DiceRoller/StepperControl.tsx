@@ -29,7 +29,7 @@ export default function StepperControl({
         <Pressable
           onPress={() => onChange(-1)}
           disabled={!canDecrement}
-          style={[styles.btn, !canDecrement && styles.btnDisabled]}
+          style={[styles.btn, { backgroundColor: t.colors.backgroundSecondary }, !canDecrement && styles.btnDisabled]}
         >
           <Text style={styles.btnText}>−</Text>
         </Pressable>
@@ -37,7 +37,7 @@ export default function StepperControl({
         <Pressable
           onPress={() => onChange(1)}
           disabled={!canIncrement}
-          style={[styles.btn, !canIncrement && styles.btnDisabled]}
+          style={[styles.btn, { backgroundColor: t.colors.backgroundSecondary }, !canIncrement && styles.btnDisabled]}
         >
           <Text style={styles.btnText}>+</Text>
         </Pressable>
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: radius.full,
-    backgroundColor: '#333',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { View, Text, Pressable, TouchableOpacity, Modal, Alert } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
-import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
 import { spacing, fontSizes, radius } from '../../../utils/styles';
 import { Character } from '../../../store/useCharacterStore';
-import { ClassName, CLASS_LABELS, ALL_CLASSES } from './types';
+import { ClassName, CLASS_LABELS } from './types';
+import CharacterCreateForm from '../CharacterCreateForm';
 
 type Props = {
   visible: boolean;
@@ -28,20 +28,15 @@ export default function CharacterPickerModal({
 }: Props) {
   const t = useTokens();
   const [mode, setMode] = useState<'pick' | 'create'>('pick');
-  const [newCharName, setNewCharName] = useState('');
-  const [newCharClass, setNewCharClass] = useState<ClassName>('wizard');
-
-  const handleCreate = () => {
-    if (!newCharName.trim()) return;
-    onCreate(newCharName.trim(), newCharClass);
-    setNewCharName('');
-    setMode('pick');
-  };
 
   const handleClose = () => {
     setMode('pick');
-    setNewCharName('');
     onClose();
+  };
+
+  const handleCreate = (name: string, className: ClassName) => {
+    onCreate(name, className);
+    setMode('pick');
   };
 
   return (
@@ -110,54 +105,7 @@ export default function CharacterPickerModal({
               <Button variant="ghost" onPress={handleClose} fullWidth style={{ marginTop: spacing[2] }}>Chiudi</Button>
             </>
           ) : (
-            <>
-              <Text style={{ fontSize: fontSizes.lg, fontWeight: '700', color: t.colors.foreground, marginBottom: spacing[4] }}>
-                ✨ Nuovo Personaggio
-              </Text>
-              <Input
-                label="Nome"
-                placeholder="Es. Gandalf il Viola"
-                value={newCharName}
-                onChangeText={setNewCharName}
-                style={{ marginBottom: spacing[3] }}
-              />
-              <Text style={{ fontSize: fontSizes.sm, fontWeight: '600', color: t.colors.foregroundSecondary, marginBottom: spacing[2] }}>
-                Classe
-              </Text>
-              <View style={{ flexDirection: 'row', gap: spacing[1.5], flexWrap: 'wrap', marginBottom: spacing[4] }}>
-                {ALL_CLASSES.map((cls) => {
-                  const active = newCharClass === cls;
-                  return (
-                    <TouchableOpacity
-                      key={cls}
-                      onPress={() => setNewCharClass(cls)}
-                      style={{
-                        paddingHorizontal: spacing[2.5], paddingVertical: spacing[1.5],
-                        borderRadius: radius.full,
-                        backgroundColor: active ? t.colors.accent : t.colors.backgroundSecondary,
-                        borderWidth: 1, borderColor: active ? 'transparent' : t.colors.border,
-                      }}
-                    >
-                      <Text style={{
-                        fontSize: fontSizes.sm,
-                        fontWeight: active ? '600' : '400',
-                        color: active ? t.colors.accentForeground : t.colors.foreground,
-                      }}>
-                        {CLASS_LABELS[cls]}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-              <View style={{ flexDirection: 'row', gap: spacing[2] }}>
-                <Button variant="ghost" onPress={() => { setMode('pick'); setNewCharName(''); }} style={{ flex: 1 }}>
-                  Annulla
-                </Button>
-                <Button onPress={handleCreate} disabled={!newCharName.trim()} style={{ flex: 1 }}>
-                  Crea
-                </Button>
-              </View>
-            </>
+            <CharacterCreateForm onCreate={handleCreate} onCancel={() => setMode('pick')} />
           )}
         </Pressable>
       </Pressable>
