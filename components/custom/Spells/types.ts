@@ -1,17 +1,21 @@
 import spellsData from '../../../assets/spells.json';
+import type { Spell, ClassName } from '../../../types';
 
-export type Spell = (typeof spellsData)[number];
-export type ClassName = 'druid' | 'bard' | 'wizard' | 'sorcerer' | 'warlock' | 'cleric' | 'ranger' | 'paladin';
+export type { Spell, ClassName };
 
 export const CLASS_LABELS: Record<ClassName, string> = {
-  druid:     'Druido',
+  barbarian: 'Barbaro',
   bard:      'Bardo',
-  wizard:    'Mago',
+  cleric:    'Chierico',
+  druid:     'Druido',
+  fighter:   'Guerriero',
+  monk:      'Monaco',
+  paladin:   'Paladino',
+  ranger:    'Ranger',
+  rogue:     'Ladro',
   sorcerer:  'Stregone',
   warlock:   'Warlock',
-  cleric:    'Chierico',
-  ranger:    'Ranger',
-  paladin:   'Paladino',
+  wizard:    'Mago',
 };
 
 export const SCHOOL_LABELS: Record<string, string> = {
@@ -58,7 +62,7 @@ export function getSchoolColor(school: string): string {
 }
 
 export function spellMatchesClass(spell: Spell, className: string): boolean {
-  return spell.classes.some((c) => c.toLowerCase() === className.toLowerCase());
+  return spell.classes.some((c: string) => c.toLowerCase() === className.toLowerCase());
 }
 
 export const ALL_CLASSES = [...new Set((spellsData as Spell[]).flatMap((s) => s.classes))] as ClassName[];

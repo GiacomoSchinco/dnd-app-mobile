@@ -1,8 +1,8 @@
 import { View, Text, Pressable } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { spacing, fontSizes, radius } from '../../../utils/styles';
-import { Character } from '../../../store/useCharacterStore';
-import { ClassName, CLASS_LABELS } from './types';
+import type { Character, ClassName } from '../../../types';
+import { CLASS_LABELS } from './types';
 
 type Props = {
   activeChar: Character | null;
@@ -33,7 +33,7 @@ export default function CharacterBar({ activeChar, onPress }: Props) {
             {activeChar.name}
           </Text>
           <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary }}>
-            {CLASS_LABELS[activeChar.class as ClassName] || activeChar.class} · Livello {activeChar.level}
+            {CLASS_LABELS[activeChar.classes?.[0]?.className] || activeChar.classes?.[0]?.className} · Livello {activeChar.level}
           </Text>
           <Text style={{ fontSize: fontSizes.xs, color: t.colors.foregroundTertiary, marginTop: 2 }}>
             {activeChar.preparedSpells.length} preparate · {activeChar.favoriteSpells.length} preferite

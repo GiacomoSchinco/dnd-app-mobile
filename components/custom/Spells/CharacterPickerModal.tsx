@@ -3,8 +3,8 @@ import { View, Text, Pressable, TouchableOpacity, Modal, Alert } from 'react-nat
 import { useTokens } from '../../ui/prism-provider';
 import { Button } from '../../ui/button';
 import { spacing, fontSizes, radius } from '../../../utils/styles';
-import { Character } from '../../../store/useCharacterStore';
-import { ClassName, CLASS_LABELS } from './types';
+import type { Character, ClassName } from '../../../types';
+import { CLASS_LABELS } from './types';
 import CharacterCreateForm from '../CharacterCreateForm';
 
 type Props = {
@@ -84,7 +84,7 @@ export default function CharacterPickerModal({
                           {char.name} {isActive ? '✓' : ''}
                         </Text>
                         <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary }}>
-                          {CLASS_LABELS[char.class as ClassName] || char.class} · Livello {char.level}
+                          {CLASS_LABELS[char.classes?.[0]?.className] || char.classes?.[0]?.className} · Livello {char.level}
                         </Text>
                       </View>
                       <TouchableOpacity

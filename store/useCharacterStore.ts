@@ -1,77 +1,53 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileSystemStorage } from './file-system-storage';
+import { getSpellProgression } from '../lib/rules/spellcasting';
+import type { Character, SpellSlot, CharacterState, ClassName, AbilityScores } from '../types';
 
-export interface SpellSlot {
-  max: number;
-  current: number;
+function defaultAbilityScores(): AbilityScores {
+  return { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 };
 }
 
-export interface Character {
-  id: string;
-  name: string;
-  class: string; // e.g. "druid", "wizard", "bard", etc.
-  level: number;
-  preparedSpells: string[]; // array of spell slugs
-  favoriteSpells: string[]; // array of spell slugs
-  spellSlots: Record<number, SpellSlot>; // level 1-9 spell slots
+/** Migra vecchi personaggi (formato con `class: string`) al nuovo formato (`classes: CharacterClass[]`) */
+function migrateCharacter(old: Record<string, unknown>): Character {
+  // Se ha già il nuovo formato, ritorna direttamente
+  if (Array.isArray(old.classes)) {
+    return {
+      ...old,
+      abilities: (old.abilities as AbilityScores) ?? defaultAbilityScores(),
+      proficiencies: (old.proficiencies as Character['proficiencies']) ?? {
+        armor: [], weapons: [], tools: [], skills: [], savingThrows: [],
+      },
+    } as unknown as Character;
+  }
+
+  // Migrazione dal vecchio formato (class: string)
+  const className = (old.class as string)?.toLowerCase() as ClassName || 'wizard';
+  return {
+    id: old.id as string,
+    name: old.name as string,
+    classes: [{ className, level: (old.level as number) || 1 }],
+    level: (old.level as number) || 1,
+    abilities: defaultAbilityScores(),
+    proficiencies: { armor: [], weapons: [], tools: [], skills: [], savingThrows: [] },
+    preparedSpells: (old.preparedSpells as string[]) || [],
+    favoriteSpells: (old.favoriteSpells as string[]) || [],
+    spellSlots: (old.spellSlots as Record<number, SpellSlot>) || {},
+  };
 }
 
-interface CharacterState {
-  characters: Character[];
-  activeCharacterId: string | null;
-  
-  // Actions
-  createCharacter: (name: string, className: string, level?: number) => void;
-  deleteCharacter: (id: string) => void;
-  setActiveCharacterId: (id: string | null) => void;
-  updateCharacter: (id: string, updates: Partial<Omit<Character, 'id'>>) => void;
-  
-  // Active Character helpers (operate on activeCharacterId)
-  togglePreparedSpell: (spellSlug: string) => void;
-  toggleFavoriteSpell: (spellSlug: string) => void;
-  useSpellSlot: (level: number) => void;
-  restoreSpellSlots: (level?: number) => void; // if level omitted, restores all (Long Rest)
-}
-
-// Default spell slots based on D&D 5e full caster progression (Wizard, Cleric, Druid, Sorcerer)
-const getDefaultSpellSlots = (level: number): Record<number, SpellSlot> => {
+/** Converts getSpellProgression() output to store-friendly SpellSlot format */
+function buildSpellSlots(className: string, level: number): Record<number, SpellSlot> {
   const slots: Record<number, SpellSlot> = {};
   for (let i = 1; i <= 9; i++) {
     slots[i] = { max: 0, current: 0 };
   }
-
-  // Full D&D 5e progression table
-  const progression: Record<number, Record<number, number>> = {
-    1:  { 1: 2 },
-    2:  { 1: 3 },
-    3:  { 1: 4, 2: 2 },
-    4:  { 1: 4, 2: 3 },
-    5:  { 1: 4, 2: 3, 3: 2 },
-    6:  { 1: 4, 2: 3, 3: 3 },
-    7:  { 1: 4, 2: 3, 3: 3, 4: 1 },
-    8:  { 1: 4, 2: 3, 3: 3, 4: 2 },
-    9:  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 1 },
-    10: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 },
-    11: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1 },
-    12: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1 },
-    13: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1 },
-    14: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1 },
-    15: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1 },
-    16: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1 },
-    17: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1 },
-    18: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 1, 7: 1, 8: 1, 9: 1 },
-    19: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 2, 7: 1, 8: 1, 9: 1 },
-    20: { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 2, 7: 2, 8: 1, 9: 1 },
-  };
-
-  const lvlSlots = progression[level] || {};
-  for (const [lvl, max] of Object.entries(lvlSlots)) {
-    slots[Number(lvl)] = { max, current: max };
+  const prog = getSpellProgression(className, level);
+  for (const [lvl, max] of Object.entries(prog.spellSlots)) {
+    slots[Number(lvl)] = { max: max as number, current: max as number };
   }
-
   return slots;
-};
+}
 
 export const useCharacterStore = create<CharacterState>()(
   persist(
@@ -81,14 +57,23 @@ export const useCharacterStore = create<CharacterState>()(
 
       createCharacter: (name, className, level = 1) => {
         const id = Math.random().toString(36).substring(2, 9);
+        const clsName = className.toLowerCase() as ClassName;
         const newChar: Character = {
           id,
           name,
-          class: className.toLowerCase(),
+          classes: [{ className: clsName, level }],
           level,
+          abilities: defaultAbilityScores(),
+          proficiencies: {
+            armor: [],
+            weapons: [],
+            tools: [],
+            skills: [],
+            savingThrows: [],
+          },
           preparedSpells: [],
           favoriteSpells: [],
-          spellSlots: getDefaultSpellSlots(level),
+          spellSlots: buildSpellSlots(clsName, level),
         };
         
         set((state) => ({
@@ -120,9 +105,10 @@ export const useCharacterStore = create<CharacterState>()(
           characters: state.characters.map((c) => {
             if (c.id !== id) return c;
             const updated = { ...c, ...updates };
-            // If level changed, let's also recalculate slots if they weren't explicitly updated
+            // If level changed, recalculate slots using class-aware progression
             if (updates.level && !updates.spellSlots) {
-              updated.spellSlots = getDefaultSpellSlots(updates.level);
+              const mainClass = c.classes?.[0]?.className || 'wizard';
+              updated.spellSlots = buildSpellSlots(mainClass, updates.level);
             }
             return updated;
           }),
@@ -217,6 +203,20 @@ export const useCharacterStore = create<CharacterState>()(
     {
       name: 'dungeon-craft-characters',
       storage: createJSONStorage(() => fileSystemStorage),
+      version: 1,
+      migrate: (persistedState: unknown, version: number) => {
+        const state = persistedState as { characters?: Record<string, unknown>[]; activeCharacterId?: string | null };
+        
+        if (version === 0) {
+          // Migrazione dal vecchio formato (class: string) al nuovo (classes: CharacterClass[])
+          const characters = (state.characters || []).map(migrateCharacter);
+          return { characters, activeCharacterId: state.activeCharacterId ?? null } as CharacterState;
+        }
+
+        // Se è già versione 1, assicura che tutti i personaggi siano migrati
+        const characters = (state.characters || []).map((c) => migrateCharacter(c as Record<string, unknown>));
+        return { characters, activeCharacterId: state.activeCharacterId ?? null } as CharacterState;
+      },
     }
   )
 );

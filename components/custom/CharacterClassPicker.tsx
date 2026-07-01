@@ -1,7 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../ui/prism-provider';
 import { spacing, fontSizes, radius } from '../../utils/styles';
-import { ClassName, CLASS_LABELS, ALL_CLASSES } from './Spells/types';
+import type { ClassName } from '../../types';
+import { CLASS_LABELS, ALL_CLASSES } from './Spells/types';
 
 type Props = {
   selected: ClassName;

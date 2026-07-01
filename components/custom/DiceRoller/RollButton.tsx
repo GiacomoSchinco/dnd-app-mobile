@@ -2,7 +2,7 @@ import { Text, Pressable, StyleSheet } from 'react-native';
 import Animated, { AnimatedStyle } from 'react-native-reanimated';
 import { spacing, radius, fontSizes } from '../../../utils/styles';
 import DndIcon from '../DndIcon';
-import { DiceType } from '../../../utils/dice';
+import type { DiceType } from '../../../types';
 
 type Props = {
   onPress: () => void;

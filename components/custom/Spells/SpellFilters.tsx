@@ -2,7 +2,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
 import { spacing, fontSizes, radius } from '../../../utils/styles';
-import { ClassName, CLASS_LABELS, SCHOOL_COLORS, getSchoolColor, getLevelCounts } from './types';
+import type { ClassName } from '../../../types';
+import { CLASS_LABELS, SCHOOL_COLORS, getSchoolColor, getLevelCounts } from './types';
 import { useMemo } from 'react';
 
 const SCHOOL_KEYS = Object.keys(SCHOOL_COLORS);

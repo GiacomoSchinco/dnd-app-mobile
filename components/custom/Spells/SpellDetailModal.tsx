@@ -3,8 +3,8 @@ import { useTokens } from '../../ui/prism-provider';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
 import { spacing, fontSizes, radius } from '../../../utils/styles';
-import { Spell, ClassName, SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
-import { Character } from '../../../store/useCharacterStore';
+import type { Spell, ClassName, Character } from '../../../types';
+import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
 import DndIcon from '../DndIcon';
 
 type Props = {

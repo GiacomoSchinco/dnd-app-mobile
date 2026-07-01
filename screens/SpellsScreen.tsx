@@ -5,38 +5,22 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../components/ui/prism-provider';
 import ScreenHeader from '../components/custom/ScreenHeader';
 import { spacing } from '../utils/styles';
-import { useActiveCharacter } from '../store/useActiveCharacter';
 import spellsData from '../assets/spells.json';
 
 import {
   SpellCard,
-  CharacterBar,
   SpellFilters,
-  SlotBar,
   SpellDetailModal,
-  CharacterPickerModal,
   Spell,
-  ClassName,
   spellMatchesClass,
+  SCHOOL_COLORS,
+  getSchoolColor,
+  getLevelCounts,
 } from '../components/custom/Spells';
 
 export default function SpellsScreen() {
   const t = useTokens();
   const insets = useSafeAreaInsets();
-
-  // ── Store ──
-  const {
-    activeChar,
-    characters,
-    activeCharacterId,
-    setActiveCharacterId,
-    createCharacter,
-    togglePreparedSpell,
-    toggleFavoriteSpell,
-    useSpellSlot,
-    restoreSpellSlots,
-    deleteCharacter,
-  } = useActiveCharacter();
 
   // ── Scroll to top ──
   const flatListRef = useRef<FlatList>(null);
@@ -55,12 +39,9 @@ export default function SpellsScreen() {
   const [search, setSearch] = useState('');
   const [levelFilter, setLevelFilter] = useState<number | null>(null);
   const [classFilter, setClassFilter] = useState<string | null>(null);
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const [showPreparedOnly, setShowPreparedOnly] = useState(false);
 
   // ── Modal state ──
   const [selectedSpell, setSelectedSpell] = useState<Spell | null>(null);
-  const [showCharacterPicker, setShowCharacterPicker] = useState(false);
 
   // ── Filtered spells ──
   const filteredSpells = useMemo(() => {
@@ -76,89 +57,44 @@ export default function SpellsScreen() {
     if (classFilter) {
       list = list.filter((s) => spellMatchesClass(s, classFilter));
     }
-    if (activeChar && showFavoritesOnly) {
-      list = list.filter((s) => activeChar.favoriteSpells.includes(s.name));
-    }
-    if (activeChar && showPreparedOnly) {
-      list = list.filter((s) => activeChar.preparedSpells.includes(s.name));
-    }
 
     return list;
-  }, [search, levelFilter, classFilter, showFavoritesOnly, showPreparedOnly, activeChar]);
-
-  // ── Derived ──
-  const activeSlots = activeChar && levelFilter !== null && levelFilter > 0
-    ? activeChar.spellSlots[levelFilter]
-    : null;
-
-  // ── Handlers ──
-  const toggleClassFilter = useCallback(() => {
-    if (classFilter) {
-      setClassFilter(null);
-    } else if (activeChar) {
-      setClassFilter(activeChar.class);
-    }
-  }, [classFilter, activeChar]);
-
-  const handleSelectCharacter = useCallback((id: string) => {
-    setActiveCharacterId(id);
-  }, [setActiveCharacterId]);
-
-  const handleCreateCharacter = useCallback((name: string, className: ClassName) => {
-    createCharacter(name, className);
-  }, [createCharacter]);
-
-  const handleDeleteCharacter = useCallback((id: string) => {
-    deleteCharacter(id);
-  }, [deleteCharacter]);
+  }, [search, levelFilter, classFilter]);
 
   // ── Render spell ──
   const renderSpell = useCallback(({ item }: { item: Spell }) => {
-    const isPrepared = activeChar?.preparedSpells.includes(item.name) ?? false;
-    const isFav = activeChar?.favoriteSpells.includes(item.name) ?? false;
-
     return (
       <SpellCard
         spell={item}
-        isPrepared={isPrepared}
-        isFavorite={isFav}
-        hasActiveCharacter={!!activeChar}
+        isPrepared={false}
+        isFavorite={false}
+        hasActiveCharacter={false}
         onPress={() => setSelectedSpell(item)}
-        onToggleFavorite={() => toggleFavoriteSpell(item.name)}
-        onTogglePrepared={() => togglePreparedSpell(item.name)}
+        onToggleFavorite={() => {}}
+        onTogglePrepared={() => {}}
       />
     );
-  }, [activeChar, toggleFavoriteSpell, togglePreparedSpell]);
+  }, []);
 
   // ── Main render ──
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
-      {/* Header fisso (fuori dalla FlatList → la ricerca non perde focus) */}
+      {/* Header fisso */}
       <View style={{ paddingHorizontal: spacing[4], paddingBottom: spacing[2] }}>
         <ScreenHeader title="✨ Incantesimi" />
-        <CharacterBar activeChar={activeChar} onPress={() => setShowCharacterPicker(true)} />
-        {activeSlots && (
-          <SlotBar
-            level={levelFilter!}
-            current={activeSlots.current}
-            max={activeSlots.max}
-            onUseSlot={() => useSpellSlot(levelFilter!)}
-            onRestore={() => restoreSpellSlots(levelFilter!)}
-          />
-        )}
         <SpellFilters
           search={search}
           onSearchChange={setSearch}
           levelFilter={levelFilter}
           onLevelFilterChange={setLevelFilter}
           classFilter={classFilter}
-          onClassFilterChange={toggleClassFilter}
-          showPreparedOnly={showPreparedOnly}
-          onPreparedOnlyChange={setShowPreparedOnly}
-          showFavoritesOnly={showFavoritesOnly}
-          onFavoritesOnlyChange={setShowFavoritesOnly}
+          onClassFilterChange={setClassFilter}
+          showPreparedOnly={false}
+          onPreparedOnlyChange={() => {}}
+          showFavoritesOnly={false}
+          onFavoritesOnlyChange={() => {}}
           filteredCount={filteredSpells.length}
-          hasActiveCharacter={!!activeChar}
+          hasActiveCharacter={false}
         />
       </View>
 
@@ -206,20 +142,10 @@ export default function SpellsScreen() {
 
       <SpellDetailModal
         spell={selectedSpell}
-        activeChar={activeChar}
+        activeChar={null}
         onClose={() => setSelectedSpell(null)}
-        onToggleFavorite={() => selectedSpell && toggleFavoriteSpell(selectedSpell.name)}
-        onTogglePrepared={() => selectedSpell && togglePreparedSpell(selectedSpell.name)}
-      />
-
-      <CharacterPickerModal
-        visible={showCharacterPicker}
-        characters={characters}
-        activeCharacterId={activeCharacterId}
-        onClose={() => setShowCharacterPicker(false)}
-        onSelect={handleSelectCharacter}
-        onCreate={handleCreateCharacter}
-        onDelete={handleDeleteCharacter}
+        onToggleFavorite={() => {}}
+        onTogglePrepared={() => {}}
       />
     </View>
   );

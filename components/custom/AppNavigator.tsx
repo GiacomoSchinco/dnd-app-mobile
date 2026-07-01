@@ -4,10 +4,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../ui/prism-provider';
 import Tabs from '../ui/tabs';
 import HomeScreen from '../../screens/HomeScreen';
-import DicesScreen from '../../screens/DicesScreen';
 import SpellsScreen from '../../screens/SpellsScreen';
 import CharactersScreen from '../../screens/CharactersScreen';
-import SettingsScreen from '../../screens/SettingsScreen';
+import MoreScreen from '../../screens/MoreScreen';
 
 export default function AppNavigator() {
   const t = useTokens();
@@ -18,13 +17,12 @@ export default function AppNavigator() {
     <View style={{ flex: 1, backgroundColor: t.colors.background, paddingTop: insets.top , paddingBottom: insets.bottom }}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Tabs
-        position="top"
+        position="bottom"
         tabs={[
           { label: '🏠 Home', content: <HomeScreen /> },
-          { label: '🎲 Dadi', content: <DicesScreen /> },
+          { label: '👤 PG', content: <CharactersScreen /> },
           { label: '✨ Magie', content: <SpellsScreen /> },
-          { label: '👥 PG', content: <CharactersScreen /> },
-          { label: '⚙️', content: <SettingsScreen /> },
+          { label: '☰ Altro', content: <MoreScreen /> },
         ]}
       />
     </View>

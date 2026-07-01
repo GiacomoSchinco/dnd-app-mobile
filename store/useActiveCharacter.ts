@@ -1,18 +1,5 @@
-import { useCharacterStore, Character } from './useCharacterStore';
-import { ClassName } from '../components/custom/Spells/types';
-
-export interface ActiveCharacterActions {
-  activeChar: Character | null;
-  characters: Character[];
-  activeCharacterId: string | null;
-  setActiveCharacterId: (id: string | null) => void;
-  togglePreparedSpell: (slug: string) => void;
-  toggleFavoriteSpell: (slug: string) => void;
-  useSpellSlot: (level: number) => void;
-  restoreSpellSlots: (level?: number) => void;
-  createCharacter: (name: string, className: string, level?: number) => void;
-  deleteCharacter: (id: string) => void;
-}
+import { useCharacterStore } from './useCharacterStore';
+import type { Character, ActiveCharacterActions } from '../types';
 
 /**
  * Custom hook that centralizes all character store subscriptions.
@@ -28,6 +15,7 @@ export function useActiveCharacter(): ActiveCharacterActions {
   const restoreSpellSlots = useCharacterStore((s) => s.restoreSpellSlots);
   const createCharacter = useCharacterStore((s) => s.createCharacter);
   const deleteCharacter = useCharacterStore((s) => s.deleteCharacter);
+  const updateCharacter = useCharacterStore((s) => s.updateCharacter);
 
   const activeChar = characters.find((c) => c.id === activeCharacterId) ?? null;
 
@@ -42,5 +30,6 @@ export function useActiveCharacter(): ActiveCharacterActions {
     restoreSpellSlots,
     createCharacter,
     deleteCharacter,
+    updateCharacter,
   };
 }
