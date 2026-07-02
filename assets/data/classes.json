@@ -4,36 +4,61 @@
     "name": "Barbarian",
     "description": "I barbari sono guerrieri primitivi che canalizzano la loro furia in combattimento.",
     "hit_die": "d12",
-    "primary_ability": ["strength"],
-    "saving_throws": ["strength", "constitution"],
+    "primary_ability": [
+      "strength"
+    ],
+    "saving_throws": [
+      "strength",
+      "constitution"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere", "armature medie", "scudi"],
-      "weapons": ["armi semplici", "armi da guerra"],
+      "id": 1,
+      "armor": [
+        "armature leggere",
+        "armature medie",
+        "scudi"
+      ],
+      "weapons": [
+        "armi semplici",
+        "armi da guerra"
+      ],
       "tools": [],
       "skills": {
+        "id": 2,
         "count": 2,
-        "options": ["Addestrare Animali", "Atletica", "Intimidire", "Natura", "Percezione", "Sopravvivenza"]
+        "options": [
+          "Addestrare Animali",
+          "Atletica",
+          "Intimidire",
+          "Natura",
+          "Percezione",
+          "Sopravvivenza"
+        ]
       }
     },
     "spellcasting": null,
     "features": [
       {
+        "id": 3,
         "name": "Furia",
         "level": 1,
-        "description": "Come azione bonus, puoi entrare in furia per 10 minuti. Ottieni vantaggio alle prove di Forza e ai tiri salvezza di Forza, resistenza ai danni contundenti, perforanti e taglienti. Puoi mantenere la furia con un'azione bonus. Ne recuperi un utilizzo dopo un riposo breve[citation:5][citation:6]."
+        "description": "Come azione bonus, puoi entrare in furia per 10 minuti. Ottieni vantaggio alle prove di Forza e ai tiri salvezza di Forza, resistenza ai danni contundenti, perforanti e taglienti. Ne recuperi gli utilizzi dopo un riposo lungo."
       },
       {
+        "id": 4,
         "name": "Difesa Senza Armature",
         "level": 1,
         "description": "Quando non indossi armature, la tua CA è 10 + modificatore Destrezza + modificatore Costituzione. Puoi usare uno scudo e mantenere questo beneficio."
       },
       {
+        "id": 5,
         "name": "Maestria con le Armi",
         "level": 1,
-        "description": "Scegli due armi da mischia e ottieni l'accesso alle loro proprietà di maestria. Puoi cambiarle dopo un riposo lungo[citation:6]."
+        "description": "Scegli due armi da mischia e ottieni l'accesso alle loro proprietà di maestria. Puoi cambiarle dopo un riposo lungo."
       }
     ],
     "hit_points": {
+      "id": 6,
       "average": 7,
       "description": "1d12 per livello"
     }
@@ -43,20 +68,47 @@
     "name": "Bard",
     "description": "I bardi sono artisti, musicisti e narratori che usano la magia attraverso le loro performance.",
     "hit_die": "d8",
-    "primary_ability": ["charisma"],
-    "saving_throws": ["dexterity", "charisma"],
+    "primary_ability": [
+      "charisma"
+    ],
+    "saving_throws": [
+      "dexterity",
+      "charisma"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere"],
-      "weapons": ["armi semplici", "archi corti", "spade corte", "fioretti", "fruste"],
-      "tools": ["tre strumenti musicali a scelta"],
+      "id": 7,
+      "armor": [
+        "armature leggere"
+      ],
+      "weapons": [
+        "armi semplici",
+        "archi corti",
+        "spade corte",
+        "fioretti",
+        "fruste"
+      ],
+      "tools": [
+        "tre strumenti musicali a scelta"
+      ],
       "skills": {
+        "id": 8,
         "count": 3,
-        "options": ["Acrobazia", "Atletica", "Intrattenere", "Inganno", "Intimidire", "Percezione", "Persuasione"]
+        "options": [
+          "Acrobazia",
+          "Atletica",
+          "Intrattenere",
+          "Inganno",
+          "Intimidire",
+          "Percezione",
+          "Persuasione"
+        ]
       }
     },
     "spellcasting": {
+      "id": 9,
       "ability": "charisma",
       "spell_slots": {
+        "id": 10,
         "level_1": 2
       },
       "spells_known": 4,
@@ -64,12 +116,14 @@
     },
     "features": [
       {
+        "id": 11,
         "name": "Ispirazione Bardica",
         "level": 1,
-        "description": "Come azione bonus, puoi dare a una creatura un dado d'ispirazione (d6). Dura 1 ora e può essere usato dopo aver visto il risultato di una prova fallita. Si recupera dopo un riposo lungo[citation:5]."
+        "description": "Come azione bonus, puoi dare a una creatura un dado d'ispirazione (d6). Dura 1 ora e può essere usato dopo aver visto il risultato di una prova fallita. Si recupera dopo un riposo lungo."
       }
     ],
     "hit_points": {
+      "id": 12,
       "average": 5,
       "description": "1d8 per livello"
     }
@@ -79,37 +133,56 @@
     "name": "Cleric",
     "description": "I chierici sono campioni sacri che canalizzano il potere divino.",
     "hit_die": "d8",
-    "primary_ability": ["wisdom"],
-    "saving_throws": ["wisdom", "charisma"],
+    "primary_ability": [
+      "wisdom"
+    ],
+    "saving_throws": [
+      "wisdom",
+      "charisma"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere", "armature medie", "scudi"],
-      "weapons": ["armi semplici"],
+      "id": 13,
+      "armor": [
+        "armature leggere",
+        "armature medie",
+        "scudi"
+      ],
+      "weapons": [
+        "armi semplici"
+      ],
       "tools": [],
       "skills": {
+        "id": 14,
         "count": 2,
-        "options": ["Arcano", "Intuizione", "Medicina", "Persuasione", "Religione", "Storia"]
+        "options": [
+          "Arcano",
+          "Intuizione",
+          "Medicina",
+          "Persuasione",
+          "Religione",
+          "Storia"
+        ]
       }
     },
     "spellcasting": {
+      "id": 15,
       "ability": "wisdom",
       "spell_slots": {
+        "id": 16,
         "level_1": 2
       },
       "cantrips_known": 3
     },
     "features": [
       {
-        "name": "Dominio Divino",
-        "level": 1,
-        "description": "Scegli un dominio che ti concede incantesimi aggiuntivi sempre preparati."
-      },
-      {
+        "id": 17,
         "name": "Incanalare Divinità",
         "level": 1,
-        "description": "Puoi incanalare energia divina 2 volte per riposo. Gli effetti dipendono dal dominio[citation:5]."
+        "description": "Puoi incanalare energia divina per manifestare effetti sacri. Gli utilizzi si recuperano dopo un riposo breve o lungo."
       }
     ],
     "hit_points": {
+      "id": 18,
       "average": 5,
       "description": "1d8 per livello"
     }
@@ -119,32 +192,67 @@
     "name": "Druid",
     "description": "I druidi custodiscono la natura e traggono potere dal mondo naturale.",
     "hit_die": "d8",
-    "primary_ability": ["wisdom"],
-    "saving_throws": ["intelligence", "wisdom"],
+    "primary_ability": [
+      "wisdom"
+    ],
+    "saving_throws": [
+      "intelligence",
+      "wisdom"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere", "armature medie (non metalliche)", "scudi (non metallici)"],
-      "weapons": ["bastoni ferrrati", "clave", "dardi", "giavellotti", "pugnali", "spade corte", "falci", "frombole"],
-      "tools": ["kit da erborista"],
+      "id": 19,
+      "armor": [
+        "armature leggere",
+        "armature medie",
+        "scudi"
+      ],
+      "weapons": [
+        "bastoni ferrati",
+        "clave",
+        "dardi",
+        "giavellotti",
+        "pugnali",
+        "spade corte",
+        "falci",
+        "frombole"
+      ],
+      "tools": [
+        "kit da erborista"
+      ],
       "skills": {
+        "id": 20,
         "count": 2,
-        "options": ["Addestrare Animali", "Arcano", "Intuizione", "Medicina", "Natura", "Percezione", "Religione", "Sopravvivenza"]
+        "options": [
+          "Addestrare Animali",
+          "Arcano",
+          "Intuizione",
+          "Medicina",
+          "Natura",
+          "Percezione",
+          "Religione",
+          "Sopravvivenza"
+        ]
       }
     },
     "spellcasting": {
+      "id": 21,
       "ability": "wisdom",
       "spell_slots": {
+        "id": 22,
         "level_1": 2
       },
       "cantrips_known": 2
     },
     "features": [
       {
+        "id": 23,
         "name": "Druidico",
         "level": 1,
         "description": "Conosci il Druidico e il Primordiale, le lingue segrete dei druidi."
       }
     ],
     "hit_points": {
+      "id": 24,
       "average": 5,
       "description": "1d8 per livello"
     }
@@ -154,36 +262,65 @@
     "name": "Fighter",
     "description": "I guerrieri sono maestri del combattimento, abili con ogni arma e armatura.",
     "hit_die": "d10",
-    "primary_ability": ["strength", "dexterity"],
-    "saving_throws": ["strength", "constitution"],
+    "primary_ability": [
+      "strength",
+      "dexterity"
+    ],
+    "saving_throws": [
+      "strength",
+      "constitution"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere", "armature medie", "armature pesanti", "scudi"],
-      "weapons": ["armi semplici", "armi da guerra"],
+      "id": 25,
+      "armor": [
+        "armature leggere",
+        "armature medie",
+        "armature pesanti",
+        "scudi"
+      ],
+      "weapons": [
+        "armi semplici",
+        "armi da guerra"
+      ],
       "tools": [],
       "skills": {
+        "id": 26,
         "count": 2,
-        "options": ["Acrobazia", "Addestrare Animali", "Atletica", "Intimidire", "Intuizione", "Percezione", "Sopravvivenza", "Storia"]
+        "options": [
+          "Acrobazia",
+          "Addestrare Animali",
+          "Atletica",
+          "Intimidire",
+          "Intuizione",
+          "Percezione",
+          "Sopravvivenza",
+          "Storia"
+        ]
       }
     },
     "spellcasting": null,
     "features": [
       {
+        "id": 27,
         "name": "Stile di Combattimento",
         "level": 1,
-        "description": "Scegli due stili di combattimento tra Armi da Guerra, Difesa, Duello, Protezione, Tiro con l'Arco[citation:5]."
+        "description": "Scegli uno stile di combattimento dalle opzioni disponibili (es. Difesa, Duello, Tiro con l'Arco). Ottieni il talento corrispondente."
       },
       {
+        "id": 28,
         "name": "Secondo Vento",
         "level": 1,
-        "description": "Una volta per riposo, puoi usare un'azione bonus per recuperare PF pari a 2d10 + livello[citation:5]."
+        "description": "Puoi usare un'azione bonus per recuperare Punti Ferita. Questa riserva ha un numero limitato di utilizzi che si rigenerano nel tempo."
       },
       {
+        "id": 29,
         "name": "Maestria con le Armi",
         "level": 1,
-        "description": "Scegli tre armi e ottieni l'accesso alle loro proprietà di maestria[citation:5]."
+        "description": "Scegli tre armi specifiche e ottieni l'accesso alle loro proprietà di maestria tattica."
       }
     ],
     "hit_points": {
+      "id": 30,
       "average": 6,
       "description": "1d10 per livello"
     }
@@ -193,36 +330,68 @@
     "name": "Rogue",
     "description": "I ladri sono abili infiltratori che colpiscono dalle ombre.",
     "hit_die": "d8",
-    "primary_ability": ["dexterity"],
-    "saving_throws": ["dexterity", "intelligence"],
+    "primary_ability": [
+      "dexterity"
+    ],
+    "saving_throws": [
+      "dexterity",
+      "intelligence"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere"],
-      "weapons": ["armi semplici", "archi corti", "spade corte", "fioretti", "balestre a mano"],
-      "tools": ["strumenti da scasso"],
+      "id": 31,
+      "armor": [
+        "armature leggere"
+      ],
+      "weapons": [
+        "armi semplici",
+        "archi corti",
+        "spade corte",
+        "fioretti",
+        "balestre a mano"
+      ],
+      "tools": [
+        "strumenti da scasso"
+      ],
       "skills": {
+        "id": 32,
         "count": 4,
-        "options": ["Acrobazia", "Atletica", "Furtività", "Indagare", "Inganno", "Intimidire", "Intuizione", "Percezione", "Persuasione", "Rapidità di Mano"]
+        "options": [
+          "Acrobazia",
+          "Atletica",
+          "Furtività",
+          "Indagare",
+          "Inganno",
+          "Intimidire",
+          "Intuizione",
+          "Percezione",
+          "Persuasione",
+          "Rapidità di Mano"
+        ]
       }
     },
     "spellcasting": null,
     "features": [
       {
+        "id": 33,
         "name": "Esperto",
         "level": 1,
-        "description": "Scegli 4 abilità (o strumenti) e raddoppia il tuo bonus di competenza per esse[citation:5]."
+        "description": "Scegli due abilità o strumenti in cui hai competenza; raddoppia il tuo bonus di competenza per ogni prova effettuata con essi."
       },
       {
+        "id": 34,
         "name": "Attacco Furtivo",
         "level": 1,
-        "description": "Una volta per turno, infliggi 1d6 danni extra se hai vantaggio o un alleato entro 5 ft dal bersaglio. Ora puoi usarlo anche come reazione[citation:5]."
+        "description": "Una volta per turno, puoi infliggere danni extra a una creatura colpita con un'arma con proprietà Accurata o a distanza se hai vantaggio al tiro per colpire."
       },
       {
+        "id": 35,
         "name": "Gergo dei Ladri",
         "level": 1,
-        "description": "Conosci il linguaggio segreto dei ladri e puoi lasciare messaggi criptati."
+        "description": "Conosci il gergo dei ladri, un mix segreto di dialetti e codici che ti permette di nascondere messaggi in una conversazione normale."
       }
     ],
     "hit_points": {
+      "id": 36,
       "average": 5,
       "description": "1d8 per livello"
     }
@@ -232,32 +401,55 @@
     "name": "Wizard",
     "description": "I maghi sono studiosi arcani che imparano e lanciano incantesimi dai loro grimori.",
     "hit_die": "d6",
-    "primary_ability": ["intelligence"],
-    "saving_throws": ["intelligence", "wisdom"],
+    "primary_ability": [
+      "intelligence"
+    ],
+    "saving_throws": [
+      "intelligence",
+      "wisdom"
+    ],
     "proficiencies": {
+      "id": 37,
       "armor": [],
-      "weapons": ["pugnali", "frombole", "bastoni ferrrati", "archi leggeri"],
+      "weapons": [
+        "pugnali",
+        "frombole",
+        "bastoni ferrrati",
+        "archi leggeri"
+      ],
       "tools": [],
       "skills": {
+        "id": 38,
         "count": 2,
-        "options": ["Arcano", "Indagare", "Intuizione", "Medicina", "Religione", "Storia"]
+        "options": [
+          "Arcano",
+          "Indagare",
+          "Intuizione",
+          "Medicina",
+          "Religione",
+          "Storia"
+        ]
       }
     },
     "spellcasting": {
+      "id": 39,
       "ability": "intelligence",
       "spell_slots": {
+        "id": 40,
         "level_1": 2
       },
       "cantrips_known": 3
     },
     "features": [
       {
+        "id": 41,
         "name": "Recupero Arcano",
         "level": 1,
-        "description": "Una volta al giorno dopo un riposo breve, puoi recuperare slot incantesimo. Ora lo puoi usare 2 volte al giorno[citation:5]."
+        "description": "Una volta al giorno, dopo aver completato un riposo breve, puoi scegliere di recuperare una parte dei tuoi slot incantesimo spesi."
       }
     ],
     "hit_points": {
+      "id": 42,
       "average": 4,
       "description": "1d6 per livello"
     }
@@ -265,33 +457,56 @@
   {
     "id": 8,
     "name": "Monk",
-    "description": "I monaci incanalano l'energia ki per imprese sovrumane.",
+    "description": "I monaci incanalano l'energia interiore per compiere imprese acrobatiche e marziali straordinarie.",
     "hit_die": "d8",
-    "primary_ability": ["dexterity", "wisdom"],
-    "saving_throws": ["strength", "dexterity"],
+    "primary_ability": [
+      "dexterity",
+      "wisdom"
+    ],
+    "saving_throws": [
+      "strength",
+      "dexterity"
+    ],
     "proficiencies": {
+      "id": 43,
       "armor": [],
-      "weapons": ["armi semplici", "armi da mischia marziali con proprietà Leggera"],
-      "tools": ["strumenti da artigiano a scelta"],
+      "weapons": [
+        "armi semplici",
+        "armi da mischia marziali con proprietà Leggera"
+      ],
+      "tools": [
+        "uno strumento da artigiano o uno strumento musicale a scelta"
+      ],
       "skills": {
+        "id": 44,
         "count": 2,
-        "options": ["Acrobazia", "Atletica", "Furtività", "Intuizione", "Religione", "Storia"]
+        "options": [
+          "Acrobazia",
+          "Atletica",
+          "Furtività",
+          "Intuizione",
+          "Religione",
+          "Storia"
+        ]
       }
     },
     "spellcasting": null,
     "features": [
       {
+        "id": 45,
         "name": "Difesa Senza Armature",
         "level": 1,
-        "description": "CA = 10 + modificatore Destrezza + modificatore Saggezza."
+        "description": "Finché non indossi alcuna armatura e non impugni uno scudo, la tua Classe Armatura è pari a 10 + modificatore Destrezza + modificatore Saggezza."
       },
       {
+        "id": 46,
         "name": "Arti Marziali",
         "level": 1,
-        "description": "Puoi usare Destrezza per gli attacchi senz'armi, e il dado danno parte da d6 (invece di d4)[citation:7]."
+        "description": "Ottieni benefici ai colpi senz'armi e alle armi da monaco: puoi usare Destrezza invece di Forza e il dado di danno aumenta con il livello."
       }
     ],
     "hit_points": {
+      "id": 47,
       "average": 5,
       "description": "1d8 per livello"
     }
@@ -299,38 +514,66 @@
   {
     "id": 9,
     "name": "Paladin",
-    "description": "I paladini sono guerrieri sacri che combattono per una causa divina.",
+    "description": "I paladini sono guerrieri sacri vincolati a un giuramento che combattono contro l'oscurità.",
     "hit_die": "d10",
-    "primary_ability": ["strength", "charisma"],
-    "saving_throws": ["wisdom", "charisma"],
+    "primary_ability": [
+      "strength",
+      "charisma"
+    ],
+    "saving_throws": [
+      "wisdom",
+      "charisma"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere", "armature medie", "armature pesanti", "scudi"],
-      "weapons": ["armi semplici", "armi da guerra"],
+      "id": 48,
+      "armor": [
+        "armature leggere",
+        "armature medie",
+        "armature pesanti",
+        "scudi"
+      ],
+      "weapons": [
+        "armi semplici",
+        "armi da guerra"
+      ],
       "tools": [],
       "skills": {
+        "id": 49,
         "count": 2,
-        "options": ["Atletica", "Intimidire", "Intuizione", "Medicina", "Persuasione", "Religione"]
+        "options": [
+          "Atletica",
+          "Intimidire",
+          "Intuizione",
+          "Medicina",
+          "Persuasione",
+          "Religione"
+        ]
       }
     },
     "spellcasting": {
+      "id": 50,
       "ability": "charisma",
       "spell_slots": {
+        "id": 51,
         "level_1": 2
       }
     },
     "features": [
       {
+        "id": 52,
         "name": "Senso Divino",
         "level": 1,
-        "description": "Puoi percepire la presenza di celestiali, demoni o non morti entro 60 ft."
+        "description": "Come azione bonus, puoi percepire la presenza di celestiali, demoni o non morti nelle vicinanze fino alla fine del tuo turno successivo."
       },
       {
+        "id": 53,
         "name": "Imposizione delle Mani",
         "level": 1,
-        "description": "Hai una riserva di guarigione pari a 5 x livello. Puoi usarla come azione bonus[citation:5]."
+        "description": "Il tuo tocco benedetto può curare le ferite. Hai una riserva di potere curativo che si ripristina completamente dopo un riposo lungo."
       }
     ],
     "hit_points": {
+      "id": 54,
       "average": 6,
       "description": "1d10 per livello"
     }
@@ -338,38 +581,67 @@
   {
     "id": 10,
     "name": "Ranger",
-    "description": "I ranger sono cacciatori esperti che si muovono agilmente nella natura.",
+    "description": "I ranger sono cacciatori ed esploratori che usano la magia della natura per proteggere i confini della civiltà.",
     "hit_die": "d10",
-    "primary_ability": ["dexterity", "wisdom"],
-    "saving_throws": ["strength", "dexterity"],
+    "primary_ability": [
+      "dexterity",
+      "wisdom"
+    ],
+    "saving_throws": [
+      "strength",
+      "dexterity"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere", "armature medie", "scudi"],
-      "weapons": ["armi semplici", "armi da guerra"],
+      "id": 55,
+      "armor": [
+        "armature leggere",
+        "armature medie",
+        "scudi"
+      ],
+      "weapons": [
+        "armi semplici",
+        "armi da guerra"
+      ],
       "tools": [],
       "skills": {
+        "id": 56,
         "count": 3,
-        "options": ["Addestrare Animali", "Atletica", "Furtività", "Intuizione", "Indagare", "Natura", "Percezione", "Sopravvivenza"]
+        "options": [
+          "Addestrare Animali",
+          "Atletica",
+          "Furtività",
+          "Intuizione",
+          "Indagare",
+          "Natura",
+          "Percezione",
+          "Sopravvivenza"
+        ]
       }
     },
     "spellcasting": {
+      "id": 57,
       "ability": "wisdom",
       "spell_slots": {
+        "id": 58,
         "level_1": 2
       }
     },
     "features": [
       {
+        "id": 59,
         "name": "Marchio del Cacciatore",
         "level": 1,
-        "description": "Marchio del Cacciatore è sempre preparato per te. Puoi lanciarlo gratuitamente 2 volte per riposo lungo[citation:5]."
+        "description": "Ottieni l'incantesimo Marchio del Cacciatore sempre preparato e puoi lanciarlo un numero limitato di volte senza spendere slot incantesimo."
       },
       {
+        "id": 60,
         "name": "Esploratore Abile",
         "level": 1,
-        "description": "Scegli un terreno: hai vantaggio su iniziativa e sulle prove di Intelligenza o Saggezza contro le creature che non ti hanno scoperto."
+        "description": "Scegli un'abilità in cui hai competenza per raddoppiare il relativo bonus. Ottieni inoltre vantaggi legati all'esplorazione e alle lingue."
       }
     ],
     "hit_points": {
+      "id": 61,
       "average": 6,
       "description": "1d10 per livello"
     }
@@ -377,22 +649,45 @@
   {
     "id": 11,
     "name": "Sorcerer",
-    "description": "Gli stregoni hanno magia innata nel sangue, ereditata o donata.",
+    "description": "Gli stregoni manipolano la realtà grazie a un potere magico innato derivato dalla loro stirpe o dal destino.",
     "hit_die": "d6",
-    "primary_ability": ["charisma"],
-    "saving_throws": ["constitution", "charisma"],
+    "primary_ability": [
+      "charisma"
+    ],
+    "saving_throws": [
+      "constitution",
+      "charisma"
+    ],
     "proficiencies": {
+      "id": 62,
       "armor": [],
-      "weapons": ["balestre", "bastoni ferrrati", "dardi", "frombole", "pugnali"],
+      "weapons": [
+        "balestre",
+        "bastoni ferrrati",
+        "dardi",
+        "frombole",
+        "pugnali"
+      ],
       "tools": [],
       "skills": {
+        "id": 63,
         "count": 2,
-        "options": ["Arcano", "Furtività", "Inganno", "Intimidire", "Intuizione", "Persuasione", "Religione"]
+        "options": [
+          "Arcano",
+          "Furtività",
+          "Inganno",
+          "Intimidire",
+          "Intuizione",
+          "Persuasione",
+          "Religione"
+        ]
       }
     },
     "spellcasting": {
+      "id": 64,
       "ability": "charisma",
       "spell_slots": {
+        "id": 65,
         "level_1": 2
       },
       "spells_known": 2,
@@ -400,17 +695,14 @@
     },
     "features": [
       {
-        "name": "Origine Magica",
-        "level": 1,
-        "description": "Scegli la fonte del tuo potere magico che influenza i tuoi incantesimi. Ottieni anche incantesimi aggiuntivi sempre preparati[citation:5]."
-      },
-      {
+        "id": 66,
         "name": "Magia Innata",
         "level": 1,
-        "description": "Ottieni un nuovo modo di potenziare i tuoi incantesimi e le tue CD dei tiri salvezza[citation:5]."
+        "description": "Puoi scatenare la magia pura che scorre in te come azione bonus, aumentando la CD dei tuoi incantesimi e ottenendo vantaggi ai tiri per colpire."
       }
     ],
     "hit_points": {
+      "id": 67,
       "average": 4,
       "description": "1d6 per livello"
     }
@@ -418,22 +710,44 @@
   {
     "id": 12,
     "name": "Warlock",
-    "description": "I warlock ottengono potere da un patrono extraplanare.",
+    "description": "I warlock stringono patti occulti con potenti patroni per ottenere frammenti di potere magico proibito.",
     "hit_die": "d8",
-    "primary_ability": ["charisma"],
-    "saving_throws": ["wisdom", "charisma"],
+    "primary_ability": [
+      "charisma"
+    ],
+    "saving_throws": [
+      "wisdom",
+      "charisma"
+    ],
     "proficiencies": {
-      "armor": ["armature leggere"],
-      "weapons": ["armi semplici"],
+      "id": 68,
+      "armor": [
+        "armature leggere"
+      ],
+      "weapons": [
+        "armi semplici"
+      ],
       "tools": [],
       "skills": {
+        "id": 69,
         "count": 2,
-        "options": ["Arcano", "Furtività", "Inganno", "Intimidire", "Intuizione", "Natura", "Religione", "Storia"]
+        "options": [
+          "Arcano",
+          "Furtività",
+          "Inganno",
+          "Intimidire",
+          "Intuizione",
+          "Natura",
+          "Religione",
+          "Storia"
+        ]
       }
     },
     "spellcasting": {
+      "id": 70,
       "ability": "charisma",
       "spell_slots": {
+        "id": 71,
         "level_1": 1
       },
       "spells_known": 2,
@@ -441,17 +755,14 @@
     },
     "features": [
       {
-        "name": "Patrono Sovrannaturale",
-        "level": 1,
-        "description": "Scegli il tipo di patrono (Arcifey, Demone, Grande Antico) che ti concede poteri speciali e incantesimi aggiuntivi."
-      },
-      {
+        "id": 72,
         "name": "Invocazioni Arcane",
         "level": 1,
-        "description": "Scegli un'Invocazione Arcano dal 1° livello. Questa ti concede nuovi poteri o potenziamenti[citation:5]."
+        "description": "Ottieni l'accesso alle Invocazioni Arcane, personalizzazioni mistiche che potenziano le tue capacità o ti concedono incantesimi speciali."
       }
     ],
     "hit_points": {
+      "id": 73,
       "average": 5,
       "description": "1d8 per livello"
     }

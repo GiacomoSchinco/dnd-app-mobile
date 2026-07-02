@@ -1,0 +1,686 @@
+[
+  {
+    "id": 1,
+    "class_id": 1,
+    "name": "Cammino del Berserker",
+    "description": "Furia cieca che massimizza i danni fisici e l'aggressività nei combattimenti in mischia.",
+    "features": [
+      {
+        "id": 1,
+        "name": "Frenesia",
+        "level": 3,
+        "description": "Quando entri in Furia, puoi infliggere danni da fendente extra pari a diversi d6 (in base al tuo bonus di Furia) la prima volta che colpisci un bersaglio in ogni tuo turno con un attacco con un'arma."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "class_id": 1,
+    "name": "Cammino del Cuore Selvaggio",
+    "description": "Connessione profonda con gli spiriti animali per ottenere resistenze o abilità tattiche speciali.",
+    "features": [
+      {
+        "id": 2,
+        "name": "Potere Animale",
+        "level": 3,
+        "description": "Scegli un aspetto animale (Orso, Aquila o Lupo) quando entri in Furia per ottenere benefici speciali, come la resistenza a tutti i danni (tranne psichici) o la capacità di fare scatti come azione bonus."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "class_id": 1,
+    "name": "Cammino dello Zelota",
+    "description": "Guerrieri ispirati da divinità della guerra, incredibilmente difficili da abbattere e colmi di energia radiosa o necrotica.",
+    "features": [
+      {
+        "id": 3,
+        "name": "Furia Divina",
+        "level": 3,
+        "description": "Mentre sei in Furia, la prima creatura che colpisci in ogni tuo turno subisce danni extra pari a 1d6 + metà del tuo livello da Barbaro. Scegli il tipo di danno (radioso o necrotico) quando selezioni questa sottoclasse."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "class_id": 1,
+    "name": "Cammino dell'Albero del Mondo",
+    "description": "Canalizza le radici di Yggdrasil per controllare il campo di battaglia, teletrasportarsi e aumentare la portata dei colpi.",
+    "features": [
+      {
+        "id": 4,
+        "name": "Vitalità dell'Albero",
+        "level": 3,
+        "description": "Quando entri in Furia ricevi Punti Ferita temporanei, e all'inizio di ogni tuo turno in Furia puoi scegliere di donare Punti Ferita temporanei a un alleato visibile entro 9 metri."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "class_id": 2,
+    "name": "Collegio della Sapienza",
+    "description": "Maestri del sapere e delle abilità, capaci di apprendere incantesimi da altre classi e confondere i nemici.",
+    "features": [
+      {
+        "id": 5,
+        "name": "Parole Taglienti",
+        "level": 3,
+        "description": "Come reazione, quando una creatura entro 18 metri effettua un tiro per colpire, una prova di caratteristica o un tiro per i danni, puoi spendere un dado di Ispirazione Bardica per sottrarre il risultato del dado dal tiro del bersaglio."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "class_id": 2,
+    "name": "Collegio del Valore",
+    "description": "Bardi marziali che ispirano gli alleati direttamente in combattimento e ottengono competenze in armature medie e armi da guerra.",
+    "features": [
+      {
+        "id": 6,
+        "name": "Ispirazione Combativa",
+        "level": 3,
+        "description": "Una creatura che possiede un tuo dado di Ispirazione Bardica può usarlo per aumentare la propria CA come reazione quando viene colpita, o aggiungerlo al tiro per i danni di un attacco appena mandato a segno."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "class_id": 2,
+    "name": "Collegio del Fascino",
+    "description": "Intrecciano la straordinaria magia del Reame Fatato per ammaliare le menti, guidare gli alleati e dominare la scena.",
+    "features": [
+      {
+        "id": 7,
+        "name": "Manto di Ispirazione",
+        "level": 3,
+        "description": "Come azione bonus, spendi un utilizzo di Ispirazione Bardica per conferire 5 Punti Ferita temporanei a un numero di alleati fino al tuo modificatore di Carisma. Gli alleati colpiti possono usare immediatamente la propria reazione per muoversi senza subire attacchi di opportunità."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "class_id": 2,
+    "name": "Collegio della Danza",
+    "description": "Combattono a mani nude sfuggendo ai colpi nemici grazie a una danza ispiratrice che aumenta la CA e la velocità degli alleati.",
+    "features": [
+      {
+        "id": 8,
+        "name": "Danza Abbagliante",
+        "level": 3,
+        "description": "Mentre non indossi armature o scudi, la tua CA diventa 10 + mod. Destrezza + mod. Carisma. Inoltre, puoi sferrare un colpo senz'armi come azione bonus quando spendi un utilizzo di Ispirazione Bardica."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "class_id": 3,
+    "name": "Dominio della Vita",
+    "description": "Focalizzato sulla pura energia positiva, sulla guarigione prodigiosa e sulla preservazione della vita.",
+    "features": [
+      {
+        "id": 9,
+        "name": "Discepolo della Vita",
+        "level": 3,
+        "description": "Ogni volta che usi un incantesimo di 1° livello o superiore per ripristinare Punti Ferita a una creatura, il bersaglio recupera Punti Ferita aggiuntivi pari a 2 + il livello dell'incantesimo."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "class_id": 3,
+    "name": "Dominio della Luce",
+    "description": "Canalizza il potere del sole per emettere fiamme sacre, dispel l'oscurità e bruciare i nemici sul posto.",
+    "features": [
+      {
+        "id": 10,
+        "name": "Bagliore Radioso",
+        "level": 3,
+        "description": "Come reazione, quando vieni attaccato da una creatura entro 9 metri, puoi imporre svantaggio al tiro per colpire emettendo una fiammata di luce divina."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "class_id": 3,
+    "name": "Dominio dell'Inganno",
+    "description": "Sfrutta l'illusione, il sotterfugio e i duplicati illusori per confondere e raggirare gli avversari dalle ombre.",
+    "features": [
+      {
+        "id": 11,
+        "name": "Duplicato Illusorio",
+        "level": 3,
+        "description": "Come azione bonus, puoi spendere un utilizzo di Incanalare Divinità per creare un'illusione perfetta di te stesso entro 9 metri. Puoi lanciare incantesimi originandoli dallo spazio dell'illusione e ottieni vantaggio se attacchi un nemico adiacente ad essa."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "class_id": 3,
+    "name": "Dominio della Guerra",
+    "description": "Chierici d'assalto che fondono incantesimi di potenziamento divino a devastanti attacchi fisici in prima linea.",
+    "features": [
+      {
+        "id": 12,
+        "name": "Sacerdote di Guerra",
+        "level": 3,
+        "description": "Quando effettui l'azione di Attacco, puoi effettuare un attacco con l'arma aggiuntivo come azione bonus. Puoi usare questa capacità un numero di volte pari al tuo modificatore di Saggezza per riposo lungo."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "class_id": 4,
+    "name": "Circolo della Terra",
+    "description": "Legati a un ecosistema specifico, traggono incantesimi extra e una grande flessibilità magica dalla natura circostante.",
+    "features": [
+      {
+        "id": 13,
+        "name": "Connessione con la Terra",
+        "level": 3,
+        "description": "Scegli un bioma (Arido, Polare, Temperato, Tropicale) dopo un riposo lungo. Ottieni una lista di incantesimi sempre preparati tematici e la resistenza a un tipo di danno specifico associato alla terra scelta."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "class_id": 4,
+    "name": "Circolo della Luna",
+    "description": "Specialisti della Forma Selvatica, capaci di trasformarsi in bestie feroci come azione bonus per dominare la mischia.",
+    "features": [
+      {
+        "id": 14,
+        "name": "Forma Selvatica Combattiva",
+        "level": 3,
+        "description": "Puoi attivare la Forma Selvatica come azione bonus anziché azione principale. Mentre sei trasformato la tua CA aumenta e puoi spendere slot incantesimo come azione bonus per recuperare 1d8 PF per livello dello slot speso."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "class_id": 4,
+    "name": "Circolo del Mare",
+    "description": "Evocano la furia dell'oceano, delle tempeste e delle maree per spingere i nemici e colpirli con fulmini.",
+    "features": [
+      {
+        "id": 15,
+        "name": "Ira del Mare",
+        "level": 3,
+        "description": "Come azione bonus, manifesti un'aura oceanica attorno a te. Una volta per turno, quando colpisci una creatura, puoi infliggere danni da tuono extra e costringerla a un tiro salvezza di Forza: se fallisce, viene spinta fino a 4.5 metri lontano da te."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "class_id": 4,
+    "name": "Circolo delle Stelle",
+    "description": "Utilizzano i poteri delle costellazioni per alterare la propria forma, curare le ferite o scagliare dardi stellari.",
+    "features": [
+      {
+        "id": 16,
+        "name": "Forma Stellare",
+        "level": 3,
+        "description": "Puoi spendere un utilizzo di Forma Selvatica per assumere una forma stellare luminosa. Scegli una costellazione attiva: Arciere (attacco bonus a distanza), Calice (cure extra aumentate) o Dragone (concentrazione e prove di intelligenza/saggezza potenziate)."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "class_id": 5,
+    "name": "Campione",
+    "description": "Sviluppo della pura potenza e perfezione fisica, focalizzato esclusivamente sul mettere a segno devastanti colpi critici.",
+    "features": [
+      {
+        "id": 17,
+        "name": "Critico Migliorato",
+        "level": 3,
+        "description": "I tuoi attacchi con le armi ottengono un colpo critico con un risultato di 19 o 20 sul tiro del dado d20."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "class_id": 5,
+    "name": "Maestro di Battaglia",
+    "description": "Maestri tattici che usano i dadi di superiorità per eseguire manovre complesse e strategiche sul campo di battaglia.",
+    "features": [
+      {
+        "id": 18,
+        "name": "Manovre di Combattimento",
+        "level": 3,
+        "description": "Apprendi tre manovre marziali (es. Attacco di Precisione, Disarmo, Slancio) e ottieni 4 dadi di superiorità (d8). Puoi spendere questi dadi per attivare gli effetti speciali delle manovre quando attacchi."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "class_id": 5,
+    "name": "Cavaliere Mistico",
+    "description": "Guerrieri arcani che combinano l'uso delle armi con incantesimi di abiurazione ed evocazione tratti dal grimorio del mago.",
+    "features": [
+      {
+        "id": 19,
+        "name": "Lancio di Incantesimi Arcani",
+        "level": 3,
+        "description": "Sblocchi l'accesso agli incantesimi della lista del Mago, con slot di 1° livello, basando la tua caratteristica da incantatore sull'Intelligenza."
+      },
+      {
+        "id": 20,
+        "name": "Legame con l'Arma",
+        "level": 3,
+        "description": "Esegui un rituale per legarti a un'arma. Finché vi sei legato, non puoi essere disarmato di quell'arma e puoi richiamarla istantaneamente nella tua mano come azione bonus da qualsiasi distanza."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "class_id": 5,
+    "name": "Guerriero Psionico",
+    "description": "Utilizzano l'energia mentale per generare scudi per gli alleati, muovere oggetti a distanza e potenziare i propri attacchi.",
+    "features": [
+      {
+        "id": 21,
+        "name": "Potere Psionico",
+        "level": 3,
+        "description": "Ottieni una riserva di Dadi di Energia Psionica (d6). Puoi spenderli per ridurre i danni subiti da un alleato vicino (Campo Protettivo) o per infondere un tuo attacco di danni da forza extra (Colpo Psionico)."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "class_id": 6,
+    "name": "Assassino",
+    "description": "Specialisti nell'infiltrazione, nell'uso dei veleni e nei colpi letali sferrati di sorpresa all'inizio degli scontri.",
+    "features": [
+      {
+        "id": 22,
+        "name": "Assassinare",
+        "level": 3,
+        "description": "Ottieni vantaggio ai tiri per colpire contro qualsiasi creatura che non abbia ancora intrapreso il suo turno nel round di combattimento attuale. Inoltre, se colpisci una creatura sorpresa, il colpo si trasforma automaticamente in un colpo critico."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "class_id": 6,
+    "name": "Furfante",
+    "description": "Infiltratori agili ed esperti nello scasso, nell'arrampicata e nell'uso rapidissimo di oggetti durante il combattimento.",
+    "features": [
+      {
+        "id": 23,
+        "name": "Mani Rapide",
+        "level": 3,
+        "description": "Puoi usare l'azione bonus concessa dalla tua Azione Scaltra per effettuare una prova di Rapidità di Mano, usare i tuoi strumenti da scasso per disattivare una trappola/aprire una serratura, o compiere l'azione di Utilizzare un Oggetto."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "class_id": 6,
+    "name": "Mistificatore Arcano",
+    "description": "Ladri che combinano la furtività con la magia di illusione e ammaliamento, controllando anche una Mano Magica invisibile.",
+    "features": [
+      {
+        "id": 24,
+        "name": "Mano Magica Leggendaria",
+        "level": 3,
+        "description": "Quando lanci l'incantesimo Mano Magica, puoi rendere la mano invisibile e puoi usarla tramite la tua Azione Scaltra (azione bonus) per infilare o sfilare oggetti dalle tasche altrui o usare attrezzi da scasso a distanza."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "class_id": 6,
+    "name": "Lama Psionica",
+    "description": "Infiltratori che manifestano lame di pura energia mentale per colpire i nemici e comunicare telepaticamente.",
+    "features": [
+      {
+        "id": 25,
+        "name": "Lame Psioniche",
+        "level": 3,
+        "description": "Quando attacchi a mani vuote, puoi materializzare istantaneamente una lama magica di energia psichica (d6 danni). Se la usi, puoi effettuare un secondo attacco di lama psionica come azione bonus (d4 danni) nello stesso turno."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "class_id": 7,
+    "name": "Scuola di Abiurazione",
+    "description": "Focalizzati sulla protezione arcana, creano barriere magiche capaci di assorbire i danni per sé e per i propri alleati.",
+    "features": [
+      {
+        "id": 26,
+        "name": "Interdizione Arcana",
+        "level": 3,
+        "description": "Quando lanci un incantesimo di abiurazione di 1° livello o superiore, crei una barriera protettiva magica attorno a te che possiede Punti Ferita pari a due volte il tuo livello da mago + mod. Intelligenza, assorbendo il danno al tuo posto."
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "class_id": 7,
+    "name": "Scuola di Divinazione",
+    "description": "Maestri del tempo e della percezione, capaci di prevedere e rimpiazzare i tiri di dado futuri grazie ai dadi Portento.",
+    "features": [
+      {
+        "id": 27,
+        "name": "Portento",
+        "level": 3,
+        "description": "Al termine di un riposo lungo, lancia due dadi d20 e annota i risultati. Puoi sostituire qualsiasi tiro di d20 effettuato da te o da una creatura visibile con uno dei tuoi dadi Portento prima che il tiro avvenga."
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "class_id": 7,
+    "name": "Scuola di Evocazione",
+    "description": "Manipolatori delle energie elementali pure, capaci di massimizzare i danni ad area proteggendo gli alleati dal fuoco amico.",
+    "features": [
+      {
+        "id": 28,
+        "name": "Plasmare Incantesimi",
+        "level": 3,
+        "description": "Quando lanci un incantesimo di evocazione che richiede un tiro salvezza a un'area, puoi scegliere un numero di creature pari a 1 + il livello dell'incantesimo. Le creature scelte superano automaticamente il tiro salvezza e non subiscono alcun danno."
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "class_id": 7,
+    "name": "Scuola di Illusione",
+    "description": "Creatori di inganni visivi e sonori straordinari, capaci di alterare la realtà percepita dagli avversari.",
+    "features": [
+      {
+        "id": 29,
+        "name": "Illusione Minore Migliorata",
+        "level": 3,
+        "description": "Apprendi il trucchetto Illusione Minore. Quando lo lanci, puoi creare contemporaneamente sia un suono che un'immagine visiva con un unico lancio, e puoi farlo come azione bonus."
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "class_id": 8,
+    "name": "Guerriero della Mano Aperta",
+    "description": "Maestri del combattimento senz'armi, capaci di controllare i movimenti dei nemici, spingerli o privarli delle reazioni.",
+    "features": [
+      {
+        "id": 30,
+        "name": "Tecnica della Mano Aperta",
+        "level": 3,
+        "description": "Ogni volta che colpisci una creatura con gli attacchi della tua Raffica di Colpi, puoi imporre al bersaglio un effetto extra: deve superare un TS di Destrezza o cadere a terra prono, o un TS di Forza o essere spinto fino a 4.5 metri lontano da te."
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "class_id": 8,
+    "name": "Guerriero degli Elementi",
+    "description": "Incanalano l'energia elementale per allungare la portata dei propri colpi e infliggere danni da fuoco, freddo o fulmine.",
+    "features": [
+      {
+        "id": 31,
+        "name": "Discepolo degli Elementi",
+        "level": 3,
+        "description": "All'inizio del tuo turno, puoi spendere 1 Punto Fuoco Interiore per estendere la portata dei tuoi colpi senz'armi di 3 metri fino alla fine del turno. Gli attacchi infliggono a scelta danni da acido, freddo, fuoco, fulmine o tuono."
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "class_id": 8,
+    "name": "Guerriero delle Ombre",
+    "description": "Monaci assassini che manipolano l'oscurità magica per nascondersi e teletrasportarsi da un'ombra all'altra.",
+    "features": [
+      {
+        "id": 32,
+        "name": "Arti delle Ombre",
+        "level": 3,
+        "description": "Puoi spendere Punti Focus per lanciare gli incantesimi Oscurità, Visione Oscura o Passare Senza Tracce senza componenti materiali. Ottieni inoltre la visione al buio magica fino a 18 metri."
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "class_id": 8,
+    "name": "Guerriero della Misericordia",
+    "description": "Manipolatori del flusso vitale, capaci di curare gli alleati con il tocco o infliggere sofferenza immediata ai nemici.",
+    "features": [
+      {
+        "id": 33,
+        "name": "Tocco della Guarigione",
+        "level": 3,
+        "description": "Puoi spendere 1 Punto Focus per toccare una creatura e ripristinare un ammontare di PF pari al tiro del tuo dado di Arti Marziali + il tuo modificatore di Saggezza. Puoi usarlo anche all'interno della tua Raffica di Colpi."
+      },
+      {
+        "id": 34,
+        "name": "Tocco della Ferita",
+        "level": 3,
+        "description": "Quando colpisci una creatura con un colpo senz'armi, puoi spendere 1 Punto Focus per infliggere danni necrotici extra pari a un tiro del tuo dado di Arti Marziali + mod. Saggezza."
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "class_id": 9,
+    "name": "Giuramento di Devozione",
+    "description": "Ispirati ai più puri ideali di giustizia, cavalieri immacolati che infondono le proprie armi di luce sacra contro il male.",
+    "features": [
+      {
+        "id": 35,
+        "name": "Arma Consacrata",
+        "level": 3,
+        "description": "Come azione bonus, spendi un utilizzo di Incanalare Divinità per infondere un'arma che impugni di energia sacra. L'arma aggiunge il tuo modificatore di Carisma ai tiri per colpire per 1 minuto ed emette luce intensa."
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "class_id": 9,
+    "name": "Giuramento della Gloria",
+    "description": "Paladini focalizzati sull'eroismo fisico, sulla velocità fulminea e sul compimento di imprese leggendarie celebrate nei miti.",
+    "features": [
+      {
+        "id": 36,
+        "name": "Atleta Incomparabile",
+        "level": 3,
+        "description": "Come azione bonus, usi Incanalare Divinità per potenziare il tuo fisico per 10 minuti. Ottieni vantaggio alle prove di Atletica e Acrobazia, e la tua distanza di salto aumenta di 3 metri."
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "class_id": 9,
+    "name": "Giuramento di Vendetta",
+    "description": "Cacciatori spietati che marchiano un singolo bersaglio, giurando di distruggerlo a qualunque costo e senza pietà.",
+    "features": [
+      {
+        "id": 37,
+        "name": "Voto di Inimicizia",
+        "level": 3,
+        "description": "Come azione bonus, spendi un utilizzo di Incanalare Divinità per scegliere una creatura che vedi entro 3 metri. Ottieni vantaggio a tutti i tiri per colpire contro quel bersaglio per 1 minuto o finché non scende a 0 PF."
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "class_id": 9,
+    "name": "Giuramento degli Antichi",
+    "description": "Cavalieri verdi che proteggono la luce, la natura e la gioia del mondo, capaci di resistere tenacemente alla magia nociva.",
+    "features": [
+      {
+        "id": 38,
+        "name": "Ira della Natura",
+        "level": 3,
+        "description": "Come un'azione bonus o principale, usi Incanalare Divinità per far scaturire viti e viticci spettrali che avvolgono un nemico entro 9 metri, costringendolo a un TS di Forza o Destrezza: se fallisce, la creatura è trattenuta."
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "class_id": 10,
+    "name": "Cacciatore",
+    "description": "Specialisti nel contrastare minacce specifiche, estremamente flessibili sia contro bersagli singoli che contro orde di nemici.",
+    "features": [
+      {
+        "id": 39,
+        "name": "Preda del Cacciatore",
+        "level": 3,
+        "description": "Scegli un'opzione offensiva permanente: Colosso Micidiale (infliggi 1d8 danni extra una volta per turno a un bersaglio già ferito) o Sterminatore di Orde (effettua un attacco d'arma bonus contro una seconda creatura adiacente alla prima)."
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "class_id": 10,
+    "name": "Signore delle Bestie",
+    "description": "Combattono in perfetta sintonia con un compagno animale che attacca, difende e cresce in potenza insieme al Ranger.",
+    "features": [
+      {
+        "id": 40,
+        "name": "Compagno del Primate",
+        "level": 3,
+        "description": "Evochi magicamente un compagno animale fedele (Sorgente della Terra, del Cielo o del Mare). L'animale agisce subito dopo di te in combattimento, obbedisce ai tuoi comandi verbali e aggiunge il tuo Bonus di Competenza alla sua CA e ai tiri per i danni."
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "class_id": 10,
+    "name": "Cacciatore d'Ombre",
+    "description": "Cacciatori letali nell'oscurità, capaci di tendere micidiali e devastanti imboscate nel primissimo turno di scontro.",
+    "features": [
+      {
+        "id": 41,
+        "name": "Ambush Terribile",
+        "level": 3,
+        "description": "Aggiungi il tuo modificatore di Saggezza all'Iniziativa. Inoltre, all'inizio del tuo primo turno di ogni combattimento, la tua velocità aumenta di 3 metri e se effettui l'azione di Attacco puoi compiere un attacco d'arma aggiuntivo che infligge 1d8 danni extra."
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "class_id": 10,
+    "name": "Viandante Fatato",
+    "description": "Ranger toccati dalle fate che uniscono il combattimento a trucchi mentali e importanti bonus ai tiri sociali basati sulla Saggezza.",
+    "features": [
+      {
+        "id": 42,
+        "name": "Presenza Ultraterrena",
+        "level": 3,
+        "description": "Puoi aggiungere il tuo modificatore di Saggezza a tutte le tue prove di Carisma (Persuasione, Inganno, Intimidire). Inoltre, apprendi un trucchetto della scuola delle fate o l'incantesimo Charme su Persone."
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "class_id": 11,
+    "name": "Stregoneria Draconica",
+    "description": "Magia derivata dal sangue di un antico antenato drago, che conferisce scaglie protettive e affinità elementali distruttive.",
+    "features": [
+      {
+        "id": 43,
+        "name": "Resilienza Draconica",
+        "level": 3,
+        "description": "I tuoi Punti Ferita massimi aumentano di 3 e crescono di 1 per ogni livello successivo. Finché non indossi un'armatura, la tua Classe Armatura base è pari a 13 + il tuo modificatore di Destrezza."
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "class_id": 11,
+    "name": "Magia Selvaggia",
+    "description": "Manipolatori del caos puro, i cui incantesimi possono innescare improvvise ondate di effetti magici imprevedibili e folli.",
+    "features": [
+      {
+        "id": 44,
+        "name": "Ondata di Magia Selvaggia",
+        "level": 3,
+        "description": "Ogni volta che lanci un incantesimo di 1° livello o superiore, il DM può ordinarti di lanciare un d20. Se ottieni un 1, devi tirare sulla tabella della Magia Selvaggia per scatenare un effetto magico casuale e caotico nell'area."
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "class_id": 11,
+    "name": "Anima Meccanica",
+    "description": "Magia legata all'ordine perfetto di Mechanus, capace di manipolare le probabilità e neutralizzare vantaggi o svantaggi sul campo.",
+    "features": [
+      {
+        "id": 45,
+        "name": "Manifestazione dell'Ordine",
+        "level": 3,
+        "description": "Come reazione, quando una creatura che vedi entro 18 metri sta per effettuare un tiro con vantaggio o svantaggio, puoi spendere un punto stregoneria per annullare l'effetto, costringendola a un tiro di dado standard."
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "class_id": 11,
+    "name": "Mente Aberrante",
+    "description": "Potere psionico alieno o mutato, focalizzato sulla telepatia, sulle costrizioni mentali e sul lancio di incantesimi silenti.",
+    "features": [
+      {
+        "id": 46,
+        "name": "Discorso Telepatico",
+        "level": 3,
+        "description": "Come azione bonus, scegli una creatura entro 9 metri. Tu e la creatura potete comunicare telepaticamente in modo bidirezionale finché vi trovate a una distanza in chilometri non superiore al tuo modificatore di Carisma."
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "class_id": 12,
+    "name": "Patrono Immondo",
+    "description": "Patto stretto con un demone o un diavolo per ottenere poteri distruttivi legati al fuoco infernale e alla corruzione.",
+    "features": [
+      {
+        "id": 47,
+        "name": "Benedizione dell'Oscuro",
+        "level": 3,
+        "description": "Quando riduci una creatura ostile a 0 Punti Ferita, ottieni Punti Ferita temporanei pari al tuo modificatore di Carisma + il tuo livello da Warlock."
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "class_id": 12,
+    "name": "Patrono Arcifata",
+    "description": "Patto con i volubili signori delle fate, focalizzato sul teletrasporto rapido, sull'invisibilità e sulla nebbia fatata.",
+    "features": [
+      {
+        "id": 48,
+        "name": "Fuga Nebbiosa Fatata",
+        "level": 3,
+        "description": "Ottieni l'incantesimo Passo Misterioso (Misty Step) sempre preparato. Puoi usarlo gratuitamente un numero di volte pari al tuo Bonus di Competenza per riposo lungo, e quando ti teletrasporti puoi scegliere di diventare invisibile fino alla fine del tuo turno successivo."
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "class_id": 12,
+    "name": "Patrono Grande Antico",
+    "description": "Patto con entità aliene del vuoto cosmico, incentrato sulla follia psichica, sulla telepatia e sullo scardinamento mentale nemico.",
+    "features": [
+      {
+        "id": 49,
+        "name": "Spasmo Psichico",
+        "level": 3,
+        "description": "Quando lanci un incantesimo di ammaliamento o illusione, puoi costringere un bersaglio a subire danni psichici extra. Inoltre, quando una creatura ti attacca, puoi usare la tua reazione per imporre svantaggio al tiro invadendo la sua mente con visioni folli."
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "class_id": 12,
+    "name": "Patrono Celestiale",
+    "description": "Patto con un'entità di luce dei piani superiori, che garantisce eccezionali poteri curativi e incantesimi di fuoco sacro.",
+    "features": [
+      {
+        "id": 50,
+        "name": "Luce Guaritrice",
+        "level": 3,
+        "description": "Ottieni una riserva di d6 d'energia curativa pari a 1 + il tuo livello da Warlock. Come azione bonus, puoi spendere fino a un numero di dadi pari al tuo modificatore di Carisma per curare una creatura visibile entro 18 metri."
+      }
+    ]
+  }
+]

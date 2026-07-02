@@ -1,0 +1,373 @@
+[
+  {
+    "id": 1,
+    "name": "Accolito",
+    "description": "Hai speso la tua giovinezza in un tempio, servendo come novizio e studiando i sacri misteri.",
+    "ability_score_boosts": [
+      "INT",
+      "SAG",
+      "CAR"
+    ],
+    "skills": [
+      "insight",
+      "religion"
+    ],
+    "tool_proficiencies": [],
+    "equipment": [
+      "Simbolo sacro",
+      "Pergamena con preghiere",
+      "Vesti da cerimonia",
+      "3 candele",
+      "6 monete d'oro"
+    ],
+    "feat_id": "magic_initiate_cleric"
+  },
+  {
+    "id": 2,
+    "name": "Artigiano",
+    "description": "Hai iniziato la tua carriera come apprendista, imparando a manipolare i materiali per creare oggetti di valore.",
+    "ability_score_boosts": [
+      "COS",
+      "INT",
+      "CAR"
+    ],
+    "skills": [
+      "investigation",
+      "persuasion"
+    ],
+    "tool_proficiencies": [
+      "smiths_tools"
+    ],
+    "equipment": [
+      "Strumenti da fabbro",
+      "Abiti da viaggiatore",
+      "Custodia per mappe o pergamene",
+      "25 monete d'oro"
+    ],
+    "feat_id": "crafter"
+  },
+  {
+    "id": 3,
+    "name": "Ciarlatano",
+    "description": "Sai esattamente cosa vuole la gente e sai come darglielo, anche se si tratta di un falso o di una bugia.",
+    "ability_score_boosts": [
+      "DES",
+      "INT",
+      "CAR"
+    ],
+    "skills": [
+      "deception",
+      "sleight_of_hand"
+    ],
+    "tool_proficiencies": [
+      "forgery_kit"
+    ],
+    "equipment": [
+      "Kit per falsificazione",
+      "Abiti eleganti",
+      "Moneta truccata o dadi truccati",
+      "15 monete d'oro"
+    ],
+    "feat_id": "crafter"
+  },
+  {
+    "id": 4,
+    "name": "Criminale",
+    "description": "Hai una lunga storia di violazione della legge, avendo operato tra le ombre e i bassifondi della società.",
+    "ability_score_boosts": [
+      "DES",
+      "COS",
+      "INT"
+    ],
+    "skills": [
+      "deception",
+      "stealth"
+    ],
+    "tool_proficiencies": [
+      "thieves_tools"
+    ],
+    "equipment": [
+      "Strumenti da ladro",
+      "Piede di porco",
+      "Abiti scuri con cappuccio",
+      "Borsa per monete",
+      "16 monete d'oro"
+    ],
+    "feat_id": "alert"
+  },
+  {
+    "id": 5,
+    "name": "Intrattenitore",
+    "description": "Ti esibisci davanti a un pubblico, che sia per strada, nelle taverne o nelle corti dei nobili.",
+    "ability_score_boosts": [
+      "DES",
+      "COS",
+      "CAR"
+    ],
+    "skills": [
+      "acrobatics",
+      "performance"
+    ],
+    "tool_proficiencies": [
+      "musical_instrument_choice"
+    ],
+    "equipment": [
+      "Uno strumento musicale",
+      "Abito da esibizione",
+      "Specchio da viaggio",
+      "Profumo",
+      "11 monete d'oro"
+    ],
+    "feat_id": "musician"
+  },
+  {
+    "id": 6,
+    "name": "Contadino",
+    "description": "Hai coltivato la terra e accudito il bestiame, sviluppando una resistenza fisica eccezionale.",
+    "ability_score_boosts": [
+      "FOR",
+      "COS",
+      "SAG"
+    ],
+    "skills": [
+      "animal_handling",
+      "nature"
+    ],
+    "tool_proficiencies": [
+      "carpenters_tools"
+    ],
+    "equipment": [
+      "Strumenti da falegname",
+      "Falce",
+      "Abiti da lavoro",
+      "Lanterna a olio",
+      "23 monete d'oro"
+    ],
+    "feat_id": "tough"
+  },
+  {
+    "id": 7,
+    "name": "Guardia",
+    "description": "Il tuo compito era proteggere le porte della città, i mercanti o le mura di una fortezza.",
+    "ability_score_boosts": [
+      "FOR",
+      "DES",
+      "SAG"
+    ],
+    "skills": [
+      "athletics",
+      "perception"
+    ],
+    "tool_proficiencies": [
+      "gaming_set_choice"
+    ],
+    "equipment": [
+      "Un set da gioco",
+      "Insegna o distintivo",
+      "Manette o corda",
+      "Abiti da viaggio",
+      "12 monete d'oro"
+    ],
+    "feat_id": "alert"
+  },
+  {
+    "id": 8,
+    "name": "Guida",
+    "description": "Hai vissuto nelle terre selvagge, tracciando rotte e conducendo i viaggiatori al sicuro attraverso i pericoli.",
+    "ability_score_boosts": [
+      "DES",
+      "COS",
+      "SAG"
+    ],
+    "skills": [
+      "stealth",
+      "survival"
+    ],
+    "tool_proficiencies": [
+      "cartographers_tools"
+    ],
+    "equipment": [
+      "Strumenti da cartografo",
+      "Abiti da viaggio",
+      "Bussola o meridiana portatile",
+      "Corda di canapa (15m)",
+      "13 monete d'oro"
+    ],
+    "feat_id": "magic_initiate_druid"
+  },
+  {
+    "id": 9,
+    "name": "Eremita",
+    "description": "Hai vissuto in isolamento dal resto del mondo, per motivi religiosi, filosofici o personali.",
+    "ability_score_boosts": [
+      "COS",
+      "INT",
+      "SAG"
+    ],
+    "skills": [
+      "medicine",
+      "religion"
+    ],
+    "tool_proficiencies": [
+      "herbalism_kit"
+    ],
+    "equipment": [
+      "Kit da erborista",
+      "Coperta pesante",
+      "Diario con appunti filosofici",
+      "Abiti semplici",
+      "15 monete d'oro"
+    ],
+    "feat_id": "healer"
+  },
+  {
+    "id": 10,
+    "name": "Nobile",
+    "description": "Sei nato in una famiglia di alto lignaggio, con titoli, ricchezze e privilegi ereditari.",
+    "ability_score_boosts": [
+      "FOR",
+      "INT",
+      "CAR"
+    ],
+    "skills": [
+      "history",
+      "persuasion"
+    ],
+    "tool_proficiencies": [
+      "gaming_set_choice"
+    ],
+    "equipment": [
+      "Un set da gioco",
+      "Abito pregiato",
+      "Anello sigillo",
+      "Pergamena con albero genealogico",
+      "24 monete d'oro"
+    ],
+    "feat_id": "skilled"
+  },
+  {
+    "id": 11,
+    "name": "Sapiente",
+    "description": "Hai dedicato la tua vita allo studio di testi antichi, della storia o dei segreti del multiverso.",
+    "ability_score_boosts": [
+      "COS",
+      "INT",
+      "SAG"
+    ],
+    "skills": [
+      "arcana",
+      "history"
+    ],
+    "tool_proficiencies": [
+      "calligraphers_supplies"
+    ],
+    "equipment": [
+      "Strumenti da calligrafo",
+      "Inchiostro e calamo",
+      "Libro di appunti",
+      "Abito da studioso",
+      "8 monete d'oro"
+    ],
+    "feat_id": "magic_initiate_wizard"
+  },
+  {
+    "id": 12,
+    "name": "Marinaio",
+    "description": "Hai navigato sui mari a bordo di navi mercantili, da guerra o vascelli pirata.",
+    "ability_score_boosts": [
+      "FOR",
+      "DES",
+      "SAG"
+    ],
+    "skills": [
+      "athletics",
+      "perception"
+    ],
+    "tool_proficiencies": [
+      "navigators_tools"
+    ],
+    "equipment": [
+      "Strumenti da navigatore",
+      "Corda di seta (15m)",
+      "Abito da marinaio",
+      "Portafortuna",
+      "10 monete d'oro"
+    ],
+    "feat_id": "tavern_brawler"
+  },
+  {
+    "id": 13,
+    "name": "Soldato",
+    "description": "Hai servito nell'esercito o in una compagnia mercenaria, addestrandoti alla dura vita militare.",
+    "ability_score_boosts": [
+      "FOR",
+      "DES",
+      "COS"
+    ],
+    "skills": [
+      "athletics",
+      "intimidation"
+    ],
+    "tool_proficiencies": [
+      "gaming_set_choice"
+    ],
+    "equipment": [
+      "Un set da gioco",
+      "Trofeo militare o medaglia",
+      "Abiti da viaggio",
+      "Borsa",
+      "14 monete d'oro"
+    ],
+    "feat_id": "savage_attacker"
+  },
+  {
+    "id": 14,
+    "name": "Furfante",
+    "description": "Sei cresciuto da solo per le strade, sopravvivendo grazie alla tua astuzia e agilità.",
+    "ability_score_boosts": [
+      "DES",
+      "COS",
+      "SAG"
+    ],
+    "skills": [
+      "sleight_of_hand",
+      "stealth"
+    ],
+    "tool_proficiencies": [
+      "thieves_tools"
+    ],
+    "equipment": [
+      "Strumenti da ladro",
+      "Piccolo topo addomesticato",
+      "Mappa della tua città natale",
+      "Abiti logori",
+      "11 monete d'oro"
+    ],
+    "feat_id": "lucky"
+  },
+  {
+    "id": 15,
+    "name": "Viandante",
+    "description": "Hai passato la vita in viaggio tra insediamenti diversi, vivendo alla giornata o commerciando piccoli beni.",
+    "ability_score_boosts": [
+      "DES",
+      "COS",
+      "CAR"
+    ],
+    "skills": [
+      "insight",
+      "stealth"
+    ],
+    "tool_proficiencies": [
+      "thieves_tools"
+    ],
+    "equipment": [
+      "Strumenti da ladro",
+      "Abiti da viaggio",
+      "Mappa regionale",
+      "Piccolo diario di viaggio",
+      "11 monete d'oro"
+    ],
+    "feat_id": "lucky"
+  }
+]
