@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileSystemStorage } from './file-system-storage';
 import { getSpellProgression } from '../lib/rules/spellcasting';
-import type { Character, SpellSlot, CharacterState, ClassName, AbilityScores } from '../types';
+import type { Character, CharacterClass, SpellSlot, CharacterState, ClassName, AbilityScores } from '../types';
 
 function defaultAbilityScores(): AbilityScores {
   return { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 };
@@ -12,27 +12,36 @@ function defaultAbilityScores(): AbilityScores {
 function migrateCharacter(old: Record<string, unknown>): Character {
   // Se ha già il nuovo formato, ritorna direttamente
   if (Array.isArray(old.classes)) {
+    const oldSlots = old.spellSlots as Record<number, SpellSlot> | undefined;
+    const hasRealSlots = oldSlots && Object.values(oldSlots).some((s) => s.max > 0);
+    const mainClass = (old.classes as CharacterClass[])?.[0];
+
     return {
       ...old,
       abilities: (old.abilities as AbilityScores) ?? defaultAbilityScores(),
       proficiencies: (old.proficiencies as Character['proficiencies']) ?? {
         armor: [], weapons: [], tools: [], skills: [], savingThrows: [],
       },
+      // Ricalcola slot se sono vuoti (es. Warlock creati prima della fix)
+      spellSlots: hasRealSlots
+        ? oldSlots!
+        : buildSpellSlots(mainClass?.className || 'wizard', mainClass?.level || 1),
     } as unknown as Character;
   }
 
   // Migrazione dal vecchio formato (class: string)
   const className = (old.class as string)?.toLowerCase() as ClassName || 'wizard';
+  const level = (old.level as number) || 1;
   return {
     id: old.id as string,
     name: old.name as string,
-    classes: [{ className, level: (old.level as number) || 1 }],
-    level: (old.level as number) || 1,
+    classes: [{ className, level }],
+    level,
     abilities: defaultAbilityScores(),
     proficiencies: { armor: [], weapons: [], tools: [], skills: [], savingThrows: [] },
     preparedSpells: (old.preparedSpells as string[]) || [],
     favoriteSpells: (old.favoriteSpells as string[]) || [],
-    spellSlots: (old.spellSlots as Record<number, SpellSlot>) || {},
+    spellSlots: buildSpellSlots(className, level),
   };
 }
 
@@ -43,9 +52,21 @@ function buildSpellSlots(className: string, level: number): Record<number, Spell
     slots[i] = { max: 0, current: 0 };
   }
   const prog = getSpellProgression(className, level);
+
+  // Slot incantesimi normali
   for (const [lvl, max] of Object.entries(prog.spellSlots)) {
     slots[Number(lvl)] = { max: max as number, current: max as number };
   }
+
+  // Pact Magic (Warlock): mette gli slot al livello del pact magic
+  if (prog.pactMagic) {
+    const pactLevel = prog.pactMagic.level;
+    slots[pactLevel] = {
+      max: (slots[pactLevel]?.max ?? 0) + prog.pactMagic.slots,
+      current: (slots[pactLevel]?.current ?? 0) + prog.pactMagic.slots,
+    };
+  }
+
   return slots;
 }
 

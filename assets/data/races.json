@@ -1,0 +1,340 @@
+[
+  {
+    "id": 1,
+    "name": "Human",
+    "description": "Versatili e ambiziosi, gli umani cambiano il mondo con la loro resilienza e capacità di adattamento.",
+    "speed": 30,
+    "size": "Medium",
+    "traits": [
+      {
+        "name": "Skilled",
+        "description": "Guadagni la competenza in un'abilità a tua scelta."
+      },
+      {
+        "name": "Origin Feat",
+        "description": "Guadagni un talento di Origine aggiuntivo al livello 1 (es. Allertato, Fortunato, Musico, ecc.)."
+      },
+      {
+        "name": "Versatile",
+        "description": "Se effettui un riposo lungo, puoi sostituire la competenza nell'abilità scelta con Skilled con un'altra abilità."
+      }
+    ],
+    "subraces": null,
+    "darkvision": null,
+    "resistances": [],
+    "immunities": [],
+    "proficiencies": [],
+    "tools": [],
+    "languages": ["Comune"],
+    "extra_language": 0,
+    "extra_skills": 1,
+    "hp_per_level": 0
+  },
+  {
+    "id": 2,
+    "name": "Elf",
+    "description": "Creature longeve e intrise di magia feerica, divise in tre grandi lignaggi: Alti Elfi, Elfi dei Boschi e Drow.",
+    "speed": 30,
+    "size": "Medium",
+    "traits": [
+      {
+        "name": "Darkvision",
+        "description": "Vedi al buio fino a 60 piedi (120 piedi se scegli il lignaggio Drow)."
+      },
+      {
+        "name": "Fey Ancestry",
+        "description": "Vantaggio ai tiri salvezza per evitare o porre fine alla condizione Affascinato. La magia non può farti addormentare."
+      },
+      {
+        "name": "Keen Senses",
+        "description": "Ottieni competenza nell'abilità Percezione."
+      },
+      {
+        "name": "Trance",
+        "description": "Non hai bisogno di dormire. Un riposo lungo dura solo 4 ore se mediti."
+      },
+      {
+        "name": "Elven Lineage",
+        "description": "Scegli una stirpe (Alto Elfo, Elfo dei Boschi, Drow). Ottieni trucchetti e incantesimi bonus fissi che si sbloccano ai livelli 1, 3 e 5."
+      }
+    ],
+    "subraces": ["High Elf", "Wood Elf", "Drow"],
+    "darkvision": 60,
+    "resistances": [],
+    "immunities": ["magical_sleep"],
+    "proficiencies": ["percezione"],
+    "tools": [],
+    "languages": ["Comune", "Elfico"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 0
+  },
+  {
+    "id": 3,
+    "name": "Dwarf",
+    "description": "Resistenti e legati alla pietra, i nani sono famosi per la loro robustezza fisica e la connessione con le profondità della terra.",
+    "speed": 30,
+    "size": "Medium",
+    "traits": [
+      {
+        "name": "Darkvision",
+        "description": "Vedi al buio fino a 60 piedi."
+      },
+      {
+        "name": "Dwarven Resilience",
+        "description": "Vantaggio ai tiri salvezza contro il Veleno e resistenza ai danni da veleno."
+      },
+      {
+        "name": "Dwarven Toughness",
+        "description": "I tuoi PF massimi aumentano di 1, e aumentano di un ulteriore 1 ogni volta che guadagni un livello."
+      },
+      {
+        "name": "Stonecunning",
+        "description": "Come azione bonus, ottieni Percezione Tellurica (Tremorsense) entro 60 piedi per 10 minuti se ti trovi su superfici di pietra. Puoi usarlo un numero di volte pari al tuo bonus di competenza per riposo lungo."
+      }
+    ],
+    "subraces": null,
+    "darkvision": 60,
+    "resistances": ["veleno"],
+    "immunities": [],
+    "proficiencies": [],
+    "tools": [],
+    "languages": ["Comune", "Nanosco"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 1
+  },
+  {
+    "id": 4,
+    "name": "Halfling",
+    "description": "Piccoli e ottimisti, gli halfling sopravvivono alle minacce del mondo grazie a una fortuna sfacciata e alla furtività.",
+    "speed": 30,
+    "size": "Small",
+    "traits": [
+      {
+        "name": "Lucky",
+        "description": "Quando ottieni 1 a un d20 per un attacco, prova di caratteristica o tiro salvezza, puoi ritirare il dado e usare il nuovo risultato."
+      },
+      {
+        "name": "Brave",
+        "description": "Vantaggio ai tiri salvezza per evitare o porre fine alla condizione Spaventato."
+      },
+      {
+        "name": "Halfling Nimbleness",
+        "description": "Puoi muoverti attraverso lo spazio di qualsiasi creatura che sia di una taglia più grande della tua."
+      },
+      {
+        "name": "Naturally Stealthy",
+        "description": "Ottieni competenza nell'abilità Furtività. Puoi tentare di nasconderti anche quando sei oscurato solo da una creatura di taglia più grande di te."
+      }
+    ],
+    "subraces": null,
+    "darkvision": null,
+    "resistances": [],
+    "immunities": [],
+    "proficiencies": ["furtivita"],
+    "tools": [],
+    "languages": ["Comune", "Halfling"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 0
+  },
+  {
+    "id": 5,
+    "name": "Gnome",
+    "description": "Creature magiche di piccola taglia dotate di un intelletto formidabile e di una spiccata propensione per l'arcano o l'ingegneria.",
+    "speed": 30,
+    "size": "Small",
+    "traits": [
+      {
+        "name": "Darkvision",
+        "description": "Vedi al buio fino a 60 piedi."
+      },
+      {
+        "name": "Gnomish Cunning",
+        "description": "Vantaggio ai tiri salvezza di Intelligenza, Saggezza e Carisma comics contro gli effetti magici."
+      },
+      {
+        "name": "Gnomish Lineage",
+        "description": "Scegli tra Gnomo delle Foreste (conosce il trucchetto Illusione Minore e può lanciare Parlare con gli Animali) o Gnomo delle Rocce (conosce Mano Magica e Riparare, e può creare piccoli congegni tecnologici)."
+      }
+    ],
+    "subraces": ["Forest Gnome", "Rock Gnome"],
+    "darkvision": 60,
+    "resistances": [],
+    "immunities": [],
+    "proficiencies": [],
+    "tools": [],
+    "languages": ["Comune", "Gnomico"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 0
+  },
+  {
+    "id": 6,
+    "name": "Dragonborn",
+    "description": "Orgogliosi discendenti dei draghi, i dragonidi sfruttano il potere elementale del loro soffio distruttivo.",
+    "speed": 30,
+    "size": "Medium",
+    "traits": [
+      {
+        "name": "Darkvision",
+        "description": "Vedi al buio fino a 60 piedi."
+      },
+      {
+        "name": "Draconic Ancestry",
+        "description": "Scegli un tipo di drago (Cromatico o Metallico). Determina l'elemento del soffio e la resistenza."
+      },
+      {
+        "name": "Breath Weapon",
+        "description": "Quando usi l'azione di Attacco, puoi sostituire uno dei tuoi attacchi con un soffio (cono 15ft o linea 30ft). Danno 2d6 (cresce a 3d6 al 6°, 4d6 all'11°, 5d6 al 16°). Usabile un numero di volte pari al tuo Bonus di Competenza per riposo lungo."
+      },
+      {
+        "name": "Damage Resistance",
+        "description": "Hai resistenza al tipo di danno associato alla tua ascendenza draconica."
+      },
+      {
+        "name": "Draconic Flight",
+        "description": "Al 5° livello, come azione bonus, ottieni velocità di volo pari alla tua velocità di movimento fino alla fine del tuo turno attuale. Puoi usarlo un numero di volte pari al tuo Bonus di Competenza per riposo lungo."
+      }
+    ],
+    "subraces": null,
+    "darkvision": 60,
+    "resistances": [],
+    "immunities": [],
+    "proficiencies": [],
+    "tools": [],
+    "languages": ["Comune", "Draconico"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 0
+  },
+  {
+    "id": 7,
+    "name": "Tiefling",
+    "description": "Segnati da un legame planare con i Piani Inferiori, i tiefling manifestano poteri legati alla loro stirpe occulta.",
+    "speed": 30,
+    "size": "Medium",
+    "traits": [
+      {
+        "name": "Darkvision",
+        "description": "Vedi al buio fino a 60 piedi."
+      },
+      {
+        "name": "Fiendish Legacy",
+        "description": "Scegli una stirpe: Abissale (Veleno), Chtonica (Necrotico) o Infernale (Fuoco). Ottieni resistenza al danno corrispondente e incantesimi specifici ai livelli 1, 3 e 5."
+      }
+    ],
+    "subraces": ["Abyssal", "Chthonic", "Infernal"],
+    "darkvision": 60,
+    "resistances": [],
+    "immunities": [],
+    "proficiencies": [],
+    "tools": [],
+    "languages": ["Comune", "Infernale"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 0
+  },
+  {
+    "id": 8,
+    "name": "Aasimar",
+    "description": "Umanoidi toccati dal potere dei piani celestiali, capaci di rivelare la loro natura divina per volare o terrorizzare i nemici.",
+    "speed": 30,
+    "size": "Medium",
+    "traits": [
+      {
+        "name": "Darkvision",
+        "description": "Vedi al buio fino a 60 piedi."
+      },
+      {
+        "name": "Celestial Resistance",
+        "description": "Resistenza ai danni Necrotici e Radianti."
+      },
+      {
+        "name": "Healing Hands",
+        "description": "Come azione, puoi toccare una creatura e curarla di un numero di d4 pari al tuo Bonus di Competenza. Usabile 1 volta per riposo lungo."
+      },
+      {
+        "name": "Celestial Revelation",
+        "description": "Al livello 3, come azione bonus, ti trasformi per 1 minuto. Una volta per turno infliggi danni extra pari al tuo Bonus di Competenza quando colpisci con un attacco o un incantesimo. Scegli tra ali radiose (volo), spinta celestiale (volo temporaneo nel turno) o aura spaventosa. Usabile 1 volta per riposo lungo."
+      }
+    ],
+    "subraces": null,
+    "darkvision": 60,
+    "resistances": ["necrotico", "radiante"],
+    "immunities": [],
+    "proficiencies": [],
+    "tools": [],
+    "languages": ["Comune", "Celestiale"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 0
+  },
+  {
+    "id": 9,
+    "name": "Goliath",
+    "description": "Discendenti dei giganti, i goliath possiedono una stazza imponente e poteri ancestrali legati alle montagne e agli elementi.",
+    "speed": 35,
+    "size": "Medium",
+    "traits": [
+      {
+        "name": "Darkvision",
+        "description": "Vedi al buio fino a 60 piedi."
+      },
+      {
+        "name": "Large Form",
+        "description": "Sei considerato di una taglia più grande per determinare la capacità di trasporto, spinta e sollevamento. Al livello 5 puoi diventare ufficialmente di taglia Grande come azione bonus per 10 minuti."
+      },
+      {
+        "name": "Giant Ancestry",
+        "description": "Scegli un'eredità: Gigante del Fuoco (danni da fuoco extra), Gigante delle Nuvole (teletrasporto breve), Gigante delle Tempeste (danni da fulmine come reazione), Gigante del Ghiaccio (danni da freddo e riduzione velocità nemica), Gigante della Pietra (riduzione danno come reazione), Gigante delle Colline (butta a terra i nemici proni). Usabile un numero di volte pari al tuo Bonus di Competenza per riposo lungo."
+      }
+    ],
+    "subraces": null,
+    "darkvision": 60,
+    "resistances": [],
+    "immunities": [],
+    "proficiencies": [],
+    "tools": [],
+    "languages": ["Comune", "Gigante"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 0
+  },
+  {
+    "id": 10,
+    "name": "Orc",
+    "description": "Forti e instancabili, gli orchi della versione 2024 sono protetti dalla grazia delle divinità selvagge che conferisce loro un'incredibile determinazione.",
+    "speed": 35,
+    "size": "Medium",
+    "traits": [
+      {
+        "name": "Darkvision",
+        "description": "Vedi al buio fino a 60 piedi."
+      },
+      {
+        "name": "Adrenaline Rush",
+        "description": "Come azione bonus, puoi effettuare l'azione di Scatto (Dash) e guadagnare punti ferita temporanei pari al tuo Bonus di Competenza. Puoi usarlo un numero di volte pari al tuo Bonus di Competenza per riposo lungo."
+      },
+      {
+        "name": "Relentless Endurance",
+        "description": "Quando scendi a 0 punti ferita ma non vieni ucciso sul colpo, puoi rimanere a 1 punto ferita. Si ricarica dopo un riposo lungo."
+      },
+      {
+        "name": "Powerful Build",
+        "description": "Ottieni la competenza nell'abilità Atletica e sei considerato di una taglia superiore per il sollevamento pesi."
+      }
+    ],
+    "subraces": null,
+    "darkvision": 60,
+    "resistances": [],
+    "immunities": [],
+    "proficiencies": ["atletica"],
+    "tools": [],
+    "languages": ["Comune", "Orchesco"],
+    "extra_language": 0,
+    "extra_skills": 0,
+    "hp_per_level": 0
+  }
+]

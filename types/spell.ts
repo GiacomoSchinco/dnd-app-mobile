@@ -1,4 +1,4 @@
-import spellsData from '../assets/spells.json';
+import spellsData from '../assets/data/spells.json';
 
 export type Spell = (typeof spellsData)[number];
 

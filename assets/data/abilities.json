@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "strength",
+    "name_it": "Forza",
+    "abbreviation": "FOR",
+    "description": "Misura la potenza fisica, l'allenamento atletico e la capacità di sostenere sforzi prolungati."
+  },
+  {
+    "id": 2,
+    "name": "dexterity",
+    "name_it": "Destrezza",
+    "abbreviation": "DES",
+    "description": "Misura l'agilità, i riflessi, l'equilibrio e la coordinazione occhio-mano."
+  },
+  {
+    "id": 3,
+    "name": "constitution",
+    "name_it": "Costituzione",
+    "abbreviation": "COS",
+    "description": "Misura la salute, la resistenza e la forza vitale."
+  },
+  {
+    "id": 4,
+    "name": "intelligence",
+    "name_it": "Intelligenza",
+    "abbreviation": "INT",
+    "description": "Misura l'acume mentale, la memoria, la capacità di analisi e la conoscenza."
+  },
+  {
+    "id": 5,
+    "name": "wisdom",
+    "name_it": "Saggezza",
+    "abbreviation": "SAG",
+    "description": "Misura la percezione, l'intuizione, la sensibilità e la forza di volontà."
+  },
+  {
+    "id": 6,
+    "name": "charisma",
+    "name_it": "Carisma",
+    "abbreviation": "CAR",
+    "description": "Misura la forza di personalità, il fascino, la leadership e la capacità di influenzare gli altri."
+  }
+]

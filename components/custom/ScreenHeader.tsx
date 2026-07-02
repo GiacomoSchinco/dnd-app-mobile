@@ -1,17 +1,21 @@
-import { Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { useTokens } from '../ui/prism-provider';
 import { spacing, fontSizes } from '../../utils/styles';
+import BackButton from './BackButton';
 
 type Props = {
   title: string;
   subtitle?: string;
+  onBack?: () => void;
+  backLabel?: string;
 };
 
-export default function ScreenHeader({ title, subtitle }: Props) {
+export default function ScreenHeader({ title, subtitle, onBack, backLabel }: Props) {
   const t = useTokens();
 
   return (
     <>
+      {onBack && <BackButton onPress={onBack} label={backLabel} />}
       <Text
         style={{
           color: t.colors.foreground,

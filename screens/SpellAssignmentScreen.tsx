@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, Pressable } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 import { useTokens } from '../components/ui/prism-provider';
 import ScreenHeader from '../components/custom/ScreenHeader';
 import { spacing, fontSizes } from '../utils/styles';
@@ -20,10 +20,11 @@ export default function SpellAssignmentScreen({ characterId, onBack }: Props) {
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       <View style={{ padding: spacing[6], paddingBottom: 0 }}>
-        <Pressable onPress={onBack} style={{ marginBottom: spacing[3] }}>
-          <Text style={{ color: t.colors.accent, fontSize: fontSizes.base }}>← Indietro</Text>
-        </Pressable>
-        <ScreenHeader title="📖 Incantesimi" />
+        <ScreenHeader
+          title="📖 Incantesimi"
+          onBack={onBack}
+          backLabel="Personaggio"
+        />
         {char && (
           <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary, marginTop: spacing[1] }}>
             {char.name} — {CLASS_LABELS[char.classes?.[0]?.className as keyof typeof CLASS_LABELS] || char.classes?.[0]?.className} · Livello {char.level}

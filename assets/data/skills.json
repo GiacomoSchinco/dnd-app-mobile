@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "name": "acrobatics",
+    "name_it": "Acrobazia",
+    "ability": "dexterity",
+    "description": "Mantenere l'equilibrio, eseguire capriole, saltare, atterrare in piedi."
+  },
+  {
+    "id": 2,
+    "name": "animal_handling",
+    "name_it": "Addestrare Animali",
+    "ability": "wisdom",
+    "description": "Intuire le intenzioni di un animale, calmarlo, addestrarlo."
+  },
+  {
+    "id": 3,
+    "name": "arcana",
+    "name_it": "Arcano",
+    "ability": "intelligence",
+    "description": "Conoscenze su incantesimi, oggetti magici, simboli arcani."
+  },
+  {
+    "id": 4,
+    "name": "athletics",
+    "name_it": "Atletica",
+    "ability": "strength",
+    "description": "Arrampicarsi, nuotare, saltare, lottare, superare ostacoli fisici."
+  },
+  {
+    "id": 5,
+    "name": "deception",
+    "name_it": "Inganno",
+    "ability": "charisma",
+    "description": "Mentire, travestirsi, mantenere una facciata credibile."
+  },
+  {
+    "id": 6,
+    "name": "history",
+    "name_it": "Storia",
+    "ability": "intelligence",
+    "description": "Conoscenze su eventi storici, leggende, personaggi importanti."
+  },
+  {
+    "id": 7,
+    "name": "insight",
+    "name_it": "Intuizione",
+    "ability": "wisdom",
+    "description": "Intuire le vere intenzioni di una persona, scoprire inganni."
+  },
+  {
+    "id": 8,
+    "name": "intimidation",
+    "name_it": "Intimidire",
+    "ability": "charisma",
+    "description": "Usare la forza o la presenza per convincere qualcuno."
+  },
+  {
+    "id": 9,
+    "name": "investigation",
+    "name_it": "Indagare",
+    "ability": "intelligence",
+    "description": "Cercare indizi, dedurre informazioni da prove."
+  },
+  {
+    "id": 10,
+    "name": "medicine",
+    "name_it": "Medicina",
+    "ability": "wisdom",
+    "description": "Diagnosticare malattie, stabilizzare feriti, riconoscere veleni."
+  },
+  {
+    "id": 11,
+    "name": "nature",
+    "name_it": "Natura",
+    "ability": "intelligence",
+    "description": "Conoscenze su piante, animali, clima, geografia."
+  },
+  {
+    "id": 12,
+    "name": "perception",
+    "name_it": "Percezione",
+    "ability": "wisdom",
+    "description": "Notare dettagli nascosti, sentire rumori lontani, cogliere segni."
+  },
+  {
+    "id": 13,
+    "name": "performance",
+    "name_it": "Intrattenere",
+    "ability": "charisma",
+    "description": "Cantare, recitare, suonare, raccontare storie."
+  },
+  {
+    "id": 14,
+    "name": "persuasion",
+    "name_it": "Persuasione",
+    "ability": "charisma",
+    "description": "Convincere qualcuno con argomenti logici o appelli emotivi."
+  },
+  {
+    "id": 15,
+    "name": "religion",
+    "name_it": "Religione",
+    "ability": "intelligence",
+    "description": "Conoscenze su divinità, riti, simboli sacri, ordini religiosi."
+  },
+  {
+    "id": 16,
+    "name": "sleight_of_hand",
+    "name_it": "Rapidità di Mano",
+    "ability": "dexterity",
+    "description": "Prestidigitazione, nascondere oggetti, intascare, gioco di mano."
+  },
+  {
+    "id": 17,
+    "name": "stealth",
+    "name_it": "Furtività",
+    "ability": "dexterity",
+    "description": "Muoversi senza farsi vedere o sentire, nascondersi."
+  },
+  {
+    "id": 18,
+    "name": "survival",
+    "name_it": "Sopravvivenza",
+    "ability": "wisdom",
+    "description": "Seguire tracce, cercare cibo, orientarsi, prevedere il tempo."
+  }
+]

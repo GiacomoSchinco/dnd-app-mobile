@@ -24,9 +24,11 @@ export default function CharactersScreen() {
     return (
       <View style={{ flex: 1, backgroundColor: t.colors.background }}>
         <View style={{ padding: spacing[6], paddingBottom: 0 }}>
-          <Pressable onPress={() => setDetailCharacterId(null)} style={{ marginBottom: spacing[4] }}>
-            <Text style={{ color: t.colors.accent, fontSize: fontSizes.base }}>← Lista personaggi</Text>
-          </Pressable>
+          <ScreenHeader
+            title="👤 Dettaglio"
+            onBack={() => setDetailCharacterId(null)}
+            backLabel="Personaggi"
+          />
         </View>
         <CharacterDetailScreen characterId={detailCharacterId} />
       </View>

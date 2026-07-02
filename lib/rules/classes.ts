@@ -1,4 +1,4 @@
-import classesData from '../../assets/classes.json';
+import classesData from '../../assets/data/classes.json';
 import type { ClassName, ClassDefinition, Ability, ClassFeature } from '../../types/character';
 import type { CharacterClassData } from '../../types';
 
