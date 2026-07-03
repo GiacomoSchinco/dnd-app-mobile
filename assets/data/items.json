@@ -11,7 +11,6 @@
     "category": "sword",
     "description": "Una classica spada a una mano e mezza, versatile in combattimento.",
     "properties": {
-      "id": 1,
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -33,7 +32,6 @@
     "category": "sword",
     "description": "Una lama corta e maneggevole, ideale per attacchi rapidi.",
     "properties": {
-      "id": 2,
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "perforante",
@@ -55,9 +53,7 @@
     "category": "dagger",
     "description": "Una piccola lama facile da nascondere e da lanciare.",
     "properties": {
-      "id": 3,
       "range": {
-        "id": 4,
         "long": 18,
         "normal": 6
       },
@@ -83,7 +79,6 @@
     "category": "axe",
     "description": "Un'imponente ascia a due mani capace di infliggere danni devastanti.",
     "properties": {
-      "id": 5,
       "damage": "1d12",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -105,7 +100,6 @@
     "category": "axe",
     "description": "Un'ascia versatile utilizzabile a una o due mani.",
     "properties": {
-      "id": 6,
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -127,7 +121,6 @@
     "category": "hammer",
     "description": "Un martello da battaglia in acciaio, efficace contro armature.",
     "properties": {
-      "id": 7,
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "contundente",
@@ -149,7 +142,6 @@
     "category": "mace",
     "description": "Una semplice mazza di legno rinforzata con metallo.",
     "properties": {
-      "id": 8,
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "contundente"
@@ -167,7 +159,6 @@
     "category": "club",
     "description": "Un semplice pezzo di legno usato come arma improvvisata.",
     "properties": {
-      "id": 9,
       "damage": "1d4",
       "itemType": "weapon",
       "damageType": "contundente"
@@ -185,9 +176,7 @@
     "category": "spear",
     "description": "Un'arma semplice ma efficace, utilizzabile anche come giavellotto.",
     "properties": {
-      "id": 10,
       "range": {
-        "id": 11,
         "long": 18,
         "normal": 6
       },
@@ -213,7 +202,6 @@
     "category": "polearm",
     "description": "Un'arma ad asta che combina lancia e ascia.",
     "properties": {
-      "id": 12,
       "damage": "1d10",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -236,9 +224,7 @@
     "category": "bow",
     "description": "Un grande arco in legno composito, richiede forza per essere usato.",
     "properties": {
-      "id": 13,
       "range": {
-        "id": 14,
         "long": 180,
         "normal": 45
       },
@@ -264,9 +250,7 @@
     "category": "bow",
     "description": "Un arco piccolo e maneggevole, ideale per i viaggi.",
     "properties": {
-      "id": 15,
       "range": {
-        "id": 16,
         "long": 96,
         "normal": 24
       },
@@ -291,9 +275,7 @@
     "category": "crossbow",
     "description": "Una balestra maneggevole, facile da ricaricare.",
     "properties": {
-      "id": 17,
       "range": {
-        "id": 18,
         "long": 96,
         "normal": 24
       },
@@ -319,9 +301,7 @@
     "category": "crossbow",
     "description": "Una balestra massiccia dalla potenza letale.",
     "properties": {
-      "id": 19,
       "range": {
-        "id": 20,
         "long": 120,
         "normal": 30
       },
@@ -348,9 +328,7 @@
     "category": "sling",
     "description": "Una semplice fionda in cuoio per lanciare pietre.",
     "properties": {
-      "id": 21,
       "range": {
-        "id": 22,
         "long": 36,
         "normal": 9
       },
@@ -374,9 +352,7 @@
     "category": "dart",
     "description": "Un piccolo proiettile da lancio.",
     "properties": {
-      "id": 23,
       "range": {
-        "id": 24,
         "long": 18,
         "normal": 6
       },
@@ -401,9 +377,7 @@
     "category": "javelin",
     "description": "Un'arma da lancio a forma di lancia corta.",
     "properties": {
-      "id": 25,
       "range": {
-        "id": 26,
         "long": 36,
         "normal": 9
       },
@@ -427,9 +401,7 @@
     "category": "spear",
     "description": "Una lancia a tre punte, usata anche nella pesca.",
     "properties": {
-      "id": 27,
       "range": {
-        "id": 28,
         "long": 18,
         "normal": 6
       },
@@ -455,7 +427,6 @@
     "category": "sickle",
     "description": "Un attrezzo agricolo ricurvo, usabile anche come arma.",
     "properties": {
-      "id": 29,
       "damage": "1d4",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -476,7 +447,6 @@
     "category": "flail",
     "description": "Un'arma con una sfera chiodata attaccata a una catena.",
     "properties": {
-      "id": 30,
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "contundente"
@@ -494,7 +464,6 @@
     "category": "flail",
     "description": "Un'arma pesante con una sfera chiodata all'estremità di una catena.",
     "properties": {
-      "id": 31,
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "contundente"
@@ -512,7 +481,6 @@
     "category": "polearm",
     "description": "Una lunga lancia usata dalla fanteria per tenere a distanza i nemici.",
     "properties": {
-      "id": 32,
       "damage": "1d10",
       "itemType": "weapon",
       "damageType": "perforante",
@@ -535,7 +503,6 @@
     "category": "polearm",
     "description": "Un'arma ad asta con una lama ricurva, ideale per disarmare.",
     "properties": {
-      "id": 33,
       "damage": "1d10",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -558,7 +525,6 @@
     "category": "club",
     "description": "Un bastone corto usato dalle guardie cittadine.",
     "properties": {
-      "id": 34,
       "damage": "1d4",
       "itemType": "weapon",
       "damageType": "contundente"
@@ -576,7 +542,6 @@
     "category": "club",
     "description": "Un randello con chiodi sporgenti per maggior danno.",
     "properties": {
-      "id": 35,
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "contundente"
@@ -594,7 +559,6 @@
     "category": "whip",
     "description": "Una frusta in cuoio, utile per colpire a distanza ravvicinata.",
     "properties": {
-      "id": 36,
       "damage": "1d4",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -616,7 +580,6 @@
     "category": "sword",
     "description": "Una spada leggera e precisa, usata nei duelli.",
     "properties": {
-      "id": 37,
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "perforante",
@@ -637,7 +600,6 @@
     "category": "sword",
     "description": "Una lama ricurva, ideale per attacchi rapidi.",
     "properties": {
-      "id": 38,
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -659,7 +621,6 @@
     "category": "sword",
     "description": "Una spada giapponese dalla lama affilatissima.",
     "properties": {
-      "id": 39,
       "damage": "1d10",
       "itemType": "weapon",
       "damageType": "tagliente",
@@ -681,7 +642,6 @@
     "category": "monk",
     "description": "Due bastoni collegati da una catena, arma da maestri di arti marziali.",
     "properties": {
-      "id": 40,
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "contundente",
@@ -702,9 +662,7 @@
     "category": "thrown",
     "description": "Stelle da lancio giapponesi, facili da nascondere.",
     "properties": {
-      "id": 41,
       "range": {
-        "id": 42,
         "long": 12,
         "normal": 4
       },
@@ -730,9 +688,7 @@
     "category": "thrown",
     "description": "Un'arma da lancio che torna indietro se non colpisce il bersaglio.",
     "properties": {
-      "id": 43,
       "range": {
-        "id": 44,
         "long": 36,
         "normal": 9
       },
@@ -756,9 +712,7 @@
     "category": "thrown",
     "description": "Un anello di metallo affilato, usato come arma da lancio.",
     "properties": {
-      "id": 45,
       "range": {
-        "id": 46,
         "long": 18,
         "normal": 6
       },
@@ -783,7 +737,6 @@
     "category": "spear",
     "description": "Una lancia più lunga del normale, usata dalla cavalleria.",
     "properties": {
-      "id": 47,
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "perforante",
@@ -804,7 +757,6 @@
     "category": "quarterstaff",
     "description": "Un robusto bastone con rinforzi metallici alle estremità.",
     "properties": {
-      "id": 48,
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "contundente",
@@ -826,7 +778,6 @@
     "category": "tool",
     "description": "Un attrezzo agricolo, poco bilanciato ma tagliente.",
     "properties": {
-      "id": 49,
       "damage": "1d4",
       "itemType": "weapon",
       "damageType": "tagliente"
@@ -844,7 +795,6 @@
     "category": "tool",
     "description": "Una pala robusta, utile per scavare e per colpire.",
     "properties": {
-      "id": 50,
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "contundente"
@@ -992,7 +942,6 @@
     "category": "shield",
     "description": "Uno scudo in legno rinforzato con metallo.",
     "properties": {
-      "id": 51,
       "itemType": "armor",
       "armorType": "shield",
       "armorClass": 2
@@ -1010,7 +959,6 @@
     "category": "shield",
     "description": "Un semplice scudo in legno, leggero ma meno resistente.",
     "properties": {
-      "id": 52,
       "itemType": "armor",
       "armorType": "shield",
       "armorClass": 2
@@ -1028,7 +976,6 @@
     "category": "shield",
     "description": "Uno scudo in acciaio, pesante ma molto resistente.",
     "properties": {
-      "id": 53,
       "itemType": "armor",
       "armorType": "shield",
       "armorClass": 2
@@ -1046,7 +993,6 @@
     "category": "headgear",
     "description": "Un elmo in metallo che protegge la testa.",
     "properties": {
-      "id": 54,
       "itemType": "gear",
       "armorClass": 0
     }
@@ -1063,7 +1009,6 @@
     "category": "bracers",
     "description": "Protezioni per gli avambracci.",
     "properties": {
-      "id": 55,
       "itemType": "gear",
       "armorClass": 0
     }
@@ -1080,7 +1025,6 @@
     "category": "leggings",
     "description": "Protezioni per le gambe.",
     "properties": {
-      "id": 56,
       "itemType": "gear",
       "armorClass": 0
     }
@@ -1097,7 +1041,6 @@
     "category": "pauldrons",
     "description": "Protezioni per le spalle.",
     "properties": {
-      "id": 57,
       "itemType": "gear",
       "armorClass": 0
     }
@@ -1114,7 +1057,6 @@
     "category": "gloves",
     "description": "Semplici guanti in cuoio.",
     "properties": {
-      "id": 58,
       "itemType": "gear",
       "armorClass": 0
     }
@@ -1131,7 +1073,6 @@
     "category": "gloves",
     "description": "Guanti rinforzati con maglie di ferro.",
     "properties": {
-      "id": 59,
       "itemType": "gear",
       "armorClass": 0
     }
@@ -1148,7 +1089,6 @@
     "category": "arrow",
     "description": "Frecce per arco.",
     "properties": {
-      "id": 60,
       "itemType": "ammunition",
       "ammunitionType": "arrow"
     }
@@ -1165,7 +1105,6 @@
     "category": "bolt",
     "description": "Quadrelli per balestra.",
     "properties": {
-      "id": 61,
       "itemType": "ammunition",
       "ammunitionType": "bolt"
     }
@@ -1182,7 +1121,6 @@
     "category": "bullet",
     "description": "Sfere di piombo per fionda.",
     "properties": {
-      "id": 62,
       "itemType": "ammunition",
       "ammunitionType": "bullet"
     }
@@ -1199,7 +1137,6 @@
     "category": "arrow",
     "description": "Frecce con punta d'argento, efficaci contro licantropi e demoni.",
     "properties": {
-      "id": 63,
       "itemType": "ammunition",
       "magicBonus": 0,
       "damageBonus": 0,
@@ -1218,7 +1155,6 @@
     "category": "arrow",
     "description": "Frecce che prendono fuoco all'impatto.",
     "properties": {
-      "id": 64,
       "itemType": "ammunition",
       "damageBonus": "1d4 fuoco",
       "ammunitionType": "arrow"
@@ -1236,7 +1172,6 @@
     "category": "bolt",
     "description": "Quadrelli in acciaio temprato.",
     "properties": {
-      "id": 65,
       "itemType": "ammunition",
       "ammunitionType": "bolt"
     }
@@ -1253,7 +1188,6 @@
     "category": "bullet",
     "description": "Semplici pietre levigate per fionda.",
     "properties": {
-      "id": 66,
       "itemType": "ammunition",
       "ammunitionType": "bullet"
     }
@@ -1270,7 +1204,6 @@
     "category": "container",
     "description": "Contiene fino a 20 frecce o quadrelli.",
     "properties": {
-      "id": 67,
       "capacity": 20,
       "itemType": "gear"
     }
@@ -1287,7 +1220,6 @@
     "category": "container",
     "description": "Tiene munizioni a portata di mano.",
     "properties": {
-      "id": 68,
       "itemType": "gear"
     }
   },
@@ -1303,7 +1235,6 @@
     "category": "arrow",
     "description": "Frecce appositamente progettate per la caccia.",
     "properties": {
-      "id": 69,
       "itemType": "ammunition",
       "ammunitionType": "arrow"
     }
@@ -1320,7 +1251,6 @@
     "category": "bolt",
     "description": "Quadrelli per balestre leggere.",
     "properties": {
-      "id": 70,
       "itemType": "ammunition",
       "ammunitionType": "bolt"
     }
@@ -1337,7 +1267,6 @@
     "category": "bolt",
     "description": "Quadrelli più pesanti per balestre pesanti.",
     "properties": {
-      "id": 71,
       "itemType": "ammunition",
       "ammunitionType": "bolt"
     }
@@ -1354,7 +1283,6 @@
     "category": "arrow",
     "description": "Frecce di precisione per competizioni.",
     "properties": {
-      "id": 72,
       "itemType": "ammunition",
       "ammunitionType": "arrow"
     }
@@ -1371,7 +1299,6 @@
     "category": "arrow",
     "description": "Frecce bilanciate con cura per maggiore precisione.",
     "properties": {
-      "id": 73,
       "itemType": "ammunition",
       "magicBonus": 1,
       "damageBonus": 0,
@@ -1390,7 +1317,6 @@
     "category": "dart",
     "description": "Piccoli dardi da lanciare con la mano.",
     "properties": {
-      "id": 74,
       "itemType": "ammunition",
       "ammunitionType": "arrow"
     }
@@ -1407,7 +1333,6 @@
     "category": "container",
     "description": "Contiene fino a 15 kg di materiale.",
     "properties": {
-      "id": 75,
       "capacity": 15,
       "itemType": "gear"
     }
@@ -1424,7 +1349,6 @@
     "category": "bedding",
     "description": "Mantiene caldo durante la notte all'aperto.",
     "properties": {
-      "id": 76,
       "itemType": "gear"
     }
   },
@@ -1440,7 +1364,6 @@
     "category": "shelter",
     "description": "Protegge dalle intemperie fino a due persone.",
     "properties": {
-      "id": 77,
       "itemType": "gear"
     }
   },
@@ -1456,7 +1379,6 @@
     "category": "shelter",
     "description": "Spaziosa tenda per quattro persone.",
     "properties": {
-      "id": 78,
       "itemType": "gear"
     }
   },
@@ -1472,7 +1394,6 @@
     "category": "food",
     "description": "Provviste per un giorno (carne secca, pane, frutta secca).",
     "properties": {
-      "id": 79,
       "effect": "Nutrimento per 1 giorno",
       "itemType": "consumable"
     }
@@ -1489,7 +1410,6 @@
     "category": "food",
     "description": "Provviste per sette giorni.",
     "properties": {
-      "id": 80,
       "effect": "Nutrimento per 7 giorni",
       "itemType": "consumable"
     }
@@ -1506,7 +1426,6 @@
     "category": "container",
     "description": "Contiene 1 litro d'acqua.",
     "properties": {
-      "id": 81,
       "capacity": 1,
       "itemType": "gear"
     }
@@ -1523,7 +1442,6 @@
     "category": "container",
     "description": "Contiene 2 litri di liquido.",
     "properties": {
-      "id": 82,
       "capacity": 2,
       "itemType": "gear"
     }
@@ -1540,7 +1458,6 @@
     "category": "light",
     "description": "Illumina per 1 ora, brucia anche come arma improvvisata.",
     "properties": {
-      "id": 83,
       "itemType": "gear"
     }
   },
@@ -1556,7 +1473,6 @@
     "category": "light",
     "description": "Illumina per 6 ore con 1 tanica d'olio.",
     "properties": {
-      "id": 84,
       "itemType": "gear"
     }
   },
@@ -1572,7 +1488,6 @@
     "category": "fuel",
     "description": "Per lanterne, brucia per 6 ore.",
     "properties": {
-      "id": 85,
       "itemType": "consumable"
     }
   },
@@ -1588,7 +1503,6 @@
     "category": "light",
     "description": "Illumina debolmente per 1 ora.",
     "properties": {
-      "id": 86,
       "itemType": "gear"
     }
   },
@@ -1604,7 +1518,6 @@
     "category": "tool",
     "description": "Accende fuochi, usata con esca.",
     "properties": {
-      "id": 87,
       "itemType": "tool"
     }
   },
@@ -1620,7 +1533,6 @@
     "category": "tool",
     "description": "Accende fuochi rapidamente, più efficace della pietra focaia.",
     "properties": {
-      "id": 88,
       "itemType": "tool"
     }
   },
@@ -1636,7 +1548,6 @@
     "category": "rope",
     "description": "Resistente, canapa.",
     "properties": {
-      "id": 89,
       "itemType": "gear"
     }
   },
@@ -1652,7 +1563,6 @@
     "category": "rope",
     "description": "Resistente, canapa.",
     "properties": {
-      "id": 90,
       "itemType": "gear"
     }
   },
@@ -1668,7 +1578,6 @@
     "category": "rope",
     "description": "Leggera e resistente, più costosa della canapa.",
     "properties": {
-      "id": 91,
       "itemType": "gear"
     }
   },
@@ -1684,7 +1593,6 @@
     "category": "climbing",
     "description": "Per scalate, usato con corda.",
     "properties": {
-      "id": 92,
       "itemType": "gear"
     }
   },
@@ -1700,7 +1608,6 @@
     "category": "climbing",
     "description": "Per scalate su ghiaccio.",
     "properties": {
-      "id": 93,
       "itemType": "gear"
     }
   },
@@ -1716,7 +1623,6 @@
     "category": "climbing",
     "description": "Per scalate, si lancia per agganciarsi.",
     "properties": {
-      "id": 94,
       "itemType": "gear"
     }
   },
@@ -1732,7 +1638,6 @@
     "category": "climbing",
     "description": "Leggera e pieghevole, si arrotola per il trasporto.",
     "properties": {
-      "id": 95,
       "itemType": "gear"
     }
   },
@@ -1748,7 +1653,6 @@
     "category": "tool",
     "description": "Piccola, per scavare buche o rimuovere detriti.",
     "properties": {
-      "id": 96,
       "itemType": "tool"
     }
   },
@@ -1764,7 +1668,6 @@
     "category": "tool",
     "description": "Per scavare nella roccia, ottimo per minatori.",
     "properties": {
-      "id": 97,
       "itemType": "tool"
     }
   },
@@ -1780,7 +1683,6 @@
     "category": "construction",
     "description": "Per tende o segnalazioni, lunghi circa 1,5 m.",
     "properties": {
-      "id": 98,
       "itemType": "gear"
     }
   },
@@ -1796,7 +1698,6 @@
     "category": "container",
     "description": "Contiene fino a 15 kg di materiale.",
     "properties": {
-      "id": 99,
       "capacity": 15,
       "itemType": "gear"
     }
@@ -1813,7 +1714,6 @@
     "category": "container",
     "description": "Contiene fino a 30 kg di materiale.",
     "properties": {
-      "id": 100,
       "capacity": 30,
       "itemType": "gear"
     }
@@ -1830,7 +1730,6 @@
     "category": "container",
     "description": "Contiene fino a 20 kg, richiede attrezzi per aprirla.",
     "properties": {
-      "id": 101,
       "capacity": 20,
       "itemType": "gear"
     }
@@ -1847,7 +1746,6 @@
     "category": "container",
     "description": "Contiene fino a 50 kg, chiudibile a chiave.",
     "properties": {
-      "id": 102,
       "capacity": 50,
       "itemType": "gear"
     }
@@ -1864,7 +1762,6 @@
     "category": "restraint",
     "description": "10 anelli, robusta, può legare oggetti o persone.",
     "properties": {
-      "id": 103,
       "itemType": "gear"
     }
   },
@@ -1880,7 +1777,6 @@
     "category": "lock",
     "description": "Con chiave, CD 15 per scassinare.",
     "properties": {
-      "id": 104,
       "itemType": "gear"
     }
   },
@@ -1896,7 +1792,6 @@
     "category": "lock",
     "description": "Con chiave, CD 17 per scassinare.",
     "properties": {
-      "id": 105,
       "itemType": "gear"
     }
   },
@@ -1912,7 +1807,6 @@
     "category": "restraint",
     "description": "Per prigionieri, CD 20 per scassinare o fuggire.",
     "properties": {
-      "id": 106,
       "itemType": "gear"
     }
   },
@@ -1928,7 +1822,6 @@
     "category": "tool",
     "description": "Per guardarsi o segnalare riflettendo la luce.",
     "properties": {
-      "id": 107,
       "itemType": "gear"
     }
   },
@@ -1944,7 +1837,6 @@
     "category": "tool",
     "description": "Per esaminare dettagli, accendere fuochi.",
     "properties": {
-      "id": 108,
       "itemType": "gear"
     }
   },
@@ -1960,7 +1852,6 @@
     "category": "tool",
     "description": "Vede a grande distanza, ingrandisce fino a 8x.",
     "properties": {
-      "id": 109,
       "itemType": "gear"
     }
   },
@@ -1976,7 +1867,6 @@
     "category": "tool",
     "description": "Indica il nord magnetico.",
     "properties": {
-      "id": 110,
       "itemType": "gear"
     }
   },
@@ -1992,7 +1882,6 @@
     "category": "tool",
     "description": "Indica l'ora approssimativa col sole.",
     "properties": {
-      "id": 111,
       "itemType": "gear"
     }
   },
@@ -2008,7 +1897,6 @@
     "category": "tool",
     "description": "Misure precise del tempo, 1 ora.",
     "properties": {
-      "id": 112,
       "itemType": "gear"
     }
   },
@@ -2024,7 +1912,6 @@
     "category": "tool",
     "description": "Misure rapide, 1 minuto.",
     "properties": {
-      "id": 113,
       "itemType": "gear"
     }
   },
@@ -2040,7 +1927,6 @@
     "category": "writing",
     "description": "Nero, per scrivere, dura per 500 pagine.",
     "properties": {
-      "id": 114,
       "itemType": "consumable"
     }
   },
@@ -2056,7 +1942,6 @@
     "category": "writing",
     "description": "Per scrivere, si intinge nell'inchiostro.",
     "properties": {
-      "id": 115,
       "itemType": "gear"
     }
   },
@@ -2072,7 +1957,6 @@
     "category": "writing",
     "description": "Per scrivere, un foglio.",
     "properties": {
-      "id": 116,
       "itemType": "consumable"
     }
   },
@@ -2088,7 +1972,6 @@
     "category": "writing",
     "description": "Più resistente della carta, per documenti importanti.",
     "properties": {
-      "id": 117,
       "itemType": "consumable"
     }
   },
@@ -2104,7 +1987,6 @@
     "category": "writing",
     "description": "50 pagine, rilegato in cuoio.",
     "properties": {
-      "id": 118,
       "itemType": "gear"
     }
   },
@@ -2120,7 +2002,6 @@
     "category": "writing",
     "description": "100 pagine, rilegato in cuoio con copertina rigida.",
     "properties": {
-      "id": 119,
       "itemType": "gear"
     }
   },
@@ -2136,7 +2017,6 @@
     "category": "map",
     "description": "Della regione circostante, mostra città e punti d'interesse.",
     "properties": {
-      "id": 120,
       "itemType": "gear"
     }
   },
@@ -2152,7 +2032,6 @@
     "category": "writing",
     "description": "Per sigillare lettere, si scioglie e si timbra.",
     "properties": {
-      "id": 121,
       "itemType": "consumable"
     }
   },
@@ -2168,7 +2047,6 @@
     "category": "jewelry",
     "description": "Personale, per autenticare documenti con ceralacca.",
     "properties": {
-      "id": 122,
       "itemType": "gear"
     }
   },
@@ -2184,7 +2062,6 @@
     "category": "tool",
     "description": "Per segnare su superfici, lascia traccia bianca.",
     "properties": {
-      "id": 123,
       "itemType": "consumable"
     }
   },
@@ -2200,7 +2077,6 @@
     "category": "art",
     "description": "Per disegnare, lascia tratti neri.",
     "properties": {
-      "id": 124,
       "itemType": "consumable"
     }
   },
@@ -2216,7 +2092,6 @@
     "category": "art",
     "description": "Per dipingere, setole fini.",
     "properties": {
-      "id": 125,
       "itemType": "gear"
     }
   },
@@ -2232,7 +2107,6 @@
     "category": "art",
     "description": "Per dipingere, tela di lino.",
     "properties": {
-      "id": 126,
       "itemType": "gear"
     }
   },
@@ -2248,7 +2122,6 @@
     "category": "art",
     "description": "Per dipingere, pigmenti vari.",
     "properties": {
-      "id": 127,
       "itemType": "consumable"
     }
   },
@@ -2264,7 +2137,6 @@
     "category": "cooking",
     "description": "Per cucinare, piccolo e maneggevole.",
     "properties": {
-      "id": 128,
       "itemType": "gear"
     }
   },
@@ -2280,7 +2152,6 @@
     "category": "cooking",
     "description": "Per cucinare, in ferro.",
     "properties": {
-      "id": 129,
       "itemType": "gear"
     }
   },
@@ -2296,7 +2167,6 @@
     "category": "cooking",
     "description": "Piatto + pentolino combinati per soldati.",
     "properties": {
-      "id": 130,
       "itemType": "gear"
     }
   },
@@ -2312,7 +2182,6 @@
     "category": "cooking",
     "description": "Coltello, forchetta, cucchiaio in metallo.",
     "properties": {
-      "id": 131,
       "itemType": "gear"
     }
   },
@@ -2328,7 +2197,6 @@
     "category": "container",
     "description": "Per bere, semplice.",
     "properties": {
-      "id": 132,
       "itemType": "gear"
     }
   },
@@ -2344,7 +2212,6 @@
     "category": "container",
     "description": "Contiene 1 litro di liquido.",
     "properties": {
-      "id": 133,
       "capacity": 1,
       "itemType": "gear"
     }
@@ -2361,7 +2228,6 @@
     "category": "container",
     "description": "Contiene 1 litro di vino o acqua.",
     "properties": {
-      "id": 134,
       "capacity": 1,
       "itemType": "gear"
     }
@@ -2378,7 +2244,6 @@
     "category": "beverage",
     "description": "Vino comune, qualità da taverna.",
     "properties": {
-      "id": 135,
       "itemType": "consumable"
     }
   },
@@ -2394,7 +2259,6 @@
     "category": "beverage",
     "description": "Vino d'annata, riserva speciale.",
     "properties": {
-      "id": 136,
       "itemType": "consumable"
     }
   },
@@ -2410,7 +2274,6 @@
     "category": "beverage",
     "description": "Birra chiara, rinfrescante.",
     "properties": {
-      "id": 137,
       "itemType": "consumable"
     }
   },
@@ -2426,7 +2289,6 @@
     "category": "beverage",
     "description": "Birra corposa, gusto deciso.",
     "properties": {
-      "id": 138,
       "itemType": "consumable"
     }
   },
@@ -2442,7 +2304,6 @@
     "category": "smoking",
     "description": "Per pipa, foglie essiccate.",
     "properties": {
-      "id": 139,
       "itemType": "consumable"
     }
   },
@@ -2458,7 +2319,6 @@
     "category": "smoking",
     "description": "In legno, per fumare tabacco.",
     "properties": {
-      "id": 140,
       "itemType": "gear"
     }
   },
@@ -2474,7 +2334,6 @@
     "category": "game",
     "description": "Per giocare d'azzardo, set di 5 dadi.",
     "properties": {
-      "id": 141,
       "itemType": "gear"
     }
   },
@@ -2490,7 +2349,6 @@
     "category": "game",
     "description": "Per giocare, mazzo da 52 carte.",
     "properties": {
-      "id": 142,
       "itemType": "gear"
     }
   },
@@ -2506,7 +2364,6 @@
     "category": "game",
     "description": "Gioco da tavolo, scacchiera in legno e pezzi.",
     "properties": {
-      "id": 143,
       "itemType": "gear"
     }
   },
@@ -2522,7 +2379,6 @@
     "category": "game",
     "description": "Gioco da tavolo, più semplice degli scacchi.",
     "properties": {
-      "id": 144,
       "itemType": "gear"
     }
   },
@@ -2538,7 +2394,6 @@
     "category": "instrument",
     "description": "A corde, usato da bardi.",
     "properties": {
-      "id": 145,
       "itemType": "gear"
     }
   },
@@ -2554,7 +2409,6 @@
     "category": "instrument",
     "description": "A fiato, di legno.",
     "properties": {
-      "id": 146,
       "itemType": "gear"
     }
   },
@@ -2570,7 +2424,6 @@
     "category": "instrument",
     "description": "A percussione, due bacchette incluse.",
     "properties": {
-      "id": 147,
       "itemType": "gear"
     }
   },
@@ -2586,7 +2439,6 @@
     "category": "instrument",
     "description": "A corde, strumento nobile.",
     "properties": {
-      "id": 148,
       "itemType": "gear"
     }
   },
@@ -2602,7 +2454,6 @@
     "category": "instrument",
     "description": "A fiato, in ottone.",
     "properties": {
-      "id": 149,
       "itemType": "gear"
     }
   },
@@ -2618,7 +2469,6 @@
     "category": "instrument",
     "description": "A corde e arco, suono delicato.",
     "properties": {
-      "id": 150,
       "itemType": "gear"
     }
   },
@@ -2634,7 +2484,6 @@
     "category": "fishing",
     "description": "Per pescare, lenza e amo inclusi.",
     "properties": {
-      "id": 151,
       "itemType": "gear"
     }
   },
@@ -2650,7 +2499,6 @@
     "category": "fishing",
     "description": "Per pescare piccoli pesci o farfalle.",
     "properties": {
-      "id": 152,
       "itemType": "gear"
     }
   },
@@ -2666,7 +2514,6 @@
     "category": "fishing",
     "description": "Per pescare, vermi o esche artificiali.",
     "properties": {
-      "id": 153,
       "itemType": "consumable"
     }
   },
@@ -2682,7 +2529,6 @@
     "category": "hunting",
     "description": "Per cacciare piccola selvaggina.",
     "properties": {
-      "id": 154,
       "itemType": "gear"
     }
   },
@@ -2698,7 +2544,6 @@
     "category": "fishing",
     "description": "Per pescare, si getta in acqua.",
     "properties": {
-      "id": 155,
       "itemType": "gear"
     }
   },
@@ -2714,7 +2559,6 @@
     "category": "tool",
     "description": "Per pesare, precisione artigianale.",
     "properties": {
-      "id": 156,
       "itemType": "tool"
     }
   },
@@ -2730,7 +2574,6 @@
     "category": "tool",
     "description": "Per bilancia, set di pesi in metallo.",
     "properties": {
-      "id": 157,
       "itemType": "tool"
     }
   },
@@ -2746,7 +2589,6 @@
     "category": "thieves",
     "description": "Per aprire serrature, grimaldelli e arnesi.",
     "properties": {
-      "id": 158,
       "itemType": "tool"
     }
   },
@@ -2762,7 +2604,6 @@
     "category": "smith",
     "description": "Per lavorare il metallo, incudine portatile.",
     "properties": {
-      "id": 159,
       "itemType": "tool"
     }
   },
@@ -2778,7 +2619,6 @@
     "category": "carpenter",
     "description": "Per lavorare il legno, seghe e scalpelli.",
     "properties": {
-      "id": 160,
       "itemType": "tool"
     }
   },
@@ -2794,7 +2634,6 @@
     "category": "mason",
     "description": "Per lavorare la pietra, scalpelli e mazza.",
     "properties": {
-      "id": 161,
       "itemType": "tool"
     }
   },
@@ -2810,7 +2649,6 @@
     "category": "leather",
     "description": "Per lavorare il cuoio, aghi e punzoni.",
     "properties": {
-      "id": 162,
       "itemType": "tool"
     }
   },
@@ -2826,7 +2664,6 @@
     "category": "tailor",
     "description": "Per cucire, forbici e aghi.",
     "properties": {
-      "id": 163,
       "itemType": "tool"
     }
   },
@@ -2842,7 +2679,6 @@
     "category": "cobbler",
     "description": "Per riparare scarpe, forme e lesine.",
     "properties": {
-      "id": 164,
       "itemType": "tool"
     }
   },
@@ -2858,7 +2694,6 @@
     "category": "glass",
     "description": "Per lavorare il vetro, tagliavetro.",
     "properties": {
-      "id": 165,
       "itemType": "tool"
     }
   },
@@ -2874,7 +2709,6 @@
     "category": "potter",
     "description": "Per modellare l'argilla, tornio portatile.",
     "properties": {
-      "id": 166,
       "itemType": "tool"
     }
   },
@@ -2890,7 +2724,6 @@
     "category": "painter",
     "description": "Per dipingere, pennelli e spatole.",
     "properties": {
-      "id": 167,
       "itemType": "tool"
     }
   },
@@ -2906,7 +2739,6 @@
     "category": "scribe",
     "description": "Per scrivere, penne e inchiostri speciali.",
     "properties": {
-      "id": 168,
       "itemType": "tool"
     }
   },
@@ -2922,7 +2754,6 @@
     "category": "cartographer",
     "description": "Per fare mappe, compassi e righelli.",
     "properties": {
-      "id": 169,
       "itemType": "tool"
     }
   },
@@ -2938,7 +2769,6 @@
     "category": "alchemist",
     "description": "Per preparare pozioni, alambicchi e provette.",
     "properties": {
-      "id": 170,
       "itemType": "tool"
     }
   },
@@ -2954,7 +2784,6 @@
     "category": "herbalist",
     "description": "Per raccogliere erbe, forbici e mortaio.",
     "properties": {
-      "id": 171,
       "itemType": "tool"
     }
   },
@@ -2970,7 +2799,6 @@
     "category": "cook",
     "description": "Per cucinare, coltelli e pentole.",
     "properties": {
-      "id": 172,
       "itemType": "tool"
     }
   },
@@ -2986,7 +2814,6 @@
     "category": "brewer",
     "description": "Per fare birra, tini e botti.",
     "properties": {
-      "id": 173,
       "itemType": "tool"
     }
   },
@@ -3002,7 +2829,6 @@
     "category": "vintner",
     "description": "Per fare vino, torchio e botti.",
     "properties": {
-      "id": 174,
       "itemType": "tool"
     }
   },
@@ -3018,7 +2844,6 @@
     "category": "miner",
     "description": "Per estrarre minerali, piccone e pala.",
     "properties": {
-      "id": 175,
       "itemType": "tool"
     }
   },
@@ -3034,7 +2859,6 @@
     "category": "digger",
     "description": "Per scavare, vanga e piccone.",
     "properties": {
-      "id": 176,
       "itemType": "tool"
     }
   },
@@ -3050,7 +2874,6 @@
     "category": "lumberjack",
     "description": "Per tagliare alberi, ascia e cunei.",
     "properties": {
-      "id": 177,
       "itemType": "tool"
     }
   },
@@ -3066,7 +2889,6 @@
     "category": "fisher",
     "description": "Per pescare, reti e canne.",
     "properties": {
-      "id": 178,
       "itemType": "tool"
     }
   },
@@ -3082,7 +2904,6 @@
     "category": "hunter",
     "description": "Per cacciare, trappole e richiami.",
     "properties": {
-      "id": 179,
       "itemType": "tool"
     }
   },
@@ -3098,7 +2919,6 @@
     "category": "merchant",
     "description": "Bilancia, pesi, abaco.",
     "properties": {
-      "id": 180,
       "itemType": "tool"
     }
   },
@@ -3114,7 +2934,6 @@
     "category": "scribe",
     "description": "Per scrivere, inchiostri e penne.",
     "properties": {
-      "id": 181,
       "itemType": "tool"
     }
   },
@@ -3130,7 +2949,6 @@
     "category": "wizard",
     "description": "Componenti minori, gessetti e inchiostri magici.",
     "properties": {
-      "id": 182,
       "itemType": "tool"
     }
   },
@@ -3146,7 +2964,6 @@
     "category": "potion",
     "description": "Vetro contenente liquido rosso brillante.",
     "properties": {
-      "id": 183,
       "effect": "Recupera 2d4+2 PF",
       "itemType": "consumable"
     }
@@ -3163,7 +2980,6 @@
     "category": "potion",
     "description": "Liquido rosso più denso.",
     "properties": {
-      "id": 184,
       "effect": "Recupera 4d4+4 PF",
       "itemType": "consumable"
     }
@@ -3180,7 +2996,6 @@
     "category": "potion",
     "description": "Fiala di liquido verdastro.",
     "properties": {
-      "id": 185,
       "effect": "Cura avvelenamento",
       "itemType": "consumable"
     }
@@ -3197,7 +3012,6 @@
     "category": "potion",
     "description": "Liquido blu, bolle leggermente.",
     "properties": {
-      "id": 186,
       "effect": "Respirare sott'acqua per 1 ora",
       "itemType": "consumable"
     }
@@ -3214,7 +3028,6 @@
     "category": "potion",
     "description": "Liquido trasparente come acqua.",
     "properties": {
-      "id": 187,
       "effect": "Invisibile per 1 ora",
       "itemType": "consumable"
     }
@@ -3231,7 +3044,6 @@
     "category": "potion",
     "description": "Liquido giallo scintillante.",
     "properties": {
-      "id": 188,
       "effect": "Velocità raddoppiata per 1 minuto",
       "itemType": "consumable"
     }
@@ -3248,7 +3060,6 @@
     "category": "potion",
     "description": "Liquido rosso scuro.",
     "properties": {
-      "id": 189,
       "effect": "+2 Forza per 1 ora",
       "itemType": "consumable"
     }
@@ -3265,7 +3076,6 @@
     "category": "potion",
     "description": "Liquido verde chiaro.",
     "properties": {
-      "id": 190,
       "effect": "+2 Destrezza per 1 ora",
       "itemType": "consumable"
     }
@@ -3282,7 +3092,6 @@
     "category": "potion",
     "description": "Liquido marrone.",
     "properties": {
-      "id": 191,
       "effect": "+2 Costituzione per 1 ora",
       "itemType": "consumable"
     }
@@ -3299,7 +3108,6 @@
     "category": "potion",
     "description": "Liquido blu scuro.",
     "properties": {
-      "id": 192,
       "effect": "+2 Intelligenza per 1 ora",
       "itemType": "consumable"
     }
@@ -3316,7 +3124,6 @@
     "category": "potion",
     "description": "Liquido viola.",
     "properties": {
-      "id": 193,
       "effect": "+2 Saggezza per 1 ora",
       "itemType": "consumable"
     }
@@ -3333,7 +3140,6 @@
     "category": "potion",
     "description": "Liquido rosa.",
     "properties": {
-      "id": 194,
       "effect": "+2 Carisma per 1 ora",
       "itemType": "consumable"
     }
@@ -3350,7 +3156,6 @@
     "category": "poison",
     "description": "Fiala di liquido nero.",
     "properties": {
-      "id": 195,
       "effect": "1d4 danni veleno per 1 minuto",
       "itemType": "consumable"
     }
@@ -3367,7 +3172,6 @@
     "category": "poison",
     "description": "Fiala di liquido viola scuro.",
     "properties": {
-      "id": 196,
       "effect": "2d6 danni veleno",
       "itemType": "consumable"
     }
@@ -3384,7 +3188,6 @@
     "category": "chemical",
     "description": "Fiala di vetro con liquido corrosivo.",
     "properties": {
-      "id": 197,
       "effect": "2d4 danni acido",
       "itemType": "consumable"
     }
@@ -3401,7 +3204,6 @@
     "category": "holy",
     "description": "Acqua benedetta, danneggia non morti.",
     "properties": {
-      "id": 198,
       "effect": "2d6 danni a non morti",
       "itemType": "consumable"
     }
@@ -3418,7 +3220,6 @@
     "category": "holy",
     "description": "Olio benedetto, per unzioni.",
     "properties": {
-      "id": 199,
       "itemType": "consumable"
     }
   },
@@ -3434,7 +3235,6 @@
     "category": "religious",
     "description": "Per rituali, profuma e purifica.",
     "properties": {
-      "id": 200,
       "itemType": "consumable"
     }
   },
@@ -3450,7 +3250,6 @@
     "category": "herb",
     "description": "Per curare, miscela di erbe.",
     "properties": {
-      "id": 201,
       "itemType": "consumable"
     }
   },
@@ -3466,7 +3265,6 @@
     "category": "herb",
     "description": "Per cucinare, rosmarino, salvia, timo.",
     "properties": {
-      "id": 202,
       "itemType": "consumable"
     }
   },
@@ -3482,7 +3280,6 @@
     "category": "food",
     "description": "Commestibili, porcini essiccati.",
     "properties": {
-      "id": 203,
       "itemType": "consumable"
     }
   },
@@ -3498,7 +3295,6 @@
     "category": "food",
     "description": "Provvista, carne essiccata e salata.",
     "properties": {
-      "id": 204,
       "itemType": "consumable"
     }
   },
@@ -3514,7 +3310,6 @@
     "category": "food",
     "description": "Provvista, merluzzo o aringa essiccata.",
     "properties": {
-      "id": 205,
       "itemType": "consumable"
     }
   },
@@ -3530,7 +3325,6 @@
     "category": "food",
     "description": "Provvista, fichi, uvetta, datteri.",
     "properties": {
-      "id": 206,
       "itemType": "consumable"
     }
   },
@@ -3546,7 +3340,6 @@
     "category": "food",
     "description": "Commestibile, pane di segale.",
     "properties": {
-      "id": 207,
       "itemType": "consumable"
     }
   },
@@ -3562,7 +3355,6 @@
     "category": "food",
     "description": "Commestibile, cacio stagionato.",
     "properties": {
-      "id": 208,
       "itemType": "consumable"
     }
   },
@@ -3578,7 +3370,6 @@
     "category": "food",
     "description": "Commestibile, salame piccante.",
     "properties": {
-      "id": 209,
       "itemType": "consumable"
     }
   },
@@ -3594,7 +3385,6 @@
     "category": "food",
     "description": "Dolcificante, miele di montagna.",
     "properties": {
-      "id": 210,
       "itemType": "consumable"
     }
   },
@@ -3610,7 +3400,6 @@
     "category": "food",
     "description": "Per conservare cibo, sale marino.",
     "properties": {
-      "id": 211,
       "itemType": "consumable"
     }
   },
@@ -3626,7 +3415,6 @@
     "category": "food",
     "description": "Per cucinare, pepe, cannella, zafferano.",
     "properties": {
-      "id": 212,
       "itemType": "consumable"
     }
   },
@@ -3642,7 +3430,6 @@
     "category": "clothing",
     "description": "Abiti semplici, tunica e pantaloni.",
     "properties": {
-      "id": 213,
       "itemType": "gear"
     }
   },
@@ -3658,7 +3445,6 @@
     "category": "clothing",
     "description": "Abiti per occasioni speciali, tessuti pregiati.",
     "properties": {
-      "id": 214,
       "itemType": "gear"
     }
   },
@@ -3674,7 +3460,6 @@
     "category": "clothing",
     "description": "Per il freddo, lana pesante.",
     "properties": {
-      "id": 215,
       "itemType": "gear"
     }
   },
@@ -3690,7 +3475,6 @@
     "category": "clothing",
     "description": "Protegge dal sole e nasconde il volto.",
     "properties": {
-      "id": 216,
       "itemType": "gear"
     }
   },
@@ -3706,7 +3490,6 @@
     "category": "clothing",
     "description": "Per coprirsi dal sole, paglia o feltro.",
     "properties": {
-      "id": 217,
       "itemType": "gear"
     }
   },
@@ -3722,7 +3505,6 @@
     "category": "clothing",
     "description": "Per tenere i pantaloni, cuoio semplice.",
     "properties": {
-      "id": 218,
       "itemType": "gear"
     }
   },
@@ -3738,7 +3520,6 @@
     "category": "clothing",
     "description": "Per appenderci oggetti, cuoio rinforzato.",
     "properties": {
-      "id": 219,
       "itemType": "gear"
     }
   },
@@ -3754,7 +3535,6 @@
     "category": "clothing",
     "description": "Calzature robuste, cuoio spesso.",
     "properties": {
-      "id": 220,
       "itemType": "gear"
     }
   },
@@ -3770,7 +3550,6 @@
     "category": "clothing",
     "description": "Calzature leggere, pelle morbida.",
     "properties": {
-      "id": 221,
       "itemType": "gear"
     }
   },
@@ -3786,7 +3565,6 @@
     "category": "clothing",
     "description": "Per le mani, lana o cuoio sottile.",
     "properties": {
-      "id": 222,
       "itemType": "gear"
     }
   },
@@ -3802,7 +3580,6 @@
     "category": "clothing",
     "description": "Indumento di lino o cotone.",
     "properties": {
-      "id": 223,
       "itemType": "gear"
     }
   },
@@ -3818,7 +3595,6 @@
     "category": "clothing",
     "description": "Indumento in lana o tela.",
     "properties": {
-      "id": 224,
       "itemType": "gear"
     }
   },
@@ -3834,7 +3610,6 @@
     "category": "clothing",
     "description": "Indumento femminile.",
     "properties": {
-      "id": 225,
       "itemType": "gear"
     }
   },
@@ -3850,7 +3625,6 @@
     "category": "clothing",
     "description": "Indumento lungo, indossato sopra la camicia.",
     "properties": {
-      "id": 226,
       "itemType": "gear"
     }
   },
@@ -3866,7 +3640,6 @@
     "category": "clothing",
     "description": "Per cerimonie, tessuti pregiati.",
     "properties": {
-      "id": 227,
       "itemType": "gear"
     }
   },
@@ -3882,7 +3655,6 @@
     "category": "clothing",
     "description": "Abito formale romano.",
     "properties": {
-      "id": 228,
       "itemType": "gear"
     }
   },
@@ -3898,7 +3670,6 @@
     "category": "clothing",
     "description": "Di una corporazione o gilda.",
     "properties": {
-      "id": 229,
       "itemType": "gear"
     }
   },
@@ -3914,7 +3685,6 @@
     "category": "clothing",
     "description": "Con rune, tessuto scuro.",
     "properties": {
-      "id": 230,
       "itemType": "gear"
     }
   },
@@ -3930,7 +3700,6 @@
     "category": "clothing",
     "description": "In fibra naturale, verde e marrone.",
     "properties": {
-      "id": 231,
       "itemType": "gear"
     }
   },
@@ -3946,7 +3715,6 @@
     "category": "clothing",
     "description": "Per occasioni importanti, tessuti ricchi.",
     "properties": {
-      "id": 232,
       "itemType": "gear"
     }
   },
@@ -3962,7 +3730,6 @@
     "category": "accessory",
     "description": "Per celare il volto, semplice.",
     "properties": {
-      "id": 233,
       "itemType": "gear"
     }
   },
@@ -3978,7 +3745,6 @@
     "category": "accessory",
     "description": "Per travestirsi, capelli finti.",
     "properties": {
-      "id": 234,
       "itemType": "gear"
     }
   },
@@ -3994,7 +3760,6 @@
     "category": "jewelry",
     "description": "Di ottone, finto argento.",
     "properties": {
-      "id": 235,
       "itemType": "gear"
     }
   },
@@ -4010,7 +3775,6 @@
     "category": "jewelry",
     "description": "Di ottone, ciondolo semplice.",
     "properties": {
-      "id": 236,
       "itemType": "gear"
     }
   },
@@ -4026,7 +3790,6 @@
     "category": "jewelry",
     "description": "Di ottone, catena sottile.",
     "properties": {
-      "id": 237,
       "itemType": "gear"
     }
   },
@@ -4042,7 +3805,6 @@
     "category": "container",
     "description": "Piccola, tiene 5 kg di materiale.",
     "properties": {
-      "id": 238,
       "capacity": 5,
       "itemType": "gear"
     }
@@ -4059,7 +3821,6 @@
     "category": "container",
     "description": "Media, tiene 8 kg di materiale.",
     "properties": {
-      "id": 239,
       "capacity": 8,
       "itemType": "gear"
     }
@@ -4076,7 +3837,6 @@
     "category": "container",
     "description": "Tiene 10 kg di materiale.",
     "properties": {
-      "id": 240,
       "capacity": 10,
       "itemType": "gear"
     }
@@ -4093,7 +3853,6 @@
     "category": "container",
     "description": "Per il cibo, piccolo.",
     "properties": {
-      "id": 241,
       "itemType": "gear"
     }
   },
@@ -4109,7 +3868,6 @@
     "category": "container",
     "description": "Per monete, cuoio.",
     "properties": {
-      "id": 242,
       "itemType": "gear"
     }
   },
@@ -4125,7 +3883,6 @@
     "category": "container",
     "description": "Per monete, stringa in cuoio.",
     "properties": {
-      "id": 243,
       "itemType": "gear"
     }
   },
@@ -4141,7 +3898,6 @@
     "category": "container",
     "description": "Per spada, cuoio.",
     "properties": {
-      "id": 244,
       "itemType": "gear"
     }
   },
@@ -4157,7 +3913,6 @@
     "category": "container",
     "description": "Per pugnale, cuoio.",
     "properties": {
-      "id": 245,
       "itemType": "gear"
     }
   },
@@ -4173,7 +3928,6 @@
     "category": "container",
     "description": "Per frecce, tiene 20 frecce.",
     "properties": {
-      "id": 246,
       "capacity": 20,
       "itemType": "gear"
     }
@@ -4190,7 +3944,6 @@
     "category": "container",
     "description": "Contiene 6 fiale, cuoio con scomparti.",
     "properties": {
-      "id": 247,
       "capacity": 6,
       "itemType": "gear"
     }
@@ -4207,7 +3960,6 @@
     "category": "container",
     "description": "Per conservare erbe, legno.",
     "properties": {
-      "id": 248,
       "itemType": "gear"
     }
   },
@@ -4223,7 +3975,6 @@
     "category": "container",
     "description": "Con serratura, legno.",
     "properties": {
-      "id": 249,
       "itemType": "gear"
     }
   },
@@ -4239,7 +3990,6 @@
     "category": "container",
     "description": "Con serratura, legno rinforzato.",
     "properties": {
-      "id": 250,
       "itemType": "gear"
     }
   },
@@ -4255,7 +4005,6 @@
     "category": "container",
     "description": "Con serratura, legno massiccio.",
     "properties": {
-      "id": 251,
       "itemType": "gear"
     }
   },
@@ -4271,7 +4020,6 @@
     "category": "container",
     "description": "In legno rinforzato, ferramenta in metallo.",
     "properties": {
-      "id": 252,
       "itemType": "gear"
     }
   },
@@ -4287,7 +4035,6 @@
     "category": "container",
     "description": "Robusto, interamente in metallo.",
     "properties": {
-      "id": 253,
       "itemType": "gear"
     }
   },
@@ -4303,7 +4050,6 @@
     "category": "container",
     "description": "Per vestiti, legno intagliato.",
     "properties": {
-      "id": 254,
       "itemType": "gear"
     }
   },
@@ -4319,7 +4065,6 @@
     "category": "container",
     "description": "Per trasportare oggetti, robusto.",
     "properties": {
-      "id": 255,
       "itemType": "gear"
     }
   },
@@ -4335,7 +4080,6 @@
     "category": "container",
     "description": "Per merci, legno grezzo.",
     "properties": {
-      "id": 256,
       "itemType": "gear"
     }
   },
@@ -4351,7 +4095,6 @@
     "category": "holy",
     "description": "Per chierici, intagliato a mano.",
     "properties": {
-      "id": 257,
       "itemType": "gear"
     }
   },
@@ -4367,7 +4110,6 @@
     "category": "holy",
     "description": "Per chierici, argentato.",
     "properties": {
-      "id": 258,
       "itemType": "gear"
     }
   },
@@ -4383,7 +4125,6 @@
     "category": "arcane",
     "description": "Per maghi, legno di nocciolo.",
     "properties": {
-      "id": 259,
       "itemType": "gear"
     }
   },
@@ -4399,7 +4140,6 @@
     "category": "arcane",
     "description": "Per maghi, legno di quercia.",
     "properties": {
-      "id": 260,
       "itemType": "gear"
     }
   },
@@ -4415,7 +4155,6 @@
     "category": "druidic",
     "description": "Per druidi, ramo di vischio.",
     "properties": {
-      "id": 261,
       "itemType": "gear"
     }
   },
@@ -4431,7 +4170,6 @@
     "category": "book",
     "description": "Libro degli incantesimi, copertina in cuoio.",
     "properties": {
-      "id": 262,
       "itemType": "gear"
     }
   },
@@ -4447,7 +4185,6 @@
     "category": "book",
     "description": "Di qualità, rilegatura pregiata.",
     "properties": {
-      "id": 263,
       "itemType": "gear"
     }
   },
@@ -4463,7 +4200,6 @@
     "category": "scroll",
     "description": "Incantesimo di 1° livello su pergamena.",
     "properties": {
-      "id": 264,
       "itemType": "consumable"
     }
   },
@@ -4479,7 +4215,6 @@
     "category": "scroll",
     "description": "Incantesimo di 2° livello su pergamena.",
     "properties": {
-      "id": 265,
       "itemType": "consumable"
     }
   },
@@ -4495,7 +4230,6 @@
     "category": "potion",
     "description": "Liquido blu luminoso.",
     "properties": {
-      "id": 266,
       "effect": "Recupera 1 slot incantesimo di 1° livello",
       "itemType": "consumable"
     }
@@ -4512,7 +4246,6 @@
     "category": "healer",
     "description": "Per curare ferite, bende e unguenti.",
     "properties": {
-      "id": 267,
       "itemType": "tool"
     }
   },
@@ -4528,7 +4261,6 @@
     "category": "healer",
     "description": "Per medicare, lino.",
     "properties": {
-      "id": 268,
       "itemType": "consumable"
     }
   },
@@ -4544,7 +4276,6 @@
     "category": "healer",
     "description": "Cura 1d4 PF, applicato su ferite.",
     "properties": {
-      "id": 269,
       "effect": "Cura 1d4 PF",
       "itemType": "consumable"
     }
@@ -4561,7 +4292,6 @@
     "category": "jewelry",
     "description": "Portafortuna, semplice ciondolo.",
     "properties": {
-      "id": 270,
       "itemType": "gear"
     }
   },
@@ -4577,7 +4307,6 @@
     "category": "jewelry",
     "description": "Per protezione, rune incise.",
     "properties": {
-      "id": 271,
       "itemType": "gear"
     }
   },
@@ -4593,7 +4322,6 @@
     "category": "coin",
     "description": "Di altri regni, non spendibile localmente.",
     "properties": {
-      "id": 272,
       "itemType": "currency"
     }
   },
@@ -4609,7 +4337,6 @@
     "category": "gem",
     "description": "Non lavorata, valore potenziale.",
     "properties": {
-      "id": 273,
       "itemType": "gear"
     }
   },
@@ -4625,7 +4352,6 @@
     "category": "gem",
     "description": "Lavorata, splendente.",
     "properties": {
-      "id": 274,
       "itemType": "gear"
     }
   },
@@ -4641,7 +4367,6 @@
     "category": "gem",
     "description": "Preziosa, perfetta sfera.",
     "properties": {
-      "id": 275,
       "itemType": "gear"
     }
   },
@@ -4657,7 +4382,6 @@
     "category": "instrument",
     "description": "Per segnalare, suono potente.",
     "properties": {
-      "id": 276,
       "itemType": "gear"
     }
   },
@@ -4673,7 +4397,6 @@
     "category": "tool",
     "description": "Per segnalare, suono argentino.",
     "properties": {
-      "id": 277,
       "itemType": "gear"
     }
   },
@@ -4689,7 +4412,6 @@
     "category": "tool",
     "description": "Per segnalare, legno o osso.",
     "properties": {
-      "id": 278,
       "itemType": "gear"
     }
   },
@@ -4705,7 +4427,6 @@
     "category": "tool",
     "description": "Sentito solo dai cani, addestramento.",
     "properties": {
-      "id": 279,
       "itemType": "gear"
     }
   },
@@ -4721,7 +4442,6 @@
     "category": "tool",
     "description": "Per respirare sott'acqua, canna.",
     "properties": {
-      "id": 280,
       "itemType": "gear"
     }
   },
@@ -4737,7 +4457,6 @@
     "category": "accessory",
     "description": "Proteggono dal sole, vetri affumicati.",
     "properties": {
-      "id": 281,
       "itemType": "gear"
     }
   },
@@ -4753,9 +4472,7 @@
     "category": "axe",
     "description": "Un'ascia leggera progettata per essere scagliata contro i nemici. Può essere usata anche come arma da mischia.",
     "properties": {
-      "id": 282,
       "range": {
-        "id": 283,
         "long": 18,
         "normal": 6
       },
@@ -4779,7 +4496,6 @@
     "category": null,
     "description": "arma del admin",
     "properties": {
-      "id": 284,
       "damage": "1d8",
       "damageType": "tagliente",
       "magicBonus": 0,
@@ -4789,7 +4505,6 @@
       ],
       "extraDamage": [
         {
-          "id": 285,
           "dice": "1d6",
           "type": "fulmine"
         }
@@ -4808,12 +4523,477 @@
     "category": "Strumento musicale",
     "description": "Questo strumento non è un semplice violino, ma un capolavoro di ingegneria liutaia e armaiola. Il corpo del violino è costruito in legno di acero stagionato, rinforzato internamente da sottili centine di acciaio armonico che ne proteggono l'integrità senza sacrificarne il suono. L'archetto, apparentemente standard, nasconde un'anima in acciaio flessibile a sezione triangolare. I crini sono fissati a una ghiera a scatto che, se ruotata con un movimento rapido del polso, rivela una punta da affondo rinforzata.",
     "properties": {
-      "id": 286,
       "damage": "1d8",
       "damageType": "perforante",
       "properties": [
         "accurata"
       ]
+    }
+  },
+  {
+    "id": 282,
+    "name": "Pergamena con preghiere",
+    "type": "gear",
+    "weight": 0.1,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "religious",
+    "description": "Una pergamena con preghiere sacre, usata dai chierici per le loro cerimonie quotidiane.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 283,
+    "name": "Custodia per mappe o pergamene",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 1.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Un contenitore cilindrico in cuoio per proteggere mappe e pergamene durante i viaggi.",
+    "properties": {
+      "itemType": "gear",
+      "capacity": 10
+    }
+  },
+  {
+    "id": 284,
+    "name": "Dadi truccati",
+    "type": "gear",
+    "weight": 0.05,
+    "value": 1.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "game",
+    "description": "Un dado modificato per imbrogliare nei giochi d'azzardo.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 285,
+    "name": "Specchio da viaggio",
+    "type": "gear",
+    "weight": 0.2,
+    "value": 2.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Un piccolo specchio portatile in metallo lucidato, utile per segnalazioni o controlli.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 286,
+    "name": "Profumo",
+    "type": "consumable",
+    "weight": 0.1,
+    "value": 2.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "cosmetic",
+    "description": "Una fiala di profumo dalle essenze floreali, usato per apparire più affascinante.",
+    "properties": {
+      "itemType": "consumable"
+    }
+  },
+  {
+    "id": 287,
+    "name": "Distintivo",
+    "type": "gear",
+    "weight": 0.1,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "accessory",
+    "description": "Un distintivo che rappresenta l'appartenenza a una guardia, gilda o organizzazione.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 288,
+    "name": "Corda di canapa (15m)",
+    "type": "gear",
+    "weight": 3.0,
+    "value": 1.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "rope",
+    "description": "Una corda resistente in canapa, lunga 15 metri.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 289,
+    "name": "Coperta pesante",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "bedding",
+    "description": "Una coperta spessa in lana, ideale per i climi freddi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 290,
+    "name": "Diario con appunti filosofici",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 1.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "book",
+    "description": "Un diario personale con riflessioni filosofiche e annotazioni sulla vita.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 291,
+    "name": "Pergamena con albero genealogico",
+    "type": "gear",
+    "weight": 0.05,
+    "value": 2.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "document",
+    "description": "Una pergamena che illustra l'albero genealogico di una famiglia nobile.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 292,
+    "name": "Medaglia",
+    "type": "gear",
+    "weight": 0.1,
+    "value": 1.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "accessory",
+    "description": "Una medaglia ottenuta per meriti militari in battaglia.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 293,
+    "name": "Piccolo topo addomesticato",
+    "type": "gear",
+    "weight": 0.05,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "animal",
+    "description": "Un piccolo topo bianco addomesticato, tenuto come animale domestico.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 294,
+    "name": "Piccolo diario di viaggio",
+    "type": "gear",
+    "weight": 0.3,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "book",
+    "description": "Un piccolo diario per annotare esperienze di viaggio e osservazioni.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 295,
+    "name": "Portafortuna",
+    "type": "gear",
+    "weight": 0.05,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "accessory",
+    "description": "Un piccolo amuleto o ciondolo considerato portafortuna.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 296,
+    "name": "Uno strumento musicale",
+    "type": "gear",
+    "weight": 1.0,
+    "value": 5.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "instrument",
+    "description": "Uno strumento musicale a scelta tra liuto, flauto, tamburo, arpa o violino.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 297,
+    "name": "Vesti da cerimonia",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 5.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Vesti eleganti e solenni, indossate per cerimonie religiose o ufficiali.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 298,
+    "name": "Abiti eleganti",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 5.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Abiti raffinati in tessuti pregiati, adatti per occasioni formali e incontri con nobili.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 299,
+    "name": "Abiti da viaggiatore",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Abiti pratici e resistenti, ideali per lunghi viaggi e avventure.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 300,
+    "name": "Abiti da viaggio",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Indumenti comodi e funzionali per affrontare le strade e le intemperie.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 301,
+    "name": "Abiti da lavoro",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 0.2,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Vestiti resistenti e semplici, usati per lavori manuali e faticosi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 302,
+    "name": "Abiti semplici",
+    "type": "gear",
+    "weight": 1.5,
+    "value": 0.2,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Abbigliamento umile e modesto, indossato da contadini e gente comune.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 303,
+    "name": "Abiti logori",
+    "type": "gear",
+    "weight": 1.5,
+    "value": 0.05,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Vestiti consumati e rattoppati, segno di una vita dura e di stenti.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 304,
+    "name": "Abito da esibizione",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 4.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Un costume vistoso e colorato, perfetto per esibizioni artistiche e spettacoli.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 305,
+    "name": "Abito pregiato",
+    "type": "gear",
+    "weight": 2.5,
+    "value": 10.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Un abito di alta qualità, confezionato con tessuti lussuosi e rifiniture preziose.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 306,
+    "name": "Abito da studioso",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 3.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Vesti sobrie e funzionali, indossate da accademici, saggi e ricercatori.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 307,
+    "name": "Abito da marinaio",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Abbigliamento pratico e resistente, usato dai marinai per affrontare il mare.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 308,
+    "name": "Libro di appunti",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 1.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "book",
+    "description": "Un quaderno con pagine bianche per prendere appunti, disegnare o scrivere riflessioni.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 309,
+    "name": "Kit per falsificazione",
+    "type": "tool",
+    "weight": 1.0,
+    "value": 15.0,
+    "currency": "po",
+    "rarity": "uncommon",
+    "requires_attunement": false,
+    "category": "thieves",
+    "description": "Un set di strumenti per falsificare documenti, sigilli e firme.",
+    "properties": {
+      "itemType": "tool"
+    }
+  },
+  {
+    "id": 310,
+    "name": "Piede di porco",
+    "type": "tool",
+    "weight": 2.0,
+    "value": 1.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Un attrezzo in metallo utilizzato per forzare porte, casse e altri oggetti chiusi.",
+    "properties": {
+      "itemType": "tool"
+    }
+  },
+  {
+    "id": 311,
+    "name": "Strumenti da navigatore",
+    "type": "tool",
+    "weight": 1.5,
+    "value": 10.0,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Un set di strumenti per la navigazione: sestante, bussola e carte nautiche.",
+    "properties": {
+      "itemType": "tool"
+    }
+  },
+  {
+    "id": 312,
+    "name": "Calamo",
+    "type": "gear",
+    "weight": 0.05,
+    "value": 0.5,
+    "currency": "po",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "writing",
+    "description": "Un calamo per scrivere, intinto nell'inchiostro.",
+    "properties": {
+      "itemType": "gear"
     }
   }
 ]

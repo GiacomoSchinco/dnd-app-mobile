@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "class_name": "Barbarian",
-    "class_id": 1,
-    "description": "Equipaggiamento iniziale standard per il Barbaro (D&D 2024).",
+    "type": "class",
+    "target_id": 1,
+    "description": "Equipaggiamento iniziale standard per il Barbaro.",
     "starting_gold": 15,
     "items": [
       {
@@ -30,9 +30,9 @@
   },
   {
     "id": 2,
-    "class_name": "Bard",
-    "class_id": 2,
-    "description": "Equipaggiamento iniziale standard per il Bardo (D&D 2024).",
+    "type": "class",
+    "target_id": 2,
+    "description": "Equipaggiamento iniziale standard per il Bardo.",
     "starting_gold": 75,
     "items": [
       {
@@ -64,9 +64,9 @@
   },
   {
     "id": 3,
-    "class_name": "Cleric",
-    "class_id": 3,
-    "description": "Equipaggiamento iniziale standard per il Chierico (D&D 2024).",
+    "type": "class",
+    "target_id": 3,
+    "description": "Equipaggiamento iniziale standard per il Chierico.",
     "starting_gold": 115,
     "items": [
       {
@@ -98,9 +98,9 @@
   },
   {
     "id": 4,
-    "class_name": "Druid",
-    "class_id": 4,
-    "description": "Equipaggiamento iniziale standard per il Druido (D&D 2024).",
+    "type": "class",
+    "target_id": 4,
+    "description": "Equipaggiamento iniziale standard per il Druido.",
     "starting_gold": 50,
     "items": [
       {
@@ -137,9 +137,9 @@
   },
   {
     "id": 5,
-    "class_name": "Fighter",
-    "class_id": 5,
-    "description": "Equipaggiamento iniziale standard per il Guerriero (D&D 2024).",
+    "type": "class",
+    "target_id": 5,
+    "description": "Equipaggiamento iniziale standard per il Guerriero.",
     "starting_gold": 125,
     "items": [
       {
@@ -171,9 +171,9 @@
   },
   {
     "id": 6,
-    "class_name": "Rogue",
-    "class_id": 6,
-    "description": "Equipaggiamento iniziale standard per il Ladro (D&D 2024).",
+    "type": "class",
+    "target_id": 6,
+    "description": "Equipaggiamento iniziale standard per il Ladro.",
     "starting_gold": 50,
     "items": [
       {
@@ -215,9 +215,9 @@
   },
   {
     "id": 7,
-    "class_name": "Wizard",
-    "class_id": 7,
-    "description": "Equipaggiamento iniziale standard per il Mago (D&D 2024).",
+    "type": "class",
+    "target_id": 7,
+    "description": "Equipaggiamento iniziale standard per il Mago.",
     "starting_gold": 55,
     "items": [
       {
@@ -259,9 +259,9 @@
   },
   {
     "id": 8,
-    "class_name": "Monk",
-    "class_id": 8,
-    "description": "Equipaggiamento iniziale standard per il Monaco (D&D 2024).",
+    "type": "class",
+    "target_id": 8,
+    "description": "Equipaggiamento iniziale standard per il Monaco.",
     "starting_gold": 15,
     "items": [
       {
@@ -288,9 +288,9 @@
   },
   {
     "id": 9,
-    "class_name": "Paladin",
-    "class_id": 9,
-    "description": "Equipaggiamento iniziale standard per il Paladino (D&D 2024).",
+    "type": "class",
+    "target_id": 9,
+    "description": "Equipaggiamento iniziale standard per il Paladino.",
     "starting_gold": 115,
     "items": [
       {
@@ -327,9 +327,9 @@
   },
   {
     "id": 10,
-    "class_name": "Ranger",
-    "class_id": 10,
-    "description": "Equipaggiamento iniziale standard per il Ranger (D&D 2024).",
+    "type": "class",
+    "target_id": 10,
+    "description": "Equipaggiamento iniziale standard per il Ranger.",
     "starting_gold": 75,
     "items": [
       {
@@ -366,9 +366,9 @@
   },
   {
     "id": 11,
-    "class_name": "Sorcerer",
-    "class_id": 11,
-    "description": "Equipaggiamento iniziale standard per lo Stregone (D&D 2024).",
+    "type": "class",
+    "target_id": 11,
+    "description": "Equipaggiamento iniziale standard per lo Stregone.",
     "starting_gold": 50,
     "items": [
       {
@@ -390,9 +390,9 @@
   },
   {
     "id": 12,
-    "class_name": "Warlock",
-    "class_id": 12,
-    "description": "Equipaggiamento iniziale standard per il Warlock (D&D 2024).",
+    "type": "class",
+    "target_id": 12,
+    "description": "Equipaggiamento iniziale standard per il Warlock.",
     "starting_gold": 50,
     "items": [
       {
@@ -418,6 +418,436 @@
       {
         "name": "Zaino",
         "item_id": 72,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1000,
+    "type": "background",
+    "target_id": 1,
+    "description": "Equipaggiamento iniziale per il Accolito.",
+    "starting_gold": 6,
+    "items": [
+      {
+        "name": "Simbolo sacro di legno",
+        "item_id": 254,
+        "quantity": 1
+      },
+      {
+        "name": "Pergamena con preghiere",
+        "item_id": 282,
+        "quantity": 1
+      },
+      {
+        "name": "Vesti da cerimonia",
+        "item_id": 297,
+        "quantity": 1
+      },
+      {
+        "name": "Candela",
+        "item_id": 83,
+        "quantity": 3
+      }
+    ]
+  },
+  {
+    "id": 1001,
+    "type": "background",
+    "target_id": 2,
+    "description": "Equipaggiamento iniziale per il Artigiano.",
+    "starting_gold": 25,
+    "items": [
+      {
+        "name": "Attrezzi da fabbro",
+        "item_id": 156,
+        "quantity": 1
+      },
+      {
+        "name": "Abiti da viaggiatore",
+        "item_id": 299,
+        "quantity": 1
+      },
+      {
+        "name": "Custodia per mappe o pergamene",
+        "item_id": 283,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1002,
+    "type": "background",
+    "target_id": 3,
+    "description": "Equipaggiamento iniziale per il Ciarlatano.",
+    "starting_gold": 15,
+    "items": [
+      {
+        "name": "Kit per falsificazione",
+        "item_id": 309,
+        "quantity": 1
+      },
+      {
+        "name": "Abiti eleganti",
+        "item_id": 298,
+        "quantity": 1
+      },
+      {
+        "name": "Dadi truccati",
+        "item_id": 284,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1003,
+    "type": "background",
+    "target_id": 4,
+    "description": "Equipaggiamento iniziale per il Criminale.",
+    "starting_gold": 16,
+    "items": [
+      {
+        "name": "Attrezzi da scasso",
+        "item_id": 155,
+        "quantity": 1
+      },
+      {
+        "name": "Piede di porco",
+        "item_id": 310,
+        "quantity": 1
+      },
+      {
+        "name": "Cappuccio",
+        "item_id": 213,
+        "quantity": 1
+      },
+      {
+        "name": "Borsa portamonete",
+        "item_id": 240,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1004,
+    "type": "background",
+    "target_id": 5,
+    "description": "Equipaggiamento iniziale per il Intrattenitore.",
+    "starting_gold": 11,
+    "items": [
+      {
+        "name": "Liuto",
+        "item_id": 142,
+        "quantity": 1
+      },
+      {
+        "name": "Abito da esibizione",
+        "item_id": 304,
+        "quantity": 1
+      },
+      {
+        "name": "Specchio da viaggio",
+        "item_id": 285,
+        "quantity": 1
+      },
+      {
+        "name": "Profumo",
+        "item_id": 286,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1005,
+    "type": "background",
+    "target_id": 6,
+    "description": "Equipaggiamento iniziale per il Contadino.",
+    "starting_gold": 23,
+    "items": [
+      {
+        "name": "Attrezzi da falegname",
+        "item_id": 157,
+        "quantity": 1
+      },
+      {
+        "name": "Falcetto",
+        "item_id": 19,
+        "quantity": 1
+      },
+      {
+        "name": "Abiti da lavoro",
+        "item_id": 301,
+        "quantity": 1
+      },
+      {
+        "name": "Lanterna",
+        "item_id": 81,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1006,
+    "type": "background",
+    "target_id": 7,
+    "description": "Equipaggiamento iniziale per il Guardia.",
+    "starting_gold": 12,
+    "items": [
+      {
+        "name": "Dadi da gioco (set)",
+        "item_id": 138,
+        "quantity": 1
+      },
+      {
+        "name": "Distintivo",
+        "item_id": 287,
+        "quantity": 1
+      },
+      {
+        "name": "Manette",
+        "item_id": 103,
+        "quantity": 1
+      },
+      {
+        "name": "Abiti da viaggio",
+        "item_id": 300,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1007,
+    "type": "background",
+    "target_id": 8,
+    "description": "Equipaggiamento iniziale per il Guida.",
+    "starting_gold": 13,
+    "items": [
+      {
+        "name": "Attrezzi da cartografo",
+        "item_id": 166,
+        "quantity": 1
+      },
+      {
+        "name": "Abiti da viaggio",
+        "item_id": 300,
+        "quantity": 1
+      },
+      {
+        "name": "Bussola",
+        "item_id": 107,
+        "quantity": 1
+      },
+      {
+        "name": "Corda di canapa (15m)",
+        "item_id": 288,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1008,
+    "type": "background",
+    "target_id": 9,
+    "description": "Equipaggiamento iniziale per il Eremita.",
+    "starting_gold": 15,
+    "items": [
+      {
+        "name": "Attrezzi da erborista",
+        "item_id": 168,
+        "quantity": 1
+      },
+      {
+        "name": "Coperta pesante",
+        "item_id": 289,
+        "quantity": 1
+      },
+      {
+        "name": "Diario con appunti filosofici",
+        "item_id": 290,
+        "quantity": 1
+      },
+      {
+        "name": "Vesti comuni",
+        "item_id": 210,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1009,
+    "type": "background",
+    "target_id": 10,
+    "description": "Equipaggiamento iniziale per il Nobile.",
+    "starting_gold": 24,
+    "items": [
+      {
+        "name": "Dadi da gioco (set)",
+        "item_id": 138,
+        "quantity": 1
+      },
+      {
+        "name": "Abito pregiato",
+        "item_id": 305,
+        "quantity": 1
+      },
+      {
+        "name": "Anello con sigillo",
+        "item_id": 119,
+        "quantity": 1
+      },
+      {
+        "name": "Pergamena con albero genealogico",
+        "item_id": 291,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1010,
+    "type": "background",
+    "target_id": 11,
+    "description": "Equipaggiamento iniziale per il Sapiente.",
+    "starting_gold": 8,
+    "items": [
+      {
+        "name": "Attrezzi da calligrafo",
+        "item_id": 165,
+        "quantity": 1
+      },
+      {
+        "name": "Inchiostro (fiala)",
+        "item_id": 111,
+        "quantity": 1
+      },
+      {
+        "name": "Penna d'oca",
+        "item_id": 112,
+        "quantity": 1
+      },
+      {
+        "name": "Libro di appunti",
+        "item_id": 308,
+        "quantity": 1
+      },
+      {
+        "name": "Abito da studioso",
+        "item_id": 306,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1011,
+    "type": "background",
+    "target_id": 12,
+    "description": "Equipaggiamento iniziale per il Marinaio.",
+    "starting_gold": 10,
+    "items": [
+      {
+        "name": "Strumenti da navigatore",
+        "item_id": 311,
+        "quantity": 1
+      },
+      {
+        "name": "Corda di seta (10m)",
+        "item_id": 88,
+        "quantity": 1
+      },
+      {
+        "name": "Abito da marinaio",
+        "item_id": 307,
+        "quantity": 1
+      },
+      {
+        "name": "Portafortuna",
+        "item_id": 295,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1012,
+    "type": "background",
+    "target_id": 13,
+    "description": "Equipaggiamento iniziale per il Soldato.",
+    "starting_gold": 14,
+    "items": [
+      {
+        "name": "Dadi da gioco (set)",
+        "item_id": 138,
+        "quantity": 1
+      },
+      {
+        "name": "Medaglia",
+        "item_id": 292,
+        "quantity": 1
+      },
+      {
+        "name": "Abiti da viaggio",
+        "item_id": 300,
+        "quantity": 1
+      },
+      {
+        "name": "Borsa",
+        "item_id": 235,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1013,
+    "type": "background",
+    "target_id": 14,
+    "description": "Equipaggiamento iniziale per il Furfante.",
+    "starting_gold": 11,
+    "items": [
+      {
+        "name": "Attrezzi da scasso",
+        "item_id": 155,
+        "quantity": 1
+      },
+      {
+        "name": "Piccolo topo addomesticato",
+        "item_id": 293,
+        "quantity": 1
+      },
+      {
+        "name": "Mappa",
+        "item_id": 117,
+        "quantity": 1
+      },
+      {
+        "name": "Abiti logori",
+        "item_id": 303,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 1014,
+    "type": "background",
+    "target_id": 15,
+    "description": "Equipaggiamento iniziale per il Viandante.",
+    "starting_gold": 11,
+    "items": [
+      {
+        "name": "Attrezzi da scasso",
+        "item_id": 155,
+        "quantity": 1
+      },
+      {
+        "name": "Abiti da viaggio",
+        "item_id": 300,
+        "quantity": 1
+      },
+      {
+        "name": "Mappa",
+        "item_id": 117,
+        "quantity": 1
+      },
+      {
+        "name": "Piccolo diario di viaggio",
+        "item_id": 294,
         "quantity": 1
       }
     ]
