@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Modal, ScrollView, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
@@ -6,6 +6,7 @@ import { spacing, fontSizes, radius } from '../../../utils/styles';
 import type { Spell, ClassName, Character } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
 import DndIcon from '../DndIcon';
+import BottomModal from '../BottomModal';
 
 type Props = {
   spell: Spell | null;
@@ -43,25 +44,11 @@ export default function SpellDetailModal({
   const t = useTokens();
 
   return (
-    <Modal visible={!!spell} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', padding: spacing[4] }}>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={{ flex: 1, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-          onPress={onClose}
-        />
-        {spell && (
-          <View style={{
-            backgroundColor: t.colors.card,
-            borderRadius: radius.xl,
-            maxHeight: Dimensions.get('window').height * 0.8,
-          }}>
-            <ScrollView
-              showsVerticalScrollIndicator={true}
-              contentContainerStyle={{ padding: spacing[6] }}
-            >
-              {/* Header */}
-              <View style={{ flexDirection: 'row', gap: spacing[3], marginBottom: spacing[3] }}>
+    <BottomModal visible={!!spell} onClose={onClose}>
+      {spell && (
+      <>
+      {/* Header */}
+      <View style={{ flexDirection: 'row', gap: spacing[3], marginBottom: spacing[3] }}>
                 <View style={{
                   backgroundColor: (SCHOOL_MAP[spell.school]?.color || '#888') + '20',
                   borderRadius: radius.xl,
@@ -148,10 +135,8 @@ export default function SpellDetailModal({
                   </Button>
                 </View>
               )}
-            </ScrollView>
-          </View>
-        )}
-      </View>
-    </Modal>
+      </>
+      )}
+    </BottomModal>
   );
 }

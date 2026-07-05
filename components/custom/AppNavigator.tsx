@@ -122,8 +122,9 @@ export default function AppNavigator() {
 
           headerShown: false,
 
-          // 3. Tab bar: quando espansa, si fonde col pannello
+          // 3. Tab bar: scompare quando il pannello dadi è aperto
           tabBarStyle: {
+            display: isDiceOpen ? 'none' : 'flex',
             position: 'absolute',
             bottom: bottomMargin,
             left: 16,
