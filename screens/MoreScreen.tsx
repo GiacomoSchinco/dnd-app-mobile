@@ -18,7 +18,6 @@ interface AltroItem {
 }
 
 const ITEMS: AltroItem[] = [
-  { key: 'dadi', label: '🎲 Lancia dadi', icon: 'd20', description: 'Tira d4, d6, d8, d10, d12, d20' },
   { key: 'impostazioni', label: '⚙️ Impostazioni', icon: 'divination', description: 'Temi, info app' },
 ];
 

@@ -10,7 +10,7 @@ type Props = {
 export default function DicesScreen({ onBack, backLabel }: Props) {
   return (
     <Screen>
-      <ScreenHeader title="🎲 Lancia i dadi" onBack={onBack} backLabel={backLabel} />
+      {onBack && <ScreenHeader title="🎲 Lancia dadi" onBack={onBack} backLabel={backLabel} />}
       <DiceRoller initialType="d20" initialQuantity={1} />
     </Screen>
   );

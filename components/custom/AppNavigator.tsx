@@ -181,6 +181,10 @@ export default function AppNavigator() {
             borderTopRightRadius: pillRadius,
             borderWidth: 1,
             borderColor: navbarBorder,
+            borderTopWidth: 3,
+            borderTopColor: t.colors.accent,
+            borderBottomWidth: 2,
+            borderBottomColor: t.colors.accent,
             borderBottomLeftRadius: pillRadius,
             borderBottomRightRadius: pillRadius,
             paddingHorizontal: spacing[6],
@@ -202,8 +206,8 @@ export default function AppNavigator() {
           }}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing[4] }}>
-              <ScreenHeader title="🎲 Lancia i dadi" />
+            <View style={{ marginBottom: -spacing[6] }}>
+              <ScreenHeader title="Lancia i tuoi dadi" center={true} />
             </View>
             <DiceRoller initialType="d20" initialQuantity={1} />
           </ScrollView>

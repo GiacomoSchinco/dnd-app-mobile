@@ -110,8 +110,8 @@ export default function SpellsScreen() {
         style={{ paddingHorizontal: spacing[4] }}
       />
 
-      {/* Pulsante "Torna su" flottante */}
-      {showScrollTop && (
+      {/* Pulsante "Torna su" flottante — nascosto se il modale è aperto */}
+      {showScrollTop && !selectedSpell && (
         <Pressable
           onPress={scrollToTop}
           style={{

@@ -14,15 +14,17 @@ export default function SettingsScreen({ onBack }: Props) {
 
   return (
     <ScrollView style={s.screen} contentContainerStyle={s.scrollContent}>
-      {onBack && <BackButton onPress={onBack} label="Torna al menu" />}
-      <ScreenHeader title="⚙️ Impostazioni" />
-      <ThemePicker />
-      <Button variant="outline" size="lg" fullWidth onPress={() => Alert.alert('Esporta', 'PDF generato!')}>
-        📤 Esporta scheda
-      </Button>
-      <Button variant="ghost" size="lg" fullWidth onPress={() => Alert.alert('Info', 'DungeonCraft v1.0.0\nCreato con Prism UI 🎨')}>
-        ℹ️ Info app
-      </Button>
+      <View style={{ width: '100%', alignSelf: 'stretch' }}>
+        {onBack && <BackButton onPress={onBack} label="Torna al menu" />}
+        <ScreenHeader title="⚙️ Impostazioni" />
+        <ThemePicker />
+        <Button variant="outline" size="lg" fullWidth onPress={() => Alert.alert('Esporta', 'PDF generato!')}>
+          📤 Esporta scheda
+        </Button>
+        <Button variant="ghost" size="lg" fullWidth onPress={() => Alert.alert('Info', 'DungeonCraft v1.0.0\nCreato con Prism UI 🎨')}>
+          ℹ️ Info app
+        </Button>
+      </View>
     </ScrollView>
   );
 }
