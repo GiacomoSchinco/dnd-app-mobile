@@ -5,10 +5,9 @@ import { useScreenStyles, spacing, fontSizes, radius } from '../utils/styles';
 import Screen from '../components/custom/Screen';
 import ScreenHeader from '../components/custom/ScreenHeader';
 import DndIcon from '../components/custom/DndIcon';
-import DicesScreen from './DicesScreen';
 import SettingsScreen from './SettingsScreen';
 
-type SectionKey = 'dadi' | 'impostazioni';
+type SectionKey = 'impostazioni';
 
 interface AltroItem {
   key: SectionKey;
@@ -26,15 +25,6 @@ export default function MoreScreen() {
   const s = useScreenStyles();
   const [activeSection, setActiveSection] = useState<SectionKey | null>(null);
 
-  if (activeSection === 'dadi') {
-    return (
-      <DicesScreen
-        onBack={() => setActiveSection(null)}
-        backLabel="Torna al menu"
-      />
-    );
-  }
-
   if (activeSection === 'impostazioni') {
     return (
       <SettingsScreen onBack={() => setActiveSection(null)} />
@@ -43,7 +33,7 @@ export default function MoreScreen() {
 
   return (
     <Screen>
-      <ScreenHeader title="☰ Altro" />
+      <ScreenHeader title="Altro" icon="ellipsis-horizontal-outline" />
 
       <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary, marginBottom: spacing[2], alignSelf: 'flex-start' }}>
         Tutte le altre funzioni

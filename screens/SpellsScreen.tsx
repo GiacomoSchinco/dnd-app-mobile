@@ -81,7 +81,7 @@ export default function SpellsScreen() {
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       {/* Header fisso con safe area */}
       <View style={{ paddingTop: insets.top + spacing[4], paddingHorizontal: spacing[4], paddingBottom: spacing[2] }}>
-        <ScreenHeader title="✨ Incantesimi" />
+        <ScreenHeader title="Magie" icon="flash-outline" />
         <SpellFilters
           search={search}
           onSearchChange={setSearch}

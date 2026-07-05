@@ -16,7 +16,7 @@ export default function SettingsScreen({ onBack }: Props) {
     <ScrollView style={s.screen} contentContainerStyle={s.scrollContent}>
       <View style={{ width: '100%', alignSelf: 'stretch' }}>
         {onBack && <BackButton onPress={onBack} label="Torna al menu" />}
-        <ScreenHeader title="⚙️ Impostazioni" />
+        <ScreenHeader title="Impostazioni" icon="settings-outline" />
         <ThemePicker />
         <Button variant="outline" size="lg" fullWidth onPress={() => Alert.alert('Esporta', 'PDF generato!')}>
           📤 Esporta scheda

@@ -18,9 +18,37 @@ import MoreScreen from '../../screens/MoreScreen';
 import DndIcon from './DndIcon';
 import ScreenHeader from './ScreenHeader';
 import DiceRoller from './DiceRoller';
-import { spacing, radius } from '../../utils/styles';
+import { spacing } from '../../utils/styles';
 
 const Tab = createBottomTabNavigator();
+
+// ── 1. DEFINIZIONE DELL'ARRAY DELLE VOCI (Modificabile come vuoi) ──
+const NAVIGATION_TABS = [
+  {
+    name: 'Home',
+    component: HomeScreen,
+    iconActive: 'home' as const,
+    iconInactive: 'home-outline' as const,
+  },
+  {
+    name: 'Personaggi',
+    component: CharactersScreen,
+    iconActive: 'people' as const,
+    iconInactive: 'people-outline' as const,
+  },
+  {
+    name: 'Magie',
+    component: SpellsScreen,
+    iconActive: 'flash' as const,
+    iconInactive: 'flash-outline' as const,
+  },
+  {
+    name: 'Altro',
+    component: MoreScreen,
+    iconActive: 'ellipsis-horizontal' as const,
+    iconInactive: 'ellipsis-horizontal-outline' as const,
+  },
+];
 
 // ── Pulsante centrale rotondo con D20 ──
 function CentralDiceButton({ onPress, accessibilityState, isExpanded }: any) {
@@ -59,7 +87,6 @@ function CentralDiceButton({ onPress, accessibilityState, isExpanded }: any) {
   );
 }
 
-// ── Schermata vuota (il tab Dadi non mostra mai una pagina) ──
 function EmptyScreen() {
   return null;
 }
@@ -68,17 +95,16 @@ export default function AppNavigator() {
   const t = useTokens();
   const insets = useSafeAreaInsets();
   const isDark = t.colors.background.startsWith('#0');
-
-  // Stato: navbar espansa o chiusa
   const [isDiceOpen, setIsDiceOpen] = useState(false);
 
-  // Calcolo millimetrico del margine inferiore
   const bottomMargin = insets.bottom > 0 ? insets.bottom : 16;
-
-  // Stile condiviso tra tab bar e pannello
   const navbarBg = isDark ? 'rgba(28, 28, 36, 0.98)' : 'rgba(255, 255, 255, 0.98)';
   const navbarBorder = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
   const pillRadius = t.radius.xl || 24;
+
+  // Dividiamo l'array a metà per inserire il d20 al centro
+  const firstHalfTabs = NAVIGATION_TABS.slice(0, 2);
+  const secondHalfTabs = NAVIGATION_TABS.slice(2);
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
@@ -86,30 +112,23 @@ export default function AppNavigator() {
 
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          // 1. Icone — nascoste se la navbar è espansa
+          // Icone dinamiche basate sulla configurazione dell'array
           tabBarIcon: ({ focused, color }) => {
             if (isDiceOpen && route.name !== 'Dadi') {
               return <View style={{ width: 22, height: 22 }} />;
             }
 
-            let iconName: keyof typeof Ionicons.glyphMap = 'home-outline';
-
-            if (route.name === 'Home') {
-              iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === 'Personaggi') {
-              iconName = focused ? 'shield' : 'shield-outline';
-            } else if (route.name === 'Magie') {
-              iconName = focused ? 'flash' : 'flash-outline';
-            } else if (route.name === 'Altro') {
-              iconName = focused ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline';
-            }
+            // Cerchiamo la tab corrispondente nell'array
+            const currentTab = NAVIGATION_TABS.find((tab) => tab.name === route.name);
+            const iconName = currentTab
+              ? (focused ? currentTab.iconActive : currentTab.iconInactive)
+              : 'help-outline';
 
             return <Ionicons name={iconName} size={22} color={color} />;
           },
           tabBarActiveTintColor: t.colors.accent,
           tabBarInactiveTintColor: t.colors.foregroundTertiary,
 
-          // 2. Label nascoste se espanso
           tabBarLabelStyle: {
             fontSize: 11,
             fontWeight: '600',
@@ -122,7 +141,6 @@ export default function AppNavigator() {
 
           headerShown: false,
 
-          // 3. Tab bar: scompare quando il pannello dadi è aperto
           tabBarStyle: {
             display: isDiceOpen ? 'none' : 'flex',
             position: 'absolute',
@@ -150,10 +168,12 @@ export default function AppNavigator() {
           },
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Personaggi" component={CharactersScreen} />
+        {/* Prime due voci dell'array */}
+        {firstHalfTabs.map((tab) => (
+          <Tab.Screen key={tab.name} name={tab.name} component={tab.component} />
+        ))}
 
-        {/* Tasto centrale — spacer invisibile, il vero D20 è fuori */}
+        {/* Tasto centrale fisso (Spacer) */}
         <Tab.Screen
           name="Dadi"
           component={EmptyScreen}
@@ -164,16 +184,18 @@ export default function AppNavigator() {
           }}
         />
 
-        <Tab.Screen name="Magie" component={SpellsScreen} />
-        <Tab.Screen name="Altro" component={MoreScreen} />
+        {/* Ultime due voci dell'array */}
+        {secondHalfTabs.map((tab) => (
+          <Tab.Screen key={tab.name} name={tab.name} component={tab.component} />
+        ))}
       </Tab.Navigator>
 
-      {/* ── Pannello dadi: si allarga dalla navbar ── */}
+      {/* Pannello dadi espanso */}
       {isDiceOpen && (
         <View
           style={{
             position: 'absolute',
-            bottom: bottomMargin + 64, // attaccato alla tab bar
+            bottom: bottomMargin + 64,
             left: 16,
             right: 16,
             backgroundColor: navbarBg,
@@ -214,7 +236,7 @@ export default function AppNavigator() {
         </View>
       )}
 
-      {/* ── D20 flottante — sempre sopra pannello e navbar ── */}
+      {/* D20 flottante reale */}
       <View
         style={{
           position: 'absolute',
