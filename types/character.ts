@@ -38,14 +38,6 @@ export interface AbilityScores {
 
 // ── Class Definitions ──────────────────────────────────────────
 
-/** Base per future implementazioni di sottoclassi (es. Paladino → Giuramento di Fedeltà) */
-export interface SubclassDefinition {
-  name: string;
-  className: ClassName;
-  description?: string;
-  source?: string;
-}
-
 /** Base per futuri talenti (feats) */
 export interface Feat {
   name: string;

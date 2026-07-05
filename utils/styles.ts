@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../components/ui/prism-provider';
 
 // ── Spacing constants (match theme values) ──────────────────────
@@ -46,53 +47,55 @@ export const fontSizes = {
   '3xl': 34,
 } as const;
 
-// ── Standardised screen styles (theme-aware) ────────────────────
+// ── Standardised screen styles (theme-aware & notch-aware) ──────
 export function useScreenStyles() {
   const t = useTokens();
+  const insets = useSafeAreaInsets(); // Risolve i problemi di notch/barre di stato
 
   return {
-    /** Full‑screen wrapper with theme background */
+    /** Full‑screen wrapper con il background del tema */
     screen: {
       flex: 1,
       backgroundColor: t.colors.background,
-    } as const,
+    },
 
-    /** Content container for ScrollViews */
+    /** Content container per ScrollViews sensibile alle Safe Area di iOS/Android */
     scrollContent: {
-      alignItems: 'center',
-      paddingVertical: t.spacing[6],
+      alignItems: 'center' as const,
+      paddingTop: insets.top + t.spacing[4],       // Protegge il notch in alto
+      paddingBottom: insets.bottom + t.spacing[6],  // Protegge la barra di sblocco in basso
       paddingHorizontal: t.spacing[4],
-    } as const,
+    },
 
-    /** Section wrapper with vertical gap */
+    /** Section wrapper con gap verticale basato sui token */
     section: {
-      width: '100%',
+      width: '100%' as const,
       gap: t.spacing[4],
-    } as const,
+    },
 
-    /** Small uppercase label for control groups */
+    /** Small uppercase label per i gruppi di controllo (es. schede D&D) */
     label: {
-      fontSize: 11,
-      fontWeight: '600',
-      textTransform: 'uppercase',
+      fontSize: fontSizes.xs, // Usa le costanti per coerenza
+      fontWeight: '600' as const,
+      textTransform: 'uppercase' as const,
       letterSpacing: 0.5,
       color: t.colors.foregroundTertiary,
-    } as const,
+    },
 
-    /** Stepper button (circular ±) — usa backgroundColor dal tema, non hardcoded */
+    /** Bottone dello stepper (circolare ±) — flessibile e con colori del tema */
     stepperBtn: {
       width: 32,
       height: 32,
       borderRadius: 16,
-      alignItems: 'center',
-      justifyContent: 'center',
-    } as const,
+      alignItems: 'center' as const,
+      justifyContent: 'center' as const,
+    },
 
-    /** Row of horizontally aligned controls */
+    /** Riga per allineare i controlli orizzontalmente */
     controlsRow: {
-      flexDirection: 'row',
-      justifyContent: 'center',
+      flexDirection: 'row' as const,
+      justifyContent: 'center' as const,
       gap: t.spacing[4],
-    } as const,
+    },
   };
 }

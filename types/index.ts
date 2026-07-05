@@ -5,3 +5,7 @@ export * from './spell';
 export * from './race';
 export * from './skill';
 export * from './ability';
+export * from './background';
+export * from './feat';
+export * from './item';
+export * from './subclass';

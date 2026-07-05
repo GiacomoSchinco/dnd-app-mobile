@@ -1,10 +1,6 @@
 import { useCharacterStore } from './useCharacterStore';
-import type { Character, ActiveCharacterActions } from '../types';
+import type { ActiveCharacterActions } from '../types';
 
-/**
- * Custom hook that centralizes all character store subscriptions.
- * Returns the active character + all relevant actions in a single call.
- */
 export function useActiveCharacter(): ActiveCharacterActions {
   const characters = useCharacterStore((s) => s.characters);
   const activeCharacterId = useCharacterStore((s) => s.activeCharacterId);

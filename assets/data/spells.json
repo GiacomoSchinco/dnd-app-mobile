@@ -3243,6 +3243,7 @@
       "druid",
       "ranger"
     ],
+    "casting": "action",
     "components": [
       "V",
       "S"

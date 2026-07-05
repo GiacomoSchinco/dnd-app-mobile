@@ -18,7 +18,7 @@ interface AltroItem {
 
 const ITEMS: AltroItem[] = [
   { key: 'dadi', label: '🎲 Lancia dadi', icon: 'd20', description: 'Tira d4, d6, d8, d10, d12, d20' },
-  { key: 'impostazioni', label: '⚙️ Impostazioni', icon: 'divination', description: 'Temi, info app, esporta scheda' },
+  { key: 'impostazioni', label: '⚙️ Impostazioni', icon: 'divination', description: 'Temi, info app' },
 ];
 
 export default function MoreScreen() {
@@ -88,22 +88,6 @@ export default function MoreScreen() {
               <Text style={{ color: t.colors.foregroundSecondary, fontSize: 18 }}>›</Text>
             </Pressable>
           ))}
-        </View>
-
-        {/* Placeholder per future sezioni */}
-        <View style={{
-          marginTop: spacing[8],
-          padding: spacing[6],
-          borderRadius: radius.lg,
-          borderWidth: 1,
-          borderStyle: 'dashed',
-          borderColor: t.colors.backgroundSecondary,
-          alignItems: 'center',
-        }}>
-          <Text style={{ fontSize: fontSizes['2xl'], marginBottom: spacing[2] }}>🔮</Text>
-          <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary, textAlign: 'center' }}>
-            Altre funzioni in arrivo...
-          </Text>
         </View>
       </View>
     </ScrollView>
