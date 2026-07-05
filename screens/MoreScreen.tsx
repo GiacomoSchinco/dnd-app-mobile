@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useTokens } from '../components/ui/prism-provider';
 import { useScreenStyles, spacing, fontSizes, radius } from '../utils/styles';
 import Screen from '../components/custom/Screen';
@@ -29,27 +29,16 @@ export default function MoreScreen() {
 
   if (activeSection === 'dadi') {
     return (
-      <View style={s.screen}>
-        <View style={{ padding: spacing[6], paddingBottom: 0 }}>
-          <Pressable onPress={() => setActiveSection(null)} style={{ marginBottom: spacing[4] }}>
-            <Text style={{ color: t.colors.accent, fontSize: fontSizes.base }}>← Torna al menu</Text>
-          </Pressable>
-        </View>
-        <DicesScreen />
-      </View>
+      <DicesScreen
+        onBack={() => setActiveSection(null)}
+        backLabel="Torna al menu"
+      />
     );
   }
 
   if (activeSection === 'impostazioni') {
     return (
-      <View style={s.screen}>
-        <View style={{ padding: spacing[6], paddingBottom: 0 }}>
-          <Pressable onPress={() => setActiveSection(null)} style={{ marginBottom: spacing[4] }}>
-            <Text style={{ color: t.colors.accent, fontSize: fontSizes.base }}>← Torna al menu</Text>
-          </Pressable>
-        </View>
-        <SettingsScreen />
-      </View>
+      <SettingsScreen onBack={() => setActiveSection(null)} />
     );
   }
 

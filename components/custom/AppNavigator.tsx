@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Platform, Pressable, ScrollView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,16 +14,71 @@ import CharactersScreen from '../../screens/CharactersScreen';
 import SpellsScreen from '../../screens/SpellsScreen';
 import MoreScreen from '../../screens/MoreScreen';
 
+// Componenti
+import DndIcon from './DndIcon';
+import ScreenHeader from './ScreenHeader';
+import DiceRoller from './DiceRoller';
+import { spacing, radius } from '../../utils/styles';
+
 const Tab = createBottomTabNavigator();
+
+// ── Pulsante centrale rotondo con D20 ──
+function CentralDiceButton({ onPress, accessibilityState, isExpanded }: any) {
+  const t = useTokens();
+  const isActive = accessibilityState?.selected || isExpanded;
+
+  return (
+    <Pressable
+      onPress={onPress}
+      style={{
+        top: -40,
+        width: 64,
+        height: 64,
+        borderRadius: 32,
+        backgroundColor: isActive ? t.colors.accent : t.colors.background,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 3,
+        borderColor: t.colors.accent,
+        zIndex: 100,
+        ...Platform.select({
+          ios: {
+            shadowColor: t.colors.accent,
+            shadowOffset: { width: 0, height: 6 },
+            shadowOpacity: 0.35,
+            shadowRadius: 10,
+          },
+          android: {
+            elevation: 24,
+          },
+        }),
+      }}
+    >
+      <DndIcon name="d20" size={34} color={isActive ? '#FFFFFF' : t.colors.accent} />
+    </Pressable>
+  );
+}
+
+// ── Schermata vuota (il tab Dadi non mostra mai una pagina) ──
+function EmptyScreen() {
+  return null;
+}
 
 export default function AppNavigator() {
   const t = useTokens();
   const insets = useSafeAreaInsets();
   const isDark = t.colors.background.startsWith('#0');
 
-  // Calcolo millimetrico del margine inferiore per evitare l'effetto "blocco staccato"
-  // Se c'è un notch (insets.bottom > 0), usiamo quello, altrimenti impostiamo un valore standard di 16px
+  // Stato: navbar espansa o chiusa
+  const [isDiceOpen, setIsDiceOpen] = useState(false);
+
+  // Calcolo millimetrico del margine inferiore
   const bottomMargin = insets.bottom > 0 ? insets.bottom : 16;
+
+  // Stile condiviso tra tab bar e pannello
+  const navbarBg = isDark ? 'rgba(28, 28, 36, 0.98)' : 'rgba(255, 255, 255, 0.98)';
+  const navbarBorder = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+  const pillRadius = t.radius.xl || 24;
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
@@ -31,8 +86,12 @@ export default function AppNavigator() {
 
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          // 1. Configurazione icone dinamiche (Lineari se inattive, Piene se attive)
-          tabBarIcon: ({ focused, color, size }) => {
+          // 1. Icone — nascoste se la navbar è espansa
+          tabBarIcon: ({ focused, color }) => {
+            if (isDiceOpen && route.name !== 'Dadi') {
+              return <View style={{ width: 22, height: 22 }} />;
+            }
+
             let iconName: keyof typeof Ionicons.glyphMap = 'home-outline';
 
             if (route.name === 'Home') {
@@ -47,35 +106,35 @@ export default function AppNavigator() {
 
             return <Ionicons name={iconName} size={22} color={color} />;
           },
-          // 2. Colori dell'interfaccia presi dal tuo Tema
           tabBarActiveTintColor: t.colors.accent,
           tabBarInactiveTintColor: t.colors.foregroundTertiary,
-          
-          // 3. Stile del testo sotto le icone
+
+          // 2. Label nascoste se espanso
           tabBarLabelStyle: {
             fontSize: 11,
             fontWeight: '600',
             letterSpacing: 0.2,
             marginBottom: 4,
+            ...(isDiceOpen && route.name !== 'Dadi'
+              ? { opacity: 0, height: 0, overflow: 'hidden', marginBottom: 0 }
+              : {}),
           },
-          
-          // 4. Nascondiamo l'header nativo superiore per gestire il layout nelle singole pagine
+
           headerShown: false,
 
-          // 5. Il look "Floating Pill" trasparente
+          // 3. Tab bar: quando espansa, si fonde col pannello
           tabBarStyle: {
             position: 'absolute',
             bottom: bottomMargin,
             left: 16,
             right: 16,
             height: 64,
-            borderRadius: t.radius.xl || 24,
-            backgroundColor: isDark ? 'rgba(28, 28, 36, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+            borderRadius: pillRadius,
+            backgroundColor: navbarBg,
             borderWidth: 1,
-            borderColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)',
+            borderColor: navbarBorder,
             paddingTop: 8,
             paddingBottom: 4,
-            // Ombre premium per iOS e Android
             ...Platform.select({
               ios: {
                 shadowColor: '#000',
@@ -92,9 +151,81 @@ export default function AppNavigator() {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Personaggi" component={CharactersScreen} />
+
+        {/* Tasto centrale — spacer invisibile, il vero D20 è fuori */}
+        <Tab.Screen
+          name="Dadi"
+          component={EmptyScreen}
+          options={{
+            tabBarButton: () => <View style={{ flex: 1 }} />,
+            tabBarLabel: () => null,
+            tabBarIcon: () => null,
+          }}
+        />
+
         <Tab.Screen name="Magie" component={SpellsScreen} />
         <Tab.Screen name="Altro" component={MoreScreen} />
       </Tab.Navigator>
+
+      {/* ── Pannello dadi: si allarga dalla navbar ── */}
+      {isDiceOpen && (
+        <View
+          style={{
+            position: 'absolute',
+            bottom: bottomMargin + 64, // attaccato alla tab bar
+            left: 16,
+            right: 16,
+            backgroundColor: navbarBg,
+            borderTopLeftRadius: pillRadius,
+            borderTopRightRadius: pillRadius,
+            borderWidth: 1,
+            borderColor: navbarBorder,
+            borderBottomLeftRadius: pillRadius,
+            borderBottomRightRadius: pillRadius,
+            paddingHorizontal: spacing[6],
+            paddingTop: spacing[3],
+            paddingBottom: spacing[6],
+            maxHeight: '65%',
+            zIndex: 50,
+            ...Platform.select({
+              ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: -4 },
+                shadowOpacity: 0.1,
+                shadowRadius: 10,
+              },
+              android: {
+                elevation: 8,
+              },
+            }),
+          }}
+        >
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing[4] }}>
+              <ScreenHeader title="🎲 Lancia i dadi" />
+            </View>
+            <DiceRoller initialType="d20" initialQuantity={1} />
+          </ScrollView>
+        </View>
+      )}
+
+      {/* ── D20 flottante — sempre sopra pannello e navbar ── */}
+      <View
+        style={{
+          position: 'absolute',
+          bottom: bottomMargin - 24,
+          left: 0,
+          right: 0,
+          alignItems: 'center',
+          zIndex: 100,
+          pointerEvents: 'box-none',
+        }}
+      >
+        <CentralDiceButton
+          onPress={() => setIsDiceOpen((prev) => !prev)}
+          isExpanded={isDiceOpen}
+        />
+      </View>
     </View>
   );
 }

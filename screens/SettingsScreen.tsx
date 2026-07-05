@@ -2,13 +2,19 @@ import { ScrollView, View, Alert } from 'react-native';
 import { useScreenStyles } from '../utils/styles';
 import { Button } from '../components/ui/button';
 import ScreenHeader from '../components/custom/ScreenHeader';
+import BackButton from '../components/custom/BackButton';
 import ThemePicker from '../components/custom/ThemePicker';
 
-export default function SettingsScreen() {
+type Props = {
+  onBack?: () => void;
+};
+
+export default function SettingsScreen({ onBack }: Props) {
   const s = useScreenStyles();
 
   return (
     <ScrollView style={s.screen} contentContainerStyle={s.scrollContent}>
+      {onBack && <BackButton onPress={onBack} label="Torna al menu" />}
       <ScreenHeader title="⚙️ Impostazioni" />
       <ThemePicker />
       <Button variant="outline" size="lg" fullWidth onPress={() => Alert.alert('Esporta', 'PDF generato!')}>
