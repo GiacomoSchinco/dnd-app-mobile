@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -7,13 +7,11 @@ import Animated, {
   withSequence,
   withDelay,
   Easing,
+  runOnJS,
 } from 'react-native-reanimated';
 import { spacing } from '../../../utils/styles';
 import type { DiceType, RollResult } from '../../../types';
-import {
-  DICE_COLORS,
-  executeRoll,
-} from '../../../utils/dice';
+import { DICE_COLORS, executeRoll } from '../../../utils/dice';
 import DiceTypeGrid from './DiceTypeGrid';
 import StepperControl from './StepperControl';
 import RollButton from './RollButton';
@@ -52,15 +50,27 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
     ],
   }));
 
-  // ── Animate result number when it appears ────────────────────────
-  useEffect(() => {
-    if (lastResult && !rolling) {
-      resultScale.value = withSequence(
-        withTiming(1.5, { duration: 200, easing: Easing.out(Easing.quad) }),
-        withTiming(1, { duration: 200, easing: Easing.in(Easing.quad) })
-      );
-    }
-  }, [lastResult, rolling]);
+  // ── Helper per iniettare il risultato a fine animazione ─────────
+  const handleRollCompletion = (result: RollResult) => {
+    setLastResult(result);
+    setRolling(false);
+
+    // Fa rimbalzare il dado appena si ferma e mostra il risultato
+    scaleValue.value = withSequence(
+      withTiming(1.2, { duration: 100 }),
+      withTiming(1, { duration: 200, easing: Easing.bounce })
+    );
+
+    glowOpacity.value = withSequence(
+      withTiming(0.4, { duration: 100 }),
+      withTiming(0, { duration: 300 })
+    );
+
+    resultScale.value = withSequence(
+      withTiming(1.5, { duration: 200, easing: Easing.out(Easing.quad) }),
+      withTiming(1, { duration: 200, easing: Easing.in(Easing.quad) })
+    );
+  };
 
   // ── Roll logic ───────────────────────────────────────────────────
   const roll = useCallback(() => {
@@ -69,6 +79,7 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
     setRolling(true);
     setLastResult(null);
 
+    // Reset immediato dei valori animati
     rotateValue.value = 0;
     shakeX.value = 0;
     shakeY.value = 0;
@@ -76,17 +87,30 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
     glowOpacity.value = 0;
     resultScale.value = 0;
 
+    // Anticipazione del lancio (si ingrandisce leggermente)
     scaleValue.value = withTiming(1.1, { duration: 150, easing: Easing.out(Easing.quad) });
 
     const rotations = 3 + Math.floor(Math.random() * 2);
+    const animationDuration = 600 + Math.random() * 200;
+
+    // Calcoliamo subito il risultato matematico
+    const result = executeRoll({ type: diceType, quantity, mode: 'normal', modifier });
+
+    // Rotazione principale del dado
     rotateValue.value = withDelay(
       100,
       withTiming(rotations * 360, {
-        duration: 600 + Math.random() * 200,
+        duration: animationDuration,
         easing: Easing.out(Easing.cubic),
+      }, (finished) => {
+        if (finished) {
+          // Usiamo runOnJS per sincronizzare in modo sicuro il thread UI con lo stato React
+          runOnJS(handleRollCompletion)(result);
+        }
       })
     );
 
+    // Shaking ad alta frequenza
     const shakeIntensity = 8 + Math.random() * 4;
     shakeX.value = withSequence(
       withTiming(shakeIntensity, { duration: 50 }),
@@ -98,35 +122,16 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
       withTiming(0, { duration: 50 })
     );
 
+    // Effetto bagliore intermittente durante il roll
     glowOpacity.value = withSequence(
       withTiming(0.3, { duration: 200 }),
       withTiming(0, { duration: 100 }),
       withTiming(0.2, { duration: 200 }),
       withTiming(0, { duration: 100 })
     );
-
-    const result = executeRoll({ type: diceType, quantity, mode: 'normal', modifier });
-
-    setTimeout(() => {
-      setLastResult(result);
-      setRolling(false);
-
-      scaleValue.value = withSequence(
-        withTiming(1.2, { duration: 100 }),
-        withTiming(1, { duration: 200, easing: Easing.bounce })
-      );
-
-      glowOpacity.value = withSequence(
-        withTiming(0.4, { duration: 100 }),
-        withTiming(0, { duration: 300 })
-      );
-    }, 800);
-  }, [diceType, quantity, modifier, rolling, rotateValue, shakeX, shakeY, scaleValue, glowOpacity, resultScale]);
+  }, [diceType, quantity, modifier, rolling]);
 
   // ── Quantity controls ────────────────────────────────────────────
-  const canDecreaseQuantity = quantity > 1;
-  const canIncreaseQuantity = quantity < 99;
-
   const changeQuantity = useCallback((delta: number) => {
     setQuantity((q) => Math.max(1, Math.min(99, q + delta)));
   }, []);
@@ -143,6 +148,15 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
     setModifier(0);
   }, []);
 
+  // ── Helper per il cambio dado ───────────────────────────────────
+  const updateDiceType = (newType: DiceType) => {
+    setDiceType(newType);
+    scaleValue.value = withSequence(
+      withTiming(1.2, { duration: 150 }),
+      withTiming(1, { duration: 150, easing: Easing.bounce })
+    );
+  };
+
   // ── Dice type change ─────────────────────────────────────────────
   const diceTypeChanged = useCallback(
     (newType: DiceType) => {
@@ -153,23 +167,17 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
       setModifier(0);
       resultScale.value = 0;
 
-      scaleValue.value = withSequence(
-        withTiming(0.8, { duration: 150 }),
-        withTiming(0, { duration: 150 })
-      );
-
-      setTimeout(() => {
-        setDiceType(newType);
-        scaleValue.value = withSequence(
-          withTiming(1.2, { duration: 150 }),
-          withTiming(1, { duration: 150, easing: Easing.bounce })
-        );
-      }, 300);
+      // Il vecchio dado scompare rimpicciolendosi...
+      scaleValue.value = withTiming(0, { duration: 150, easing: Easing.in(Easing.quad) }, (finished) => {
+        if (finished) {
+          // ...e il nuovo entra con un rimbalzo
+          runOnJS(updateDiceType)(newType);
+        }
+      });
     },
-    [diceType, scaleValue, resultScale]
+    [diceType]
   );
 
-  // ── Style helpers ────────────────────────────────────────────────
   const selectedColor = DICE_COLORS[diceType];
 
   return (
@@ -181,8 +189,8 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
           label="Quantità"
           value={quantity}
           onChange={changeQuantity}
-          canDecrement={canDecreaseQuantity}
-          canIncrement={canIncreaseQuantity}
+          canDecrement={quantity > 1}
+          canIncrement={quantity < 99}
         />
         <StepperControl
           label="Modificatore"

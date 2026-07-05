@@ -11,6 +11,7 @@ import { useTokens } from '../ui/prism-provider';
 // Schermate
 import HomeScreen from '../../screens/HomeScreen';
 import CharactersScreen from '../../screens/CharactersScreen';
+import ItemsScreen from '../../screens/ItemsScreen';
 import SpellsScreen from '../../screens/SpellsScreen';
 import MoreScreen from '../../screens/MoreScreen';
 
@@ -23,8 +24,9 @@ import { spacing } from '../../utils/styles';
 const Tab = createBottomTabNavigator();
 
 const NAVIGATION_TABS = [
-  { name: 'Home', component: HomeScreen, iconActive: 'home' as const, iconInactive: 'home-outline' as const },
+  //{ name: 'Home', component: HomeScreen, iconActive: 'home' as const, iconInactive: 'home-outline' as const },
   { name: 'Personaggi', component: CharactersScreen, iconActive: 'people' as const, iconInactive: 'people-outline' as const },
+  { name: 'Oggetti', component: ItemsScreen, iconActive: 'cube' as const, iconInactive: 'cube-outline' as const },
   { name: 'Magie', component: SpellsScreen, iconActive: 'flash' as const, iconInactive: 'flash-outline' as const },
   { name: 'Altro', component: MoreScreen, iconActive: 'ellipsis-horizontal' as const, iconInactive: 'ellipsis-horizontal-outline' as const },
 ];
