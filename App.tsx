@@ -1,6 +1,7 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PrismProvider } from './components/ui/prism-provider';
 import AppNavigator from './components/custom/AppNavigator';
+import { NavigationContainer } from '@react-navigation/native';
 
 // Scegli il tema che preferisci:
 import theme from './components/ui/themes/default'; // ☀️ Default Apple (chiaro)
@@ -12,7 +13,9 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <PrismProvider theme={theme}>
-        <AppNavigator />
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
       </PrismProvider>
     </SafeAreaProvider>
   );

@@ -79,8 +79,8 @@ export default function SpellsScreen() {
   // ── Main render ──
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
-      {/* Header fisso */}
-      <View style={{ paddingHorizontal: spacing[4], paddingBottom: spacing[2] }}>
+      {/* Header fisso con safe area */}
+      <View style={{ paddingTop: insets.top + spacing[4], paddingHorizontal: spacing[4], paddingBottom: spacing[2] }}>
         <ScreenHeader title="✨ Incantesimi" />
         <SpellFilters
           search={search}
@@ -103,7 +103,7 @@ export default function SpellsScreen() {
         data={filteredSpells}
         renderItem={renderSpell}
         keyExtractor={(item) => item.name}
-        contentContainerStyle={{ paddingBottom: spacing[8] }}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 80 }}
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
@@ -116,7 +116,7 @@ export default function SpellsScreen() {
           onPress={scrollToTop}
           style={{
             position: 'absolute',
-            bottom: 40 + insets.bottom,
+            bottom: insets.bottom + 80,
             right: 20,
             width: 50,
             height: 50,
