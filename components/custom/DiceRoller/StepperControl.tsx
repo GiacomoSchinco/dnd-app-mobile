@@ -1,5 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
+import { s } from '../../../utils/style-helpers';
 import { spacing, radius, fontSizes } from '../../../utils/styles';
 
 type Props = {

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { useActiveCharacter } from '../../../store/useActiveCharacter';
-import { spacing, fontSizes, radius } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import { LEVEL_LABELS } from './types';
 
 // ── Colori per ogni livello incantesimo (dal 1° al 9°) ─────
@@ -37,9 +37,9 @@ export default function SpellSlotManager({ characterId }: Props) {
 
   if (maxLevel === 0) {
     return (
-      <View style={{ alignItems: 'center', paddingVertical: spacing[10] }}>
-        <Text style={{ fontSize: fontSizes['2xl'], marginBottom: spacing[3] }}>🔮</Text>
-        <Text style={{ fontSize: fontSizes.base, color: t.colors.foregroundSecondary, textAlign: 'center' }}>
+      <View style={[s.center, s.py(t.spacing[10])]}>
+        <Text style={{ fontSize: t.typography['2xl'], marginBottom: t.spacing[3] }}>🔮</Text>
+        <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center' }}>
           Questo personaggio non ha slot incantesimi.{'\n'}Forse è di livello troppo basso.
         </Text>
       </View>
@@ -49,9 +49,9 @@ export default function SpellSlotManager({ characterId }: Props) {
   const allSlotsFull = Object.values(slots).every((s) => s.current === s.max);
 
   return (
-    <View style={{ gap: spacing[2] }}>
+    <View style={s.gap(t.spacing[2])}>
       {/* Header */}
-      <Text style={{ fontSize: fontSizes.xs, color: t.colors.foregroundTertiary, marginBottom: spacing[1] }}>
+      <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginBottom: t.spacing[1] }}>
         Tocca per usare/ripristinare
       </Text>
 
@@ -59,7 +59,7 @@ export default function SpellSlotManager({ characterId }: Props) {
       <View
         style={{
           backgroundColor: t.colors.card,
-          borderRadius: radius.xl,
+          borderRadius: t.radius.xl,
           borderWidth: 1,
           borderColor: t.colors.cardBorder,
           overflow: 'hidden',
@@ -74,37 +74,22 @@ export default function SpellSlotManager({ characterId }: Props) {
           return (
             <View
               key={level}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: spacing[3],
-                paddingHorizontal: spacing[4],
-                borderBottomWidth: 1,
-                borderBottomColor: t.colors.cardBorder,
-              }}
+              style={[s.row, s.py(t.spacing[3]), s.px(t.spacing[4]), { borderBottomWidth: 1, borderBottomColor: t.colors.cardBorder }]}
             >
               {/* Badge livello */}
               <View
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: radius.full,
-                  backgroundColor: color + '20',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginRight: spacing[3],
-                }}
+                style={[s.box(32, t.radius.full), { backgroundColor: color + '20', marginRight: t.spacing[3] }]}
               >
-                <Text style={{ fontSize: fontSizes.sm, fontWeight: '800', color }}>{level}</Text>
+                <Text style={{ fontSize: t.typography.sm, fontWeight: '800', color }}>{level}</Text>
               </View>
 
               {/* Label */}
-              <Text style={{ fontSize: fontSizes.sm, fontWeight: '600', color: t.colors.foreground, width: 38 }}>
+              <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground, width: 38 }}>
                 {LEVEL_LABELS[level]}
               </Text>
 
               {/* Pallini interattivi */}
-              <View style={{ flex: 1, flexDirection: 'row', gap: spacing[1.5] }}>
+              <View style={[s.flex, s.row, s.gap(t.spacing[1.5])]}>
                 {Array.from({ length: slot.max }, (_, i) => {
                   const filled = i < slot.current;
                   return (
@@ -137,7 +122,7 @@ export default function SpellSlotManager({ characterId }: Props) {
               {/* Counter */}
               <Text
                 style={{
-                  fontSize: fontSizes.sm,
+                  fontSize: t.typography.sm,
                   fontWeight: '700',
                   color: t.colors.foreground,
                   minWidth: 32,
@@ -155,16 +140,9 @@ export default function SpellSlotManager({ characterId }: Props) {
         {!allSlotsFull && (
           <TouchableOpacity
             onPress={() => restoreSpellSlots()}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: spacing[1.5],
-              paddingVertical: spacing[3],
-              backgroundColor: t.colors.backgroundSecondary,
-            }}
+            style={[s.row, s.gap(t.spacing[1.5]), { justifyContent: 'center', paddingVertical: t.spacing[3], backgroundColor: t.colors.backgroundSecondary }]}
           >
-            <Text style={{ fontSize: fontSizes.sm, fontWeight: '700', color: t.colors.accent }}>
+                <Text style={{ fontSize: t.typography.sm, fontWeight: '700', color: t.colors.accent }}>
               ⚡ Lungo riposo — ricarica tutti gli slot
             </Text>
           </TouchableOpacity>
@@ -175,14 +153,14 @@ export default function SpellSlotManager({ characterId }: Props) {
       {activeChar.classes?.[0]?.className === 'warlock' && (
         <View
           style={{
-            padding: spacing[3],
-            borderRadius: radius.md,
+            padding: t.spacing[3],
+            borderRadius: t.radius.md,
             backgroundColor: t.colors.accentSubtle,
             borderWidth: 1,
             borderColor: t.colors.accent + '40',
           }}
         >
-          <Text style={{ fontSize: fontSizes.xs, color: t.colors.accent, textAlign: 'center' }}>
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.accent, textAlign: 'center' }}>
             ⚡ I Warlock usano Pact Magic — tutti gli slot sono dello stesso livello e si recuperano con un riposo breve.
           </Text>
         </View>

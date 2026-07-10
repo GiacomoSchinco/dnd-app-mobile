@@ -6,12 +6,17 @@ import defaultTheme from '../ui/themes/default';
 import obsidianTheme from '../ui/themes/obsidian';
 import neonTheme from '../ui/themes/neon';
 import stoneTheme from '../ui/themes/stone';
+import darkFantasyTheme from '../ui/themes/dark_fantasy';
+import lightFantasyTheme from '../ui/themes/light_fantasy';
 
 const themes = [
   { key: 'default', theme: defaultTheme, label: 'Default', desc: 'Chiaro · stile Apple', emoji: '☀️' },
   { key: 'obsidian', theme: obsidianTheme, label: 'Obsidian', desc: 'Scuro · viola epico', emoji: '🌑' },
   { key: 'neon', theme: neonTheme, label: 'Neon', desc: 'Cyberpunk · verde glow', emoji: '💚' },
   { key: 'stone', theme: stoneTheme, label: 'Stone', desc: 'Caldo · marrone naturale', emoji: '🪨' },
+  // Nuovi temi Fantasy aggiunti:
+  { key: 'dark_fantasy', theme: darkFantasyTheme, label: 'Dark Fantasy', desc: 'Antracite · oro araldico', emoji: '🐉' },
+  { key: 'light_fantasy', theme: lightFantasyTheme, label: 'Light Fantasy', desc: 'Pergamena · rosso cremisi', emoji: '📜' },
 ];
 
 export default function ThemePicker() {

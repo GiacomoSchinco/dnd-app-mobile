@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
-import { spacing, fontSizes } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import { TYPE_LABELS, RARITY_LABELS, RARITY_COLORS } from './types';
 import { useMemo } from 'react';
 
@@ -35,22 +35,22 @@ export default function ItemFilters({
         placeholder="Cerca oggetto..."
         value={search}
         onChangeText={onSearchChange}
-        style={{ marginBottom: spacing[3] }}
+        style={s.mb(t.spacing[3])}
       />
 
       {/* Type filter */}
-      <View style={{ marginBottom: spacing[2] }}>
+      <View style={s.mb(t.spacing[2])}>
         <Text style={{
-          fontSize: fontSizes.xs,
+          fontSize: t.typography.xs,
           fontWeight: '600',
           color: t.colors.foregroundSecondary,
           textTransform: 'uppercase',
           letterSpacing: 0.5,
-          marginBottom: spacing[1.5],
+          marginBottom: t.spacing[1.5],
         }}>
           Tipo
         </Text>
-        <View style={{ flexDirection: 'row', gap: spacing[1.5], flexWrap: 'wrap' }}>
+        <View style={[s.rowWrap, s.gap(t.spacing[1.5])]}>
           {TYPE_KEYS.map((type) => {
             const active = typeFilter === type;
             return (
@@ -58,8 +58,8 @@ export default function ItemFilters({
                 key={type}
                 onPress={() => onTypeFilterChange(active ? null : type)}
                 style={{
-                  paddingHorizontal: spacing[2.5],
-                  paddingVertical: spacing[1.5],
+                  paddingHorizontal: t.spacing[2.5],
+                  paddingVertical: t.spacing[1.5],
                   borderRadius: 20,
                   backgroundColor: active ? t.colors.accent : t.colors.backgroundSecondary,
                   borderWidth: 1,
@@ -67,7 +67,7 @@ export default function ItemFilters({
                 }}
               >
                 <Text style={{
-                  fontSize: fontSizes.xs,
+                  fontSize: t.typography.xs,
                   fontWeight: '600',
                   color: active ? t.colors.accentForeground : t.colors.foregroundSecondary,
                 }}>
@@ -80,18 +80,18 @@ export default function ItemFilters({
       </View>
 
       {/* Rarity filter */}
-      <View style={{ marginBottom: spacing[2] }}>
+      <View style={s.mb(t.spacing[2])}>
         <Text style={{
-          fontSize: fontSizes.xs,
+          fontSize: t.typography.xs,
           fontWeight: '600',
           color: t.colors.foregroundSecondary,
           textTransform: 'uppercase',
           letterSpacing: 0.5,
-          marginBottom: spacing[1.5],
+          marginBottom: t.spacing[1.5],
         }}>
           Rarità
         </Text>
-        <View style={{ flexDirection: 'row', gap: spacing[1.5], flexWrap: 'wrap' }}>
+        <View style={[s.rowWrap, s.gap(t.spacing[1.5])]}>
           {RARITY_KEYS.map((rarity) => {
             const active = rarityFilter === rarity;
             const color = RARITY_COLORS[rarity] || '#888';
@@ -100,8 +100,8 @@ export default function ItemFilters({
                 key={rarity}
                 onPress={() => onRarityFilterChange(active ? null : rarity)}
                 style={{
-                  paddingHorizontal: spacing[2.5],
-                  paddingVertical: spacing[1.5],
+                  paddingHorizontal: t.spacing[2.5],
+                  paddingVertical: t.spacing[1.5],
                   borderRadius: 20,
                   backgroundColor: active ? color + '20' : t.colors.backgroundSecondary,
                   borderWidth: 1,
@@ -109,7 +109,7 @@ export default function ItemFilters({
                 }}
               >
                 <Text style={{
-                  fontSize: fontSizes.xs,
+                  fontSize: t.typography.xs,
                   fontWeight: '600',
                   color: active ? color : t.colors.foregroundSecondary,
                 }}>
@@ -122,10 +122,10 @@ export default function ItemFilters({
       </View>
 
       <Text style={{
-        fontSize: fontSizes.xs,
+        fontSize: t.typography.xs,
         color: t.colors.foregroundTertiary,
         textAlign: 'right',
-        marginBottom: spacing[2],
+        marginBottom: t.spacing[2],
       }}>
         {filteredCount} oggetti
       </Text>

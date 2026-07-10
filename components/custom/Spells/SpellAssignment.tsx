@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
-import { spacing, fontSizes, radius } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import { useActiveCharacter } from '../../../store/useActiveCharacter';
 import { getSpellProgression } from '../../../lib/rules/spellcasting';
 import spellsData from '../../../assets/data/spells.json';
@@ -118,7 +118,7 @@ export default function SpellAssignment({ characterId }: Props) {
   }, [classSpells]);
 
   return (
-    <View style={{ gap: spacing[3] }}>
+    <View style={s.gap(t.spacing[3])}>
       {/* Barra di ricerca */}
       <Input
         placeholder="Cerca incantesimo per nome..."
@@ -130,7 +130,7 @@ export default function SpellAssignment({ characterId }: Props) {
       <View
         style={{
           backgroundColor: t.colors.card,
-          borderRadius: radius.xl,
+          borderRadius: t.radius.xl,
           borderWidth: 1,
           borderColor: t.colors.cardBorder,
           overflow: 'hidden',
@@ -139,19 +139,12 @@ export default function SpellAssignment({ characterId }: Props) {
         {/* Trucchetti */}
         {maxCantrips > 0 && (
           <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingVertical: spacing[2.5],
-              paddingHorizontal: spacing[4],
-              borderBottomWidth: 1,
-              borderBottomColor: t.colors.cardBorder,
-            }}
+            style={[s.row, s.py(t.spacing[2.5]), s.px(t.spacing[4]), { borderBottomWidth: 1, borderBottomColor: t.colors.cardBorder }]}
           >
-            <Text style={{ fontSize: fontSizes.sm, fontWeight: '600', color: t.colors.foreground, flex: 1 }}>
+            <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground, flex: 1 }}>
               ☆ Trucchetti
             </Text>
-            <Text style={{ fontSize: fontSizes.sm, fontWeight: '700', color: t.colors.foreground }}>
+            <Text style={{ fontSize: t.typography.sm, fontWeight: '700', color: t.colors.foreground }}>
               <Text style={{ color: cantripCount >= maxCantrips ? t.colors.accent : t.colors.foreground }}>
                 {cantripCount}
               </Text>
@@ -168,22 +161,15 @@ export default function SpellAssignment({ characterId }: Props) {
           return (
             <View
               key={lvl}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: spacing[2.5],
-                paddingHorizontal: spacing[4],
-                borderBottomWidth: lvl < Math.max(...availableLevels) ? 1 : 0,
-                borderBottomColor: t.colors.cardBorder,
-              }}
+              style={[s.row, s.py(t.spacing[2.5]), s.px(t.spacing[4]), { borderBottomWidth: lvl < Math.max(...availableLevels) ? 1 : 0, borderBottomColor: t.colors.cardBorder }]}
             >
-              <Text style={{ fontSize: fontSizes.sm, color: t.colors.foreground, flex: 1 }}>
+              <Text style={{ fontSize: t.typography.sm, color: t.colors.foreground, flex: 1 }}>
                 {lvl}° Livello
                 {hasSlot && (
                   <Text style={{ color: t.colors.foregroundTertiary }}> ({slotMax} slot)</Text>
                 )}
               </Text>
-              <Text style={{ fontSize: fontSizes.sm, fontWeight: '700', color: prepared > 0 ? t.colors.accent : t.colors.foregroundTertiary }}>
+              <Text style={{ fontSize: t.typography.sm, fontWeight: '700', color: prepared > 0 ? t.colors.accent : t.colors.foregroundTertiary }}>
                 {prepared > 0 ? `${prepared} ` : ''}
                 <Text style={{ color: t.colors.foregroundTertiary }}>
                   {prepared > 0 ? 'preparat' + (prepared > 1 ? 'i' : 'o') : '—'}
@@ -196,20 +182,14 @@ export default function SpellAssignment({ characterId }: Props) {
         {/* Totale magie livellate (solo per preparer/spells-known) */}
         {(isPreparer || hasSpellsKnown) && maxSpells != null && (
           <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingVertical: spacing[3],
-              paddingHorizontal: spacing[4],
-              backgroundColor: t.colors.backgroundSecondary,
-            }}
+            style={[s.row, s.py(t.spacing[3]), s.px(t.spacing[4]), { backgroundColor: t.colors.backgroundSecondary }]}
           >
-            <Text style={{ fontSize: fontSizes.sm, fontWeight: '600', color: t.colors.foreground, flex: 1 }}>
+            <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground, flex: 1 }}>
               {isPreparer ? 'Totale preparati' : 'Totale conosciuti'}
             </Text>
-            <Text style={{ fontSize: fontSizes.base, fontWeight: '800', color: spellCount >= maxSpells ? t.colors.accent : t.colors.foreground }}>
+            <Text style={{ fontSize: t.typography.base, fontWeight: '800', color: spellCount >= maxSpells ? t.colors.accent : t.colors.foreground }}>
               {spellCount}
-              <Text style={{ fontSize: fontSizes.sm, fontWeight: '600', color: t.colors.foregroundTertiary }}>
+              <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foregroundTertiary }}>
                 /{maxSpells}
               </Text>
             </Text>
@@ -219,7 +199,7 @@ export default function SpellAssignment({ characterId }: Props) {
 
       {/* Filtri livello — solo livelli che il PG può lanciare */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={{ flexDirection: 'row', gap: spacing[1.5] }}>
+        <View style={[s.row, s.gap(t.spacing[1.5])]}>
           {availableLevels.map((lvl) => {
             const active = levelFilter === lvl;
             return (
@@ -227,9 +207,9 @@ export default function SpellAssignment({ characterId }: Props) {
                 key={lvl}
                 onPress={() => setLevelFilter(active ? null : lvl)}
                 style={{
-                  paddingHorizontal: spacing[3],
-                  paddingVertical: spacing[1.5],
-                  borderRadius: radius.full,
+                  paddingHorizontal: t.spacing[3],
+                  paddingVertical: t.spacing[1.5],
+                  borderRadius: t.radius.full,
                   backgroundColor: active
                     ? getSchoolColor(SCHOOL_KEYS[lvl % SCHOOL_KEYS.length])
                     : t.colors.backgroundSecondary,
@@ -239,7 +219,7 @@ export default function SpellAssignment({ characterId }: Props) {
               >
                 <Text
                   style={{
-                    fontSize: fontSizes.xs,
+                    fontSize: t.typography.xs,
                     fontWeight: active ? '700' : '400',
                     color: active ? '#FFFFFF' : t.colors.foregroundSecondary,
                   }}
@@ -253,13 +233,13 @@ export default function SpellAssignment({ characterId }: Props) {
       </ScrollView>
 
       {/* Toggle prepared only */}
-      <View style={{ flexDirection: 'row', gap: spacing[2], alignItems: 'center' }}>
+      <View style={[s.row, s.gap(t.spacing[2])]}>
         <TouchableOpacity
           onPress={() => setShowPreparedOnly(!showPreparedOnly)}
           style={{
-            paddingHorizontal: spacing[2.5],
-            paddingVertical: spacing[1],
-            borderRadius: radius.full,
+            paddingHorizontal: t.spacing[2.5],
+            paddingVertical: t.spacing[1],
+            borderRadius: t.radius.full,
             backgroundColor: showPreparedOnly ? t.colors.accent : t.colors.backgroundSecondary,
             borderWidth: 1,
             borderColor: showPreparedOnly ? 'transparent' : t.colors.border,
@@ -267,7 +247,7 @@ export default function SpellAssignment({ characterId }: Props) {
         >
           <Text
             style={{
-              fontSize: fontSizes.xs,
+              fontSize: t.typography.xs,
               fontWeight: showPreparedOnly ? '600' : '400',
               color: showPreparedOnly ? t.colors.accentForeground : t.colors.foregroundSecondary,
             }}
@@ -275,15 +255,15 @@ export default function SpellAssignment({ characterId }: Props) {
             {showPreparedOnly ? '✓ Solo preparati' : 'Solo preparati'}
           </Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: fontSizes.xs, color: t.colors.foregroundTertiary }}>
+        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
           {classSpells.length} incantesimi
         </Text>
       </View>
 
       {/* Lista incantesimi */}
       {grouped.length === 0 ? (
-        <View style={{ alignItems: 'center', paddingVertical: spacing[8] }}>
-          <Text style={{ fontSize: fontSizes.base, color: t.colors.foregroundSecondary }}>
+        <View style={[s.center, s.py(t.spacing[8])]}>
+          <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary }}>
             Nessun incantesimo trovato
           </Text>
         </View>
@@ -292,13 +272,13 @@ export default function SpellAssignment({ characterId }: Props) {
           <View key={group.level}>
             <Text
               style={{
-                fontSize: fontSizes.xs,
+                fontSize: t.typography.xs,
                 fontWeight: '700',
                 color: t.colors.foregroundTertiary,
                 textTransform: 'uppercase',
                 letterSpacing: 1,
-                marginBottom: spacing[2],
-                marginTop: spacing[1],
+                marginBottom: t.spacing[2],
+                marginTop: t.spacing[1],
               }}
             >
               {group.level === 0 ? 'TRUCCHETTI' : `LIVELLO ${group.level}`}

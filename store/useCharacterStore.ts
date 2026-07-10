@@ -1,39 +1,65 @@
 import { create } from 'zustand';
-import type { CharacterState } from '../types';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import type { CharacterState, Character, ClassName } from '../types';
+import { fileSystemStorage } from './file-system-storage';
 
-export const useCharacterStore = create<CharacterState>()(() => ({
-  characters: [],
-  activeCharacterId: null,
+let counter = 0;
+function uid(): string {
+  counter += 1;
+  return `pg_${Date.now()}_${counter}`;
+}
 
-  createCharacter: (_name, _className, _level) => {
-    // TODO: da implementare con la nuova logica di salvataggio
-  },
+export const useCharacterStore = create<CharacterState>()(
+  persist(
+    (set) => ({
+      characters: [],
+      activeCharacterId: null,
 
-  deleteCharacter: (_id) => {
-    // TODO: da implementare con la nuova logica di salvataggio
-  },
+      createCharacter: (name, className, level = 1) => {
+        const newChar: Character = {
+          id: uid(),
+          name,
+          classes: [{ className: className as ClassName, level }],
+          level,
+          race: undefined,
+          background: undefined,
+          abilities: {
+            strength: 10, dexterity: 10, constitution: 10,
+            intelligence: 10, wisdom: 10, charisma: 10,
+          },
+          proficiencies: { armor: [], weapons: [], tools: [], skills: [], savingThrows: [] },
+          preparedSpells: [],
+          favoriteSpells: [],
+          spellSlots: {},
+          feats: [],
+          epicBoons: [],
+        };
+        set((s) => ({ characters: [...s.characters, newChar] }));
+      },
 
-  setActiveCharacterId: (_id) => {
-    // TODO: da implementare con la nuova logica di salvataggio
-  },
+      deleteCharacter: (id) => {
+        set((s) => ({
+          characters: s.characters.filter((c) => c.id !== id),
+          activeCharacterId: s.activeCharacterId === id ? null : s.activeCharacterId,
+        }));
+      },
 
-  updateCharacter: (_id, _updates) => {
-    // TODO: da implementare con la nuova logica di salvataggio
-  },
+      setActiveCharacterId: (id) => set({ activeCharacterId: id }),
 
-  togglePreparedSpell: (_spellSlug) => {
-    // TODO: da implementare con la nuova logica di salvataggio
-  },
+      updateCharacter: (id, updates) => {
+        set((s) => ({
+          characters: s.characters.map((c) => (c.id === id ? { ...c, ...updates } : c)),
+        }));
+      },
 
-  toggleFavoriteSpell: (_spellSlug) => {
-    // TODO: da implementare con la nuova logica di salvataggio
-  },
-
-  useSpellSlot: (_level) => {
-    // TODO: da implementare con la nuova logica di salvataggio
-  },
-
-  restoreSpellSlots: (_level) => {
-    // TODO: da implementare con la nuova logica di salvataggio
-  },
-}));
+      togglePreparedSpell: (_slug) => { /* TODO */ },
+      toggleFavoriteSpell: (_slug) => { /* TODO */ },
+      useSpellSlot: (_level) => { /* TODO */ },
+      restoreSpellSlots: (_level) => { /* TODO */ },
+    }),
+    {
+      name: 'dnd-characters',
+      storage: createJSONStorage(() => fileSystemStorage),
+    },
+  ),
+);

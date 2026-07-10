@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTokens } from '../ui/prism-provider';
-import { spacing, fontSizes } from '../../utils/styles';
+import { s } from '../../utils/style-helpers';
 import BackButton from './BackButton';
 
 type Props = {
@@ -19,10 +19,10 @@ export default function ScreenHeader({ title, subtitle, onBack, backLabel, cente
   const t = useTokens();
 
   return (
-    <View style={{ alignItems: center ? 'center' : 'flex-start', width: '100%' }}>
+    <View style={[s.fullWidth, { alignItems: center ? 'center' : 'flex-start' }]}>
       {onBack && <BackButton onPress={onBack} label={backLabel} />}
       
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[2], marginBottom: subtitle ? spacing[1] : spacing[6], width: '100%', justifyContent: center ? 'center' : 'flex-start' }}>
+      <View style={[s.row, s.gap(t.spacing[2]), s.fullWidth, { marginBottom: subtitle ? t.spacing[1] : t.spacing[6], justifyContent: center ? 'center' : 'flex-start' }]}>
         {icon && (
           <Ionicons
             name={icon}
@@ -33,7 +33,7 @@ export default function ScreenHeader({ title, subtitle, onBack, backLabel, cente
         <Text
           style={{
             color: t.colors.foreground,
-            fontSize: fontSizes.xl,
+            fontSize: t.typography.xl,
             fontWeight: '700',
             textAlign: center ? 'center' : 'left',
           }}
@@ -46,9 +46,9 @@ export default function ScreenHeader({ title, subtitle, onBack, backLabel, cente
         <Text
           style={{
             color: t.colors.foregroundSecondary,
-            fontSize: fontSizes.sm,
+            fontSize: t.typography.sm,
             textAlign: center ? 'center' : 'left', // <-- Centra il sottotitolo
-            marginBottom: spacing[6],
+            marginBottom: t.spacing[6],
             width: '100%',
           }}
         >

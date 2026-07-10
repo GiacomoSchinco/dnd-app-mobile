@@ -9,7 +9,7 @@ import Animated, {
   Easing,
   runOnJS,
 } from 'react-native-reanimated';
-import { spacing } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import type { DiceType, RollResult } from '../../../types';
 import { DICE_COLORS, executeRoll } from '../../../utils/dice';
 import DiceTypeGrid from './DiceTypeGrid';
@@ -181,10 +181,10 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
   const selectedColor = DICE_COLORS[diceType];
 
   return (
-    <View style={{ alignItems: 'center', gap: spacing[4], padding: spacing[4] }}>
+    <View style={[s.center, { gap: 16, padding: 16 }]}>
       <DiceTypeGrid selected={diceType} onSelect={diceTypeChanged} />
 
-      <View style={{ flexDirection: 'row', justifyContent: 'center', gap: spacing[4] }}>
+      <View style={[s.row, { gap: 16, justifyContent: 'center' }]}>
         <StepperControl
           label="Quantità"
           value={quantity}

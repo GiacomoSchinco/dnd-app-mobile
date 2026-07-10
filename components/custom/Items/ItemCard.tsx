@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native';
 import { Card } from '../../ui/card';
 import { Badge } from '../../ui/badge';
 import { useTokens } from '../../ui/prism-provider';
-import { spacing, fontSizes } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import { Ionicons } from '@expo/vector-icons';
 import DndIcon from '../DndIcon';
 import type { ItemDefinition } from '../../../types';
@@ -19,25 +19,18 @@ export default function ItemCard({ item, onPress }: Props) {
 
   return (
     <Pressable onPress={onPress} style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}>
-      <Card style={{ marginBottom: spacing[3] }}>
-        <View style={{ flexDirection: 'row', gap: spacing[3], alignItems: 'center' }}>
+      <Card style={s.mb(t.spacing[3])}>
+        <View style={[s.row, s.gap(t.spacing[3])]}>
           {/* Type Icon */}
-          <View style={{
-            backgroundColor: typeColor + '20',
-            borderRadius: 12,
-            width: 52,
-            height: 52,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+          <View style={[s.box(52, 12), { backgroundColor: typeColor + '20' }]}>
             <DndIcon name={item.type as any} size={28} color={typeColor} />
           </View>
 
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: fontSizes.md, fontWeight: '600', color: t.colors.foreground }}>
+          <View style={s.flex}>
+            <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
               {item.name}
             </Text>
-            <View style={{ flexDirection: 'row', gap: spacing[1.5], flexWrap: 'wrap', alignItems: 'center', marginTop: spacing[1] }}>
+            <View style={[s.rowWrap, s.gap(t.spacing[1.5]), s.mt(t.spacing[1])]}>
               <Badge variant="solid" size="sm" color={typeColor}>
                 {getTypeLabel(item.type)}
               </Badge>
@@ -45,8 +38,8 @@ export default function ItemCard({ item, onPress }: Props) {
                 {RARITY_LABELS[item.rarity] || item.rarity}
               </Badge>
             </View>
-            <View style={{ flexDirection: 'row', gap: spacing[1], flexWrap: 'wrap', alignItems: 'center', marginTop: spacing[0.5] }}>
-              <Text style={{ fontSize: fontSizes.xs, color: t.colors.foregroundSecondary }}>
+            <View style={[s.rowWrap, s.gap(t.spacing[1]), s.mt(t.spacing[0.5])]}>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary }}>
                 {getCategoryLabel(item.category)} · {item.weight > 0 ? `${item.weight} kg` : '—'} · {item.value} {item.currency}
               </Text>
             </View>

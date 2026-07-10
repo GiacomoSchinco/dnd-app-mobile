@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Pressable, ScrollView, Dimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../ui/prism-provider';
-import { spacing, radius } from '../../utils/styles';
+import { s } from '../../utils/style-helpers';
 
 type Props = {
   visible: boolean;
@@ -41,8 +41,8 @@ export default function BottomModal({
         bottom: 0,
         backgroundColor: 'rgba(0,0,0,0.6)',
         justifyContent: 'center',
-        paddingHorizontal: spacing[4],
-        paddingTop: Math.max(spacing[4], insets.top),
+        paddingHorizontal: t.spacing[4],
+        paddingTop: Math.max(t.spacing[4], insets.top),
         paddingBottom: Math.max(bottomPadding, insets.bottom + 80),
         zIndex: 100,
       }}
@@ -63,13 +63,13 @@ export default function BottomModal({
       <View
         style={{
           backgroundColor: t.colors.card,
-          borderRadius: radius.xl,
+          borderRadius: t.radius.xl,
           maxHeight: Dimensions.get('window').height * maxHeightPercent,
         }}
       >
         <ScrollView
           showsVerticalScrollIndicator={true}
-          contentContainerStyle={{ padding: spacing[6] }}
+          contentContainerStyle={{ padding: t.spacing[6] }}
         >
           {children}
         </ScrollView>

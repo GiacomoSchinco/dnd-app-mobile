@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, Pressable, TouchableOpacity, Modal, Alert } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Button } from '../../ui/button';
-import { spacing, fontSizes, radius } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import type { Character, ClassName } from '../../../types';
 import { CLASS_LABELS } from './types';
 import CharacterCreateForm from '../CharacterCreateForm';
@@ -41,22 +41,22 @@ export default function CharacterPickerModal({
 
   return (
     <Modal visible={visible} transparent animationType="fade">
-      <Pressable style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', padding: spacing[4] }} onPress={handleClose}>
-        <Pressable onPress={() => {}} style={{ backgroundColor: t.colors.card, borderRadius: radius.xl, padding: spacing[6] }}>
+      <Pressable style={[s.flex, { backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', padding: t.spacing[4] }]} onPress={handleClose}>
+        <Pressable onPress={() => {}} style={{ backgroundColor: t.colors.card, borderRadius: t.radius.xl, padding: t.spacing[6] }}>
           {mode === 'pick' ? (
             <>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing[4] }}>
-                <Text style={{ fontSize: fontSizes.lg, fontWeight: '700', color: t.colors.foreground }}>
+              <View style={[s.row, { justifyContent: 'space-between' }, s.mb(t.spacing[4])]}>
+                <Text style={{ fontSize: t.typography.lg, fontWeight: '700', color: t.colors.foreground }}>
                   👥 Personaggi
                 </Text>
                 <TouchableOpacity onPress={() => setMode('create')}>
-                  <Text style={{ fontSize: fontSizes.base, color: t.colors.accent, fontWeight: '600' }}>+ Nuovo</Text>
+                  <Text style={{ fontSize: t.typography.base, color: t.colors.accent, fontWeight: '600' }}>+ Nuovo</Text>
                 </TouchableOpacity>
               </View>
 
               {characters.length === 0 ? (
-                <View style={{ alignItems: 'center', paddingVertical: spacing[8] }}>
-                  <Text style={{ fontSize: fontSizes.base, color: t.colors.foregroundSecondary, marginBottom: spacing[4], textAlign: 'center' }}>
+                <View style={[s.center, s.py(t.spacing[8])]}>
+                  <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, marginBottom: t.spacing[4], textAlign: 'center' }}>
                     Nessun personaggio ancora.{'\n'}Creane uno per iniziare!
                   </Text>
                   <Button onPress={() => setMode('create')}>+ Crea personaggio</Button>
@@ -68,22 +68,13 @@ export default function CharacterPickerModal({
                     <Pressable
                       key={char.id}
                       onPress={() => { onSelect(char.id); handleClose(); }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        paddingVertical: spacing[3],
-                        paddingHorizontal: spacing[3],
-                        backgroundColor: isActive ? t.colors.accentSubtle : 'transparent',
-                        borderRadius: radius.md,
-                        marginBottom: spacing[1],
-                      }}
+                      style={[s.row, { justifyContent: 'space-between', paddingVertical: t.spacing[3], paddingHorizontal: t.spacing[3], backgroundColor: isActive ? t.colors.accentSubtle : 'transparent', borderRadius: t.radius.md, marginBottom: t.spacing[1] }]}
                     >
                       <View>
-                        <Text style={{ fontSize: fontSizes.base, fontWeight: '600', color: t.colors.foreground }}>
+                        <Text style={{ fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
                           {char.name} {isActive ? '✓' : ''}
                         </Text>
-                        <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary }}>
+                        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
                           {CLASS_LABELS[char.classes?.[0]?.className] || char.classes?.[0]?.className} · Livello {char.level}
                         </Text>
                       </View>
@@ -95,14 +86,14 @@ export default function CharacterPickerModal({
                           ]);
                         }}
                       >
-                        <Text style={{ fontSize: fontSizes.sm, color: t.colors.danger }}>Elimina</Text>
+                        <Text style={{ fontSize: t.typography.sm, color: t.colors.danger }}>Elimina</Text>
                       </TouchableOpacity>
                     </Pressable>
                   );
                 })
               )}
 
-              <Button variant="ghost" onPress={handleClose} fullWidth style={{ marginTop: spacing[2] }}>Chiudi</Button>
+              <Button variant="ghost" onPress={handleClose} fullWidth style={s.mt(t.spacing[2])}>Chiudi</Button>
             </>
           ) : (
             <CharacterCreateForm onCreate={handleCreate} onCancel={() => setMode('pick')} />

@@ -1,6 +1,6 @@
 import { View, Text, Pressable } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
-import { spacing, fontSizes, radius } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import type { Character, ClassName } from '../../../types';
 import { CLASS_LABELS } from './types';
 
@@ -15,32 +15,21 @@ export default function CharacterBar({ activeChar, onPress }: Props) {
   return (
     <Pressable
       onPress={onPress}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: t.colors.card,
-        borderRadius: radius.md,
-        borderWidth: 1,
-        borderColor: t.colors.cardBorder,
-        padding: spacing[3],
-        marginBottom: spacing[4],
-      }}
-    >
+      style={[s.row, { justifyContent: 'space-between', backgroundColor: t.colors.card, borderRadius: t.radius.md, borderWidth: 1, borderColor: t.colors.cardBorder, padding: t.spacing[3], marginBottom: t.spacing[4] }]}>
       {activeChar ? (
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: fontSizes.base, fontWeight: '600', color: t.colors.foreground }}>
+        <View style={s.flex}>
+          <Text style={{ fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
             {activeChar.name}
           </Text>
-          <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary }}>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
             {CLASS_LABELS[activeChar.classes?.[0]?.className] || activeChar.classes?.[0]?.className} · Livello {activeChar.level}
           </Text>
-          <Text style={{ fontSize: fontSizes.xs, color: t.colors.foregroundTertiary, marginTop: 2 }}>
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: 2 }}>
             {activeChar.preparedSpells.length} preparate · {activeChar.favoriteSpells.length} preferite
           </Text>
         </View>
       ) : (
-        <Text style={{ fontSize: fontSizes.base, color: t.colors.foregroundSecondary }}>
+        <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary }}>
           👤 Nessun personaggio — tocca per crearne uno
         </Text>
       )}

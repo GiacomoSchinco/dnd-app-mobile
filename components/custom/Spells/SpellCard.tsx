@@ -2,7 +2,7 @@ import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 import { Card } from '../../ui/card';
 import { Badge } from '../../ui/badge';
 import { useTokens } from '../../ui/prism-provider';
-import { spacing, fontSizes, radius } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import type { Spell, ClassName } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
 import DndIcon from '../DndIcon';
@@ -33,28 +33,21 @@ export default function SpellCard({
       <Card
         variant={isPrepared ? 'elevated' : 'default'}
         style={{
-          marginBottom: spacing[3],
+          marginBottom: t.spacing[3],
           ...(isPrepared ? { borderColor: t.colors.accent } : {}),
         }}
       >
-        <View style={{ flexDirection: 'row', gap: spacing[3], alignItems: 'center' }}>
+        <View style={[s.row, s.gap(t.spacing[3])]}>
           {/* School Icon */}
-          <View style={{
-            backgroundColor: SCHOOL_MAP[spell.school]?.color + '20' || t.colors.backgroundSecondary,
-            borderRadius: radius.xl,
-            width: 52,
-            height: 52,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+          <View style={[s.box(52, t.radius.xl), { backgroundColor: SCHOOL_MAP[spell.school]?.color + '20' || t.colors.backgroundSecondary }]}>
             <DndIcon name={spell.school} size={28} color={SCHOOL_MAP[spell.school]?.color || '#fff'} />
           </View>
 
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: fontSizes.md, fontWeight: '600', color: t.colors.foreground }}>
+          <View style={s.flex}>
+            <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
               {spell.name}
             </Text>
-            <View style={{ flexDirection: 'row', gap: spacing[1.5], flexWrap: 'wrap', alignItems: 'center', marginTop: spacing[1] }}>
+            <View style={[s.rowWrap, s.gap(t.spacing[1.5]), s.mt(t.spacing[1])]}>
               <Badge variant="solid" size="sm" color={SCHOOL_MAP[spell.school]?.color || '#888'}>
                 {SCHOOL_LABELS[spell.school] || spell.school}
               </Badge>
@@ -62,32 +55,24 @@ export default function SpellCard({
                 {spell.level === 0 ? 'Trucchetto' : `${spell.level}°`}
               </Badge>
             </View>
-            <View style={{ flexDirection: 'row', gap: spacing[1], flexWrap: 'wrap', alignItems: 'center', marginTop: spacing[0.5] }}>
-              <Text style={{ fontSize: fontSizes.xs, color: t.colors.foregroundSecondary }}>
+            <View style={[s.rowWrap, s.gap(t.spacing[1]), s.mt(t.spacing[0.5])]}>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary }}>
                 {spell.classes.map((cls) => CLASS_LABELS[cls as ClassName] || cls).join(' · ')}
               </Text>
             </View>
           </View>
 
           {hasActiveCharacter && (
-            <View style={{ flexDirection: 'row', gap: spacing[1] }}>
+            <View style={[s.row, s.gap(t.spacing[1])]}>
               <TouchableOpacity
                 onPress={onToggleFavorite}
-                style={{
-                  width: 32, height: 32, borderRadius: 16,
-                  backgroundColor: isFavorite ? '#F59E0B' : t.colors.backgroundSecondary,
-                  alignItems: 'center', justifyContent: 'center',
-                }}
+                style={[s.box(32, 16), { backgroundColor: isFavorite ? '#F59E0B' : t.colors.backgroundSecondary }]}
               >
                 <Text style={{ fontSize: 16 }}>{isFavorite ? '★' : '☆'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={onTogglePrepared}
-                style={{
-                  width: 32, height: 32, borderRadius: 16,
-                  backgroundColor: isPrepared ? t.colors.accent : t.colors.backgroundSecondary,
-                  alignItems: 'center', justifyContent: 'center',
-                }}
+                style={[s.box(32, 16), { backgroundColor: isPrepared ? t.colors.accent : t.colors.backgroundSecondary }]}
               >
                 <Text style={{ fontSize: 14, color: isPrepared ? t.colors.accentForeground : t.colors.foregroundTertiary }}>
                   {isPrepared ? '✓' : '+'}

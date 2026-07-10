@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
-import { spacing, fontSizes, radius } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import type { Spell, ClassName, Character } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
 import DndIcon from '../DndIcon';
@@ -20,14 +20,14 @@ function DetailChip({ label, value, t, color }: { label: string; value: string; 
   return (
     <View style={{
       backgroundColor: t.colors.backgroundSecondary,
-      borderRadius: radius.sm,
-      paddingHorizontal: spacing[2],
-      paddingVertical: spacing[1],
+      borderRadius: t.radius.sm,
+      paddingHorizontal: t.spacing[2],
+      paddingVertical: t.spacing[1],
     }}>
       <Text style={{ fontSize: 10, color: t.colors.foregroundTertiary, fontWeight: '600', textTransform: 'uppercase' }}>
         {label}
       </Text>
-      <Text style={{ fontSize: fontSizes.sm, color: color || t.colors.foreground, fontWeight: '500' }}>
+      <Text style={{ fontSize: t.typography.sm, color: color || t.colors.foreground, fontWeight: '500' }}>
         {value}
       </Text>
     </View>
@@ -48,27 +48,20 @@ export default function SpellDetailModal({
       {spell && (
       <>
       {/* Header */}
-      <View style={{ flexDirection: 'row', gap: spacing[3], marginBottom: spacing[3] }}>
-                <View style={{
-                  backgroundColor: (SCHOOL_MAP[spell.school]?.color || '#888') + '20',
-                  borderRadius: radius.xl,
-                  width: 56,
-                  height: 56,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+      <View style={[s.row, s.gap(t.spacing[3]), s.mb(t.spacing[3])]}>
+                <View style={[s.box(56, t.radius.xl), { backgroundColor: (SCHOOL_MAP[spell.school]?.color || '#888') + '20' }]}>
                   <DndIcon name={spell.school} size={30} color={SCHOOL_MAP[spell.school]?.color || '#fff'} />
                 </View>
-                <View style={{ flex: 1 }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <Text style={{ fontSize: fontSizes.xl, fontWeight: '700', color: t.colors.foreground, flex: 1, marginRight: spacing[2] }}>
+                <View style={s.flex}>
+                  <View style={[s.row, { justifyContent: 'space-between', alignItems: 'flex-start' }]}>
+                    <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground, flex: 1, marginRight: t.spacing[2] }}>
                       {spell.name}
                     </Text>
-                    <TouchableOpacity onPress={onClose} style={{ padding: spacing[1] }}>
+                    <TouchableOpacity onPress={onClose} style={s.p(t.spacing[1])}>
                       <Text style={{ fontSize: 20, color: t.colors.foregroundTertiary }}>✕</Text>
                     </TouchableOpacity>
                   </View>
-                  <View style={{ flexDirection: 'row', gap: spacing[1.5], marginTop: spacing[1], flexWrap: 'wrap' }}>
+                  <View style={[s.rowWrap, s.gap(t.spacing[1.5]), s.mt(t.spacing[1])]}>
                     <Badge variant="solid" color={SCHOOL_MAP[spell.school]?.color || '#888'}>
                       {SCHOOL_LABELS[spell.school] || spell.school}
                     </Badge>
@@ -80,7 +73,7 @@ export default function SpellDetailModal({
               </View>
 
               {/* Detail Grid */}
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing[2], marginBottom: spacing[3] }}>
+              <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>
                 <DetailChip label="Tempo" value={spell.casting ?? '—'} t={t} />
                 <DetailChip label="Gittata" value={spell.range ?? '—'} t={t} />
                 <DetailChip label="Durata" value={spell.duration ?? '—'} t={t} />
@@ -94,21 +87,16 @@ export default function SpellDetailModal({
               </View>
 
               {/* Description */}
-              <Text style={{ fontSize: fontSizes.base, color: t.colors.foreground, lineHeight: 22 }}>
+              <Text style={{ fontSize: t.typography.base, color: t.colors.foreground, lineHeight: 22 }}>
                 {spell.description}
               </Text>
 
               {spell.upgrade && (
-                <View style={{
-                  marginTop: spacing[3],
-                  backgroundColor: t.colors.backgroundSecondary,
-                  borderRadius: radius.md,
-                  padding: spacing[3],
-                }}>
-                  <Text style={{ fontSize: fontSizes.sm, fontWeight: '600', color: t.colors.accent, marginBottom: spacing[1] }}>
+                <View style={[s.mt(t.spacing[3]), { backgroundColor: t.colors.backgroundSecondary, borderRadius: t.radius.md, padding: t.spacing[3] }]}>
+                  <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.accent, marginBottom: t.spacing[1] }}>
                     ↗ Potenziamento
                   </Text>
-                  <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
+                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
                     {spell.upgrade}
                   </Text>
                 </View>
@@ -116,7 +104,7 @@ export default function SpellDetailModal({
 
               {/* Action buttons */}
               {activeChar && (
-                <View style={{ flexDirection: 'row', gap: spacing[2], marginTop: spacing[4] }}>
+                <View style={[s.row, s.gap(t.spacing[2]), s.mt(t.spacing[4])]}>
                   <Button
                     variant={activeChar.favoriteSpells.includes(spell.name) ? 'solid' : 'outline'}
                     size="md"

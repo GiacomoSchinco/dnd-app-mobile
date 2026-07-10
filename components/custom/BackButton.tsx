@@ -1,6 +1,6 @@
 import { View, Text, Pressable } from 'react-native';
 import { useTokens } from '../ui/prism-provider';
-import { spacing, fontSizes } from '../../utils/styles';
+import { s } from '../../utils/style-helpers';
 
 type Props = {
   onPress: () => void;
@@ -14,19 +14,18 @@ export default function BackButton({ onPress, label = 'Indietro' }: Props) {
     <Pressable
       onPress={onPress}
       style={({ pressed }) => ({
-        flexDirection: 'row',
-        alignItems: 'center',
+        ...s.row,
         alignSelf: 'flex-start',
-        marginBottom: spacing[2],
+        marginBottom: t.spacing[2],
         opacity: pressed ? 0.6 : 1,
       })}
     >
       <Text
         style={{
           color: t.colors.accent,
-          fontSize: fontSizes.lg,
-          marginRight: spacing[1],
-          lineHeight: fontSizes.lg * 1.2,
+          fontSize: t.typography.lg,
+          marginRight: t.spacing[1],
+          lineHeight: t.typography.lg * 1.2,
         }}
       >
         ‹
@@ -34,7 +33,7 @@ export default function BackButton({ onPress, label = 'Indietro' }: Props) {
       <Text
         style={{
           color: t.colors.accent,
-          fontSize: fontSizes.sm,
+          fontSize: t.typography.sm,
           fontWeight: '500',
         }}
       >

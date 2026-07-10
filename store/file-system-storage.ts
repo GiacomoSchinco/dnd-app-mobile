@@ -1,16 +1,15 @@
 import * as FileSystem from 'expo-file-system/legacy';
-import { StateStorage } from 'zustand/middleware';
 
 const STORAGE_DIR = `${FileSystem.documentDirectory}zustand/`;
 
-// Adapter per collegare expo-file-system al middleware persist di Zustand
-export const fileSystemStorage: StateStorage = {
-  setItem: async (name, value) => {
+// Adapter per zustand persist (createJSONStorage si aspetta { getItem, setItem, removeItem })
+export const fileSystemStorage = {
+  setItem: async (name: string, value: string) => {
     const dir = STORAGE_DIR;
     await FileSystem.makeDirectoryAsync(dir, { intermediates: true });
     await FileSystem.writeAsStringAsync(`${dir}${name}`, value);
   },
-  getItem: async (name) => {
+  getItem: async (name: string): Promise<string | null> => {
     try {
       const value = await FileSystem.readAsStringAsync(`${STORAGE_DIR}${name}`);
       return value ?? null;
@@ -18,7 +17,7 @@ export const fileSystemStorage: StateStorage = {
       return null;
     }
   },
-  removeItem: async (name) => {
+  removeItem: async (name: string) => {
     try {
       await FileSystem.deleteAsync(`${STORAGE_DIR}${name}`, { idempotent: true });
     } catch {

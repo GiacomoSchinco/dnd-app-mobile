@@ -1,5 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
+import { s } from '../../../utils/style-helpers';
 import { spacing, radius, fontSizes } from '../../../utils/styles';
 import type { RollResult } from '../../../types';
 import { formatRollNotation } from '../../../utils/dice';
@@ -38,11 +39,11 @@ export default function ResultBreakdown({ result, selectedColor, onReset }: Prop
       </View>
 
       {/* Total */}
-      <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: spacing[2] }}>
-        <Text style={{ fontSize: fontSizes['2xl'], fontWeight: '800', color: t.colors.foreground }}>
+      <View style={[s.row, s.gap(t.spacing[2]), { alignItems: 'baseline' }]}>
+        <Text style={{ fontSize: t.typography['2xl'], fontWeight: '800', color: t.colors.foreground }}>
           {result.total}
         </Text>
-        <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundTertiary }}>
+        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundTertiary }}>
           = {result.rolls.join(' + ')}
           {result.modifier !== 0 && (result.modifier > 0 ? ` + ${result.modifier}` : ` - ${Math.abs(result.modifier)}`)}
         </Text>
@@ -59,7 +60,7 @@ export default function ResultBreakdown({ result, selectedColor, onReset }: Prop
 
       {/* Reset */}
       <Pressable onPress={onReset} style={[styles.resetBtn, { borderColor: t.colors.border }]}>
-        <Text style={[styles.resetText, { color: t.colors.foregroundTertiary }]}>
+        <Text style={[s.mt(t.spacing[3]), { color: t.colors.foregroundTertiary, textAlign: 'center' }]}>
           ✕ Annulla
         </Text>
       </Pressable>

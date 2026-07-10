@@ -1,51 +1,13 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../components/ui/prism-provider';
+import defaultTheme from '../components/ui/themes/default';
 
-// ── Spacing constants (match theme values) ──────────────────────
-export const spacing = {
-  px: 1,
-  '0.5': 2,
-  1: 4,
-  1.5: 6,
-  2: 8,
-  2.5: 10,
-  3: 12,
-  3.5: 14,
-  4: 16,
-  5: 20,
-  6: 24,
-  7: 28,
-  8: 32,
-  9: 36,
-  10: 40,
-  12: 48,
-  14: 56,
-  16: 64,
-} as const;
-
-// ── Radius constants (match theme values) ───────────────────────
-export const radius = {
-  none: 0,
-  xs: 4,
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
-  '2xl': 24,
-  full: 9999,
-} as const;
-
-// ── Typography size constants (match theme values) ──────────────
-export const fontSizes = {
-  xs: 11,
-  sm: 13,
-  base: 15,
-  md: 17,
-  lg: 20,
-  xl: 24,
-  '2xl': 28,
-  '3xl': 34,
-} as const;
+// ── Spacing/Radius/Typography ───────────────────────────────────
+// Valori derivati dal tema Prism di default (fonte unica).
+// Non cambiano con dark/light mode, solo i colori sono dinamici.
+export const spacing = defaultTheme.spacing;
+export const radius = defaultTheme.radius;
+export const fontSizes = defaultTheme.typography;
 
 // ── Floating tab bar height (from AppNavigator) ─────────────────
 export const FLOATING_TAB_HEIGHT = 64;

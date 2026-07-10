@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
-import { spacing, fontSizes, radius } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import { LEVEL_LABELS } from './types';
 
 type Props = {
@@ -15,32 +15,24 @@ export default function SlotBar({ level, current, max, onUseSlot, onRestore }: P
   const t = useTokens();
 
   return (
-    <View style={{
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: t.colors.backgroundSecondary,
-      borderRadius: radius.md,
-      padding: spacing[3],
-      marginBottom: spacing[3],
-    }}>
-      <Text style={{ fontSize: fontSizes.sm, fontWeight: '600', color: t.colors.foreground }}>
+    <View style={[s.row, { justifyContent: 'space-between', backgroundColor: t.colors.backgroundSecondary, borderRadius: t.radius.md, padding: t.spacing[3], marginBottom: t.spacing[3] }]}>
+      <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
         Slot {LEVEL_LABELS[level]}
       </Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[2] }}>
-        <Text style={{ fontSize: fontSizes.lg, fontWeight: '700', color: t.colors.accent }}>
+      <View style={[s.row, s.gap(t.spacing[2])]}>
+        <Text style={{ fontSize: t.typography.lg, fontWeight: '700', color: t.colors.accent }}>
           {current}/{max}
         </Text>
         <TouchableOpacity
           onPress={onUseSlot}
           style={{
             paddingHorizontal: 12, paddingVertical: 4,
-            borderRadius: radius.sm,
+            borderRadius: t.radius.sm,
             backgroundColor: current > 0 ? t.colors.accent : t.colors.backgroundSecondary,
             opacity: current > 0 ? 1 : 0.4,
           }}
         >
-          <Text style={{ fontSize: fontSizes.xs, fontWeight: '600', color: t.colors.accentForeground }}>
+          <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.accentForeground }}>
             -1 Slot
           </Text>
         </TouchableOpacity>
@@ -48,12 +40,12 @@ export default function SlotBar({ level, current, max, onUseSlot, onRestore }: P
           onPress={onRestore}
           style={{
             paddingHorizontal: 12, paddingVertical: 4,
-            borderRadius: radius.sm,
+            borderRadius: t.radius.sm,
             backgroundColor: t.colors.backgroundSecondary,
             borderWidth: 1, borderColor: t.colors.border,
           }}
         >
-          <Text style={{ fontSize: fontSizes.xs, color: t.colors.foregroundSecondary }}>
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary }}>
             Ripristina
           </Text>
         </TouchableOpacity>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { useTokens } from '../components/ui/prism-provider';
-import { useScreenStyles, spacing, fontSizes, radius } from '../utils/styles';
+import { s } from '../utils/style-helpers';
 import Screen from '../components/custom/Screen';
 import ScreenHeader from '../components/custom/ScreenHeader';
 import DndIcon from '../components/custom/DndIcon';
@@ -22,7 +22,6 @@ const ITEMS: AltroItem[] = [
 
 export default function MoreScreen() {
   const t = useTokens();
-  const s = useScreenStyles();
   const [activeSection, setActiveSection] = useState<SectionKey | null>(null);
 
   if (activeSection === 'impostazioni') {
@@ -35,32 +34,31 @@ export default function MoreScreen() {
     <Screen>
       <ScreenHeader title="Altro" icon="ellipsis-horizontal-outline" />
 
-      <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary, marginBottom: spacing[2], alignSelf: 'flex-start' }}>
+      <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginBottom: t.spacing[2], alignSelf: 'flex-start' }}>
         Tutte le altre funzioni
       </Text>
 
-      <View style={{ width: '100%', gap: spacing[3] }}>
+      <View style={[s.fullWidth, s.gap(t.spacing[3])]}>
         {ITEMS.map((item) => (
           <Pressable
             key={item.key}
             onPress={() => setActiveSection(item.key)}
             style={({ pressed }) => ({
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: spacing[4],
-              padding: spacing[4],
+              ...s.row,
+              gap: t.spacing[4],
+              padding: t.spacing[4],
               backgroundColor: pressed ? t.colors.backgroundSecondary : 'transparent',
-              borderRadius: radius.lg,
+              borderRadius: t.radius.lg,
               borderWidth: 1,
               borderColor: t.colors.backgroundSecondary,
             })}
           >
             <DndIcon name={item.icon as any} size={32} color={t.colors.accent} />
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: fontSizes.base, fontWeight: '600', color: t.colors.foreground }}>
+            <View style={s.flex}>
+              <Text style={{ fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
                 {item.label}
               </Text>
-              <Text style={{ fontSize: fontSizes.sm, color: t.colors.foregroundSecondary, marginTop: 2 }}>
+              <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: 2 }}>
                 {item.description}
               </Text>
             </View>

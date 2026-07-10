@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
-import { spacing, fontSizes, radius } from '../../../utils/styles';
+import { s } from '../../../utils/style-helpers';
 import type { ClassName } from '../../../types';
 import { CLASS_LABELS, SCHOOL_COLORS, getSchoolColor, getLevelCounts } from './types';
 import { useMemo } from 'react';
@@ -46,12 +46,12 @@ export default function SpellFilters({
         placeholder="Cerca incantesimo..."
         value={search}
         onChangeText={onSearchChange}
-        style={{ marginBottom: spacing[3] }}
+        style={s.mb(t.spacing[3])}
       />
 
       {/* Level filter */}
-      <View style={{ marginBottom: spacing[3] }}>
-        <View style={{ flexDirection: 'row', gap: spacing[1.5], flexWrap: 'wrap' }}>
+      <View style={s.mb(t.spacing[3])}>
+        <View style={[s.rowWrap, s.gap(t.spacing[1.5])]}>
           {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((lvl) => {
             const active = levelFilter === lvl;
             return (
@@ -59,16 +59,16 @@ export default function SpellFilters({
                 key={lvl}
                 onPress={() => onLevelFilterChange(active ? null : lvl)}
                 style={{
-                  paddingHorizontal: spacing[2.5],
-                  paddingVertical: spacing[1],
-                  borderRadius: radius.full,
+                  paddingHorizontal: t.spacing[2.5],
+                  paddingVertical: t.spacing[1],
+                  borderRadius: t.radius.full,
                   backgroundColor: active ? getSchoolColor(SCHOOL_KEYS[lvl % SCHOOL_KEYS.length]) : t.colors.backgroundSecondary,
                   borderWidth: 1,
                   borderColor: active ? 'transparent' : t.colors.border,
                 }}
               >
                 <Text style={{
-                  fontSize: fontSizes.xs,
+                  fontSize: t.typography.xs,
                   fontWeight: active ? '600' : '400',
                   color: active ? '#FFFFFF' : t.colors.foregroundSecondary,
                 }}>
@@ -85,18 +85,18 @@ export default function SpellFilters({
       </View>
 
       {/* Class & toggle filters */}
-      <View style={{ flexDirection: 'row', gap: spacing[2], flexWrap: 'wrap', marginBottom: spacing[3] }}>
+      <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>
         <TouchableOpacity
           onPress={() => onClassFilterChange(classFilter ? null : (classFilter ?? null))}
           style={{
-            paddingHorizontal: spacing[2.5], paddingVertical: spacing[1],
-            borderRadius: radius.full,
+            paddingHorizontal: t.spacing[2.5], paddingVertical: t.spacing[1],
+            borderRadius: t.radius.full,
             backgroundColor: classFilter ? t.colors.accent : t.colors.backgroundSecondary,
             borderWidth: 1, borderColor: classFilter ? 'transparent' : t.colors.border,
           }}
         >
           <Text style={{
-            fontSize: fontSizes.xs,
+            fontSize: t.typography.xs,
             color: classFilter ? t.colors.accentForeground : t.colors.foregroundSecondary,
           }}>
             🎯 Tutte le classi
@@ -108,14 +108,14 @@ export default function SpellFilters({
             <TouchableOpacity
               onPress={() => onPreparedOnlyChange(!showPreparedOnly)}
               style={{
-                paddingHorizontal: spacing[2.5], paddingVertical: spacing[1],
-                borderRadius: radius.full,
+                paddingHorizontal: t.spacing[2.5], paddingVertical: t.spacing[1],
+                borderRadius: t.radius.full,
                 backgroundColor: showPreparedOnly ? t.colors.accent : t.colors.backgroundSecondary,
                 borderWidth: 1, borderColor: showPreparedOnly ? 'transparent' : t.colors.border,
               }}
             >
               <Text style={{
-                fontSize: fontSizes.xs,
+                fontSize: t.typography.xs,
                 color: showPreparedOnly ? t.colors.accentForeground : t.colors.foregroundSecondary,
               }}>
                 ✓ Preparate
@@ -124,14 +124,14 @@ export default function SpellFilters({
             <TouchableOpacity
               onPress={() => onFavoritesOnlyChange(!showFavoritesOnly)}
               style={{
-                paddingHorizontal: spacing[2.5], paddingVertical: spacing[1],
-                borderRadius: radius.full,
+                paddingHorizontal: t.spacing[2.5], paddingVertical: t.spacing[1],
+                borderRadius: t.radius.full,
                 backgroundColor: showFavoritesOnly ? '#F59E0B' : t.colors.backgroundSecondary,
                 borderWidth: 1, borderColor: showFavoritesOnly ? 'transparent' : t.colors.border,
               }}
             >
               <Text style={{
-                fontSize: fontSizes.xs,
+                fontSize: t.typography.xs,
                 color: showFavoritesOnly ? '#FFFFFF' : t.colors.foregroundSecondary,
               }}>
                 ★ Preferite
@@ -143,9 +143,9 @@ export default function SpellFilters({
 
       {/* Results count */}
       <Text style={{
-        fontSize: fontSizes.xs,
+        fontSize: t.typography.xs,
         color: t.colors.foregroundTertiary,
-        marginBottom: spacing[2],
+        marginBottom: t.spacing[2],
       }}>
         {filteredCount} incantesimi trovati
       </Text>

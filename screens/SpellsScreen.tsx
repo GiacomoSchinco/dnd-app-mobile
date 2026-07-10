@@ -4,7 +4,7 @@ import { SvgXml } from 'react-native-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../components/ui/prism-provider';
 import ScreenHeader from '../components/custom/ScreenHeader';
-import { spacing } from '../utils/styles';
+import { s } from '../utils/style-helpers';
 import spellsData from '../assets/data/spells.json';
 
 import {
@@ -78,9 +78,9 @@ export default function SpellsScreen() {
 
   // ── Main render ──
   return (
-    <View style={{ flex: 1, backgroundColor: t.colors.background }}>
+    <View style={[s.flex, { backgroundColor: t.colors.background }]}>
       {/* Header fisso con safe area */}
-      <View style={{ paddingTop: insets.top + spacing[4], paddingHorizontal: spacing[4], paddingBottom: spacing[2] }}>
+      <View style={{ paddingTop: insets.top + t.spacing[4], paddingHorizontal: t.spacing[4], paddingBottom: t.spacing[2] }}>
         <ScreenHeader title="Magie" icon="flash-outline" />
         <SpellFilters
           search={search}
@@ -107,7 +107,7 @@ export default function SpellsScreen() {
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        style={{ paddingHorizontal: spacing[4] }}
+        style={{ paddingHorizontal: t.spacing[4] }}
       />
 
       {/* Pulsante "Torna su" flottante — nascosto se il modale è aperto */}
@@ -118,12 +118,8 @@ export default function SpellsScreen() {
             position: 'absolute',
             bottom: insets.bottom + 80,
             right: 20,
-            width: 50,
-            height: 50,
-            borderRadius: 25,
+            ...s.box(50, 25),
             backgroundColor: t.colors.accent,
-            justifyContent: 'center',
-            alignItems: 'center',
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.25,

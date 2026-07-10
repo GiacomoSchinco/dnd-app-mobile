@@ -1,84 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Platform, Pressable, ScrollView, Animated } from 'react-native';
+import { View, Platform, Animated } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
-// Import del tuo Tema Custom
 import { useTokens } from '../ui/prism-provider';
+import { ROUTES } from '../../lib/routes';
+import { NAVIGATION_TABS, type NavigationTab } from './navigation/tab-config';
+import CentralDiceButton from './navigation/CentralDiceButton';
+import DicePanel from './navigation/DicePanel';
 
-// Schermate
-import HomeScreen from '../../screens/HomeScreen';
-import CharactersScreen from '../../screens/CharactersScreen';
-import ItemsScreen from '../../screens/ItemsScreen';
-import SpellsScreen from '../../screens/SpellsScreen';
-import MoreScreen from '../../screens/MoreScreen';
+/** Converte un colore esadecimale (#HEX) in rgba con opacità */
+function hexToRgba(hex: string, alpha: number): string {
+  const clean = hex.replace('#', '');
+  const r = parseInt(clean.substring(0, 2), 16);
+  const g = parseInt(clean.substring(2, 4), 16);
+  const b = parseInt(clean.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
 
-// Componenti
-import DndIcon from './DndIcon';
-import ScreenHeader from './ScreenHeader';
-import DiceRoller from './DiceRoller';
-import { spacing } from '../../utils/styles';
+/** Determina se il tema è scuro in base alla luminanza del background */
+function isThemeDark(bgColor: string): boolean {
+  const hex = bgColor.replace('#', '');
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  // Luminanza percepita (formula W3C)
+  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+  return luminance < 128;
+}
 
 const Tab = createBottomTabNavigator();
-
-const NAVIGATION_TABS = [
-  //{ name: 'Home', component: HomeScreen, iconActive: 'home' as const, iconInactive: 'home-outline' as const },
-  { name: 'Personaggi', component: CharactersScreen, iconActive: 'people' as const, iconInactive: 'people-outline' as const },
-  { name: 'Oggetti', component: ItemsScreen, iconActive: 'cube' as const, iconInactive: 'cube-outline' as const },
-  { name: 'Magie', component: SpellsScreen, iconActive: 'flash' as const, iconInactive: 'flash-outline' as const },
-  { name: 'Altro', component: MoreScreen, iconActive: 'ellipsis-horizontal' as const, iconInactive: 'ellipsis-horizontal-outline' as const },
-];
-
-function CentralDiceButton({ onPress, isExpanded }: any) {
-  const t = useTokens();
-  const rotateAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(rotateAnim, {
-      toValue: isExpanded ? 1 : 0,
-      duration: 250,
-      useNativeDriver: true,
-    }).start();
-  }, [isExpanded]);
-
-  const spin = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '180deg'],
-  });
-
-  return (
-    <Pressable
-      onPress={onPress}
-      style={{
-        top: -40,
-        width: 64,
-        height: 64,
-        borderRadius: 32,
-        backgroundColor: isExpanded ? t.colors.accent : t.colors.background,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 3,
-        borderColor: t.colors.accent,
-        zIndex: 100,
-        ...Platform.select({
-          ios: {
-            shadowColor: t.colors.accent,
-            shadowOffset: { width: 0, height: 6 },
-            shadowOpacity: 0.35,
-            shadowRadius: 10,
-          },
-          android: { elevation: 24 },
-        }),
-      }}
-    >
-      <Animated.View style={{ transform: [{ rotate: spin }] }}>
-        <DndIcon name="d20" size={34} color={isExpanded ? '#FFFFFF' : t.colors.accent} />
-      </Animated.View>
-    </Pressable>
-  );
-}
 
 function EmptyScreen() {
   return null;
@@ -87,10 +41,30 @@ function EmptyScreen() {
 export default function AppNavigator() {
   const t = useTokens();
   const insets = useSafeAreaInsets();
-  const isDark = t.colors.background.startsWith('#0');
+  const isDark = isThemeDark(t.colors.background);
   const [isDiceOpen, setIsDiceOpen] = useState(false);
+  const navigation = useNavigation();
+  const [currentRoute, setCurrentRoute] = useState(
+    () => navigation.getState()?.routes?.[navigation.getState()?.index ?? 0]?.name ?? ROUTES.HOME
+  );
 
-  // Controller unico per gestire la timeline dell'animazione (da 0 a 1)
+  // Ascolta i cambiamenti di route per nascondere UI sulla Home
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('state', (e: any) => {
+      const state = e.data.state;
+      if (state?.routes?.[state.index]?.name) {
+        setCurrentRoute(state.routes[state.index].name);
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const isHome = currentRoute === ROUTES.HOME;
+  const isTabBarHidden = isHome || NAVIGATION_TABS.some(
+    (t) => t.routeName === currentRoute && t.hideTabBar
+  );
+
+  // Controller animazione dado
   const animController = useRef(new Animated.Value(0)).current;
 
   const toggleDicePanel = () => {
@@ -110,44 +84,57 @@ export default function AppNavigator() {
     }
   };
 
-  // Interpolazione: sposta la navbar verso il basso di 120px per nasconderla
   const tabBarTranslateY = animController.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 120],
   });
 
-  // Interpolazione: il pannello sale dal basso verso l'alto di 40px
   const dicePanelTranslateY = animController.interpolate({
     inputRange: [0, 1],
     outputRange: [40, 0],
   });
 
-  // Interpolazione: gestione dell'opacità del pannello
   const dicePanelOpacity = animController.interpolate({
     inputRange: [0, 0.4, 1],
     outputRange: [0, 0, 1],
   });
 
   const bottomMargin = insets.bottom > 0 ? insets.bottom : 16;
-  const navbarBg = isDark ? 'rgba(28, 28, 36, 0.98)' : 'rgba(255, 255, 255, 0.98)';
-  const navbarBorder = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+  const navbarBg = hexToRgba(t.colors.card, 0.97);
+  const navbarBorder = hexToRgba(t.colors.cardBorder, 0.8);
   const pillRadius = t.radius.xl || 24;
 
-  const firstHalfTabs = NAVIGATION_TABS.slice(0, 2);
-  const secondHalfTabs = NAVIGATION_TABS.slice(2);
+  const visibleTabs = NAVIGATION_TABS.filter((t) => !t.hideTabButton);
+  const hiddenTabs = NAVIGATION_TABS.filter((t) => t.hideTabButton);
+
+  const splitIndex = Math.ceil(visibleTabs.length / 2);
+  const firstHalfTabs = visibleTabs.slice(0, splitIndex);
+  const secondHalfTabs = visibleTabs.slice(splitIndex);
+
+  const renderTab = (tab: NavigationTab) => (
+    <Tab.Screen
+      key={tab.routeName}
+      name={tab.routeName}
+      component={tab.component}
+      options={{
+        tabBarLabel: tab.label,
+      }}
+    />
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
 
       <Tab.Navigator
+        initialRouteName={ROUTES.HOME}
+        backBehavior="initialRoute"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {
-            const currentTab = NAVIGATION_TABS.find((tab) => tab.name === route.name);
-            const iconName = currentTab
+            const currentTab = NAVIGATION_TABS.find((tab) => tab.routeName === route.name);
+            const iconName = (currentTab
               ? (focused ? currentTab.iconActive : currentTab.iconInactive)
-              : 'help-outline';
-
+              : 'help-outline') as any;
             return <Ionicons name={iconName} size={22} color={color} />;
           },
           tabBarActiveTintColor: t.colors.accent,
@@ -184,12 +171,25 @@ export default function AppNavigator() {
           },
         })}
       >
-        {firstHalfTabs.map((tab) => (
-          <Tab.Screen key={tab.name} name={tab.name} component={tab.component} />
+        {/* Tab nascoste PRIMA (Home è l'initialRoute) */}
+        {hiddenTabs.map((tab) => (
+          <Tab.Screen
+            key={tab.routeName}
+            name={tab.routeName}
+            component={tab.component}
+            options={{
+              tabBarButton: () => null,
+              tabBarLabel: () => null,
+              tabBarIcon: () => null,
+              tabBarStyle: { display: 'none' },
+            }}
+          />
         ))}
 
+        {firstHalfTabs.map(renderTab)}
+
         <Tab.Screen
-          name="Dadi"
+          name={ROUTES.DADI}
           component={EmptyScreen}
           options={{
             tabBarButton: () => <View style={{ flex: 1 }} />,
@@ -198,71 +198,34 @@ export default function AppNavigator() {
           }}
         />
 
-        {secondHalfTabs.map((tab) => (
-          <Tab.Screen key={tab.name} name={tab.name} component={tab.component} />
-        ))}
+        {secondHalfTabs.map(renderTab)}
       </Tab.Navigator>
 
-      {/* Pannello dadi animato posizionato più in alto */}
-      {isDiceOpen && (
-        <Animated.View
+      <DicePanel
+        isVisible={!isTabBarHidden && isDiceOpen}
+        translateY={dicePanelTranslateY}
+        opacity={dicePanelOpacity}
+        bottomMargin={bottomMargin}
+        navbarBg={navbarBg}
+        navbarBorder={navbarBorder}
+        pillRadius={pillRadius}
+      />
+
+      {!isTabBarHidden && (
+        <View
           style={{
             position: 'absolute',
-            bottom: bottomMargin + 80, // <-- Spostato più in alto rispetto a prima
-            left: 16,
-            right: 16,
-            backgroundColor: navbarBg,
-            borderRadius: pillRadius,
-            borderWidth: 1,
-            borderColor: navbarBorder,
-            borderTopWidth: 3,
-            borderTopColor: t.colors.accent,
-            borderBottomWidth: 3,
-            borderBottomColor: t.colors.accent,
-            paddingHorizontal: spacing[6],
-            paddingTop: spacing[3],
-            paddingBottom: spacing[6],
-            maxHeight: '65%',
-            zIndex: 50,
-            opacity: dicePanelOpacity,
-            transform: [{ translateY: dicePanelTranslateY }],
-            ...Platform.select({
-              ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: -4 },
-                shadowOpacity: 0.1,
-                shadowRadius: 10,
-              },
-              android: { elevation: 8 },
-            }),
+            bottom: bottomMargin - 24,
+            left: 0,
+            right: 0,
+            alignItems: 'center',
+            zIndex: 100,
+            pointerEvents: 'box-none',
           }}
         >
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ marginBottom: -spacing[6], marginTop: spacing[4] }}>
-              <ScreenHeader title="Lancia i tuoi dadi" center={true} />
-            </View>
-            <DiceRoller initialType="d20" initialQuantity={1} />
-          </ScrollView>
-        </Animated.View>
+          <CentralDiceButton onPress={toggleDicePanel} isExpanded={isDiceOpen} />
+        </View>
       )}
-
-      {/* Bottone d20 centrale fisso */}
-      <View
-        style={{
-          position: 'absolute',
-          bottom: bottomMargin - 24,
-          left: 0,
-          right: 0,
-          alignItems: 'center',
-          zIndex: 100,
-          pointerEvents: 'box-none',
-        }}
-      >
-        <CentralDiceButton
-          onPress={toggleDicePanel}
-          isExpanded={isDiceOpen}
-        />
-      </View>
     </View>
   );
 }
