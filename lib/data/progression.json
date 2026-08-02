@@ -1,0 +1,597 @@
+{
+  "shared": {
+    "proficiency_bonus": {
+      "1": 2, "2": 2, "3": 2, "4": 2,
+      "5": 3, "6": 3, "7": 3, "8": 3,
+      "9": 4, "10": 4, "11": 4, "12": 4,
+      "13": 5, "14": 5, "15": 5, "16": 5,
+      "17": 6, "18": 6, "19": 6, "20": 6
+    },
+    "asi_levels": [4, 8, 12, 16, 19],
+    "epic_boon_level": 19
+  },
+
+  "classes": {
+    "barbarian": {
+      "label": "Barbaro",
+      "subclass_label": "Cammino Primordiale",
+      "subclass_levels": [3, 6, 10, 14],
+      "features_by_level": {
+        "1": ["Ira", "Difesa senza armatura", "Padronanza d'armi"],
+        "2": ["Attacco irruento", "Percezione del pericolo"],
+        "3": ["Conoscenza primordiale", "Sottoclasse del barbaro"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Attacco Extra", "Movimento Veloce"],
+        "6": ["Privilegio della sottoclasse"],
+        "7": ["Balzo istintivo", "Istinto ferino"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": ["Colpo brutale"],
+        "10": ["Privilegio della sottoclasse"],
+        "11": ["Ira implacabile"],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": ["Colpo brutale migliorato"],
+        "14": ["Privilegio della sottoclasse"],
+        "15": ["Ira persistente"],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": ["Colpo brutale migliorato (2d10)"],
+        "18": ["Potenza indomabile"],
+        "19": ["Dono epico"],
+        "20": ["Campione primordiale"]
+      },
+      "resources": {
+        "rage": {
+          "label": "Ira",
+          "type": "daily_uses",
+          "per_level": {
+            "1": 2, "2": 2, "3": 3, "4": 3, "5": 3,
+            "6": 4, "7": 4, "8": 4, "9": 4, "10": 4,
+            "11": 4, "12": 5, "13": 5, "14": 5, "15": 5,
+            "16": 5, "17": 6, "18": 6, "19": 6, "20": 6
+          },
+          "recovery": "short_rest_one",
+          "damage_bonus_per_level": {
+            "1": 2, "2": 2, "3": 2, "4": 2, "5": 2, "6": 2, "7": 2, "8": 2,
+            "9": 3, "10": 3, "11": 3, "12": 3, "13": 3, "14": 3, "15": 3,
+            "16": 4, "17": 4, "18": 4, "19": 4, "20": 4
+          }
+        },
+        "weapon_mastery": {
+          "label": "Padronanza d'armi",
+          "count": {
+            "1": 2, "2": 2, "3": 2, "4": 3, "5": 3,
+            "6": 3, "7": 3, "8": 3, "9": 3, "10": 4,
+            "11": 4, "12": 4, "13": 4, "14": 4, "15": 4,
+            "16": 4, "17": 4, "18": 4, "19": 4, "20": 4
+          }
+        }
+      }
+    },
+
+    "bard": {
+      "label": "Bardo",
+      "subclass_label": "Collegio Bardico",
+      "subclass_levels": [3, 6, 14],
+      "features_by_level": {
+        "1": ["Incantesimi", "Ispirazione Bardica"],
+        "2": ["Factotum", "Maestria"],
+        "3": ["Collegio Bardico"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Fonte di Ispirazione"],
+        "6": ["Privilegio della sottoclasse", "Controcanto"],
+        "7": [],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": ["Maestria"],
+        "10": ["Segreti Magici"],
+        "11": [],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": [],
+        "14": ["Privilegio della sottoclasse", "Segreti Magici"],
+        "15": [],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": [],
+        "18": ["Ispirazione superiore"],
+        "19": ["Dono epico"],
+        "20": ["Parole della creazione"]
+      },
+      "resources": {
+        "bardic_inspiration": {
+          "label": "Ispirazione Bardica",
+          "type": "per_short_rest",
+          "uses_per_rest": "charisma_modifier",
+          "die_size": {
+            "1": "d6", "2": "d6", "3": "d6", "4": "d6",
+            "5": "d8", "6": "d8", "7": "d8", "8": "d8", "9": "d8",
+            "10": "d10", "11": "d10", "12": "d10", "13": "d10", "14": "d10",
+            "15": "d12", "16": "d12", "17": "d12", "18": "d12", "19": "d12", "20": "d12"
+          },
+          "font_of_inspiration_at": 5
+        }
+      }
+    },
+
+    "cleric": {
+      "label": "Chierico",
+      "subclass_label": "Dominio Divino",
+      "subclass_levels": [3, 6, 17],
+      "features_by_level": {
+        "1": ["Incantesimi", "Ordine divino"],
+        "2": ["Incanalare divinità"],
+        "3": ["Dominio Divino"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Bruciare i non morti"],
+        "6": ["Privilegio della sottoclasse"],
+        "7": ["Colpi benedetti"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": [],
+        "10": ["Intervento divino"],
+        "11": [],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": [],
+        "14": ["Colpi benedetti migliorati"],
+        "15": [],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": ["Privilegio della sottoclasse"],
+        "18": [],
+        "19": ["Dono epico"],
+        "20": ["Intervento divino superiore"]
+      },
+      "resources": {
+        "channel_divinity": {
+          "label": "Incanalare Divinità",
+          "type": "per_short_rest",
+          "per_level": {
+            "1": 2, "2": 2, "3": 2, "4": 2, "5": 2,
+            "6": 3, "7": 3, "8": 3, "9": 3, "10": 3,
+            "11": 3, "12": 3, "13": 3, "14": 3, "15": 3,
+            "16": 3, "17": 3,
+            "18": 4, "19": 4, "20": 4
+          }
+        }
+      }
+    },
+
+    "druid": {
+      "label": "Druido",
+      "subclass_label": "Circolo Druidico",
+      "subclass_levels": [3, 6, 10, 14],
+      "features_by_level": {
+        "1": ["Druidico", "Incantesimi", "Ordine primordiale"],
+        "2": ["Compagno selvatico", "Forma selvatica"],
+        "3": ["Circolo Druidico"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Rinascita selvatica"],
+        "6": ["Privilegio della sottoclasse"],
+        "7": ["Furia elementale"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": [],
+        "10": ["Privilegio della sottoclasse"],
+        "11": [],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": [],
+        "14": ["Privilegio della sottoclasse"],
+        "15": ["Furia elementale migliorata"],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": [],
+        "18": ["Incantesimi bestiali"],
+        "19": ["Dono epico"],
+        "20": ["Arcidruido"]
+      },
+      "resources": {
+        "wild_shape": {
+          "label": "Forma Selvatica",
+          "type": "daily_uses",
+          "per_level": {
+            "1": 2, "2": 2, "3": 2, "4": 2, "5": 2,
+            "6": 3, "7": 3, "8": 3, "9": 3, "10": 3,
+            "11": 3, "12": 3, "13": 3, "14": 3, "15": 3,
+            "16": 3, "17": 4, "18": 4, "19": 4, "20": 4
+          }
+        }
+      }
+    },
+
+    "fighter": {
+      "label": "Guerriero",
+      "subclass_label": "Archetipo Marziale",
+      "subclass_levels": [3, 7, 10, 15, 18],
+      "bonus_asi_levels": [6, 14],
+      "features_by_level": {
+        "1": ["Padronanza d'armi", "Recuperare energie", "Stile di combattimento"],
+        "2": ["Azione impetuosa", "Mente tattica"],
+        "3": ["Sottoclasse del guerriero"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Attacco Extra", "Spostamento tattico"],
+        "6": ["Aumento dei Punteggi di Caratteristica"],
+        "7": ["Privilegio della sottoclasse"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": ["Indomabile", "Signore delle tattiche"],
+        "10": ["Privilegio della sottoclasse"],
+        "11": ["Due attacchi extra"],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": ["Attacchi studiati", "Indomabile (2 usi)"],
+        "14": ["Aumento dei Punteggi di Caratteristica"],
+        "15": ["Privilegio della sottoclasse"],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": ["Azione impetuosa (2 usi)", "Indomabile (3 usi)"],
+        "18": ["Privilegio della sottoclasse"],
+        "19": ["Dono epico"],
+        "20": ["Tre attacchi extra"]
+      },
+      "resources": {
+        "second_wind": {
+          "label": "Recuperare Energie",
+          "type": "per_short_rest",
+          "per_level": {
+            "1": 2, "2": 2, "3": 2,
+            "4": 3, "5": 3, "6": 3, "7": 3, "8": 3, "9": 3,
+            "10": 4, "11": 4, "12": 4, "13": 4, "14": 4, "15": 4,
+            "16": 4, "17": 4, "18": 4, "19": 4, "20": 4
+          }
+        },
+        "action_surge": {
+          "label": "Azione impetuosa",
+          "type": "per_short_rest",
+          "per_level": {
+            "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1,
+            "7": 1, "8": 1, "9": 1, "10": 1, "11": 1, "12": 1,
+            "13": 1, "14": 1, "15": 1, "16": 1,
+            "17": 2, "18": 2, "19": 2, "20": 2
+          }
+        },
+        "indomitable": {
+          "label": "Indomabile",
+          "type": "per_long_rest",
+          "per_level": {
+            "9": 1, "10": 1, "11": 1, "12": 1,
+            "13": 2, "14": 2, "15": 2, "16": 2,
+            "17": 3, "18": 3, "19": 3, "20": 3
+          }
+        },
+        "weapon_mastery": {
+          "label": "Padronanza d'armi",
+          "count": {
+            "1": 3, "2": 3, "3": 3, "4": 4, "5": 4,
+            "6": 4, "7": 4, "8": 4, "9": 4, "10": 5,
+            "11": 5, "12": 5, "13": 5, "14": 5, "15": 5,
+            "16": 6, "17": 6, "18": 6, "19": 6, "20": 6
+          }
+        },
+        "extra_attack": {
+          "label": "Attacco Extra",
+          "total_attacks_per_level": {
+            "1": 1, "2": 1, "3": 1, "4": 1,
+            "5": 2, "6": 2, "7": 2, "8": 2, "9": 2, "10": 2,
+            "11": 3, "12": 3, "13": 3, "14": 3, "15": 3, "16": 3, "17": 3, "18": 3, "19": 3,
+            "20": 4
+          }
+        }
+      }
+    },
+
+    "monk": {
+      "label": "Monaco",
+      "subclass_label": "Tradizione Monastica",
+      "subclass_levels": [3, 6, 11, 17],
+      "features_by_level": {
+        "1": ["Arti marziali", "Difesa senza armatura"],
+        "2": ["Concentrazione da monaco", "Metabolismo straordinario", "Movimento senza armatura"],
+        "3": ["Devia attacchi", "Sottoclasse del monaco"],
+        "4": ["Aumento dei Punteggi di Caratteristica", "Caduta lenta"],
+        "5": ["Attacco Extra", "Colpo stordente"],
+        "6": ["Colpi potenziati", "Privilegio della sottoclasse"],
+        "7": ["Elusione"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": ["Movimento acrobatico"],
+        "10": ["Autorigenerazione", "Concentrazione superiore"],
+        "11": ["Privilegio della sottoclasse"],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": ["Deviare energia"],
+        "14": ["Esperto di sopravvivenza disciplinato"],
+        "15": ["Concentrazione perfetta"],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": ["Privilegio della sottoclasse"],
+        "18": ["Difesa superiore"],
+        "19": ["Dono epico"],
+        "20": ["Corpo e mente"]
+      },
+      "resources": {
+        "focus_points": {
+          "label": "Punti Concentrazione",
+          "type": "per_short_rest",
+          "per_level": {
+            "1": 0, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
+            "7": 7, "8": 8, "9": 9, "10": 10,
+            "11": 11, "12": 12, "13": 13, "14": 14, "15": 15,
+            "16": 16, "17": 17, "18": 18, "19": 19, "20": 20
+          }
+        },
+        "martial_arts_die": {
+          "label": "Dado delle Arti Marziali",
+          "per_level": {
+            "1": "d6", "2": "d6", "3": "d6", "4": "d6",
+            "5": "d8", "6": "d8", "7": "d8", "8": "d8", "9": "d8", "10": "d8",
+            "11": "d10", "12": "d10", "13": "d10", "14": "d10", "15": "d10", "16": "d10",
+            "17": "d12", "18": "d12", "19": "d12", "20": "d12"
+          }
+        },
+        "unarmored_movement": {
+          "label": "Movimento Senza Armatura",
+          "bonus_meters": {
+            "1": 0, "2": 3, "3": 3, "4": 3, "5": 3,
+            "6": 4, "7": 4, "8": 4, "9": 4,
+            "10": 6, "11": 6, "12": 6, "13": 6,
+            "14": 7, "15": 7, "16": 7, "17": 7,
+            "18": 9, "19": 9, "20": 9
+          }
+        }
+      }
+    },
+
+    "paladin": {
+      "label": "Paladino",
+      "subclass_label": "Giuramento Sacro",
+      "subclass_levels": [3, 7, 15, 20],
+      "features_by_level": {
+        "1": ["Imposizione delle mani", "Incantesimi", "Padronanza d'armi"],
+        "2": ["Stile di combattimento", "Punizione del paladino"],
+        "3": ["Incanalare divinità", "Giuramento Sacro"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Attacco Extra", "Fido destriero"],
+        "6": ["Aura di protezione"],
+        "7": ["Privilegio della sottoclasse"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": ["Abiurare nemici"],
+        "10": ["Aura di coraggio"],
+        "11": ["Colpi radiosi"],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": [],
+        "14": ["Tocco rigenerante"],
+        "15": ["Privilegio della sottoclasse"],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": [],
+        "18": ["Ampliamento dell'aura"],
+        "19": ["Dono epico"],
+        "20": ["Privilegio della sottoclasse"]
+      },
+      "resources": {
+        "lay_on_hands": {
+          "label": "Imposizione delle Mani",
+          "type": "pool",
+          "pool_per_level": {
+            "1": 5, "2": 10, "3": 15, "4": 20, "5": 25,
+            "6": 30, "7": 35, "8": 40, "9": 45, "10": 50,
+            "11": 55, "12": 60, "13": 65, "14": 70, "15": 75,
+            "16": 80, "17": 85, "18": 90, "19": 95, "20": 100
+          }
+        },
+        "channel_divinity": {
+          "label": "Incanalare Divinità",
+          "type": "per_short_rest",
+          "per_level": {
+            "3": 2, "4": 2, "5": 2, "6": 2, "7": 2, "8": 2, "9": 2, "10": 2,
+            "11": 3, "12": 3, "13": 3, "14": 3, "15": 3,
+            "16": 3, "17": 3, "18": 3, "19": 3, "20": 3
+          }
+        }
+      }
+    },
+
+    "ranger": {
+      "label": "Ranger",
+      "subclass_label": "Conclave Ranger",
+      "subclass_levels": [3, 7, 11, 15],
+      "features_by_level": {
+        "1": ["Incantesimi", "Nemico prescelto", "Padronanza d'armi"],
+        "2": ["Esploratore esperto", "Stile di combattimento"],
+        "3": ["Conclave Ranger"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Attacco Extra"],
+        "6": ["Girovago"],
+        "7": ["Privilegio della sottoclasse"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": ["Maestria"],
+        "10": ["Instancabile"],
+        "11": ["Privilegio della sottoclasse"],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": ["Cacciatore implacabile"],
+        "14": ["Velo della natura"],
+        "15": ["Privilegio della sottoclasse"],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": ["Precisione del cacciatore"],
+        "18": ["Sensi ferini"],
+        "19": ["Dono epico"],
+        "20": ["Sterminatore di nemici"]
+      },
+      "resources": {
+        "favored_enemy": {
+          "label": "Nemico Prescelto",
+          "type": "daily_uses",
+          "per_level": {
+            "1": 2, "2": 2, "3": 2, "4": 2,
+            "5": 3, "6": 3, "7": 3, "8": 3,
+            "9": 4, "10": 4, "11": 4, "12": 4,
+            "13": 5, "14": 5, "15": 5, "16": 5,
+            "17": 6, "18": 6, "19": 6, "20": 6
+          }
+        }
+      }
+    },
+
+    "rogue": {
+      "label": "Ladro",
+      "subclass_label": "Archetipo del Ladro",
+      "subclass_levels": [3, 9, 13, 17],
+      "bonus_asi_levels": [10],
+      "features_by_level": {
+        "1": ["Attacco furtivo", "Gergo ladresco", "Maestria", "Padronanza d'armi"],
+        "2": ["Azione scaltra"],
+        "3": ["Mira ferma", "Archetipo del Ladro"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Colpo astuto", "Schivata prodigiosa"],
+        "6": ["Maestria"],
+        "7": ["Dote affidabile", "Elusione"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": ["Privilegio della sottoclasse"],
+        "10": ["Aumento dei Punteggi di Caratteristica"],
+        "11": ["Colpo astuto migliorato"],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": ["Privilegio della sottoclasse"],
+        "14": ["Colpi infidi"],
+        "15": ["Mente sfuggente"],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": ["Privilegio della sottoclasse"],
+        "18": ["Inafferrabile"],
+        "19": ["Dono epico"],
+        "20": ["Colpo di fortuna"]
+      },
+      "resources": {
+        "sneak_attack": {
+          "label": "Attacco Furtivo",
+          "type": "scaling_dice",
+          "die_size": "d6",
+          "dice_count": {
+            "1": 1, "2": 1, "3": 2, "4": 2,
+            "5": 3, "6": 3, "7": 4, "8": 4,
+            "9": 5, "10": 5, "11": 6, "12": 6,
+            "13": 7, "14": 7, "15": 8, "16": 8,
+            "17": 9, "18": 9, "19": 10, "20": 10
+          }
+        }
+      }
+    },
+
+    "sorcerer": {
+      "label": "Stregone",
+      "subclass_label": "Origine Stregonesca",
+      "subclass_levels": [3, 6, 14, 18],
+      "features_by_level": {
+        "1": ["Incantesimi", "Stregoneria innata"],
+        "2": ["Fonte di magia", "Metamagia"],
+        "3": ["Origine Stregonesca"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Ripristino stregonesco"],
+        "6": ["Privilegio della sottoclasse"],
+        "7": ["Stregoneria incarnata"],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": [],
+        "10": ["Metamagia"],
+        "11": [],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": [],
+        "14": ["Privilegio della sottoclasse"],
+        "15": [],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": ["Metamagia"],
+        "18": ["Privilegio della sottoclasse"],
+        "19": ["Dono epico"],
+        "20": ["Apoteosi arcana"]
+      },
+      "resources": {
+        "sorcery_points": {
+          "label": "Punti Stregoneria",
+          "type": "pool",
+          "per_level": {
+            "1": 0, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
+            "7": 7, "8": 8, "9": 9, "10": 10,
+            "11": 11, "12": 12, "13": 13, "14": 14, "15": 15,
+            "16": 16, "17": 17, "18": 18, "19": 19, "20": 20
+          }
+        },
+        "metamagic_options": {
+          "label": "Opzioni Metamagiche",
+          "count": {
+            "2": 2, "3": 2, "4": 2, "5": 2, "6": 2, "7": 2, "8": 2, "9": 2,
+            "10": 4, "11": 4, "12": 4, "13": 4, "14": 4, "15": 4, "16": 4,
+            "17": 6, "18": 6, "19": 6, "20": 6
+          }
+        }
+      }
+    },
+
+    "warlock": {
+      "label": "Warlock",
+      "subclass_label": "Patrono Extracanonico",
+      "subclass_levels": [3, 6, 10, 14],
+      "features_by_level": {
+        "1": ["Magia del patto", "Suppliche occulte"],
+        "2": ["Scaltrezza magica"],
+        "3": ["Patrono Extracanonico"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": [],
+        "6": ["Privilegio della sottoclasse"],
+        "7": [],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": ["Contatta patrono"],
+        "10": ["Privilegio della sottoclasse"],
+        "11": ["Arcanum Mistico (6°)"],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": ["Arcanum Mistico (7°)"],
+        "14": ["Privilegio della sottoclasse"],
+        "15": ["Arcanum Mistico (8°)"],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": ["Arcanum Mistico (9°)"],
+        "18": [],
+        "19": ["Dono epico"],
+        "20": ["Maestro dell'occulto"]
+      },
+      "resources": {
+        "invocations_known": {
+          "label": "Suppliche Occulte",
+          "type": "known",
+          "count": {
+            "1": 1, "2": 3, "3": 3, "4": 3,
+            "5": 5, "6": 5, "7": 6, "8": 6,
+            "9": 7, "10": 7, "11": 7, "12": 8,
+            "13": 8, "14": 8, "15": 9, "16": 9,
+            "17": 9, "18": 10, "19": 10, "20": 10
+          }
+        },
+        "mystic_arcanum": {
+          "label": "Arcanum Mistico",
+          "levels": [11, 13, 15, 17],
+          "spell_levels": [6, 7, 8, 9]
+        }
+      }
+    },
+
+    "wizard": {
+      "label": "Mago",
+      "subclass_label": "Tradizione Arcana",
+      "subclass_levels": [3, 6, 10, 14],
+      "features_by_level": {
+        "1": ["Incantesimi", "Adepto dei rituali", "Recupero arcanico"],
+        "2": ["Studioso"],
+        "3": ["Tradizione Arcana"],
+        "4": ["Aumento dei Punteggi di Caratteristica"],
+        "5": ["Memorizzare incantesimi"],
+        "6": ["Privilegio della sottoclasse"],
+        "7": [],
+        "8": ["Aumento dei Punteggi di Caratteristica"],
+        "9": [],
+        "10": ["Privilegio della sottoclasse"],
+        "11": [],
+        "12": ["Aumento dei Punteggi di Caratteristica"],
+        "13": [],
+        "14": ["Privilegio della sottoclasse"],
+        "15": [],
+        "16": ["Aumento dei Punteggi di Caratteristica"],
+        "17": [],
+        "18": ["Maestria negli incantesimi"],
+        "19": ["Dono epico"],
+        "20": ["Incantesimi personali"]
+      },
+      "resources": {
+        "arcane_recovery": {
+          "label": "Recupero Arcanico",
+          "type": "per_day",
+          "description": "Una volta al giorno dopo un riposo breve, recuperi slot incantesimo per un totale di livelli pari alla metà del tuo livello da Mago (arrotondato per eccesso)."
+        },
+        "spellbook": {
+          "label": "Grimorio",
+          "initial_spells": 6,
+          "spells_per_level_up": 2
+        }
+      }
+    }
+  }
+}

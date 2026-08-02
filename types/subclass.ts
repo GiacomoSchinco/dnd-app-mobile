@@ -1,26 +1,11 @@
-// ── Raw JSON Data Types ────────────────────────────────────────
+import type { ClassFeatureRaw } from './class';
 
-export interface SubclassFeatureData {
-  id: number;
-  name: string;
-  level: number;
-  description: string;
-}
+// ── Sottoclassi (subclasses.json) ───────────────────────────────
 
-export interface SubclassRawData {
+export interface SubclassRaw {
   id: number;
   class_id: number;
   name: string;
   description: string;
-  features: SubclassFeatureData[];
-}
-
-// ── Converted Definition ───────────────────────────────────────
-
-export interface SubclassDefinition {
-  id: number;
-  classId: number;
-  name: string;
-  description: string;
-  features: SubclassFeatureData[];
+  features: ClassFeatureRaw[];
 }

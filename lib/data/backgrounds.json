@@ -1,0 +1,331 @@
+[
+  {
+    "id": 1,
+    "name": "Accolito",
+    "description": "Hai trascorso la tua vita in un tempio situato in una zona appartata di una cittadina o nascosto in un bosco sacro. Lì celebravi dei riti in onore degli dèi o di un pantheon ed eri al servizio di un sacerdote, mentre ti dedicavi allo studio delle religioni.",
+    "ability_score_boosts": {
+      "allowed_scores": ["INT", "SAG", "CAR"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["insight", "religion"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "calligraphers_supplies"
+    },
+    "feat": {
+      "feat_id": 5,
+      "name": "Iniziato alla Magia (Chierico)",
+      "requires_choice": true,
+      "spellcasting_ability_options": ["INT", "SAG", "CAR"]
+    },
+    "equipment_preset_id": 1000
+  },
+  {
+    "id": 2,
+    "name": "Artigiano",
+    "description": "Appena hai acquisito la forza sufficiente per trasportare un secchio, hai cominciato la tua carriera lavando i pavimenti e i banchi da lavoro nella bottega di un artigiano per poche monete di rame al giorno. Una volta diventato abbastanza grande da poter fare l'apprendista, hai imparato a realizzare opere semplici.",
+    "ability_score_boosts": {
+      "allowed_scores": ["FOR", "DES", "INT"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["investigation", "persuasion"],
+    "tool_proficiency": {
+      "type": "CHOICE",
+      "category": "artisans_tools"
+    },
+    "feat": {
+      "feat_id": 2,
+      "name": "Lavoro Manuale",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1001
+  },
+  {
+    "id": 3,
+    "name": "Ciarlatano",
+    "description": "Una volta raggiunta l'età per poter bere alcolici, hai subito ottenuto un posto di favore in ogni singola taverna nel raggio di 15 chilometri dalla tua città natale. Viaggiando da una bettola all'altra, hai imparato come approfittare degli sfortunati in cerca di qualche bugia di conforto.",
+    "ability_score_boosts": {
+      "allowed_scores": ["DES", "COS", "CAR"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["deception", "sleight_of_hand"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "forgery_kit"
+    },
+    "feat": {
+      "feat_id": 10,
+      "name": "Abile",
+      "requires_choice": true,
+      "choice_type": "SKILL_OR_TOOL_PROFICIENCIES",
+      "count": 3
+    },
+    "equipment_preset_id": 1002
+  },
+  {
+    "id": 4,
+    "name": "Contadino",
+    "description": "Sei cresciuto a contatto con la terra. Grazie agli anni trascorsi prendendoti cura di animali e piante, hai appreso la virtù della pazienza e ora godi di ottima salute. Sei una persona che sa apprezzare molto i doni della natura, nutrendo un sano rispetto per i suoi momenti di furia.",
+    "ability_score_boosts": {
+      "allowed_scores": ["FOR", "COS", "SAG"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["animal_handling", "nature"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "carpenters_tools"
+    },
+    "feat": {
+      "feat_id": 12,
+      "name": "Robusto",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1005
+  },
+  {
+    "id": 5,
+    "name": "Criminale",
+    "description": "Sei riuscito a sopravvivere nei vicoli più bui borseggiando i passanti e rapinando i negozi. Magari facevi parte di una piccola banda di malviventi dalla mentalità affine o eri un lupo solitario impegnato a guardarti le spalle dalla gilda dei ladri locale.",
+    "ability_score_boosts": {
+      "allowed_scores": ["DES", "COS", "INT"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["sleight_of_hand", "stealth"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "thieves_tools"
+    },
+    "feat": {
+      "feat_id": 1,
+      "name": "Allerta",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1003
+  },
+  {
+    "id": 6,
+    "name": "Eremita",
+    "description": "Hai trascorso i tuoi primi anni rinchiuso in una capanna o un monastero molto distante da qualsiasi insediamento abitato. All'epoca, i tuoi unici compagni erano le creature della foresta. La solitudine ti ha consentito di trascorrere svariate ore a riflettere sui misteri della creazione.",
+    "ability_score_boosts": {
+      "allowed_scores": ["COS", "SAG", "CAR"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["medicine", "religion"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "herbalism_kit"
+    },
+    "feat": {
+      "feat_id": 3,
+      "name": "Guaritore",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1008
+  },
+  {
+    "id": 7,
+    "name": "Guardia",
+    "description": "Ti basta pensare alle innumerevoli ore trascorse di guardia alla torre per sentire male ai piedi. Sei stato addestrato a guardare con un occhio fuori dalle mura in cerca di predoni e con l'altro all'interno per scovare tagliaborse e altri furfanti.",
+    "ability_score_boosts": {
+      "allowed_scores": ["FOR", "INT", "SAG"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["athletics", "perception"],
+    "tool_proficiency": {
+      "type": "CHOICE",
+      "category": "gaming_sets"
+    },
+    "feat": {
+      "feat_id": 1,
+      "name": "Allerta",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1006
+  },
+  {
+    "id": 8,
+    "name": "Guida",
+    "description": "Sei cresciuto all'aperto, lontano da insediamenti abitati. La tua casa era ovunque decidessi di poggiare il giaciglio. Le terre selvagge sono ricche di meraviglie e hai imparato a badare a te stesso, facendo di tanto in tanto da guida a sacerdoti al servizio della natura.",
+    "ability_score_boosts": {
+      "allowed_scores": ["DES", "COS", "SAG"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["stealth", "survival"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "cartographers_tools"
+    },
+    "feat": {
+      "feat_id": 6,
+      "name": "Iniziato alla Magia (Druido)",
+      "requires_choice": true,
+      "spellcasting_ability_options": ["INT", "SAG", "CAR"]
+    },
+    "equipment_preset_id": 1007
+  },
+  {
+    "id": 9,
+    "name": "Intrattenitore",
+    "description": "Hai trascorso la maggior parte della tua gioventù tra fiere e carnevali, svolgendo strambi incarichi per musicisti e acrobati in cambio di lezioni. Potresti aver imparato come fare il funambolo o suonare il flauto. Ancora oggi ti crogioli negli applausi e reclami il palcoscenico.",
+    "ability_score_boosts": {
+      "allowed_scores": ["FOR", "DES", "CAR"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["acrobatics", "performance"],
+    "tool_proficiency": {
+      "type": "CHOICE",
+      "category": "musical_instruments"
+    },
+    "feat": {
+      "feat_id": 8,
+      "name": "Musicista",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1004
+  },
+  {
+    "id": 10,
+    "name": "Marinaio",
+    "description": "Hai vissuto la tua vita per mare, col vento in poppa e il pavimento che oscillava sotto i piedi. Nei tuoi viaggi hai frequentato le taverne di ogni luogo immaginabile, affrontato terribili tempeste, raccontato le tue imprese e ascoltato quelle di altri marinai.",
+    "ability_score_boosts": {
+      "allowed_scores": ["FOR", "DES", "SAG"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["acrobatics", "perception"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "navigators_tools"
+    },
+    "feat": {
+      "feat_id": 11,
+      "name": "Lottatore da Taverna",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1011
+  },
+  {
+    "id": 11,
+    "name": "Mercante",
+    "description": "Hai cominciato il tuo percorso come apprendista di un mercante, un carovaniere o un negoziante, grazie al quale hai appreso le basi del commercio. Hai viaggiato in lungo e in largo comprando e vendendo materie prime o prodotti finiti.",
+    "ability_score_boosts": {
+      "allowed_scores": ["COS", "INT", "CAR"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["animal_handling", "persuasion"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "navigators_tools"
+    },
+    "feat": {
+      "feat_id": 4,
+      "name": "Fortunato",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1015
+  },
+  {
+    "id": 12,
+    "name": "Nobile",
+    "description": "Sei cresciuto in un castello, circondato da ricchezze, poteri e privilegi immensi. La tua famiglia della bassa aristocrazia si è assicurata che ricevessi un'istruzione di prima classe. Le svariate ore passate a corte ti hanno insegnato molto su cosa significhi essere al comando.",
+    "ability_score_boosts": {
+      "allowed_scores": ["FOR", "INT", "CAR"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["history", "persuasion"],
+    "tool_proficiency": {
+      "type": "CHOICE",
+      "category": "gaming_sets"
+    },
+    "feat": {
+      "feat_id": 10,
+      "name": "Abile",
+      "requires_choice": true,
+      "choice_type": "SKILL_OR_TOOL_PROFICIENCIES",
+      "count": 3
+    },
+    "equipment_preset_id": 1009
+  },
+  {
+    "id": 13,
+    "name": "Sapiente",
+    "description": "Hai trascorso la tua gioventù tra ville e monasteri, svolgendo svariate mansioni in cambio dell'accesso alle biblioteche. Sono molte le notti che hai passato insonne studiando libri e pergamene col desiderio di scoprire di più sul multiverso e i rudimenti della magia.",
+    "ability_score_boosts": {
+      "allowed_scores": ["COS", "INT", "SAG"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["arcana", "history"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "calligraphers_supplies"
+    },
+    "feat": {
+      "feat_id": 7,
+      "name": "Iniziato alla Magia (Mago)",
+      "requires_choice": true,
+      "spellcasting_ability_options": ["INT", "SAG", "CAR"]
+    },
+    "equipment_preset_id": 1010
+  },
+  {
+    "id": 14,
+    "name": "Scriba",
+    "description": "Hai trascorso i tuoi anni di formazione in uno scriptorium o in un istituto governativo dove hai imparato l'arte della calligrafia e realizzato una serie di raffinati scritti. Hai una grande attenzione ai dettagli, che ti aiuta a evitare errori nei documenti.",
+    "ability_score_boosts": {
+      "allowed_scores": ["DES", "INT", "SAG"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["investigation", "perception"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "calligraphers_supplies"
+    },
+    "feat": {
+      "feat_id": 10,
+      "name": "Abile",
+      "requires_choice": true,
+      "choice_type": "SKILL_OR_TOOL_PROFICIENCIES",
+      "count": 3
+    },
+    "equipment_preset_id": 1016
+  },
+  {
+    "id": 15,
+    "name": "Soldato",
+    "description": "Hai iniziato il tuo addestramento nell'arte della guerra non appena sei diventato adulto. Hai la battaglia nel sangue e a volte ti ritrovi ad eseguire d'impulso gli esercizi basilari che hai appreso tempo addietro. Metterai quell'addestramento a buon uso sul campo di battaglia.",
+    "ability_score_boosts": {
+      "allowed_scores": ["FOR", "DES", "COS"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["athletics", "intimidation"],
+    "tool_proficiency": {
+      "type": "CHOICE",
+      "category": "gaming_sets"
+    },
+    "feat": {
+      "feat_id": 9,
+      "name": "Aggressore Selvaggio",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1012
+  },
+  {
+    "id": 16,
+    "name": "Viandante / Furfante",
+    "description": "Sei cresciuto in strada circondato da altri emarginati con un fato altrettanto avverso. Hai dormito dove capitava e svolto lavori di ogni tipo pur di mangiare. A volte la fame ti ha costretto a ricorrere al furto, ma non hai mai smarrito né l'orgoglio né la speranza.",
+    "ability_score_boosts": {
+      "allowed_scores": ["DES", "SAG", "CAR"],
+      "distribution_modes": ["PLUS_TWO_PLUS_ONE", "THREE_PLUS_ONES"]
+    },
+    "skills": ["insight", "stealth"],
+    "tool_proficiency": {
+      "type": "FIXED",
+      "tool_id": "thieves_tools"
+    },
+    "feat": {
+      "feat_id": 4,
+      "name": "Fortunato",
+      "requires_choice": false
+    },
+    "equipment_preset_id": 1013
+  }
+]

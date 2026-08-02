@@ -1,112 +1,132 @@
+import { getClass, getClassById } from './classes';
+import { getRace, getRaceById, getLineageById, getRaceEffects, getRaceEffectIds, hasLineages, type RaceDefinition } from './races';
+import { getBackground } from './backgrounds';
+import { getFeat } from './feats';
+import { getSubclass } from './subclasses';
+import { getSpellProgression, getLevelUpSpellChanges } from './spellcasting';
+import { getClassProgression, getFeaturesAtLevel, getAsiLevels, getResourceValue } from './progression';
+import { getStartingEquipment } from './equipment-preset';
+import type { Ability, AbilityScores, EffectRaw } from '../../types';
+
 /**
  * character-builder.ts — Orchestratore per creazione e livellamento PG.
  * Combina tutti i moduli rules/ in un flusso sequenziale.
  */
 
-import type {
-  Character, CharacterClass, AbilityScores,
-  ClassName, Ability, ClassFeature,
-} from '../../types';
-import { getClass } from './classes';
-import { getRace, hasSubraces } from './races';
-import { getAllSkills } from './skills';
-import { getBackground, getBackgroundFeatId, getBackgroundAbilityBoosts } from './backgrounds';
-import { getFeat, checkFeatPrerequisites, getOriginFeats } from './feats';
-import { getAllItems } from './items';
-import { getSubclass, getSubclassesByClassId } from './subclasses';
-import { getSpellProgression, getLevelUpSpellChanges } from './spellcasting';
-import {
-  getClassProgression, getFeaturesAtLevel, getAllFeaturesUpToLevel,
-  isSubclassLevel, getAsiLevels, getProficiencyBonus, getResourceValue,
-} from './progression';
-
 // ── Step 1: Scegli razza ───────────────────────────────────────
 
 export interface RaceChoice {
-  raceName: string;
-  subrace?: string;
-}
-
-/** Applica i dati razziali a un personaggio in costruzione */
-export function applyRace(choice: RaceChoice): RaceChoiceResult {
-  const race = getRace(choice.raceName as any);
-  if (!race) return { success: false, error: `Razza "${choice.raceName}" non trovata` };
-
-  if (hasSubraces(choice.raceName as any) && !choice.subrace) {
-    return { success: false, error: 'Sottorazza richiesta ma non specificata' };
-  }
-
-  return {
-    success: true,
-    data: {
-      race: choice.raceName,
-      subrace: choice.subrace,
-      speed: race.speed,
-      size: race.size,
-      traits: race.traits,
-      languages: race.languages,
-      darkvision: race.darkvision,
-      resistances: race.resistances,
-      proficiencies: race.proficiencies,
-      hpPerLevel: race.hpPerLevel,
-      extraSkills: race.extraSkills,
-      extraLanguage: race.extraLanguage,
-    },
-  };
+  /** ID della razza (races.id) */
+  raceId?: number;
+  /** Nome della razza (es. 'Umano') */
+  raceName?: string;
+  /** ID della lineage/sottorazza (races.lineages[].id) */
+  lineageId?: number;
 }
 
 export interface RaceChoiceResult {
   success: boolean;
   error?: string;
   data?: {
-    race: string;
-    subrace?: string;
-    speed: number;
-    size: string;
-    traits: { name: string; description: string }[];
-    languages: string[];
-    darkvision: number | null;
-    resistances: string[];
-    proficiencies: string[];
-    hpPerLevel: number;
-    extraSkills: number;
-    extraLanguage: number;
+    race: RaceDefinition;
+    lineage?: { id: number; name: string } | null;
+    effects: EffectRaw[];
+    effectIds: number[];
+  };
+}
+
+/** Applica i dati razziali a un personaggio in costruzione */
+export function applyRace(choice: RaceChoice): RaceChoiceResult {
+  const race = choice.raceId != null
+    ? getRaceById(choice.raceId)
+    : choice.raceName
+      ? getRace(choice.raceName)
+      : undefined;
+
+  if (!race) {
+    return { success: false, error: `Razza "${choice.raceName ?? choice.raceId}" non trovata` };
+  }
+
+  if (hasLineages(race.id) && choice.lineageId == null) {
+    return { success: false, error: 'Sottorazza (lineage) richiesta ma non specificata' };
+  }
+
+  const lineage = choice.lineageId != null ? getLineageById(race.id, choice.lineageId) : undefined;
+
+  return {
+    success: true,
+    data: {
+      race,
+      lineage: lineage ? { id: lineage.id, name: lineage.name } : null,
+      effects: getRaceEffects(race.id, choice.lineageId),
+      effectIds: getRaceEffectIds(race.id, choice.lineageId),
+    },
   };
 }
 
 // ── Step 2: Scegli classe ─────────────────────────────────────
 
 export interface ClassChoice {
-  className: ClassName;
+  /** ID della classe (classes.id) */
+  classId?: number;
+  /** Nome della classe (chiave inglese, nome inglese o etichetta italiana) */
+  className?: string;
+  /** ID della sottoclasse (subclasses.id) */
   subclassId?: number;
   level: number;
 }
 
+export interface ClassApplyResult {
+  success: boolean;
+  error?: string;
+  data?: {
+    classDef: NonNullable<ReturnType<typeof getClass>>;
+    level: number;
+    subclass?: ReturnType<typeof getSubclass>;
+    features: { level: number; features: string[] }[];
+    hitDie: number;
+    primaryAbilities: Ability[];
+    spellcasting?: { type?: string; ability?: Ability };
+    spellProgression?: ReturnType<typeof getSpellProgression>;
+    asiLevels: number[];
+    subclassLevels: number[];
+    subclassLabel?: string;
+    resources: Record<string, unknown>;
+  };
+}
+
 /** Applica i dati di classe a un personaggio */
 export function applyClass(choice: ClassChoice): ClassApplyResult {
-  const classDef = getClass(choice.className);
-  if (!classDef) return { success: false, error: `Classe "${choice.className}" non trovata` };
+  const classDef = choice.classId != null
+    ? getClassById(choice.classId)
+    : choice.className
+      ? getClass(choice.className)
+      : undefined;
 
-  const progression = getClassProgression(choice.className);
+  if (!classDef) {
+    return { success: false, error: `Classe "${choice.className ?? choice.classId}" non trovata` };
+  }
 
-  const features = getClassFeaturesFromProgression(choice.className, choice.level);
+  const progression = getClassProgression(classDef.name);
+  const features = getClassFeaturesFromProgression(classDef.name, choice.level);
 
   return {
     success: true,
     data: {
       classDef,
       level: choice.level,
+      subclass: choice.subclassId != null ? getSubclass(choice.subclassId) : undefined,
       features,
       hitDie: classDef.hitDie,
-      primaryAbility: classDef.primaryAbility,
+      primaryAbilities: classDef.primaryAbilities,
       spellcasting: classDef.isSpellcaster ? {
         type: classDef.spellcastingType,
         ability: classDef.spellAbility,
       } : undefined,
       spellProgression: classDef.isSpellcaster
-        ? getSpellProgression(choice.className, choice.level)
+        ? getSpellProgression(classDef.name, choice.level)
         : undefined,
-      asiLevels: progression ? getAsiLevels(choice.className) : [],
+      asiLevels: progression ? getAsiLevels(classDef.name) : [],
       subclassLevels: progression?.subclassLevels ?? [],
       subclassLabel: progression?.subclassLabel,
       resources: progression?.resources ?? {},
@@ -114,25 +134,7 @@ export function applyClass(choice: ClassChoice): ClassApplyResult {
   };
 }
 
-export interface ClassApplyResult {
-  success: boolean;
-  error?: string;
-  data?: {
-    classDef: ReturnType<typeof getClass>;
-    level: number;
-    features: { level: number; features: string[] }[];
-    hitDie: number;
-    primaryAbility: string;
-    spellcasting?: { type?: string; ability?: string };
-    spellProgression?: ReturnType<typeof getSpellProgression>;
-    asiLevels: number[];
-    subclassLevels: number[];
-    subclassLabel?: string;
-    resources: Record<string, any>;
-  };
-}
-
-function getClassFeaturesFromProgression(className: ClassName, level: number): { level: number; features: string[] }[] {
+function getClassFeaturesFromProgression(className: string, level: number): { level: number; features: string[] }[] {
   const prog = getClassProgression(className);
   if (!prog) return [];
 
@@ -153,36 +155,36 @@ export interface BackgroundChoice {
   chosenSkills?: string[];
 }
 
+export interface BackgroundApplyResult {
+  success: boolean;
+  error?: string;
+  data?: {
+    background: NonNullable<ReturnType<typeof getBackground>>;
+    abilityBoosts: string[];
+    skills: string[];
+    toolProficiency?: { type: string; toolId?: string; category?: string };
+    featId?: number;
+    equipmentPresetId: number;
+  };
+}
+
 /** Applica un background al personaggio */
 export function applyBackground(choice: BackgroundChoice): BackgroundApplyResult {
   const bg = getBackground(choice.backgroundId);
-  if (!bg) return { success: false, error: `Background ID ${choice.backgroundId} non trovato` };
-
-  const featId = getBackgroundFeatId(choice.backgroundId);
+  if (!bg) {
+    return { success: false, error: `Background ID ${choice.backgroundId} non trovato` };
+  }
 
   return {
     success: true,
     data: {
       background: bg,
-      abilityBoosts: bg.abilityScoreBoosts,
+      abilityBoosts: bg.abilityScoreBoosts.allowedScores,
       skills: bg.skills,
-      toolProficiencies: bg.toolProficiencies,
-      featId,
+      toolProficiency: bg.toolProficiency,
+      featId: bg.feat.featId,
       equipmentPresetId: bg.equipmentPresetId,
     },
-  };
-}
-
-export interface BackgroundApplyResult {
-  success: boolean;
-  error?: string;
-  data?: {
-    background: ReturnType<typeof getBackground>;
-    abilityBoosts: string[];
-    skills: string[];
-    toolProficiencies: string[];
-    featId?: number;
-    equipmentPresetId: number;
   };
 }
 
@@ -190,14 +192,7 @@ export interface BackgroundApplyResult {
 
 export interface AbilityAssignment {
   method: 'standard' | 'point_buy' | 'manual';
-  scores: {
-    strength: number;
-    dexterity: number;
-    constitution: number;
-    intelligence: number;
-    wisdom: number;
-    charisma: number;
-  };
+  scores: AbilityScores;
   backgroundBoosts?: string[];
 }
 
@@ -227,7 +222,7 @@ export function calculateFinalAbilities(assignment: AbilityAssignment): AbilityS
 export interface LevelUpRequest {
   currentLevel: number;
   newLevel: number;
-  className: ClassName;
+  className: string;
   conModifier: number;
   currentHp: number;
 }
@@ -271,15 +266,15 @@ export function calculateLevelUp(request: LevelUpRequest): LevelUpResult {
 
   // ASI?
   const asiLevels = getAsiLevels(request.className);
-  const asiLevel = asiLevels.some(l => l > request.currentLevel && l <= request.newLevel);
+  const asiLevel = asiLevels.some((l) => l > request.currentLevel && l <= request.newLevel);
 
   // Sottoclasse?
-  const subclassLevel = progression.subclassLevels.some(l => l > request.currentLevel && l <= request.newLevel);
+  const subclassLevel = progression.subclassLevels.some((l) => l > request.currentLevel && l <= request.newLevel);
 
   // Cambiamenti incantesimi
   let spellChanges: ReturnType<typeof getLevelUpSpellChanges> | undefined;
   if (classDef.isSpellcaster) {
-    spellChanges = getLevelUpSpellChanges(request.className, request.currentLevel, request.newLevel);
+    spellChanges = getLevelUpSpellChanges(classDef.name, request.currentLevel, request.newLevel);
   }
 
   // Cambiamenti risorse
@@ -307,20 +302,7 @@ export function calculateLevelUp(request: LevelUpRequest): LevelUpResult {
 
 // ── Step 6: Assegna equipaggiamento iniziale ──────────────────
 
-export function getStartingEquipment(equipmentPresetId: number): { name: string; itemId: number; quantity: number }[] {
-  // L'equipment_preset.json è referenziato via ID
-  // Questa funzione fa da ponte verso il lookup
-  const allItems = getAllItems();
-  const preset = require('../../assets/data/equipment_preset.json')
-    .find((e: any) => e.id === equipmentPresetId);
-
-  if (!preset) return [];
-  return preset.items.map((item: any) => ({
-    name: item.name,
-    itemId: item.item_id,
-    quantity: item.quantity,
-  }));
-}
+export { getStartingEquipment } from './equipment-preset';
 
 // ── Riepilogo completo ─────────────────────────────────────────
 

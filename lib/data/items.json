@@ -5,7 +5,7 @@
     "type": "weapon",
     "weight": 3.0,
     "value": 15.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "sword",
@@ -15,9 +15,11 @@
       "itemType": "weapon",
       "damageType": "tagliente",
       "properties": [
-        "versatile"
+        "versatile",
+        "prosciugamento"
       ],
-      "versatileDamage": "1d10"
+      "versatileDamage": "1d10",
+      "mastery": "prosciugamento"
     }
   },
   {
@@ -26,7 +28,7 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "sword",
@@ -37,8 +39,10 @@
       "damageType": "perforante",
       "properties": [
         "leggera",
-        "accurata"
-      ]
+        "accurata",
+        "vessazione"
+      ],
+      "mastery": "vessazione"
     }
   },
   {
@@ -47,7 +51,7 @@
     "type": "weapon",
     "weight": 0.5,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "dagger",
@@ -63,8 +67,10 @@
       "properties": [
         "accurata",
         "leggera",
-        "lancio"
-      ]
+        "lancio",
+        "graffio"
+      ],
+      "mastery": "graffio"
     }
   },
   {
@@ -73,7 +79,7 @@
     "type": "weapon",
     "weight": 3.5,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "axe",
@@ -84,8 +90,10 @@
       "damageType": "tagliente",
       "properties": [
         "pesante",
-        "a due mani"
-      ]
+        "a due mani",
+        "doppio fendente"
+      ],
+      "mastery": "doppio fendente"
     }
   },
   {
@@ -94,7 +102,7 @@
     "type": "weapon",
     "weight": 2.5,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "axe",
@@ -104,9 +112,11 @@
       "itemType": "weapon",
       "damageType": "tagliente",
       "properties": [
-        "versatile"
+        "versatile",
+        "rovesciamento"
       ],
-      "versatileDamage": "1d10"
+      "versatileDamage": "1d10",
+      "mastery": "rovesciamento"
     }
   },
   {
@@ -115,7 +125,7 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 15.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "hammer",
@@ -125,9 +135,11 @@
       "itemType": "weapon",
       "damageType": "contundente",
       "properties": [
-        "versatile"
+        "versatile",
+        "spinta"
       ],
-      "versatileDamage": "1d10"
+      "versatileDamage": "1d10",
+      "mastery": "spinta"
     }
   },
   {
@@ -136,7 +148,7 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "mace",
@@ -144,7 +156,11 @@
     "properties": {
       "damage": "1d6",
       "itemType": "weapon",
-      "damageType": "contundente"
+      "damageType": "contundente",
+      "properties": [
+        "prosciugamento"
+      ],
+      "mastery": "prosciugamento"
     }
   },
   {
@@ -153,7 +169,7 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "club",
@@ -161,7 +177,11 @@
     "properties": {
       "damage": "1d4",
       "itemType": "weapon",
-      "damageType": "contundente"
+      "damageType": "contundente",
+      "properties": [
+        "lentezza"
+      ],
+      "mastery": "lentezza"
     }
   },
   {
@@ -170,7 +190,7 @@
     "type": "weapon",
     "weight": 1.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "spear",
@@ -185,9 +205,11 @@
       "damageType": "perforante",
       "properties": [
         "lancio",
-        "versatile"
+        "versatile",
+        "prosciugamento"
       ],
-      "versatileDamage": "1d8"
+      "versatileDamage": "1d8",
+      "mastery": "prosciugamento"
     }
   },
   {
@@ -196,7 +218,7 @@
     "type": "weapon",
     "weight": 3.0,
     "value": 20.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "polearm",
@@ -208,8 +230,10 @@
       "properties": [
         "pesante",
         "portata",
-        "a due mani"
-      ]
+        "a due mani",
+        "doppio fendente"
+      ],
+      "mastery": "doppio fendente"
     }
   },
   {
@@ -218,7 +242,7 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 50.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bow",
@@ -234,8 +258,10 @@
       "properties": [
         "munizioni",
         "a due mani",
-        "pesante"
-      ]
+        "pesante",
+        "lentezza"
+      ],
+      "mastery": "lentezza"
     }
   },
   {
@@ -244,7 +270,7 @@
     "type": "weapon",
     "weight": 1.5,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bow",
@@ -259,8 +285,10 @@
       "damageType": "perforante",
       "properties": [
         "munizioni",
-        "a due mani"
-      ]
+        "a due mani",
+        "vessazione"
+      ],
+      "mastery": "vessazione"
     }
   },
   {
@@ -269,7 +297,7 @@
     "type": "weapon",
     "weight": 2.5,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "crossbow",
@@ -285,8 +313,10 @@
       "properties": [
         "munizioni",
         "carica",
-        "a due mani"
-      ]
+        "a due mani",
+        "lentezza"
+      ],
+      "mastery": "lentezza"
     }
   },
   {
@@ -295,7 +325,7 @@
     "type": "weapon",
     "weight": 4.5,
     "value": 50.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "crossbow",
@@ -312,8 +342,10 @@
         "munizioni",
         "carica",
         "a due mani",
-        "pesante"
-      ]
+        "pesante",
+        "spinta"
+      ],
+      "mastery": "spinta"
     }
   },
   {
@@ -322,7 +354,7 @@
     "type": "weapon",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "sling",
@@ -336,8 +368,10 @@
       "itemType": "weapon",
       "damageType": "contundente",
       "properties": [
-        "munizioni"
-      ]
+        "munizioni",
+        "lentezza"
+      ],
+      "mastery": "lentezza"
     }
   },
   {
@@ -346,7 +380,7 @@
     "type": "weapon",
     "weight": 0.1,
     "value": 0.05,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "dart",
@@ -361,8 +395,10 @@
       "damageType": "perforante",
       "properties": [
         "accurata",
-        "lancio"
-      ]
+        "lancio",
+        "vessazione"
+      ],
+      "mastery": "vessazione"
     }
   },
   {
@@ -371,7 +407,7 @@
     "type": "weapon",
     "weight": 1.0,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "javelin",
@@ -385,8 +421,10 @@
       "itemType": "weapon",
       "damageType": "perforante",
       "properties": [
-        "lancio"
-      ]
+        "lancio",
+        "lentezza"
+      ],
+      "mastery": "lentezza"
     }
   },
   {
@@ -395,7 +433,7 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "spear",
@@ -410,9 +448,11 @@
       "damageType": "perforante",
       "properties": [
         "lancio",
-        "versatile"
+        "versatile",
+        "rovesciamento"
       ],
-      "versatileDamage": "1d8"
+      "versatileDamage": "1d8",
+      "mastery": "rovesciamento"
     }
   },
   {
@@ -421,7 +461,7 @@
     "type": "weapon",
     "weight": 1.0,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "sickle",
@@ -431,8 +471,10 @@
       "itemType": "weapon",
       "damageType": "tagliente",
       "properties": [
-        "leggera"
-      ]
+        "leggera",
+        "graffio"
+      ],
+      "mastery": "graffio"
     }
   },
   {
@@ -441,7 +483,7 @@
     "type": "weapon",
     "weight": 1.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "flail",
@@ -450,7 +492,8 @@
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "contundente"
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 21,
@@ -458,15 +501,19 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "flail",
-    "description": "Un'arma pesante con una sfera chiodata all'estremità di una catena.",
+    "description": "Un'arma pesante con una sfera chiodata all'estremitÃ  di una catena.",
     "properties": {
       "damage": "1d8",
       "itemType": "weapon",
-      "damageType": "contundente"
+      "damageType": "contundente",
+      "properties": [
+        "prosciugamento"
+      ],
+      "mastery": "prosciugamento"
     }
   },
   {
@@ -475,7 +522,7 @@
     "type": "weapon",
     "weight": 4.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "polearm",
@@ -487,8 +534,10 @@
       "properties": [
         "pesante",
         "portata",
-        "a due mani"
-      ]
+        "a due mani",
+        "spinta"
+      ],
+      "mastery": "spinta"
     }
   },
   {
@@ -497,7 +546,7 @@
     "type": "weapon",
     "weight": 3.0,
     "value": 20.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "polearm",
@@ -511,7 +560,8 @@
         "portata",
         "a due mani"
       ]
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 24,
@@ -519,7 +569,7 @@
     "type": "weapon",
     "weight": 1.0,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "club",
@@ -528,7 +578,8 @@
       "damage": "1d4",
       "itemType": "weapon",
       "damageType": "contundente"
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 25,
@@ -536,7 +587,7 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "club",
@@ -544,8 +595,13 @@
     "properties": {
       "damage": "1d6",
       "itemType": "weapon",
-      "damageType": "contundente"
-    }
+      "damageType": "contundente",
+      "properties": [
+        "lentezza"
+      ],
+      "mastery": "prosciugamento"
+    },
+    "isHomebrew": false
   },
   {
     "id": 26,
@@ -553,7 +609,7 @@
     "type": "weapon",
     "weight": 1.5,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "whip",
@@ -564,17 +620,19 @@
       "damageType": "tagliente",
       "properties": [
         "accurata",
-        "portata"
-      ]
+        "portata",
+        "lentezza"
+      ],
+      "mastery": "lentezza"
     }
   },
   {
     "id": 27,
-    "name": "Fioretto",
+    "name": "Stocco",
     "type": "weapon",
     "weight": 1.0,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "sword",
@@ -585,16 +643,18 @@
       "damageType": "perforante",
       "properties": [
         "accurata"
-      ]
-    }
+      ],
+      "mastery": "vessazione"
+    },
+    "isHomebrew": false
   },
   {
     "id": 28,
-    "name": "Sciabola",
+    "name": "Scimitarra",
     "type": "weapon",
     "weight": 1.5,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "sword",
@@ -606,8 +666,10 @@
       "properties": [
         "accurata",
         "leggera"
-      ]
-    }
+      ],
+      "mastery": "graffio"
+    },
+    "isHomebrew": false
   },
   {
     "id": 29,
@@ -615,7 +677,7 @@
     "type": "weapon",
     "weight": 1.5,
     "value": 50.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "sword",
@@ -628,7 +690,8 @@
         "pesante",
         "a due mani"
       ]
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 30,
@@ -636,7 +699,7 @@
     "type": "weapon",
     "weight": 1.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "monk",
@@ -648,7 +711,8 @@
       "properties": [
         "accurata"
       ]
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 31,
@@ -656,7 +720,7 @@
     "type": "weapon",
     "weight": 0.05,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "thrown",
@@ -674,7 +738,8 @@
         "lancio",
         "munizioni"
       ]
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 32,
@@ -682,7 +747,7 @@
     "type": "weapon",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "thrown",
@@ -698,7 +763,8 @@
       "properties": [
         "lancio"
       ]
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 33,
@@ -706,7 +772,7 @@
     "type": "weapon",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "thrown",
@@ -723,7 +789,8 @@
         "accurata",
         "lancio"
       ]
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 34,
@@ -731,18 +798,20 @@
     "type": "weapon",
     "weight": 3.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "spear",
-    "description": "Una lancia più lunga del normale, usata dalla cavalleria.",
+    "description": "Una lancia piÃ¹ lunga del normale, usata dalla cavalleria.",
     "properties": {
       "damage": "1d8",
       "itemType": "weapon",
       "damageType": "perforante",
       "properties": [
-        "portata"
-      ]
+        "portata",
+        "prosciugamento"
+      ],
+      "mastery": "prosciugamento"
     }
   },
   {
@@ -751,19 +820,21 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "quarterstaff",
-    "description": "Un robusto bastone con rinforzi metallici alle estremità.",
+    "description": "Un robusto bastone con rinforzi metallici alle estremitÃ .",
     "properties": {
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "contundente",
       "properties": [
-        "versatile"
+        "versatile",
+        "rovesciamento"
       ],
-      "versatileDamage": "1d8"
+      "versatileDamage": "1d8",
+      "mastery": "rovesciamento"
     }
   },
   {
@@ -772,7 +843,7 @@
     "type": "weapon",
     "weight": 2.0,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -781,7 +852,8 @@
       "damage": "1d4",
       "itemType": "weapon",
       "damageType": "tagliente"
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 37,
@@ -789,7 +861,7 @@
     "type": "weapon",
     "weight": 2.5,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -798,7 +870,8 @@
       "damage": "1d6",
       "itemType": "weapon",
       "damageType": "contundente"
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 38,
@@ -806,12 +879,19 @@
     "type": "armor",
     "weight": 5.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "light armor",
-    "description": "Un'armatura leggera in cuoio trattato, offre buona mobilità.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"light\",\"armorClass\":11,\"addsDexModifier\":true}"
+    "description": "Un'armatura leggera in cuoio trattato, offre buona mobilitÃ .",
+    "properties": {
+      "itemType": "armor",
+      "armorType": "light",
+      "ac": {
+        "base": 11,
+        "type": "dex"
+      }
+    }
   },
   {
     "id": 39,
@@ -819,12 +899,19 @@
     "type": "armor",
     "weight": 6.5,
     "value": 45.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "light armor",
     "description": "Un'armatura di cuoio rinforzata con borchie metalliche.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"light\",\"armorClass\":12,\"addsDexModifier\":true}"
+    "properties": {
+      "itemType": "armor",
+      "armorType": "light",
+      "ac": {
+        "base": 12,
+        "type": "dex"
+      }
+    }
   },
   {
     "id": 40,
@@ -832,12 +919,20 @@
     "type": "armor",
     "weight": 6.0,
     "value": 15.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
-    "category": "light armor",
-    "description": "Un'armatura in pelle spessa, più resistente del cuoio semplice.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"light\",\"armorClass\":11,\"addsDexModifier\":true}"
+    "category": "medium",
+    "description": "Un'armatura in pelle spessa, piÃ¹ resistente del cuoio semplice.",
+    "properties": {
+      "itemType": "armor",
+      "armorType": "medium",
+      "ac": {
+        "base": 12,
+        "type": "dex",
+        "max_dex": 2
+      }
+    }
   },
   {
     "id": 41,
@@ -845,12 +940,20 @@
     "type": "armor",
     "weight": 4.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "light armor",
     "description": "Una giubba imbottita, spesso indossata sotto le armature metalliche.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"light\",\"armorClass\":10,\"addsDexModifier\":true}"
+    "properties": {
+      "itemType": "armor",
+      "armorType": "light",
+      "ac": {
+        "base": 10,
+        "type": "dex"
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 42,
@@ -858,25 +961,43 @@
     "type": "armor",
     "weight": 20.0,
     "value": 50.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
-    "category": "medium armor",
+    "category": "heavy",
     "description": "Un'armatura di anelli metallici intrecciati, flessibile ma pesante.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"medium\",\"armorClass\":14,\"maxDexBonus\":2,\"addsDexModifier\":true}"
+    "properties": {
+      "itemType": "armor",
+      "armorType": "heavy",
+      "ac": {
+        "base": 16,
+        "type": "base"
+      },
+      "strength": 13,
+      "stealth": "svantaggio"
+    }
   },
   {
     "id": 43,
-    "name": "Armatura di scaglie",
+    "name": "Corazza a scaglie",
     "type": "armor",
     "weight": 22.5,
     "value": 50.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "medium armor",
     "description": "Un'armatura composta da scaglie metalliche sovrapposte.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"medium\",\"armorClass\":14,\"maxDexBonus\":2,\"addsDexModifier\":true}"
+    "properties": {
+      "itemType": "armor",
+      "armorType": "medium",
+      "ac": {
+        "base": 14,
+        "type": "dex",
+        "max_dex": 2
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 44,
@@ -884,12 +1005,20 @@
     "type": "armor",
     "weight": 25.0,
     "value": 400.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
-    "category": "heavy armor",
+    "category": "medium",
     "description": "Un'armatura completa in metallo, la migliore protezione disponibile.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"heavy\",\"armorClass\":16,\"addsDexModifier\":false}"
+    "properties": {
+      "itemType": "armor",
+      "armorType": "medium",
+      "ac": {
+        "base": 14,
+        "type": "dex",
+        "max_dex": 2
+      }
+    }
   },
   {
     "id": 45,
@@ -897,12 +1026,21 @@
     "type": "armor",
     "weight": 22.5,
     "value": 200.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "heavy armor",
     "description": "Un'armatura composta da strisce metalliche sovrapposte.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"heavy\",\"armorClass\":15,\"addsDexModifier\":false}"
+    "properties": {
+      "itemType": "armor",
+      "armorType": "heavy",
+      "ac": {
+        "base": 17,
+        "type": "base"
+      },
+      "strength": 15,
+      "stealth": "svantaggio"
+    }
   },
   {
     "id": 46,
@@ -910,12 +1048,20 @@
     "type": "armor",
     "weight": 20.0,
     "value": 75.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "heavy armor",
     "description": "Una cotta di maglia lunga fino alle ginocchia.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"heavy\",\"armorClass\":15,\"addsDexModifier\":false}"
+    "properties": {
+      "itemType": "armor",
+      "armorType": "heavy",
+      "ac": {
+        "base": 15,
+        "type": "base"
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 47,
@@ -923,12 +1069,21 @@
     "type": "armor",
     "weight": 8.0,
     "value": 30.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "medium armor",
     "description": "Una corazza in cuoio indurito, offre buona protezione senza appesantire.",
-    "properties": "{\"itemType\":\"armor\",\"armorType\":\"medium\",\"armorClass\":13,\"maxDexBonus\":2,\"addsDexModifier\":true}"
+    "properties": {
+      "itemType": "armor",
+      "armorType": "medium",
+      "ac": {
+        "base": 13,
+        "type": "dex",
+        "max_dex": 2
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 48,
@@ -936,7 +1091,7 @@
     "type": "armor",
     "weight": 3.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "shield",
@@ -944,7 +1099,10 @@
     "properties": {
       "itemType": "armor",
       "armorType": "shield",
-      "armorClass": 2
+      "ac": {
+        "base": 2,
+        "type": "dex"
+      }
     }
   },
   {
@@ -953,7 +1111,7 @@
     "type": "armor",
     "weight": 2.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "shield",
@@ -961,7 +1119,10 @@
     "properties": {
       "itemType": "armor",
       "armorType": "shield",
-      "armorClass": 2
+      "ac": {
+        "base": 2,
+        "type": "dex"
+      }
     }
   },
   {
@@ -970,7 +1131,7 @@
     "type": "armor",
     "weight": 3.5,
     "value": 15.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "shield",
@@ -978,7 +1139,10 @@
     "properties": {
       "itemType": "armor",
       "armorType": "shield",
-      "armorClass": 2
+      "ac": {
+        "base": 2,
+        "type": "dex"
+      }
     }
   },
   {
@@ -987,15 +1151,19 @@
     "type": "armor",
     "weight": 1.5,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "headgear",
     "description": "Un elmo in metallo che protegge la testa.",
     "properties": {
       "itemType": "gear",
-      "armorClass": 0
-    }
+      "ac": {
+        "base": 0,
+        "type": "dex"
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 52,
@@ -1003,15 +1171,19 @@
     "type": "armor",
     "weight": 1.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bracers",
     "description": "Protezioni per gli avambracci.",
     "properties": {
       "itemType": "gear",
-      "armorClass": 0
-    }
+      "ac": {
+        "base": 0,
+        "type": "dex"
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 53,
@@ -1019,15 +1191,19 @@
     "type": "armor",
     "weight": 2.0,
     "value": 8.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "leggings",
     "description": "Protezioni per le gambe.",
     "properties": {
       "itemType": "gear",
-      "armorClass": 0
-    }
+      "ac": {
+        "base": 0,
+        "type": "dex"
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 54,
@@ -1035,15 +1211,19 @@
     "type": "armor",
     "weight": 1.5,
     "value": 6.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "pauldrons",
     "description": "Protezioni per le spalle.",
     "properties": {
       "itemType": "gear",
-      "armorClass": 0
-    }
+      "ac": {
+        "base": 0,
+        "type": "dex"
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 55,
@@ -1051,15 +1231,19 @@
     "type": "armor",
     "weight": 0.5,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "gloves",
     "description": "Semplici guanti in cuoio.",
     "properties": {
       "itemType": "gear",
-      "armorClass": 0
-    }
+      "ac": {
+        "base": 0,
+        "type": "dex"
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 56,
@@ -1067,15 +1251,19 @@
     "type": "armor",
     "weight": 1.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "gloves",
     "description": "Guanti rinforzati con maglie di ferro.",
     "properties": {
       "itemType": "gear",
-      "armorClass": 0
-    }
+      "ac": {
+        "base": 0,
+        "type": "dex"
+      }
+    },
+    "isHomebrew": true
   },
   {
     "id": 57,
@@ -1083,7 +1271,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 0.05,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "arrow",
@@ -1099,7 +1287,7 @@
     "type": "ammunition",
     "weight": 0.75,
     "value": 0.05,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bolt",
@@ -1115,7 +1303,7 @@
     "type": "ammunition",
     "weight": 0.75,
     "value": 0.01,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bullet",
@@ -1131,7 +1319,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "arrow",
@@ -1149,7 +1337,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 3.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "arrow",
@@ -1166,7 +1354,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bolt",
@@ -1182,7 +1370,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 0.01,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bullet",
@@ -1198,7 +1386,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1214,7 +1402,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1229,7 +1417,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "arrow",
@@ -1245,7 +1433,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 0.05,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bolt",
@@ -1261,11 +1449,11 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bolt",
-    "description": "Quadrelli più pesanti per balestre pesanti.",
+    "description": "Quadrelli piÃ¹ pesanti per balestre pesanti.",
     "properties": {
       "itemType": "ammunition",
       "ammunitionType": "bolt"
@@ -1277,7 +1465,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "arrow",
@@ -1293,7 +1481,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 4.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "arrow",
@@ -1311,7 +1499,7 @@
     "type": "ammunition",
     "weight": 0.5,
     "value": 0.05,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "dart",
@@ -1327,7 +1515,7 @@
     "type": "gear",
     "weight": 2.5,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1339,11 +1527,11 @@
   },
   {
     "id": 73,
-    "name": "Sacco a pelo",
+    "name": "Giaciglio",
     "type": "gear",
-    "weight": 2.5,
-    "value": 1.0,
-    "currency": "po",
+    "weight": 3.5,
+    "value": 1,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bedding",
@@ -1354,11 +1542,11 @@
   },
   {
     "id": 74,
-    "name": "Tenda (2 persone)",
+    "name": "Tenda",
     "type": "gear",
-    "weight": 5.0,
-    "value": 2.0,
-    "currency": "po",
+    "weight": 10.0,
+    "value": 2,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "shelter",
@@ -1373,7 +1561,7 @@
     "type": "gear",
     "weight": 10.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "shelter",
@@ -1384,11 +1572,11 @@
   },
   {
     "id": 76,
-    "name": "Razioni da viaggio (1 giorno)",
+    "name": "Razioni",
     "type": "consumable",
     "weight": 1.0,
-    "value": 0.5,
-    "currency": "po",
+    "value": 5,
+    "currency": "ma",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -1404,7 +1592,7 @@
     "type": "consumable",
     "weight": 7.0,
     "value": 3.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -1420,7 +1608,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1434,9 +1622,9 @@
     "id": 79,
     "name": "Otre",
     "type": "gear",
-    "weight": 1.0,
-    "value": 0.1,
-    "currency": "po",
+    "weight": 2.5,
+    "value": 2,
+    "currency": "ma",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1451,8 +1639,8 @@
     "name": "Torcia",
     "type": "gear",
     "weight": 0.5,
-    "value": 0.01,
-    "currency": "po",
+    "value": 1,
+    "currency": "mr",
     "rarity": "common",
     "requires_attunement": false,
     "category": "light",
@@ -1463,11 +1651,11 @@
   },
   {
     "id": 81,
-    "name": "Lanterna",
+    "name": "Lanterna a lente sporgente",
     "type": "gear",
     "weight": 1.0,
-    "value": 0.5,
-    "currency": "po",
+    "value": 10,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "light",
@@ -1478,11 +1666,11 @@
   },
   {
     "id": 82,
-    "name": "Tanica d'olio",
+    "name": "Olio",
     "type": "consumable",
     "weight": 0.5,
-    "value": 0.1,
-    "currency": "po",
+    "value": 1,
+    "currency": "ma",
     "rarity": "common",
     "requires_attunement": false,
     "category": "fuel",
@@ -1496,8 +1684,8 @@
     "name": "Candela",
     "type": "gear",
     "weight": 0.1,
-    "value": 0.0,
-    "currency": "po",
+    "value": 1,
+    "currency": "mr",
     "rarity": "common",
     "requires_attunement": false,
     "category": "light",
@@ -1512,7 +1700,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1523,15 +1711,15 @@
   },
   {
     "id": 85,
-    "name": "Acciarino",
+    "name": "Acciarino e pietra focaia",
     "type": "gear",
     "weight": 0.5,
-    "value": 1.0,
-    "currency": "po",
+    "value": 5,
+    "currency": "ma",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
-    "description": "Accende fuochi rapidamente, più efficace della pietra focaia.",
+    "description": "Accende fuochi rapidamente, piÃ¹ efficace della pietra focaia.",
     "properties": {
       "itemType": "tool"
     }
@@ -1542,7 +1730,7 @@
     "type": "gear",
     "weight": 2.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "rope",
@@ -1553,11 +1741,11 @@
   },
   {
     "id": 87,
-    "name": "Corda (50m)",
+    "name": "Corda",
     "type": "gear",
-    "weight": 10.0,
-    "value": 4.0,
-    "currency": "po",
+    "weight": 2.5,
+    "value": 1,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "rope",
@@ -1572,11 +1760,11 @@
     "type": "gear",
     "weight": 1.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "rope",
-    "description": "Leggera e resistente, più costosa della canapa.",
+    "description": "Leggera e resistente, piÃ¹ costosa della canapa.",
     "properties": {
       "itemType": "gear"
     }
@@ -1587,7 +1775,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "climbing",
@@ -1602,7 +1790,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "climbing",
@@ -1617,7 +1805,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "climbing",
@@ -1632,7 +1820,7 @@
     "type": "gear",
     "weight": 5.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "climbing",
@@ -1647,7 +1835,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1662,7 +1850,7 @@
     "type": "tool",
     "weight": 5.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1677,7 +1865,7 @@
     "type": "gear",
     "weight": 5.0,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "construction",
@@ -1690,9 +1878,9 @@
     "id": 96,
     "name": "Sacco",
     "type": "gear",
-    "weight": 0.5,
-    "value": 0.01,
-    "currency": "po",
+    "weight": 0.25,
+    "value": 1,
+    "currency": "mr",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1708,7 +1896,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 0.02,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1724,7 +1912,7 @@
     "type": "gear",
     "weight": 2.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1740,7 +1928,7 @@
     "type": "gear",
     "weight": 5.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -1752,26 +1940,26 @@
   },
   {
     "id": 100,
-    "name": "Catenella (1m)",
+    "name": "Catena",
     "type": "gear",
-    "weight": 2.5,
-    "value": 1.0,
-    "currency": "po",
+    "weight": 5.0,
+    "value": 5,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "restraint",
-    "description": "10 anelli, robusta, può legare oggetti o persone.",
+    "description": "10 anelli, robusta, puÃ² legare oggetti o persone.",
     "properties": {
       "itemType": "gear"
     }
   },
   {
     "id": 101,
-    "name": "Lucchetto",
+    "name": "Serratura",
     "type": "gear",
     "weight": 0.5,
-    "value": 5.0,
-    "currency": "po",
+    "value": 10,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "lock",
@@ -1786,7 +1974,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "lock",
@@ -1799,9 +1987,9 @@
     "id": 103,
     "name": "Manette",
     "type": "gear",
-    "weight": 1.5,
-    "value": 2.0,
-    "currency": "po",
+    "weight": 3.0,
+    "value": 2,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "restraint",
@@ -1816,7 +2004,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1830,8 +2018,8 @@
     "name": "Lente d'ingrandimento",
     "type": "gear",
     "weight": 0.1,
-    "value": 10.0,
-    "currency": "po",
+    "value": 100,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1844,9 +2032,9 @@
     "id": 106,
     "name": "Cannocchiale",
     "type": "gear",
-    "weight": 1.0,
-    "value": 20.0,
-    "currency": "po",
+    "weight": 0.5,
+    "value": 1000,
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "tool",
@@ -1861,7 +2049,7 @@
     "type": "gear",
     "weight": 0.2,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1876,7 +2064,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1891,7 +2079,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1906,7 +2094,7 @@
     "type": "gear",
     "weight": 0.2,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -1917,11 +2105,11 @@
   },
   {
     "id": 111,
-    "name": "Inchiostro (fiala)",
+    "name": "Inchiostro",
     "type": "consumable",
     "weight": 0.1,
-    "value": 2.0,
-    "currency": "po",
+    "value": 10,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "writing",
@@ -1936,7 +2124,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 0.01,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "writing",
@@ -1947,11 +2135,11 @@
   },
   {
     "id": 113,
-    "name": "Carta (foglio)",
+    "name": "Carta",
     "type": "consumable",
     "weight": 0.01,
-    "value": 0.02,
-    "currency": "po",
+    "value": 2,
+    "currency": "ma",
     "rarity": "common",
     "requires_attunement": false,
     "category": "writing",
@@ -1962,15 +2150,15 @@
   },
   {
     "id": 114,
-    "name": "Pergamena (foglio)",
+    "name": "Pergamena",
     "type": "consumable",
     "weight": 0.02,
-    "value": 0.1,
-    "currency": "po",
+    "value": 1,
+    "currency": "ma",
     "rarity": "common",
     "requires_attunement": false,
     "category": "writing",
-    "description": "Più resistente della carta, per documenti importanti.",
+    "description": "PiÃ¹ resistente della carta, per documenti importanti.",
     "properties": {
       "itemType": "consumable"
     }
@@ -1981,7 +2169,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "writing",
@@ -1992,11 +2180,11 @@
   },
   {
     "id": 116,
-    "name": "Libro vuoto",
+    "name": "Libro",
     "type": "gear",
-    "weight": 1.0,
-    "value": 5.0,
-    "currency": "po",
+    "weight": 2.5,
+    "value": 25,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "writing",
@@ -2010,12 +2198,12 @@
     "name": "Mappa",
     "type": "gear",
     "weight": 0.1,
-    "value": 5.0,
-    "currency": "po",
+    "value": 1,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "map",
-    "description": "Della regione circostante, mostra città e punti d'interesse.",
+    "description": "Della regione circostante, mostra cittÃ  e punti d'interesse.",
     "properties": {
       "itemType": "gear"
     }
@@ -2026,7 +2214,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "writing",
@@ -2041,7 +2229,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "jewelry",
@@ -2056,7 +2244,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 0.01,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -2071,7 +2259,7 @@
     "type": "consumable",
     "weight": 0.05,
     "value": 0.01,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "art",
@@ -2086,7 +2274,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "art",
@@ -2101,7 +2289,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "art",
@@ -2116,7 +2304,7 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "art",
@@ -2131,7 +2319,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "cooking",
@@ -2146,7 +2334,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "cooking",
@@ -2161,7 +2349,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "cooking",
@@ -2176,7 +2364,7 @@
     "type": "gear",
     "weight": 0.2,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "cooking",
@@ -2191,7 +2379,7 @@
     "type": "gear",
     "weight": 0.2,
     "value": 0.02,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -2204,9 +2392,9 @@
     "id": 130,
     "name": "Bottiglia di vetro",
     "type": "gear",
-    "weight": 0.5,
-    "value": 0.5,
-    "currency": "po",
+    "weight": 1.0,
+    "value": 2,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -2222,7 +2410,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -2238,11 +2426,11 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "beverage",
-    "description": "Vino comune, qualità da taverna.",
+    "description": "Vino comune, qualitÃ  da taverna.",
     "properties": {
       "itemType": "consumable"
     }
@@ -2253,7 +2441,7 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "beverage",
@@ -2268,7 +2456,7 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 0.05,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "beverage",
@@ -2283,7 +2471,7 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "beverage",
@@ -2298,7 +2486,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "smoking",
@@ -2313,7 +2501,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "smoking",
@@ -2328,7 +2516,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "game",
@@ -2343,7 +2531,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "game",
@@ -2358,7 +2546,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "game",
@@ -2373,11 +2561,11 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "game",
-    "description": "Gioco da tavolo, più semplice degli scacchi.",
+    "description": "Gioco da tavolo, piÃ¹ semplice degli scacchi.",
     "properties": {
       "itemType": "gear"
     }
@@ -2388,7 +2576,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 15.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "instrument",
@@ -2403,7 +2591,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "instrument",
@@ -2418,7 +2606,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 3.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "instrument",
@@ -2433,7 +2621,7 @@
     "type": "gear",
     "weight": 3.0,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "instrument",
@@ -2448,7 +2636,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "instrument",
@@ -2463,7 +2651,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 20.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "instrument",
@@ -2478,7 +2666,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "fishing",
@@ -2493,7 +2681,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "fishing",
@@ -2508,7 +2696,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 0.05,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "fishing",
@@ -2519,11 +2707,11 @@
   },
   {
     "id": 151,
-    "name": "Trappola per animali",
+    "name": "Tagliola",
     "type": "gear",
-    "weight": 3.0,
-    "value": 2.0,
-    "currency": "po",
+    "weight": 12.5,
+    "value": 5,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "hunting",
@@ -2534,11 +2722,11 @@
   },
   {
     "id": 152,
-    "name": "Rete da pesca",
+    "name": "Rete",
     "type": "gear",
-    "weight": 2.0,
-    "value": 1.0,
-    "currency": "po",
+    "weight": 1.5,
+    "value": 1,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "fishing",
@@ -2553,7 +2741,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -2568,7 +2756,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -2583,7 +2771,7 @@
     "type": "tool",
     "weight": 0.5,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "thieves",
@@ -2598,7 +2786,7 @@
     "type": "tool",
     "weight": 5.0,
     "value": 20.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "smith",
@@ -2613,7 +2801,7 @@
     "type": "tool",
     "weight": 4.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "carpenter",
@@ -2628,7 +2816,7 @@
     "type": "tool",
     "weight": 6.0,
     "value": 15.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "mason",
@@ -2643,7 +2831,7 @@
     "type": "tool",
     "weight": 2.5,
     "value": 8.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "leather",
@@ -2658,7 +2846,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tailor",
@@ -2673,7 +2861,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "cobbler",
@@ -2688,7 +2876,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "glass",
@@ -2703,7 +2891,7 @@
     "type": "tool",
     "weight": 3.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "potter",
@@ -2718,7 +2906,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "painter",
@@ -2733,7 +2921,7 @@
     "type": "tool",
     "weight": 1.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "scribe",
@@ -2748,7 +2936,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "cartographer",
@@ -2763,7 +2951,7 @@
     "type": "tool",
     "weight": 4.0,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "alchemist",
@@ -2778,7 +2966,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "herbalist",
@@ -2793,7 +2981,7 @@
     "type": "tool",
     "weight": 3.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "cook",
@@ -2808,7 +2996,7 @@
     "type": "tool",
     "weight": 5.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "brewer",
@@ -2823,7 +3011,7 @@
     "type": "tool",
     "weight": 4.0,
     "value": 8.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "vintner",
@@ -2838,7 +3026,7 @@
     "type": "tool",
     "weight": 6.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "miner",
@@ -2853,7 +3041,7 @@
     "type": "tool",
     "weight": 5.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "digger",
@@ -2868,7 +3056,7 @@
     "type": "tool",
     "weight": 4.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "lumberjack",
@@ -2883,7 +3071,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "fisher",
@@ -2898,7 +3086,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 3.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "hunter",
@@ -2913,7 +3101,7 @@
     "type": "tool",
     "weight": 1.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "merchant",
@@ -2928,7 +3116,7 @@
     "type": "tool",
     "weight": 1.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "scribe",
@@ -2943,7 +3131,7 @@
     "type": "tool",
     "weight": 2.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "wizard",
@@ -2954,11 +3142,11 @@
   },
   {
     "id": 180,
-    "name": "Pozione di cura",
+    "name": "Pozione di guarigione",
     "type": "consumable",
-    "weight": 0.2,
-    "value": 50.0,
-    "currency": "po",
+    "weight": 0.25,
+    "value": 50,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "potion",
@@ -2974,11 +3162,11 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 200.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
-    "description": "Liquido rosso più denso.",
+    "description": "Liquido rosso piÃ¹ denso.",
     "properties": {
       "effect": "Recupera 4d4+4 PF",
       "itemType": "consumable"
@@ -2986,11 +3174,11 @@
   },
   {
     "id": 182,
-    "name": "Antidoto",
+    "name": "Antitossina",
     "type": "consumable",
     "weight": 0.1,
-    "value": 50.0,
-    "currency": "po",
+    "value": 50,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "potion",
@@ -3006,7 +3194,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 150.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
@@ -3018,11 +3206,11 @@
   },
   {
     "id": 184,
-    "name": "Pozione di invisibilità",
+    "name": "Pozione di invisibilitÃ ",
     "type": "consumable",
     "weight": 0.2,
     "value": 250.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "rare",
     "requires_attunement": false,
     "category": "potion",
@@ -3034,17 +3222,17 @@
   },
   {
     "id": 185,
-    "name": "Pozione di velocità",
+    "name": "Pozione di velocitÃ ",
     "type": "consumable",
     "weight": 0.2,
     "value": 300.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "rare",
     "requires_attunement": false,
     "category": "potion",
     "description": "Liquido giallo scintillante.",
     "properties": {
-      "effect": "Velocità raddoppiata per 1 minuto",
+      "effect": "VelocitÃ  raddoppiata per 1 minuto",
       "itemType": "consumable"
     }
   },
@@ -3054,7 +3242,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
@@ -3066,11 +3254,11 @@
   },
   {
     "id": 187,
-    "name": "Pozione di agilità",
+    "name": "Pozione di agilitÃ ",
     "type": "consumable",
     "weight": 0.2,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
@@ -3086,7 +3274,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
@@ -3102,7 +3290,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
@@ -3118,7 +3306,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
@@ -3134,7 +3322,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
@@ -3146,11 +3334,11 @@
   },
   {
     "id": 192,
-    "name": "Veleno (dose)",
+    "name": "Veleno (base)",
     "type": "consumable",
     "weight": 0.1,
-    "value": 75.0,
-    "currency": "po",
+    "value": 100,
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "poison",
@@ -3166,7 +3354,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 200.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "rare",
     "requires_attunement": false,
     "category": "poison",
@@ -3178,11 +3366,11 @@
   },
   {
     "id": 194,
-    "name": "Acido (fiala)",
+    "name": "Acido",
     "type": "consumable",
-    "weight": 0.2,
-    "value": 10.0,
-    "currency": "po",
+    "weight": 0.5,
+    "value": 25,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "chemical",
@@ -3194,11 +3382,11 @@
   },
   {
     "id": 195,
-    "name": "Acqua santa (fiala)",
+    "name": "Acqua santa",
     "type": "consumable",
-    "weight": 0.2,
-    "value": 15.0,
-    "currency": "po",
+    "weight": 0.5,
+    "value": 25,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "holy",
@@ -3214,7 +3402,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 30.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "holy",
@@ -3229,7 +3417,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "religious",
@@ -3244,7 +3432,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "herb",
@@ -3259,7 +3447,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "herb",
@@ -3274,7 +3462,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3289,7 +3477,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3304,7 +3492,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3319,7 +3507,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3334,7 +3522,7 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 0.02,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3349,7 +3537,7 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3364,7 +3552,7 @@
     "type": "consumable",
     "weight": 0.3,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3379,7 +3567,7 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3394,7 +3582,7 @@
     "type": "consumable",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "food",
@@ -3409,7 +3597,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "food",
@@ -3424,7 +3612,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3439,7 +3627,7 @@
     "type": "gear",
     "weight": 2.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3454,7 +3642,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3469,7 +3657,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3484,7 +3672,7 @@
     "type": "gear",
     "weight": 0.3,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3499,7 +3687,7 @@
     "type": "gear",
     "weight": 0.3,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3514,7 +3702,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3529,7 +3717,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3544,7 +3732,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3559,7 +3747,7 @@
     "type": "gear",
     "weight": 0.3,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3574,7 +3762,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3589,7 +3777,7 @@
     "type": "gear",
     "weight": 0.8,
     "value": 0.3,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3604,7 +3792,7 @@
     "type": "gear",
     "weight": 0.6,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3617,9 +3805,9 @@
     "id": 223,
     "name": "Tunica",
     "type": "gear",
-    "weight": 1.0,
-    "value": 0.3,
-    "currency": "po",
+    "weight": 2.0,
+    "value": 1,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3634,7 +3822,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3649,7 +3837,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3664,7 +3852,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 3.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3679,7 +3867,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3694,7 +3882,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 4.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3709,7 +3897,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -3724,7 +3912,7 @@
     "type": "gear",
     "weight": 0.2,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "accessory",
@@ -3739,7 +3927,7 @@
     "type": "gear",
     "weight": 0.3,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "accessory",
@@ -3754,7 +3942,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "jewelry",
@@ -3769,7 +3957,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 8.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "jewelry",
@@ -3784,7 +3972,7 @@
     "type": "gear",
     "weight": 0.08,
     "value": 6.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "jewelry",
@@ -3799,7 +3987,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3815,7 +4003,7 @@
     "type": "gear",
     "weight": 0.8,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3831,7 +4019,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3847,7 +4035,7 @@
     "type": "gear",
     "weight": 0.3,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3862,7 +4050,7 @@
     "type": "gear",
     "weight": 0.2,
     "value": 0.3,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3873,11 +4061,11 @@
   },
   {
     "id": 240,
-    "name": "Borsa portamonete",
+    "name": "Borsa",
     "type": "gear",
-    "weight": 0.1,
-    "value": 0.2,
-    "currency": "po",
+    "weight": 0.5,
+    "value": 5,
+    "currency": "ma",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3892,7 +4080,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3907,7 +4095,7 @@
     "type": "gear",
     "weight": 0.2,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3922,7 +4110,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3938,7 +4126,7 @@
     "type": "gear",
     "weight": 0.3,
     "value": 0.33,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3954,7 +4142,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3969,7 +4157,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3984,7 +4172,7 @@
     "type": "gear",
     "weight": 2.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -3999,7 +4187,7 @@
     "type": "gear",
     "weight": 5.0,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -4012,9 +4200,9 @@
     "id": 249,
     "name": "Forziere",
     "type": "gear",
-    "weight": 10.0,
-    "value": 25.0,
-    "currency": "po",
+    "weight": 12.5,
+    "value": 5,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -4029,7 +4217,7 @@
     "type": "gear",
     "weight": 15.0,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "container",
@@ -4044,7 +4232,7 @@
     "type": "gear",
     "weight": 3.0,
     "value": 8.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -4059,7 +4247,7 @@
     "type": "gear",
     "weight": 6.0,
     "value": 12.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -4074,7 +4262,7 @@
     "type": "gear",
     "weight": 8.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -4089,7 +4277,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "holy",
@@ -4104,7 +4292,7 @@
     "type": "gear",
     "weight": 0.2,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "holy",
@@ -4117,9 +4305,9 @@
     "id": 256,
     "name": "Focus arcano (bacchetta)",
     "type": "gear",
-    "weight": 0.3,
-    "value": 5.0,
-    "currency": "po",
+    "weight": 0.5,
+    "value": 10,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "arcane",
@@ -4132,9 +4320,9 @@
     "id": 257,
     "name": "Focus arcano (bastone)",
     "type": "gear",
-    "weight": 1.5,
-    "value": 10.0,
-    "currency": "po",
+    "weight": 2.0,
+    "value": 5,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "arcane",
@@ -4145,11 +4333,11 @@
   },
   {
     "id": 258,
-    "name": "Focus druidico (ramo)",
+    "name": "Focus druidico (Rametto di vischio)",
     "type": "gear",
     "weight": 0.5,
-    "value": 1.0,
-    "currency": "po",
+    "value": 1,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "druidic",
@@ -4164,7 +4352,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 25.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "book",
@@ -4179,41 +4367,41 @@
     "type": "gear",
     "weight": 1.8,
     "value": 50.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "book",
-    "description": "Di qualità, rilegatura pregiata.",
+    "description": "Di qualitÃ , rilegatura pregiata.",
     "properties": {
       "itemType": "gear"
     }
   },
   {
     "id": 261,
-    "name": "Pergamena magica (incantesimo)",
+    "name": "Pergamena magica (livello 1)",
     "type": "consumable",
     "weight": 0.05,
-    "value": 50.0,
-    "currency": "po",
+    "value": 50,
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "scroll",
-    "description": "Incantesimo di 1° livello su pergamena.",
+    "description": "Incantesimo di 1Â° livello su pergamena.",
     "properties": {
       "itemType": "consumable"
     }
   },
   {
     "id": 262,
-    "name": "Pergamena magica (2°)",
+    "name": "Pergamena magica (2Â°)",
     "type": "consumable",
     "weight": 0.05,
     "value": 150.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "scroll",
-    "description": "Incantesimo di 2° livello su pergamena.",
+    "description": "Incantesimo di 2Â° livello su pergamena.",
     "properties": {
       "itemType": "consumable"
     }
@@ -4224,13 +4412,13 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "potion",
     "description": "Liquido blu luminoso.",
     "properties": {
-      "effect": "Recupera 1 slot incantesimo di 1° livello",
+      "effect": "Recupera 1 slot incantesimo di 1Â° livello",
       "itemType": "consumable"
     }
   },
@@ -4240,7 +4428,7 @@
     "type": "tool",
     "weight": 1.5,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "healer",
@@ -4255,7 +4443,7 @@
     "type": "consumable",
     "weight": 0.2,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "healer",
@@ -4270,7 +4458,7 @@
     "type": "consumable",
     "weight": 0.1,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "healer",
@@ -4286,7 +4474,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "jewelry",
@@ -4301,7 +4489,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "jewelry",
@@ -4316,7 +4504,7 @@
     "type": "currency",
     "weight": 0.1,
     "value": 0.1,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "coin",
@@ -4331,7 +4519,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "gem",
@@ -4346,7 +4534,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 50.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "gem",
@@ -4361,7 +4549,7 @@
     "type": "gear",
     "weight": 0.03,
     "value": 100.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "rare",
     "requires_attunement": false,
     "category": "gem",
@@ -4376,7 +4564,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 3.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "instrument",
@@ -4390,8 +4578,8 @@
     "name": "Campanella",
     "type": "gear",
     "weight": 0.2,
-    "value": 0.5,
-    "currency": "po",
+    "value": 1,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -4402,11 +4590,11 @@
   },
   {
     "id": 275,
-    "name": "Fischietto",
+    "name": "Fischietto da richiamo",
     "type": "gear",
     "weight": 0.05,
-    "value": 0.2,
-    "currency": "po",
+    "value": 5,
+    "currency": "mr",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -4421,7 +4609,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "tool",
@@ -4436,7 +4624,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -4451,7 +4639,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "accessory",
@@ -4466,11 +4654,11 @@
     "type": "weapon",
     "weight": 1.0,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "axe",
-    "description": "Un'ascia leggera progettata per essere scagliata contro i nemici. Può essere usata anche come arma da mischia.",
+    "description": "Un'ascia leggera progettata per essere scagliata contro i nemici. PuÃ² essere usata anche come arma da mischia.",
     "properties": {
       "range": {
         "long": 18,
@@ -4480,9 +4668,12 @@
       "itemType": "weapon",
       "damageType": "tagliente",
       "properties": [
-        "lancio"
-      ]
-    }
+        "lancio",
+        "vessazione"
+      ],
+      "mastery": "vessazione"
+    },
+    "isHomebrew": true
   },
   {
     "id": 280,
@@ -4490,7 +4681,7 @@
     "type": "weapon",
     "weight": 5.0,
     "value": 5000.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "rare",
     "requires_attunement": false,
     "category": null,
@@ -4509,7 +4700,8 @@
           "type": "fulmine"
         }
       ]
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 281,
@@ -4517,18 +4709,19 @@
     "type": "weapon",
     "weight": 1.5,
     "value": 500.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "rare",
     "requires_attunement": false,
     "category": "Strumento musicale",
-    "description": "Questo strumento non è un semplice violino, ma un capolavoro di ingegneria liutaia e armaiola. Il corpo del violino è costruito in legno di acero stagionato, rinforzato internamente da sottili centine di acciaio armonico che ne proteggono l'integrità senza sacrificarne il suono. L'archetto, apparentemente standard, nasconde un'anima in acciaio flessibile a sezione triangolare. I crini sono fissati a una ghiera a scatto che, se ruotata con un movimento rapido del polso, rivela una punta da affondo rinforzata.",
+    "description": "Questo strumento non Ã¨ un semplice violino, ma un capolavoro di ingegneria liutaia e armaiola. Il corpo del violino Ã¨ costruito in legno di acero stagionato, rinforzato internamente da sottili centine di acciaio armonico che ne proteggono l'integritÃ  senza sacrificarne il suono. L'archetto, apparentemente standard, nasconde un'anima in acciaio flessibile a sezione triangolare. I crini sono fissati a una ghiera a scatto che, se ruotata con un movimento rapido del polso, rivela una punta da affondo rinforzata.",
     "properties": {
       "damage": "1d8",
       "damageType": "perforante",
       "properties": [
         "accurata"
       ]
-    }
+    },
+    "isHomebrew": true
   },
   {
     "id": 282,
@@ -4536,7 +4729,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "religious",
@@ -4551,7 +4744,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "container",
@@ -4567,7 +4760,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "game",
@@ -4578,11 +4771,11 @@
   },
   {
     "id": 285,
-    "name": "Specchio da viaggio",
+    "name": "Specchio",
     "type": "gear",
-    "weight": 0.2,
-    "value": 2.0,
-    "currency": "po",
+    "weight": 0.25,
+    "value": 5,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -4596,12 +4789,12 @@
     "name": "Profumo",
     "type": "consumable",
     "weight": 0.1,
-    "value": 2.0,
-    "currency": "po",
+    "value": 5,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "cosmetic",
-    "description": "Una fiala di profumo dalle essenze floreali, usato per apparire più affascinante.",
+    "description": "Una fiala di profumo dalle essenze floreali, usato per apparire piÃ¹ affascinante.",
     "properties": {
       "itemType": "consumable"
     }
@@ -4612,7 +4805,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "accessory",
@@ -4627,7 +4820,7 @@
     "type": "gear",
     "weight": 3.0,
     "value": 1.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "rope",
@@ -4638,11 +4831,11 @@
   },
   {
     "id": 289,
-    "name": "Coperta pesante",
+    "name": "Coperta",
     "type": "gear",
-    "weight": 2.0,
-    "value": 0.5,
-    "currency": "po",
+    "weight": 1.5,
+    "value": 5,
+    "currency": "ma",
     "rarity": "common",
     "requires_attunement": false,
     "category": "bedding",
@@ -4657,7 +4850,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "book",
@@ -4672,7 +4865,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 2.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "document",
@@ -4687,7 +4880,7 @@
     "type": "gear",
     "weight": 0.1,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "accessory",
@@ -4702,7 +4895,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "animal",
@@ -4717,7 +4910,7 @@
     "type": "gear",
     "weight": 0.3,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "book",
@@ -4732,7 +4925,7 @@
     "type": "gear",
     "weight": 0.05,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "accessory",
@@ -4747,7 +4940,7 @@
     "type": "gear",
     "weight": 1.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "instrument",
@@ -4762,7 +4955,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 5.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4775,9 +4968,9 @@
     "id": 298,
     "name": "Abiti eleganti",
     "type": "gear",
-    "weight": 2.0,
-    "value": 5.0,
-    "currency": "po",
+    "weight": 3.0,
+    "value": 15,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4791,8 +4984,8 @@
     "name": "Abiti da viaggiatore",
     "type": "gear",
     "weight": 2.0,
-    "value": 0.5,
-    "currency": "po",
+    "value": 2,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4807,7 +5000,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4822,7 +5015,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4837,7 +5030,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 0.2,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4852,7 +5045,7 @@
     "type": "gear",
     "weight": 1.5,
     "value": 0.05,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4867,7 +5060,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 4.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4882,11 +5075,11 @@
     "type": "gear",
     "weight": 2.5,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
-    "description": "Un abito di alta qualità, confezionato con tessuti lussuosi e rifiniture preziose.",
+    "description": "Un abito di alta qualitÃ , confezionato con tessuti lussuosi e rifiniture preziose.",
     "properties": {
       "itemType": "gear"
     }
@@ -4897,7 +5090,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 3.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4912,7 +5105,7 @@
     "type": "gear",
     "weight": 2.0,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "clothing",
@@ -4927,7 +5120,7 @@
     "type": "gear",
     "weight": 0.5,
     "value": 1.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "book",
@@ -4942,7 +5135,7 @@
     "type": "tool",
     "weight": 1.0,
     "value": 15.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "uncommon",
     "requires_attunement": false,
     "category": "thieves",
@@ -4955,9 +5148,9 @@
     "id": 310,
     "name": "Piede di porco",
     "type": "tool",
-    "weight": 2.0,
-    "value": 1.0,
-    "currency": "po",
+    "weight": 2.5,
+    "value": 2,
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -4972,7 +5165,7 @@
     "type": "tool",
     "weight": 1.5,
     "value": 10.0,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "tool",
@@ -4987,11 +5180,967 @@
     "type": "gear",
     "weight": 0.05,
     "value": 0.5,
-    "currency": "po",
+    "currency": "mo",
     "rarity": "common",
     "requires_attunement": false,
     "category": "writing",
     "description": "Un calamo per scrivere, intinto nell'inchiostro.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "name": "Martello leggero",
+    "type": "weapon",
+    "weight": 1.0,
+    "value": 2.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "hammer",
+    "description": "Un piccolo martello bilanciato per essere lanciato.",
+    "properties": {
+      "damage": "1d4",
+      "damageType": "contundente",
+      "itemType": "weapon",
+      "range": {
+        "long": 18,
+        "normal": 6
+      },
+      "properties": [
+        "leggera",
+        "lancio"
+      ],
+      "mastery": "graffio"
+    },
+    "id": 313
+  },
+  {
+    "name": "Randello pesante",
+    "type": "weapon",
+    "weight": 5.0,
+    "value": 0.2,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "club",
+    "description": "Un grande randello che richiede due mani per essere brandito.",
+    "properties": {
+      "damage": "1d8",
+      "damageType": "contundente",
+      "itemType": "weapon",
+      "properties": [
+        "a due mani"
+      ],
+      "mastery": "spinta"
+    },
+    "id": 314
+  },
+  {
+    "name": "Spadone",
+    "type": "weapon",
+    "weight": 3.0,
+    "value": 50.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "sword",
+    "description": "Un'enorme spada a due mani in grado di abbattere piÃ¹ nemici.",
+    "properties": {
+      "damage": "2d6",
+      "damageType": "tagliente",
+      "itemType": "weapon",
+      "properties": [
+        "pesante",
+        "a due mani"
+      ],
+      "mastery": "colpo di striscio"
+    },
+    "id": 315
+  },
+  {
+    "name": "Maglio",
+    "type": "weapon",
+    "weight": 5.0,
+    "value": 10.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "hammer",
+    "description": "Un enorme martello a due mani dalla testa massiccia.",
+    "properties": {
+      "damage": "2d6",
+      "damageType": "contundente",
+      "itemType": "weapon",
+      "properties": [
+        "pesante",
+        "a due mani"
+      ],
+      "mastery": "rovesciamento"
+    },
+    "id": 316
+  },
+  {
+    "name": "Piccone da guerra",
+    "type": "weapon",
+    "weight": 1.0,
+    "value": 5.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "pick",
+    "description": "Un piccone dalla punta acuminata, efficace contro le armature.",
+    "properties": {
+      "damage": "1d8",
+      "damageType": "perforante",
+      "itemType": "weapon",
+      "properties": [
+        "versatile"
+      ],
+      "versatileDamage": "1d10",
+      "mastery": "prosciugamento"
+    },
+    "id": 317
+  },
+  {
+    "name": "Balestra a mano",
+    "type": "weapon",
+    "weight": 1.5,
+    "value": 75.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "crossbow",
+    "description": "Una piccola balestra utilizzabile con una mano sola.",
+    "properties": {
+      "damage": "1d6",
+      "damageType": "perforante",
+      "itemType": "weapon",
+      "range": {
+        "long": 36,
+        "normal": 9
+      },
+      "properties": [
+        "leggera",
+        "munizioni",
+        "carica"
+      ],
+      "mastery": "vessazione"
+    },
+    "id": 318
+  },
+  {
+    "name": "Cerbottana",
+    "type": "weapon",
+    "weight": 0.5,
+    "value": 10.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "blowgun",
+    "description": "Un tubo cavo usato per soffiare dardi sottili e silenziosi.",
+    "properties": {
+      "damage": "1",
+      "damageType": "perforante",
+      "itemType": "weapon",
+      "range": {
+        "long": 30,
+        "normal": 7
+      },
+      "properties": [
+        "munizioni",
+        "carica"
+      ],
+      "mastery": "vessazione"
+    },
+    "id": 319
+  },
+  {
+    "name": "Moschetto",
+    "type": "weapon",
+    "weight": 5.0,
+    "value": 500.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "firearm",
+    "description": "Un'arma da fuoco a canna lunga, potente e rumorosa.",
+    "properties": {
+      "damage": "1d12",
+      "damageType": "perforante",
+      "itemType": "weapon",
+      "range": {
+        "long": 36,
+        "normal": 12
+      },
+      "properties": [
+        "munizioni",
+        "carica",
+        "a due mani"
+      ],
+      "mastery": "lentezza"
+    },
+    "id": 320
+  },
+  {
+    "name": "Pistola",
+    "type": "weapon",
+    "weight": 1.5,
+    "value": 250.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "firearm",
+    "description": "Un'arma da fuoco a canna corta, facile da maneggiare.",
+    "properties": {
+      "damage": "1d10",
+      "damageType": "perforante",
+      "itemType": "weapon",
+      "range": {
+        "long": 27,
+        "normal": 9
+      },
+      "properties": [
+        "munizioni",
+        "carica"
+      ],
+      "mastery": "vessazione"
+    },
+    "id": 321
+  },
+  {
+    "name": "Armatura imbottita",
+    "type": "armor",
+    "weight": 4.0,
+    "value": 5.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "light",
+    "description": "Un'armatura leggera imbottita di stoffa e ovatta.",
+    "properties": {
+      "itemType": "armor",
+      "armorType": "light",
+      "ac": {
+        "base": 11,
+        "type": "dex",
+        "stealth_disadvantage": true
+      }
+    },
+    "id": 322
+  },
+  {
+    "name": "Giaco di maglia",
+    "type": "armor",
+    "weight": 10.0,
+    "value": 50.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "medium",
+    "description": "Una camicia di anelli metallici, flessibile e resistente.",
+    "properties": {
+      "itemType": "armor",
+      "armorType": "medium",
+      "ac": {
+        "base": 13,
+        "type": "dex",
+        "max_dex": 2
+      }
+    },
+    "id": 323
+  },
+  {
+    "name": "Mezza armatura",
+    "type": "armor",
+    "weight": 20.0,
+    "value": 750.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "medium",
+    "description": "Un'armatura che combina piastre metalliche con maglia, che offre protezione eccellente senza sacrificare la mobilitÃ .",
+    "properties": {
+      "itemType": "armor",
+      "armorType": "medium",
+      "ac": {
+        "base": 15,
+        "type": "dex",
+        "max_dex": 2
+      },
+      "stealth": "svantaggio"
+    },
+    "id": 324
+  },
+  {
+    "name": "Corazza ad anelli",
+    "type": "armor",
+    "weight": 20.0,
+    "value": 30.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "heavy",
+    "description": "Un'armatura pesante composta da anelli di metallo cuciti su cuoio.",
+    "properties": {
+      "itemType": "armor",
+      "armorType": "heavy",
+      "ac": {
+        "base": 14,
+        "type": "base"
+      },
+      "stealth": "svantaggio"
+    },
+    "id": 325
+  },
+  {
+    "name": "Armatura a piastre",
+    "type": "armor",
+    "weight": 32.5,
+    "value": 1500.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "heavy",
+    "description": "La migliore armatura disponibile, composta da piastre d'acciaio che coprono tutto il corpo.",
+    "properties": {
+      "itemType": "armor",
+      "armorType": "heavy",
+      "ac": {
+        "base": 18,
+        "type": "base"
+      },
+      "strength": 15,
+      "stealth": "svantaggio"
+    },
+    "id": 326
+  },
+  {
+    "id": 327,
+    "name": "Dotazione da esploratore",
+    "type": "gear",
+    "weight": 27.5,
+    "value": 10,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Dotazione completa per l'esplorazione: zaino, sacco a pelo, borraccia, razioni, torce e attrezzi vari.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 328,
+    "name": "Dotazione da intrattenitore",
+    "type": "gear",
+    "weight": 29.0,
+    "value": 40,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Dotazione per artisti girovaghi: zaino, abiti, oggetti di scena e strumenti.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 329,
+    "name": "Dotazione da sacerdote",
+    "type": "gear",
+    "weight": 14.0,
+    "value": 33,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Dotazione per chi serve un tempio: zaino, veste, oggetti rituali e provviste.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 330,
+    "name": "Dotazione da avventuriero",
+    "type": "gear",
+    "weight": 27.5,
+    "value": 12,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Dotazione da avventuriero: zaino, torce, razioni e attrezzi per il viaggio.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 331,
+    "name": "Dotazione da studioso",
+    "type": "gear",
+    "weight": 11.0,
+    "value": 40,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Dotazione per lo studio: zaino, libri, inchiostro, penna e lampada.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 332,
+    "name": "Dotazione da scassinatore",
+    "type": "gear",
+    "weight": 19.0,
+    "value": 16,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Dotazione per i furti: zaino, corda, attrezzi da scasso e scalata.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 334,
+    "name": "Pala",
+    "type": "gear",
+    "weight": 2.5,
+    "value": 2,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Attrezzo per scavare buche e trincee.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 335,
+    "name": "Pentola di ferro",
+    "type": "gear",
+    "weight": 5.0,
+    "value": 2,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "cookware",
+    "description": "Pentola in ferro per cucinare i pasti.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 336,
+    "name": "Costume",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 5,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "clothing",
+    "description": "Vestito scenico per spettacoli o travestimenti.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 337,
+    "name": "Lampada",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 5,
+    "currency": "ma",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "light",
+    "description": "Lampada a olio che illumina un'ampia area.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 338,
+    "name": "Lanterna schermabile",
+    "type": "gear",
+    "weight": 1.0,
+    "value": 5,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "light",
+    "description": "Lanterna con sportello per regolare o nascondere la luce.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 339,
+    "name": "Libro di preghiere",
+    "type": "gear",
+    "weight": 2.5,
+    "value": 5.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "book",
+    "description": "Raccolta di preghiere e litanie della propria fede.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 340,
+    "name": "Libro di filosofia",
+    "type": "gear",
+    "weight": 2.5,
+    "value": 5.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "book",
+    "description": "Trattato di filosofia e riflessioni sulla vita.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 341,
+    "name": "Libro di storia",
+    "type": "gear",
+    "weight": 2.5,
+    "value": 5.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "book",
+    "description": "Cronache e resoconti storici.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 342,
+    "name": "Libro di scienze occulte",
+    "type": "gear",
+    "weight": 2.5,
+    "value": 5.0,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "book",
+    "description": "Tomo di conoscenze arcane e segrete.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 343,
+    "name": "Borsa del guaritore",
+    "type": "gear",
+    "weight": 1.5,
+    "value": 5,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "kit",
+    "description": "Contiene bende, erbe e unguenti per curare le ferite.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 344,
+    "name": "Focus arcano (globo)",
+    "type": "gear",
+    "weight": 1.5,
+    "value": 20,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "focus",
+    "description": "Globo di cristallo usato come focus per incantesimi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 345,
+    "name": "Focus arcano (cristallo)",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 10,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "focus",
+    "description": "Cristallo usato come focus per incantesimi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 346,
+    "name": "Ampolla",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 2,
+    "currency": "mr",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Ampolla con capacità di 0,5 litri.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 347,
+    "name": "Ariete portatile",
+    "type": "gear",
+    "weight": 17.5,
+    "value": 4,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Usato per sfondare porte, conferisce +4 alle prove di Forza.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 348,
+    "name": "Asta",
+    "type": "gear",
+    "weight": 3.5,
+    "value": 5,
+    "currency": "mr",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Asta lunga 3 metri, utile per sondare o saltare con vantaggio.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 349,
+    "name": "Attrezzi da scalatore",
+    "type": "gear",
+    "weight": 6.0,
+    "value": 25,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Kit da scalatore: punte per stivali, guanti, chiodi e imbragatura.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 350,
+    "name": "Barile",
+    "type": "gear",
+    "weight": 35.0,
+    "value": 2,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Barile che può contenere fino a 20 litri di liquido.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 351,
+    "name": "Borsa per componenti",
+    "type": "gear",
+    "weight": 1.0,
+    "value": 25,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Borsa impermeabile per conservare le componenti materiali degli incantesimi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 352,
+    "name": "Brocca",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 2,
+    "currency": "mr",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Brocca con capacità di 4 litri.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 353,
+    "name": "Carrucola e paranco",
+    "type": "gear",
+    "weight": 2.5,
+    "value": 1,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Consente di sollevare fino a quattro volte il peso massimo.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 354,
+    "name": "Cesto",
+    "type": "gear",
+    "weight": 1.0,
+    "value": 4,
+    "currency": "ma",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Cesto che può contenere fino a 20 chilogrammi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 355,
+    "name": "Custodia per quadrelli da balestra",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 1,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Custodia che può contenere fino a 20 quadrelli.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 356,
+    "name": "Fiala",
+    "type": "gear",
+    "weight": 0.0,
+    "value": 1,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Fiala con capacità di 2 litri.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 357,
+    "name": "Fuoco dell'alchimista",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 50,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "consumable",
+    "description": "Fiala infiammabile che avvolge il bersaglio nelle fiamme.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 358,
+    "name": "Pennino",
+    "type": "gear",
+    "weight": 0.0,
+    "value": 2,
+    "currency": "mr",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Pennino per scrivere.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 359,
+    "name": "Secchio",
+    "type": "gear",
+    "weight": 1.0,
+    "value": 5,
+    "currency": "mr",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Secchio per trasportare liquidi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 360,
+    "name": "Sfere metalliche",
+    "type": "gear",
+    "weight": 1.0,
+    "value": 1,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "consumable",
+    "description": "Sfere d'acciaio che fanno cadere chi ci cammina sopra.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 361,
+    "name": "Spago",
+    "type": "gear",
+    "weight": 0.0,
+    "value": 1,
+    "currency": "ma",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Spago resistente.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 362,
+    "name": "Spuntoni di ferro",
+    "type": "gear",
+    "weight": 2.5,
+    "value": 1,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "consumable",
+    "description": "Spuntoni di ferro da piantare nel terreno.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 363,
+    "name": "Triboli",
+    "type": "gear",
+    "weight": 1.0,
+    "value": 1,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "consumable",
+    "description": "Piccoli spuntoni a quattro punte che feriscono i piedi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 364,
+    "name": "Dotazione da diplomatico",
+    "type": "gear",
+    "weight": 19.5,
+    "value": 39,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "container",
+    "description": "Dotazione per diplomatici: forziere, abiti eleganti, inchiostro, pennini, lampada, pergamene e profumo.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 365,
+    "name": "Focus arcano (Verga)",
+    "type": "gear",
+    "weight": 1.0,
+    "value": 10,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "focus",
+    "description": "Verga usata come focus per incantesimi.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 366,
+    "name": "Pergamena magica (trucchetto)",
+    "type": "gear",
+    "weight": 0.0,
+    "value": 30,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "consumable",
+    "description": "Pergamena che contiene un trucchetto da lanciare.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 367,
+    "name": "Focus druidico (Bacchetta in legno di tasso)",
+    "type": "gear",
+    "weight": 0.5,
+    "value": 10,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "focus",
+    "description": "Bacchetta in legno di tasso usata come focus druidico.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 368,
+    "name": "Focus druidico (Bastone di legno)",
+    "type": "gear",
+    "weight": 2.0,
+    "value": 5,
+    "currency": "mo",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "focus",
+    "description": "Bastone di legno (anche bastone ferrato) usato come focus druidico.",
+    "properties": {
+      "itemType": "gear"
+    }
+  },
+  {
+    "id": 369,
+    "name": "Scala a pioli",
+    "type": "gear",
+    "weight": 12.5,
+    "value": 1,
+    "currency": "ma",
+    "rarity": "common",
+    "requires_attunement": false,
+    "category": "tool",
+    "description": "Scala a pioli lunga circa 3 metri.",
     "properties": {
       "itemType": "gear"
     }

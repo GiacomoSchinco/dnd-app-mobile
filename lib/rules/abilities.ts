@@ -1,35 +1,18 @@
-import abilitiesData from '../../assets/data/abilities.json';
-import type { Ability } from '../../types/character';
-import type { AbilityDefinition, AbilityRawData } from '../../types/ability';
+import abilitiesData from '../data/abilities.json';
+import type { Ability, AbilityAbbreviation, AbilityRaw } from '../../types';
 
-// ── Mappe di conversione ──────────────────────────────────────
+/**
+ * abilities.ts — Gestione delle caratteristiche (abilities.json).
+ * Le 6 caratteristiche: FOR / DES / COS / INT / SAG / CAR.
+ */
 
-const ABILITY_MAP: Record<string, Ability> = {
-  strength: 'strength',
-  dexterity: 'dexterity',
-  constitution: 'constitution',
-  intelligence: 'intelligence',
-  wisdom: 'wisdom',
-  charisma: 'charisma',
-};
-
-const ABILITY_LABEL_MAP: Record<string, string> = {
-  strength: 'Forza',
-  dexterity: 'Destrezza',
-  constitution: 'Costituzione',
-  intelligence: 'Intelligenza',
-  wisdom: 'Saggezza',
-  charisma: 'Carisma',
-};
-
-const ABILITY_ABBREVIATION_MAP: Record<string, string> = {
-  strength: 'FOR',
-  dexterity: 'DES',
-  constitution: 'COS',
-  intelligence: 'INT',
-  wisdom: 'SAG',
-  charisma: 'CAR',
-};
+export interface AbilityDefinition {
+  id: number;
+  name: Ability;
+  nameIt: string;
+  abbreviation: AbilityAbbreviation;
+  description: string;
+}
 
 const ABILITIES_LIST: Ability[] = [
   'strength',
@@ -40,45 +23,55 @@ const ABILITIES_LIST: Ability[] = [
   'charisma',
 ];
 
-// ── Conversione ────────────────────────────────────────────────
-
-function convertRawAbility(rawAbility: AbilityRawData): AbilityDefinition {
+function convertRawAbility(raw: AbilityRaw): AbilityDefinition {
   return {
-    name: ABILITY_MAP[rawAbility.name],
-    labelItalian: rawAbility.name_it,
-    abbreviation: rawAbility.abbreviation,
-    description: rawAbility.description,
+    id: raw.id,
+    name: raw.name,
+    nameIt: raw.name_it,
+    abbreviation: raw.abbreviation,
+    description: raw.description,
   };
 }
 
-// ── Dati esportati ──────────────────────────────────────────
-
-export const ABILITIES_DATA = (abilitiesData as AbilityRawData[]).reduce((acc, rawAbility) => {
-  const converted = convertRawAbility(rawAbility);
-  acc[converted.name] = converted;
-  return acc;
-}, {} as Record<Ability, AbilityDefinition>);
+export const ABILITIES_DATA: AbilityDefinition[] = (abilitiesData as AbilityRaw[]).map(convertRawAbility);
 
 // ── Helper Functions ──────────────────────────────────────────
 
-/** Cerca un'abilità per nome */
+/** Cerca un'abilità per nome (es. 'strength') */
 export function getAbility(ability: Ability): AbilityDefinition | undefined {
-  return ABILITIES_DATA[ability];
+  return ABILITIES_DATA.find((a) => a.name === ability);
+}
+
+/** Cerca un'abilità per abbreviazione italiana (es. 'FOR') */
+export function getAbilityByAbbreviation(abbr: string): AbilityDefinition | undefined {
+  const upper = abbr.toUpperCase();
+  return ABILITIES_DATA.find((a) => a.abbreviation === upper);
 }
 
 /** Restituisce tutte le abilità */
 export function getAllAbilities(): AbilityDefinition[] {
-  return ABILITIES_LIST.map((a) => ABILITIES_DATA[a]);
+  return ABILITIES_LIST.map((a) => getAbility(a)).filter((a): a is AbilityDefinition => Boolean(a));
 }
 
-/** Restituisce il nome italiano di un'abilità */
+/** Nome italiano di un'abilità (es. 'strength' → 'Forza') */
 export function getAbilityLabel(ability: Ability): string {
-  return ABILITY_LABEL_MAP[ability] ?? ability;
+  return getAbility(ability)?.nameIt ?? ability;
 }
 
-/** Restituisce l'abbreviazione italiana di un'abilità (es. 'FOR') */
+/** Abbreviazione italiana di un'abilità (es. 'strength' → 'FOR') */
 export function getAbilityAbbreviation(ability: Ability): string {
-  return ABILITY_ABBREVIATION_MAP[ability] ?? ability.toUpperCase().slice(0, 3);
+  return getAbility(ability)?.abbreviation ?? ability.toUpperCase().slice(0, 3);
+}
+
+/** Converte un'abbreviazione in Ability (es. 'FOR' → 'strength') */
+export function parseAbilityFromAbbreviation(abbr: string): Ability | undefined {
+  return getAbilityByAbbreviation(abbr)?.name;
+}
+
+/** Converte un nome italiano in Ability (es. 'Forza' → 'strength') */
+export function parseAbilityFromItalian(name: string): Ability | undefined {
+  const lower = name.toLowerCase();
+  return ABILITIES_DATA.find((a) => a.nameIt.toLowerCase() === lower)?.name;
 }
 
 /** Calcola il modificatore da un punteggio abilità */
@@ -89,15 +82,6 @@ export function getAbilityModifier(score: number): number {
 /** Formatta il modificatore con segno (es. +3, -1) */
 export function formatModifier(modifier: number): string {
   return modifier >= 0 ? `+${modifier}` : `${modifier}`;
-}
-
-/** Converte un nome italiano in Ability (es. 'Forza' → 'strength') */
-export function parseAbilityFromItalian(name: string): Ability | undefined {
-  const lower = name.toLowerCase();
-  for (const [key, label] of Object.entries(ABILITY_LABEL_MAP)) {
-    if (label.toLowerCase() === lower) return key as Ability;
-  }
-  return undefined;
 }
 
 /** Punteggio base standard (array per metodo di acquisto punti) */

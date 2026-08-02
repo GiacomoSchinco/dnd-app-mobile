@@ -1,0 +1,611 @@
+[
+  {
+    "id": 101,
+    "name": "Intraprendente",
+    "type": "resource_grant",
+    "key": "heroic_inspiration",
+    "reset_on": "long_rest",
+    "description": "Ottieni Ispirazione Eroica ogni volta che completi un riposo lungo. L'Ispirazione Eroica ti permette di ottenere vantaggio a un tiro per colpire, una prova caratteristica o un tiro salvezza."
+  },
+  {
+    "id": 102,
+    "name": "Pluriabilità",
+    "type": "choice",
+    "choice_type": "skill_proficiency",
+    "count": 1,
+    "label": "Scegli 1 competenza in un'abilità a tua scelta.",
+    "description": "Acquisisci competenza in un'abilità a tua scelta tra tutte quelle disponibili."
+  },
+  {
+    "id": 103,
+    "name": "Versatile",
+    "type": "choice",
+    "choice_type": "origin_feat",
+    "count": 1,
+    "label": "Scegli 1 Talento delle Origini a tua scelta.",
+    "description": "Ottieni un talento delle origini a tua scelta. È consigliato il talento Abile."
+  },
+  {
+    "id": 201,
+    "name": "Scurovisione",
+    "type": "sense_grant",
+    "sense": "darkvision",
+    "value": 18,
+    "unit": "meters",
+    "description": "Vedi nell'oscurità fino a 18 metri. Nelle aree di oscurità, vedi come se fossero illuminate da luce fioca."
+  },
+  {
+    "id": 202,
+    "name": "Retaggio Fatato",
+    "type": "condition_advantage",
+    "condition": "charmed",
+    "description": "Vantaggio ai tiri salvezza per evitare o terminare la condizione Affascinato su te stesso."
+  },
+  {
+    "id": 203,
+    "name": "Trance",
+    "type": "condition_immunity",
+    "condition": "magical_sleep",
+    "description": "La magia non può farti addormentare. Puoi completare un riposo lungo in 4 ore rimanendo in uno stato di trance meditativa, durante il quale resti cosciente."
+  },
+  {
+    "id": 204,
+    "name": "Sensi Acuti",
+    "type": "choice",
+    "choice_type": "skill_proficiency",
+    "count": 1,
+    "options": ["insight", "perception", "survival"],
+    "label": "Scegli una competenza tra Intuizione, Percezione e Sopravvivenza.",
+    "description": "Scegli una competenza tra Intuizione (Saggezza), Percezione (Saggezza) o Sopravvivenza (Saggezza)."
+  },
+  {
+    "id": 301,
+    "name": "Scurovisione Nanica",
+    "type": "sense_grant",
+    "sense": "darkvision",
+    "value": 36,
+    "unit": "meters",
+    "description": "Vedi nell'oscurità fino a 36 metri. Nelle aree di oscurità, vedi come se fossero illuminate da luce fioca."
+  },
+  {
+    "id": 302,
+    "name": "Resilienza Nanica",
+    "type": "resistance_grant",
+    "damage_type": "poison",
+    "description": "Resistenza ai danni da veleno. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da veleno."
+  },
+  {
+    "id": 303,
+    "name": "Resilienza Nanica (Tiri Salvezza)",
+    "type": "condition_advantage",
+    "condition": "poisoned",
+    "description": "Vantaggio ai tiri salvezza per evitare o terminare la condizione Avvelenato su te stesso."
+  },
+  {
+    "id": 304,
+    "name": "Robustezza Nanica",
+    "type": "hp_bonus_per_level",
+    "value": 1,
+    "description": "I tuoi punti ferita massimi aumentano di 1, e aumentano di nuovo di 1 ogni volta che acquisisci un livello."
+  },
+  {
+    "id": 305,
+    "name": "Esperto Minatore",
+    "type": "action_grant",
+    "action_id": 3001,
+    "action_type": "bonus",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "long_rest",
+    "description": "Come azione bonus, ottieni percezione tellurica con un raggio di 18 metri per 10 minuti. Per usarla, devi trovarti su una superficie di pietra o toccarla. La pietra deve essere naturale o lavorata."
+  },
+  {
+    "id": 401,
+    "name": "Fortuna",
+    "type": "mechanic_modifier",
+    "key": "reroll_d20_ones",
+    "description": "Quando ottieni 1 a un tiro per colpire, una prova caratteristica o un tiro salvezza con un d20, puoi ritirare il dado e usare il nuovo risultato."
+  },
+  {
+    "id": 402,
+    "name": "Coraggioso",
+    "type": "condition_advantage",
+    "condition": "frightened",
+    "description": "Vantaggio ai tiri salvezza per evitare o terminare la condizione Spaventato su te stesso."
+  },
+  {
+    "id": 403,
+    "name": "Agilità Halfling",
+    "type": "mechanic_modifier",
+    "key": "move_through_larger_creatures",
+    "description": "Puoi attraversare lo spazio occupato da qualsiasi creatura più grande di te, ma non puoi fermarti lì."
+  },
+  {
+    "id": 404,
+    "name": "Furtività Innata",
+    "type": "mechanic_modifier",
+    "key": "hide_behind_larger_creature",
+    "description": "Puoi effettuare l'azione di Nasconderti anche se sei oscurato solo da una singola creatura, purché questa sia più grande di te di almeno una taglia."
+  },
+  {
+    "id": 501,
+    "name": "Scurovisione",
+    "type": "sense_grant",
+    "sense": "darkvision",
+    "value": 18,
+    "unit": "meters",
+    "description": "Vedi nell'oscurità fino a 18 metri. Nelle aree di oscurità, vedi come se fossero illuminate da luce fioca."
+  },
+  {
+    "id": 502,
+    "name": "Astuzia Gnomesca",
+    "type": "save_advantage_mental",
+    "abilities": ["int", "wis", "cha"],
+    "description": "Vantaggio ai tiri salvezza su Intelligenza, Saggezza e Carisma contro la magia."
+  },
+  {
+    "id": 601,
+    "name": "Scurovisione",
+    "type": "sense_grant",
+    "sense": "darkvision",
+    "value": 18,
+    "unit": "meters",
+    "description": "Vedi nell'oscurità fino a 18 metri. Nelle aree di oscurità, vedi come se fossero illuminate da luce fioca."
+  },
+  {
+    "id": 602,
+    "name": "Soffio Draconico",
+    "type": "action_grant",
+    "action_id": 6001,
+    "action_type": "attack_replacement",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "long_rest",
+    "saving_throw": {
+      "ability": "dexterity",
+      "dc_ability": "constitution"
+    },
+    "area": {
+      "cone": 4.5,
+      "line_length": 9,
+      "line_width": 1.5,
+      "unit": "meters",
+      "shape_choice": true
+    },
+    "scaling_damage": {
+      "dice": "d10",
+      "levels": { "1": 1, "5": 2, "11": 3, "17": 4 }
+    },
+    "description": "Quando esegui l'azione di Attacco, puoi sostituire uno dei tuoi attacchi con un'esalazione di energia in un cono di 4,5m o una linea di 9m x 1,5m. Ogni creatura nell'area deve superare un TS su Destrezza (CD 8 + Cost + PB) o subire danni del tipo del tuo antenato draconico, dimezzati in caso di successo."
+  },
+  {
+    "id": 603,
+    "name": "Volo Draconico",
+    "type": "action_grant",
+    "action_id": 6002,
+    "req_level": 5,
+    "action_type": "bonus",
+    "duration_minutes": 10,
+    "max_uses": 1,
+    "reset_on": "long_rest",
+    "description": "Come azione bonus, fai spuntare ali spettrali per 10 minuti. Ottieni una velocità di volo pari alla tua velocità. L'aspetto delle ali varia in base al tuo antenato draconico."
+  },
+  {
+    "id": 701,
+    "name": "Scurovisione",
+    "type": "sense_grant",
+    "sense": "darkvision",
+    "value": 18,
+    "unit": "meters",
+    "description": "Vedi nell'oscurità fino a 18 metri. Nelle aree di oscurità, vedi come se fossero illuminate da luce fioca."
+  },
+  {
+    "id": 702,
+    "name": "Presenza Ultraterrena",
+    "type": "spell_grant",
+    "spells": [{ "spell_id": 13, "name": "Taumaturgia", "req_level": 1, "ability": "cha" }],
+    "description": "Conosci il trucchetto Taumaturgia. La caratteristica da incantatore per questo incantesimo è Carisma (o quella scelta per il Retaggio Immondo)."
+  },
+  {
+    "id": 801,
+    "name": "Scurovisione",
+    "type": "sense_grant",
+    "sense": "darkvision",
+    "value": 18,
+    "unit": "meters",
+    "description": "Vedi nell'oscurità fino a 18 metri. Nelle aree di oscurità, vedi come se fossero illuminate da luce fioca."
+  },
+  {
+    "id": 802,
+    "name": "Resistenza Necrotica",
+    "type": "resistance_grant",
+    "damage_type": "necrotic",
+    "description": "Resistenza ai danni necrotici. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni necrotici."
+  },
+  {
+    "id": 803,
+    "name": "Resistenza Radiosa",
+    "type": "resistance_grant",
+    "damage_type": "radiant",
+    "description": "Resistenza ai danni radiosi. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni radiosi."
+  },
+  {
+    "id": 804,
+    "name": "Portatore di Luce",
+    "type": "spell_grant",
+    "spells": [{ "spell_id": 22, "name": "Luce", "req_level": 1, "ability": "cha" }],
+    "description": "Conosci il trucchetto Luce. La caratteristica da incantatore per questo trucchetto è Carisma."
+  },
+  {
+    "id": 805,
+    "name": "Mani Curative",
+    "type": "action_grant",
+    "action_id": 8001,
+    "action_type": "action",
+    "max_uses": 1,
+    "reset_on": "long_rest",
+    "heal_dice": "d4",
+    "heal_dice_count": "proficiency_bonus",
+    "description": "Con un'azione di Magia, tocchi una creatura e tiri un numero di d4 pari al tuo bonus di competenza. La creatura recupera PF pari al totale."
+  },
+  {
+    "id": 806,
+    "name": "Rivelazione Celestiale",
+    "type": "action_grant",
+    "req_level": 3,
+    "action_id": 8002,
+    "action_type": "bonus",
+    "max_uses": 1,
+    "reset_on": "long_rest",
+    "duration_minutes": 1,
+    "description": "Come azione bonus, ti trasformi per 1 minuto. Scegli tra: Ali Celesti (volo = velocità), Bagliore Interiore (luce 3m + danni radiosi PB ai nemici vicini) o Sudario Necrotico (ali spettrali, TS Carisma o Spaventato). Una volta per turno, quando infliggi danni, aggiungi PB danni (radiosi o necrotici)."
+  },
+  {
+    "id": 901,
+    "name": "Costituzione Robusta",
+    "type": "check_advantage",
+    "check": "grapple_escape",
+    "description": "Vantaggio alle prove di caratteristica per non essere afferrato."
+  },
+  {
+    "id": 902,
+    "name": "Costituzione Robusta (Carico)",
+    "type": "carrying_capacity_multiplier",
+    "value": 2,
+    "description": "La tua capacità di trasporto è quella di una creatura di taglia superiore (raddoppiata)."
+  },
+  {
+    "id": 903,
+    "name": "Forma Grande",
+    "type": "action_grant",
+    "action_id": 9001,
+    "req_level": 5,
+    "action_type": "bonus",
+    "duration_minutes": 10,
+    "max_uses": 1,
+    "reset_on": "long_rest",
+    "effects_on_activation": {
+      "advantage_checks": ["strength"],
+      "speed_bonus": 3,
+      "speed_unit": "meters",
+      "size": "Large"
+    },
+    "description": "Come azione bonus, diventi di taglia Grande per 10 minuti. Ottieni vantaggio alle prove di Forza e la tua velocità aumenta di 3 metri."
+  },
+  {
+    "id": 1001,
+    "name": "Scurovisione",
+    "type": "sense_grant",
+    "sense": "darkvision",
+    "value": 36,
+    "unit": "meters",
+    "description": "Vedi nell'oscurità fino a 36 metri. Nelle aree di oscurità, vedi come se fossero illuminate da luce fioca."
+  },
+  {
+    "id": 1002,
+    "name": "Scarica di Adrenalina",
+    "type": "action_grant",
+    "action_id": 10001,
+    "action_type": "bonus",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "short_or_long_rest",
+    "description": "Puoi utilizzare l'azione Scatto come azione bonus. Ogni volta che lo fai, ottieni un numero di PF temporanei pari al tuo bonus di competenza."
+  },
+  {
+    "id": 1003,
+    "name": "Resistenza Implacabile",
+    "type": "action_grant",
+    "action_id": 10002,
+    "action_type": "passive_trigger",
+    "max_uses": 1,
+    "reset_on": "long_rest",
+    "description": "Quando scendi a 0 PF ma non vieni ucciso sul colpo, puoi decidere di rimanere a 1 PF invece di cadere privo di sensi."
+  },
+  {
+    "id": 2101,
+    "name": "Scurovisione Superiore",
+    "type": "sense_override",
+    "sense": "darkvision",
+    "value": 36,
+    "unit": "meters",
+    "description": "La portata della tua scurovisione aumenta fino a 36 metri."
+  },
+  {
+    "id": 2102,
+    "name": "Magia Drow",
+    "type": "spell_grant",
+    "spells": [
+      { "spell_id": 1, "name": "Luci Danzanti", "req_level": 1, "ability": "cha" },
+      { "spell_id": 2, "name": "Luminescenza", "req_level": 3, "ability": "cha", "free_uses_per_long_rest": 1 },
+      { "spell_id": 3, "name": "Oscurità", "req_level": 5, "ability": "cha", "free_uses_per_long_rest": 1 }
+    ],
+    "description": "Conosci Luci Danzanti. Al livello 3, puoi lanciare Luminescenza una volta per riposo lungo. Al livello 5, puoi lanciare Oscurità una volta per riposo lungo. La caratteristica da incantatore è Carisma."
+  },
+  {
+    "id": 2201,
+    "name": "Magia dell'Elfo Alto",
+    "type": "spell_grant",
+    "spells": [
+      { "spell_id": 4, "name": "Individuazione del Magico", "req_level": 3, "ability": "int", "free_uses_per_long_rest": 1 },
+      { "spell_id": 5, "name": "Passo Velato", "req_level": 5, "ability": "int", "free_uses_per_long_rest": 1 }
+    ],
+    "description": "Al livello 3, puoi lanciare Individuazione del Magico una volta per riposo lungo. Al livello 5, puoi lanciare Passo Velato una volta per riposo lungo. La caratteristica da incantatore è Intelligenza."
+  },
+  {
+    "id": 2202,
+    "name": "Trucchetto dell'Elfo Alto",
+    "type": "choice",
+    "choice_type": "cantrip",
+    "count": 1,
+    "spell_list": "wizard",
+    "replaceable_on_long_rest": true,
+    "label": "Scegli un trucchetto dalla lista del Mago.",
+    "description": "Scegli un trucchetto dalla lista degli incantesimi del Mago. Puoi sostituirlo con un altro trucchetto ogni volta che completi un riposo lungo."
+  },
+  {
+    "id": 2301,
+    "name": "Lesto di Piede",
+    "type": "speed_bonus",
+    "value": 1.5,
+    "unit": "meters",
+    "description": "La tua velocità aumenta di 1,5 metri (da 9m a 10,5m)."
+  },
+  {
+    "id": 2302,
+    "name": "Magia dell'Elfo dei Boschi",
+    "type": "spell_grant",
+    "spells": [
+      { "spell_id": 6, "name": "Artificio Druidico", "req_level": 1, "ability": "wis" },
+      { "spell_id": 7, "name": "Passo Veloce", "req_level": 3, "ability": "wis", "free_uses_per_long_rest": 1 },
+      { "spell_id": 8, "name": "Passare Senza Tracce", "req_level": 5, "ability": "wis", "free_uses_per_long_rest": 1 }
+    ],
+    "description": "Conosci Artificio Druidico. Al livello 3, puoi lanciare Passo Veloce una volta per riposo lungo. Al livello 5, puoi lanciare Passare Senza Tracce una volta per riposo lungo. La caratteristica da incantatore è Saggezza."
+  },
+  {
+    "id": 5101,
+    "name": "Magia delle Foreste",
+    "type": "spell_grant",
+    "spells": [
+      { "spell_id": 9, "name": "Illusione Minore", "req_level": 1, "ability": "int" },
+      { "spell_id": 10, "name": "Parlare con gli Animali", "req_level": 1, "ability": "int", "free_uses_per_long_rest": "proficiency_bonus" }
+    ],
+    "description": "Conosci Illusione Minore. L'incantesimo Parlare con gli Animali è sempre preparato e puoi lanciarlo un numero di volte pari al tuo bonus di competenza senza consumare slot, recuperando tutti gli usi dopo un riposo lungo."
+  },
+  {
+    "id": 5201,
+    "name": "Magia delle Rocce",
+    "type": "spell_grant",
+    "spells": [
+      { "spell_id": 11, "name": "Riparare", "req_level": 1, "ability": "int" },
+      { "spell_id": 12, "name": "Prestidigitazione", "req_level": 1, "ability": "int" }
+    ],
+    "description": "Conosci i trucchetti Riparare e Prestidigitazione. La caratteristica da incantatore è Intelligenza."
+  },
+  {
+    "id": 5202,
+    "name": "Inventore",
+    "type": "action_grant",
+    "action_id": 5001,
+    "description": "Puoi impiegare 10 minuti per creare un piccolo dispositivo meccanico (CA 5, 1 PF) usando Prestidigitazione. Puoi avere fino a 3 oggetti attivi. Ogni oggetto si smantella dopo 8 ore."
+  },
+  {
+    "id": 6101,
+    "name": "Resistenza all'Acido",
+    "type": "resistance_grant",
+    "damage_type": "acid",
+    "description": "Resistenza ai danni da acido. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da acido."
+  },
+  {
+    "id": 6201,
+    "name": "Resistenza al Fulmine",
+    "type": "resistance_grant",
+    "damage_type": "lightning",
+    "description": "Resistenza ai danni da fulmine. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da fulmine."
+  },
+  {
+    "id": 6301,
+    "name": "Resistenza al Fuoco",
+    "type": "resistance_grant",
+    "damage_type": "fire",
+    "description": "Resistenza ai danni da fuoco. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da fuoco."
+  },
+  {
+    "id": 6401,
+    "name": "Resistenza al Fulmine",
+    "type": "resistance_grant",
+    "damage_type": "lightning",
+    "description": "Resistenza ai danni da fulmine. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da fulmine."
+  },
+  {
+    "id": 6501,
+    "name": "Resistenza all'Acido",
+    "type": "resistance_grant",
+    "damage_type": "acid",
+    "description": "Resistenza ai danni da acido. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da acido."
+  },
+  {
+    "id": 6601,
+    "name": "Resistenza al Fuoco",
+    "type": "resistance_grant",
+    "damage_type": "fire",
+    "description": "Resistenza ai danni da fuoco. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da fuoco."
+  },
+  {
+    "id": 6701,
+    "name": "Resistenza al Veleno",
+    "type": "resistance_grant",
+    "damage_type": "poison",
+    "description": "Resistenza ai danni da veleno. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da veleno."
+  },
+  {
+    "id": 6801,
+    "name": "Resistenza al Fuoco",
+    "type": "resistance_grant",
+    "damage_type": "fire",
+    "description": "Resistenza ai danni da fuoco. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da fuoco."
+  },
+  {
+    "id": 6901,
+    "name": "Resistenza al Freddo",
+    "type": "resistance_grant",
+    "damage_type": "cold",
+    "description": "Resistenza ai danni da freddo. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da freddo."
+  },
+  {
+    "id": 7001,
+    "name": "Resistenza al Freddo",
+    "type": "resistance_grant",
+    "damage_type": "cold",
+    "description": "Resistenza ai danni da freddo. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da freddo."
+  },
+  {
+    "id": 7101,
+    "name": "Resistenza al Veleno",
+    "type": "resistance_grant",
+    "damage_type": "poison",
+    "description": "Resistenza ai danni da veleno. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da veleno."
+  },
+  {
+    "id": 7102,
+    "name": "Magia Abissale",
+    "type": "spell_grant",
+    "spells": [
+      { "spell_id": 14, "name": "Spruzzo Velenoso", "req_level": 1, "ability": "cha" },
+      { "spell_id": 15, "name": "Raggio di Infermità", "req_level": 3, "ability": "cha", "free_uses_per_long_rest": 1 },
+      { "spell_id": 16, "name": "Blocca Persone", "req_level": 5, "ability": "cha", "free_uses_per_long_rest": 1 }
+    ],
+    "description": "Conosci Spruzzo Velenoso. Al livello 3, puoi lanciare Raggio di Infermità una volta per riposo lungo. Al livello 5, puoi lanciare Blocca Persone una volta per riposo lungo."
+  },
+  {
+    "id": 7201,
+    "name": "Resistenza Necrotica",
+    "type": "resistance_grant",
+    "damage_type": "necrotic",
+    "description": "Resistenza ai danni necrotici. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni necrotici."
+  },
+  {
+    "id": 7202,
+    "name": "Magia Ctonia",
+    "type": "spell_grant",
+    "spells": [
+      { "spell_id": 17, "name": "Tocco Gelido", "req_level": 1, "ability": "cha" },
+      { "spell_id": 18, "name": "Vita Falsata", "req_level": 3, "ability": "cha", "free_uses_per_long_rest": 1 },
+      { "spell_id": 19, "name": "Raggio di Affaticamento", "req_level": 5, "ability": "cha", "free_uses_per_long_rest": 1 }
+    ],
+    "description": "Conosci Tocco Gelido. Al livello 3, puoi lanciare Vita Falsata una volta per riposo lungo. Al livello 5, puoi lanciare Raggio di Affaticamento una volta per riposo lungo."
+  },
+  {
+    "id": 7301,
+    "name": "Resistenza al Fuoco",
+    "type": "resistance_grant",
+    "damage_type": "fire",
+    "description": "Resistenza ai danni da fuoco. Subisci metà danno dagli attacchi e dagli effetti che infliggono danni da fuoco."
+  },
+  {
+    "id": 7302,
+    "name": "Magia Infernale",
+    "type": "spell_grant",
+    "spells": [
+      { "spell_id": 20, "name": "Dardo di Fuoco", "req_level": 1, "ability": "cha" },
+      { "spell_id": 21, "name": "Intimorire Infernale", "req_level": 3, "ability": "cha", "free_uses_per_long_rest": 1 },
+      { "spell_id": 3, "name": "Oscurità", "req_level": 5, "ability": "cha", "free_uses_per_long_rest": 1 }
+    ],
+    "description": "Conosci Dardo di Fuoco. Al livello 3, puoi lanciare Intimorire Infernale una volta per riposo lungo. Al livello 5, puoi lanciare Oscurità una volta per riposo lungo."
+  },
+  {
+    "id": 9101,
+    "name": "Salta-Nuvole",
+    "type": "action_grant",
+    "action_id": 91001,
+    "action_type": "bonus",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "long_rest",
+    "description": "Come azione bonus, ti teletrasporti magicamente fino a 9 metri in uno spazio libero che puoi vedere."
+  },
+  {
+    "id": 9201,
+    "name": "Fuoco Bruciante",
+    "type": "action_grant",
+    "action_id": 92001,
+    "action_type": "on_hit",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "long_rest",
+    "extra_damage": { "dice": "1d10", "type": "fire" },
+    "description": "Quando colpisci un bersaglio con un tiro per colpire e infliggi danni, puoi infliggere 1d10 danni da fuoco extra."
+  },
+  {
+    "id": 9301,
+    "name": "Brivido Gelante",
+    "type": "action_grant",
+    "action_id": 93001,
+    "action_type": "on_hit",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "long_rest",
+    "extra_damage": { "dice": "1d6", "type": "cold" },
+    "additional_effects": {
+      "speed_reduction": 3,
+      "speed_unit": "meters",
+      "duration": "until_next_turn_start"
+    },
+    "description": "Quando colpisci un bersaglio con un tiro per colpire e infliggi danni, puoi infliggere 1d6 danni da freddo extra e ridurre la sua velocità di 3m fino all'inizio del tuo prossimo turno."
+  },
+  {
+    "id": 9401,
+    "name": "Forza della Collina",
+    "type": "action_grant",
+    "action_id": 94001,
+    "action_type": "on_hit",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "long_rest",
+    "additional_effects": {
+      "knock_prone": true,
+      "max_target_size": "Large"
+    },
+    "description": "Quando colpisci una creatura di taglia Grande o inferiore con un tiro per colpire e infliggi danni, la creatura può cadere prono."
+  },
+  {
+    "id": 9501,
+    "name": "Resistenza della Pietra",
+    "type": "action_grant",
+    "action_id": 95001,
+    "action_type": "reaction",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "long_rest",
+    "damage_reduction": {
+      "dice": "1d12",
+      "add_ability": "constitution"
+    },
+    "description": "Quando subisci danni, puoi usare una reazione per tirare 1d12, aggiungere il tuo modificatore di Costituzione e sottrarre il totale ai danni subiti."
+  },
+  {
+    "id": 9601,
+    "name": "Tuono Tempestoso",
+    "type": "action_grant",
+    "action_id": 96001,
+    "action_type": "reaction",
+    "max_uses": "proficiency_bonus",
+    "reset_on": "long_rest",
+    "range": 18,
+    "range_unit": "meters",
+    "retaliatory_damage": { "dice": "1d8", "type": "thunder" },
+    "description": "Quando subisci danni da una creatura entro 18 metri da te, puoi usare una reazione per infliggerle 1d8 danni da tuono."
+  }
+]

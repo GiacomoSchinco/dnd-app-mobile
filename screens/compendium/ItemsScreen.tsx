@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import { s } from '../../utils/style-helpers';
-import itemsData from '../../assets/data/items.json';
+import itemsData from '../../lib/data/items.json';
 import type { ItemDefinition } from '../../types';
 import {
   ItemCard,

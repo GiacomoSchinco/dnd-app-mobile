@@ -1,6 +1,36 @@
-import spellsData from '../assets/data/spells.json';
+// ── Incantesimi (spells.json) ───────────────────────────────────
 
-export type Spell = (typeof spellsData)[number];
+export type SpellSchool =
+  | 'abjuration'
+  | 'conjuration'
+  | 'divination'
+  | 'enchantment'
+  | 'evocation'
+  | 'illusion'
+  | 'necromancy'
+  | 'transmutation'
+  | (string & {});
+
+export interface SpellRaw {
+  name: string;
+  school: SpellSchool;
+  level: number;
+  classes: string[];
+  casting: string;
+  ritual: boolean;
+  range: string;
+  components: string[];
+  materials: string | null;
+  duration: string;
+  concentration: boolean;
+  source: string;
+  description: string;
+  /** Potenziamento a slot superiori — non sempre presente */
+  upgrade?: string;
+}
+
+/** Tipo runtime di un incantesimo = SpellRaw (allineato al JSON) */
+export type Spell = SpellRaw;
 
 /** Solo classi che possono lanciare incantesimi */
 export type SpellCastingClass =
@@ -12,17 +42,3 @@ export type SpellCastingClass =
   | 'paladin'
   | 'ranger'
   | 'warlock';
-
-export interface SpellProgression {
-  cantrips: number;
-  spellsKnown: number | null;
-  spellsPreparable?: number;
-  wizardSpellbookSize?: number;
-  preparedModifier?: 'int' | 'wis' | 'cha';
-  spellSlots: Record<number, number>;
-  pactMagic?: {
-    slots: number;
-    level: number;
-    mysticArcanum?: number[];
-  };
-}

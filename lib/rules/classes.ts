@@ -1,37 +1,50 @@
-import classesData from '../../assets/data/classes.json';
-import type { ClassName, ClassDefinition, Ability, ClassFeature } from '../../types/character';
-import type { CharacterClassData } from '../../types';
+import classesData from '../data/classes.json';
+import type { Ability, ClassRaw, ClassSpellcastingRaw, SpellCastingType } from '../../types';
 
-// ── Mappe di conversione ──────────────────────────────────────
+/**
+ * classes.ts — Gestione delle classi (classes.json).
+ * 12 classi. `name` è in inglese (Barbarian, Bard, ...);
+ * le etichette italiane sono disponibili via `labelIt` / progression.json.
+ */
 
-const ABILITY_MAP: Record<string, Ability> = {
-  'strength': 'strength',
-  'dexterity': 'dexterity',
-  'constitution': 'constitution',
-  'intelligence': 'intelligence',
-  'wisdom': 'wisdom',
-  'charisma': 'charisma',
-  'forza': 'strength',
-  'destrezza': 'dexterity',
-  'costituzione': 'constitution',
-  'intelligenza': 'intelligence',
-  'saggezza': 'wisdom',
-  'carisma': 'charisma',
-};
+export interface ClassFeatureDefinition {
+  name: string;
+  level: number;
+  description: string;
+}
 
-const ARMOR_MAP: Record<string, string> = {
-  'armature leggere': 'light',
-  'armature medie': 'medium',
-  'armature pesanti': 'heavy',
-  'scudi': 'shield',
-};
+export interface ClassDefinition {
+  id: number;
+  /** Chiave inglese minuscola (es. 'barbarian') */
+  name: string;
+  /** Nome inglese dal JSON (es. 'Barbarian') */
+  label: string;
+  /** Etichetta italiana (es. 'Barbaro') */
+  labelIt: string;
+  progressionKey: string;
+  description: string;
+  hitDie: 6 | 8 | 10 | 12;
+  primaryAbilities: Ability[];
+  savingThrows: Ability[];
+  proficiencies: {
+    armor: string[];
+    weapons: string[];
+    tools: string[];
+    skills: { count: number; options: string[] };
+  };
+  isSpellcaster: boolean;
+  /** Dati grezzi di spellcasting dal JSON (snake_case) */
+  spellcasting?: ClassSpellcastingRaw;
+  spellcastingType?: SpellCastingType;
+  spellAbility?: Ability;
+  features: ClassFeatureDefinition[];
+  featuresByLevel: Record<number, ClassFeatureDefinition[]>;
+  hitPoints: { average: number; description: string };
+  /** Solo Fighter, Paladin, Ranger → array di feats.id (categoria fighting_style) */
+  fightingStyles?: number[];
+}
 
-const WEAPON_MAP: Record<string, string> = {
-  'armi semplici': 'simple',
-  'armi da guerra': 'martial',
-};
-
-const CLASS_LABEL_MAP: Record<string, string> = {
+const CLASS_LABEL_ITALIAN: Record<string, string> = {
   barbarian: 'Barbaro',
   bard: 'Bardo',
   cleric: 'Chierico',
@@ -46,139 +59,123 @@ const CLASS_LABEL_MAP: Record<string, string> = {
   wizard: 'Mago',
 };
 
-const ABILITY_LABEL_MAP: Record<string, string> = {
-  strength: 'Forza',
-  dexterity: 'Destrezza',
-  constitution: 'Costituzione',
-  intelligence: 'Intelligenza',
-  wisdom: 'Saggezza',
-  charisma: 'Carisma',
+const CASTER_TYPE_MAP: Record<string, SpellCastingType> = {
+  bard: 'full',
+  cleric: 'full',
+  druid: 'full',
+  sorcerer: 'full',
+  wizard: 'full',
+  paladin: 'half',
+  ranger: 'half',
+  warlock: 'pact',
 };
 
-// ── Conversione classe ──────────────────────────────────────
-
-function convertRawClass(rawClass: CharacterClassData): ClassDefinition {
-  let spellcastingType: 'full' | 'half' | 'third' | 'pact' | undefined;
-  let spellAbility: Ability | undefined;
-  let spellPreparation: 'always' | 'longRest' | undefined;
-
-  if (rawClass.spellcasting) {
-    spellAbility = ABILITY_MAP[rawClass.spellcasting.ability];
-
-    switch (rawClass.name.toLowerCase()) {
-      case 'bard':
-      case 'cleric':
-      case 'druid':
-      case 'sorcerer':
-      case 'wizard':
-        spellcastingType = 'full';
-        spellPreparation = 'longRest';
-        break;
-      case 'paladin':
-      case 'ranger':
-        spellcastingType = 'half';
-        spellPreparation = 'longRest';
-        break;
-      case 'warlock':
-        spellcastingType = 'pact';
-        spellPreparation = 'always';
-        break;
-    }
-  }
-
-  const levelFeatures: Record<number, ClassFeature[]> = {};
-  if (rawClass.features) {
-    rawClass.features.forEach((feature) => {
-      if (!levelFeatures[feature.level]) {
-        levelFeatures[feature.level] = [];
-      }
-      levelFeatures[feature.level].push({
-        name: feature.name,
-        level: feature.level,
-        description: feature.description,
-      });
-    });
+function convertRawClass(raw: ClassRaw): ClassDefinition {
+  const name = raw.name.toLowerCase();
+  const isSpellcaster = raw.spellcasting != null;
+  const featuresByLevel: Record<number, ClassFeatureDefinition[]> = {};
+  for (const f of raw.features) {
+    const def: ClassFeatureDefinition = { name: f.name, level: f.level, description: f.description };
+    (featuresByLevel[f.level] ??= []).push(def);
   }
 
   return {
-    name: rawClass.name.toLowerCase() as ClassName,
-    label: rawClass.name,
-    hitDie: parseInt(rawClass.hit_die.replace('d', '')) as 6 | 8 | 10 | 12,
-    primaryAbility: ABILITY_MAP[rawClass.primary_ability[0]],
-    prerequisites: {
-      [ABILITY_MAP[rawClass.primary_ability[0]]]: 13,
-    },
-    isSpellcaster: !!rawClass.spellcasting,
-    spellcastingType,
-    spellAbility,
-    spellPreparation,
-    proficiencies: {
-      armor: rawClass.proficiencies.armor.map((a: string) => ARMOR_MAP[a] || a),
-      weapons: rawClass.proficiencies.weapons.map((w: string) => WEAPON_MAP[w] || w),
-      tools: rawClass.proficiencies.tools || [],
-      savingThrows: rawClass.saving_throws.map((s: string) => ABILITY_MAP[s]),
-      skills: rawClass.proficiencies.skills.count,
-    },
-    levelFeatures,
-    hitPoints: rawClass.hit_points,
+    id: raw.id,
+    name,
+    label: raw.name,
+    labelIt: CLASS_LABEL_ITALIAN[name] ?? raw.name,
+    progressionKey: raw.progression_key,
+    description: raw.description,
+    hitDie: parseInt(raw.hit_die.replace('d', ''), 10) as 6 | 8 | 10 | 12,
+    primaryAbilities: raw.primary_ability,
+    savingThrows: raw.saving_throws,
+    proficiencies: raw.proficiencies,
+    isSpellcaster,
+    spellcasting: raw.spellcasting ?? undefined,
+    spellcastingType: isSpellcaster ? CASTER_TYPE_MAP[name] : undefined,
+    spellAbility: raw.spellcasting?.ability,
+    features: raw.features.map((f) => ({ name: f.name, level: f.level, description: f.description })),
+    featuresByLevel,
+    hitPoints: raw.hit_points,
+    fightingStyles: raw.fighting_styles,
   };
 }
 
-// ── Dati esportati ──────────────────────────────────────────
-
-export const CLASSES_DATA = (classesData as CharacterClassData[]).reduce((acc, rawClass) => {
-  const converted = convertRawClass(rawClass);
-  acc[converted.name] = converted;
-  return acc;
-}, {} as Record<ClassName, ClassDefinition>);
+export const CLASSES_DATA: ClassDefinition[] = (classesData as ClassRaw[]).map(convertRawClass);
 
 // ── Helper Functions ──────────────────────────────────────────
 
-/** Cerca una classe per nome (case-insensitive) */
-export function getClass(className: ClassName): ClassDefinition | undefined {
-  return CLASSES_DATA[className];
+/** Cerca una classe per ID (classes.id) */
+export function getClassById(id: number): ClassDefinition | undefined {
+  return CLASSES_DATA.find((c) => c.id === id);
+}
+
+/**
+ * Cerca una classe per nome.
+ * Accetta chiave inglese ('barbarian'), nome inglese ('Barbarian')
+ * o etichetta italiana ('Barbaro'), case-insensitive.
+ */
+export function getClass(name: string): ClassDefinition | undefined {
+  const lower = name.toLowerCase();
+  return CLASSES_DATA.find(
+    (c) => c.name === lower || c.label.toLowerCase() === lower || c.labelIt.toLowerCase() === lower
+  );
+}
+
+/** Cerca una classe per progression_key (es. 'barbarian') */
+export function getClassByProgressionKey(key: string): ClassDefinition | undefined {
+  return CLASSES_DATA.find((c) => c.progressionKey === key);
 }
 
 /** Restituisce tutte le classi */
 export function getAllClasses(): ClassDefinition[] {
-  return Object.values(CLASSES_DATA);
+  return CLASSES_DATA;
 }
 
 /** Restituisce le classi con capacità di incantesimo */
 export function getSpellcastingClasses(): ClassDefinition[] {
-  return Object.values(CLASSES_DATA).filter((cls) => cls.isSpellcaster);
+  return CLASSES_DATA.filter((c) => c.isSpellcaster);
 }
 
 /** Filtra classi per tipo di incantatore */
-export function getClassesBySpellcastingType(type: 'full' | 'half' | 'third' | 'pact'): ClassDefinition[] {
-  return Object.values(CLASSES_DATA).filter((cls) => cls.spellcastingType === type);
+export function getClassesBySpellcastingType(type: SpellCastingType): ClassDefinition[] {
+  return CLASSES_DATA.filter((c) => c.spellcastingType === type);
 }
 
-/** Restituisce il nome italiano di una classe */
+/** Nome italiano di una classe (es. 'barbarian' → 'Barbaro') */
 export function getClassNameItalian(name: string): string {
-  return CLASS_LABEL_MAP[name.toLowerCase()] || name;
-}
-
-/** Restituisce il nome italiano di un'abilità */
-export function getAbilityLabel(ability: string): string {
-  return ABILITY_LABEL_MAP[ability.toLowerCase()] || ability;
+  return CLASS_LABEL_ITALIAN[name.toLowerCase()] ?? name;
 }
 
 /** Verifica se una classe è in grado di lanciare incantesimi */
 export function isSpellcaster(className: string): boolean {
-  const cls = getClass(className.toLowerCase() as ClassName);
-  return cls?.isSpellcaster ?? false;
+  return getClass(className)?.isSpellcaster ?? false;
 }
 
-/** Restituisce il dado vita di una classe (es. "d8") */
+/** Restituisce il dado vita di una classe (es. 'd12') */
 export function getHitDie(className: string): string | null {
-  const cls = getClass(className.toLowerCase() as ClassName);
+  const cls = getClass(className);
   return cls ? `d${cls.hitDie}` : null;
 }
 
 /** Calcola i PF medi al 1° livello */
 export function getAverageHpAtFirstLevel(className: string, conModifier: number): number | null {
-  const cls = getClass(className.toLowerCase() as ClassName);
+  const cls = getClass(className);
   if (!cls) return null;
   return cls.hitPoints.average + conModifier;
+}
+
+/** Feature di una classe a un dato livello */
+export function getFeaturesAtLevel(className: string, level: number): ClassFeatureDefinition[] {
+  return getClass(className)?.featuresByLevel[level] ?? [];
+}
+
+/** Tutte le feature di una classe (fino a un livello, opzionale) */
+export function getClassFeatures(className: string, upToLevel?: number): ClassFeatureDefinition[] {
+  const cls = getClass(className);
+  if (!cls) return [];
+  const levels = Object.keys(cls.featuresByLevel)
+    .map(Number)
+    .filter((l) => upToLevel == null || l <= upToLevel);
+  return levels.flatMap((l) => cls.featuresByLevel[l] ?? []);
 }

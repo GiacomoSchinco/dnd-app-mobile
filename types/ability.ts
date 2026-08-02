@@ -1,24 +1,22 @@
-import type { Ability } from './character';
+// ── Abilità (abilities.json) ────────────────────────────────────
 
-// ── Raw JSON Data Types ────────────────────────────────────────
+export type Ability =
+  | 'strength'
+  | 'dexterity'
+  | 'constitution'
+  | 'intelligence'
+  | 'wisdom'
+  | 'charisma';
 
-export interface AbilityRawData {
+export type AbilityAbbreviation = 'FOR' | 'DES' | 'COS' | 'INT' | 'SAG' | 'CAR';
+
+export interface AbilityRaw {
   id: number;
   name: Ability;
   name_it: string;
-  abbreviation: string;
+  abbreviation: AbilityAbbreviation;
   description: string;
 }
 
-// ── Converted Definition ───────────────────────────────────────
-
-export interface AbilityDefinition {
-  /** Nome chiave inglese (es. 'strength') */
-  name: Ability;
-  /** Nome in italiano */
-  labelItalian: string;
-  /** Abbreviazione italiana (es. 'FOR', 'DES') */
-  abbreviation: string;
-  /** Descrizione */
-  description: string;
-}
+/** Punteggi delle sei abilità di un personaggio */
+export type AbilityScores = Record<Ability, number>;

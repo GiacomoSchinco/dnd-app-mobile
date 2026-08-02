@@ -1,74 +1,46 @@
-import skillsData from '../../assets/data/skills.json';
-import type { SkillName, SkillDefinition, SkillRawData } from '../../types/skill';
-import type { Ability } from '../../types/character';
+import skillsData from '../data/skills.json';
+import type { Ability, SkillName, SkillRaw } from '../../types';
 
-// ── Mappe di conversione ──────────────────────────────────────
+/**
+ * skills.ts — Gestione delle abilità di gioco (skills.json).
+ * 18 skill, ciascuna associata a una caratteristica (`ability`).
+ */
 
-const SKILL_NAME_MAP: Record<string, SkillName> = {
-  acrobatics: 'acrobatics',
-  animal_handling: 'animal_handling',
-  arcana: 'arcana',
-  athletics: 'athletics',
-  deception: 'deception',
-  history: 'history',
-  insight: 'insight',
-  intimidation: 'intimidation',
-  investigation: 'investigation',
-  medicine: 'medicine',
-  nature: 'nature',
-  perception: 'perception',
-  performance: 'performance',
-  persuasion: 'persuasion',
-  religion: 'religion',
-  sleight_of_hand: 'sleight_of_hand',
-  stealth: 'stealth',
-  survival: 'survival',
-};
+export interface SkillDefinition {
+  id: number;
+  name: SkillName;
+  nameIt: string;
+  ability: Ability;
+  description: string;
+}
 
-/** Associazione abilità → skill keys */
-const ABILITY_SKILLS_MAP: Record<Ability, SkillName[]> = {
-  strength: ['athletics'],
-  dexterity: ['acrobatics', 'sleight_of_hand', 'stealth'],
-  constitution: [],
-  intelligence: ['arcana', 'history', 'investigation', 'nature', 'religion'],
-  wisdom: ['animal_handling', 'insight', 'medicine', 'perception', 'survival'],
-  charisma: ['deception', 'intimidation', 'performance', 'persuasion'],
-};
-
-// ── Conversione skill ──────────────────────────────────────────
-
-function convertRawSkill(rawSkill: SkillRawData): SkillDefinition {
+function convertRawSkill(raw: SkillRaw): SkillDefinition {
   return {
-    name: SKILL_NAME_MAP[rawSkill.name] || (rawSkill.name as SkillName),
-    labelItalian: rawSkill.name_it,
-    ability: rawSkill.ability,
-    description: rawSkill.description,
+    id: raw.id,
+    name: raw.name,
+    nameIt: raw.name_it,
+    ability: raw.ability,
+    description: raw.description,
   };
 }
 
-// ── Dati esportati ──────────────────────────────────────────
-
-export const SKILLS_DATA = (skillsData as SkillRawData[]).reduce((acc, rawSkill) => {
-  const converted = convertRawSkill(rawSkill);
-  acc[converted.name] = converted;
-  return acc;
-}, {} as Record<SkillName, SkillDefinition>);
+export const SKILLS_DATA: SkillDefinition[] = (skillsData as SkillRaw[]).map(convertRawSkill);
 
 // ── Helper Functions ──────────────────────────────────────────
 
 /** Cerca una skill per nome */
 export function getSkill(skillName: SkillName): SkillDefinition | undefined {
-  return SKILLS_DATA[skillName];
+  return SKILLS_DATA.find((s) => s.name === skillName);
 }
 
 /** Restituisce tutte le skill */
 export function getAllSkills(): SkillDefinition[] {
-  return Object.values(SKILLS_DATA);
+  return SKILLS_DATA;
 }
 
-/** Restituisce il nome italiano di una skill */
+/** Nome italiano di una skill (es. 'acrobatics' → 'Acrobazia') */
 export function getSkillNameItalian(name: string): string {
-  return SKILLS_DATA[name as SkillName]?.labelItalian ?? name;
+  return getSkill(name as SkillName)?.nameIt ?? name;
 }
 
 /** Restituisce l'abilità associata a una skill */
@@ -78,13 +50,7 @@ export function getSkillAbility(skillName: SkillName): Ability | undefined {
 
 /** Restituisce tutte le skill associate a una data abilità */
 export function getSkillsByAbility(ability: Ability): SkillDefinition[] {
-  const names = ABILITY_SKILLS_MAP[ability] ?? [];
-  return names.map((name) => SKILLS_DATA[name]).filter(Boolean);
-}
-
-/** Verifica se una skill esiste */
-export function isValidSkill(name: string): name is SkillName {
-  return name in SKILLS_DATA;
+  return SKILLS_DATA.filter((s) => s.ability === ability);
 }
 
 /** Restituisce le skill raggruppate per abilità */
@@ -94,4 +60,9 @@ export function getSkillsGroupedByAbility(): Record<Ability, SkillDefinition[]> 
     acc[ability] = getSkillsByAbility(ability);
     return acc;
   }, {} as Record<Ability, SkillDefinition[]>);
+}
+
+/** Verifica se una skill esiste */
+export function isValidSkill(name: string): name is SkillName {
+  return SKILLS_DATA.some((s) => s.name === name);
 }

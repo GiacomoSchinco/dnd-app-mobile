@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import { s } from '../../utils/style-helpers';
-import spellsData from '../../assets/data/spells.json';
+import spellsData from '../../lib/data/spells.json';
 
 import {
   SpellCard,

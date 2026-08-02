@@ -1,5 +1,5 @@
-export type DiceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20';
-export type AdvantageMode = 'normal' | 'advantage' | 'disadvantage';
+export type { DiceType, AdvantageMode, RollRequest, RollResult } from '../types';
+import type { DiceType, AdvantageMode, RollRequest, RollResult } from '../types';
 
 export const DICE_SIDES: Record<DiceType, number> = {
   d4: 4,
@@ -20,27 +20,6 @@ export const DICE_COLORS: Record<DiceType, string> = {
   d12: '#8B5CF6',
   d20: '#EC4899',
 };
-
-export interface RollRequest {
-  type: DiceType;
-  quantity: number;
-  mode: AdvantageMode;
-  modifier?: number;
-}
-
-export interface RollResult {
-  request: RollRequest;
-  /** Tutti i dadi effettivamente lanciati (incluso quello scartato) */
-  allRolls: number[];
-  /** I dadi tenuti ed effettivamente sommati nel totale */
-  rolls: number[];
-  /** Il dado (o i dadi) scartati dal calcolo */
-  dropped: number[];
-  /** Somma finale di rolls + modifier */
-  total: number;
-  /** Il modificatore piatto applicato */
-  modifier: number;
-}
 
 export function rollDie(type: DiceType): number {
   return Math.floor(Math.random() * DICE_SIDES[type]) + 1;

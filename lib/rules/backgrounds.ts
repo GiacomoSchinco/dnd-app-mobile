@@ -1,33 +1,78 @@
-import backgroundsData from '../../assets/data/backgrounds.json';
-import type { BackgroundRawData, BackgroundDefinition } from '../../types';
+import backgroundsData from '../data/backgrounds.json';
+import type { AbilityAbbreviation, BackgroundRaw, SkillName } from '../../types';
 
-// ── Conversione ────────────────────────────────────────────────
+/**
+ * backgrounds.ts — Gestione dei background (backgrounds.json).
+ * 16 background. `skills` sono nomi inglesi; `ability_score_boosts.allowed_scores`
+ * sono abbreviazioni italiane (FOR, DES, ...).
+ */
 
-function convertRawBackground(raw: BackgroundRawData): BackgroundDefinition {
+export interface BackgroundToolProficiency {
+  type: 'FIXED' | 'CHOICE';
+  toolId?: string;
+  category?: string;
+}
+
+export interface BackgroundFeat {
+  featId: number;
+  name: string;
+  requiresChoice: boolean;
+  spellcastingAbilityOptions?: AbilityAbbreviation[];
+  choiceType?: string;
+  count?: number;
+}
+
+export interface BackgroundDefinition {
+  id: number;
+  name: string;
+  description: string;
+  abilityScoreBoosts: {
+    allowedScores: AbilityAbbreviation[];
+    distributionModes: string[];
+  };
+  skills: SkillName[];
+  toolProficiency: BackgroundToolProficiency;
+  feat: BackgroundFeat;
+  equipmentPresetId: number;
+}
+
+function convertRawBackground(raw: BackgroundRaw): BackgroundDefinition {
   return {
     id: raw.id,
     name: raw.name,
     description: raw.description,
-    abilityScoreBoosts: raw.ability_score_boosts,
+    abilityScoreBoosts: {
+      allowedScores: raw.ability_score_boosts.allowed_scores,
+      distributionModes: raw.ability_score_boosts.distribution_modes,
+    },
     skills: raw.skills,
-    toolProficiencies: raw.tool_proficiencies,
-    featId: raw.feat_id,
+    toolProficiency: {
+      type: raw.tool_proficiency.type,
+      toolId: raw.tool_proficiency.tool_id,
+      category: raw.tool_proficiency.category,
+    },
+    feat: {
+      featId: raw.feat.feat_id,
+      name: raw.feat.name,
+      requiresChoice: raw.feat.requires_choice,
+      spellcastingAbilityOptions: raw.feat.spellcasting_ability_options,
+      choiceType: raw.feat.choice_type,
+      count: raw.feat.count,
+    },
     equipmentPresetId: raw.equipment_preset_id,
   };
 }
 
-// ── Dati esportati ──────────────────────────────────────────
-
-export const BACKGROUNDS_DATA = (backgroundsData as BackgroundRawData[]).map(convertRawBackground);
+export const BACKGROUNDS_DATA: BackgroundDefinition[] = (backgroundsData as BackgroundRaw[]).map(convertRawBackground);
 
 /** Cerca un background per ID */
 export function getBackground(id: number): BackgroundDefinition | undefined {
-  return BACKGROUNDS_DATA.find(b => b.id === id);
+  return BACKGROUNDS_DATA.find((b) => b.id === id);
 }
 
 /** Cerca un background per nome (case-insensitive) */
 export function getBackgroundByName(name: string): BackgroundDefinition | undefined {
-  return BACKGROUNDS_DATA.find(b => b.name.toLowerCase() === name.toLowerCase());
+  return BACKGROUNDS_DATA.find((b) => b.name.toLowerCase() === name.toLowerCase());
 }
 
 /** Restituisce tutti i background */
@@ -35,17 +80,27 @@ export function getAllBackgrounds(): BackgroundDefinition[] {
   return BACKGROUNDS_DATA;
 }
 
-/** Restituisce le skill concesse da un background */
-export function getBackgroundSkills(id: number): string[] {
+/** Skill concesse da un background */
+export function getBackgroundSkills(id: number): SkillName[] {
   return getBackground(id)?.skills ?? [];
 }
 
-/** Restituisce il feat_id associato a un background */
+/** feat_id associato a un background */
 export function getBackgroundFeatId(id: number): number | undefined {
-  return getBackground(id)?.featId;
+  return getBackground(id)?.feat.featId;
 }
 
-/** Restituisce gli ability score boosts concessi da un background (abbreviazioni es. FOR, DES, COS) */
-export function getBackgroundAbilityBoosts(id: number): string[] {
-  return getBackground(id)?.abilityScoreBoosts ?? [];
+/** Ability score boosts concessi da un background (abbreviazioni es. FOR, DES, COS) */
+export function getBackgroundAbilityBoosts(id: number): AbilityAbbreviation[] {
+  return getBackground(id)?.abilityScoreBoosts.allowedScores ?? [];
+}
+
+/** Competenza strumenti concessa da un background */
+export function getBackgroundToolProficiency(id: number): BackgroundToolProficiency | undefined {
+  return getBackground(id)?.toolProficiency;
+}
+
+/** equipment_preset_id associato a un background */
+export function getBackgroundEquipmentPresetId(id: number): number | undefined {
+  return getBackground(id)?.equipmentPresetId;
 }

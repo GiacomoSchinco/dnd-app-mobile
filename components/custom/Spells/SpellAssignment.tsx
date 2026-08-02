@@ -5,7 +5,7 @@ import { Input } from '../../ui/input';
 import { s } from '../../../utils/style-helpers';
 import { useActiveCharacter } from '../../../store/useActiveCharacter';
 import { getSpellProgression } from '../../../lib/rules/spellcasting';
-import spellsData from '../../../assets/data/spells.json';
+import spellsData from '../../../lib/data/spells.json';
 import type { Spell, ClassName } from '../../../types';
 import {
   CLASS_LABELS,

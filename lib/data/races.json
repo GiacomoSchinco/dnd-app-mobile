@@ -1,0 +1,227 @@
+[
+  {
+    "id": 1,
+    "name": "Umano",
+    "description": "Sparsi in ogni angolo del multiverso, gli umani sono tanto sfaccettati quanto numerosi e tentano di vivere la loro vita al massimo delle proprie possibilità.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Medium", "Small"],
+    "effects": [101, 102, 103],
+    "lineages": null
+  },
+  {
+    "id": 2,
+    "name": "Elfo",
+    "description": "Creature longeve e intrise di magia feerica, create da Corellon, entrate in sintonia con i vari piani di esistenza.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Medium"],
+    "effects": [201, 202, 203, 204],
+    "lineages": [
+      {
+        "id": 21,
+        "name": "Drow",
+        "effects": [2101, 2102]
+      },
+      {
+        "id": 22,
+        "name": "Elfo Alto",
+        "effects": [2201, 2202]
+      },
+      {
+        "id": 23,
+        "name": "Elfo dei Boschi",
+        "effects": [2301, 2302]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Nano",
+    "description": "Plasmati dalla nuda terra, i nani sono resistenti come le montagne, dotati di affinità per la pietra e i metalli.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Medium"],
+    "effects": [301, 302, 303, 304, 305],
+    "lineages": null
+  },
+  {
+    "id": 4,
+    "name": "Halfling",
+    "description": "Piccoli e ottimisti, gli halfling sopravvivono ai pericoli del mondo grazie alla loro agilità, furtività e prodigiosa fortuna.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Small"],
+    "effects": [401, 402, 403, 404],
+    "lineages": null
+  },
+  {
+    "id": 5,
+    "name": "Gnomo",
+    "description": "Creature magiche di piccola taglia create dagli dèi delle invenzioni e delle illusioni, dotate di un intelletto brillante.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Small"],
+    "effects": [501, 502],
+    "lineages": [
+      {
+        "id": 51,
+        "name": "Gnomo delle Foreste",
+        "effects": [5101]
+      },
+      {
+        "id": 52,
+        "name": "Gnomo delle Rocce",
+        "effects": [5201, 5202]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Dragonide",
+    "description": "Orgogliosi discendenti di draghi cromatici e metallici, capaci di soffiare energia elementale e incanalare il volo draconico.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Medium"],
+    "effects": [601, 602, 603],
+    "lineages": [
+      {
+        "id": 61,
+        "name": "Nero",
+        "effects": [6101]
+      },
+      {
+        "id": 62,
+        "name": "Blu",
+        "effects": [6201]
+      },
+      {
+        "id": 63,
+        "name": "Ottone",
+        "effects": [6301]
+      },
+      {
+        "id": 64,
+        "name": "Bronzo",
+        "effects": [6401]
+      },
+      {
+        "id": 65,
+        "name": "Rame",
+        "effects": [6501]
+      },
+      {
+        "id": 66,
+        "name": "Oro",
+        "effects": [6601]
+      },
+      {
+        "id": 67,
+        "name": "Verde",
+        "effects": [6701]
+      },
+      {
+        "id": 68,
+        "name": "Rosso",
+        "effects": [6801]
+      },
+      {
+        "id": 69,
+        "name": "Argento",
+        "effects": [6901]
+      },
+      {
+        "id": 70,
+        "name": "Bianco",
+        "effects": [7001]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Tiefling",
+    "description": "Legati ai Piani Inferiori da eredità immonde (Abissale, Ctonia o Infernale), che garantiscono loro poteri unici.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Medium", "Small"],
+    "effects": [701, 702],
+    "lineages": [
+      {
+        "id": 71,
+        "name": "Abissale",
+        "effects": [7101, 7102]
+      },
+      {
+        "id": 72,
+        "name": "Ctonio",
+        "effects": [7201, 7202]
+      },
+      {
+        "id": 73,
+        "name": "Infernale",
+        "effects": [7301, 7302]
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Aasimar",
+    "description": "Mortali con una scintilla celestiale dei Piani Superiori, capaci di curare, portare luce ed evocare rivelazioni divine.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Medium", "Small"],
+    "effects": [801, 802, 803, 804, 805, 806],
+    "lineages": null
+  },
+  {
+    "id": 9,
+    "name": "Goliath",
+    "description": "Lontani discendenti dei giganti con doti soprannaturali, capaci di crescere temporaneamente fino alla stazza dei loro antenati.",
+    "base_speed": 10.5,
+    "speed_unit": "meters",
+    "size_options": ["Medium"],
+    "effects": [901, 902, 903],
+    "lineages": [
+      {
+        "id": 91,
+        "name": "Gigante delle Nuvole",
+        "effects": [9101]
+      },
+      {
+        "id": 92,
+        "name": "Gigante del Fuoco",
+        "effects": [9201]
+      },
+      {
+        "id": 93,
+        "name": "Gigante del Ghiaccio",
+        "effects": [9301]
+      },
+      {
+        "id": 94,
+        "name": "Gigante delle Colline",
+        "effects": [9401]
+      },
+      {
+        "id": 95,
+        "name": "Gigante delle Pietre",
+        "effects": [9501]
+      },
+      {
+        "id": 96,
+        "name": "Gigante delle Tempeste",
+        "effects": [9601]
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Orco",
+    "description": "Vantano grande resistenza e determinazione, sostenuti dal favore della divinità Gruumsh e capaci di rialzarsi nei momenti critici.",
+    "base_speed": 9,
+    "speed_unit": "meters",
+    "size_options": ["Medium"],
+    "effects": [1001, 1002, 1003],
+    "lineages": null
+  }
+]

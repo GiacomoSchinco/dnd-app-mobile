@@ -1,40 +1,45 @@
-import type { Ability, ClassFeature } from './character';
+import type { Ability } from './ability';
 
-export interface ClassSkillProficiencies {
-  count: number;
-  options: string[];
+// ── Classi (classes.json) ───────────────────────────────────────
+
+export interface ClassFeatureRaw {
+  name: string;
+  level: number;
+  description: string;
 }
 
-export interface ClassProficiencies {
-  armor: string[];
-  weapons: string[];
-  tools: string[];
-  skills: ClassSkillProficiencies;
-}
-
-export interface ClassSpellcastingData {
+export interface ClassSpellcastingRaw {
   ability: Ability;
   spell_slots?: Record<string, number>;
   spells_known?: number;
   cantrips_known?: number;
 }
 
-export type { ClassFeature };
-
-export interface HitPointsData {
-  average: number;
-  description: string;
+export interface ClassProficienciesRaw {
+  armor: string[];
+  weapons: string[];
+  tools: string[];
+  skills: {
+    count: number;
+    options: string[];
+  };
 }
 
-export interface CharacterClassData {
+export interface ClassRaw {
   id: number;
   name: string;
+  progression_key: string;
   description: string;
   hit_die: string;
   primary_ability: Ability[];
-  saving_throws: string[];
-  proficiencies: ClassProficiencies;
-  spellcasting: ClassSpellcastingData | null;
-  features: ClassFeature[];
-  hit_points: HitPointsData;
+  saving_throws: Ability[];
+  proficiencies: ClassProficienciesRaw;
+  spellcasting: ClassSpellcastingRaw | null;
+  features: ClassFeatureRaw[];
+  hit_points: {
+    average: number;
+    description: string;
+  };
+  /** Presente solo su Fighter, Paladin, Ranger → array di feats.id (categoria fighting_style) */
+  fighting_styles?: number[];
 }

@@ -1,6 +1,6 @@
-import type { Ability } from './character';
+import type { Ability } from './ability';
 
-// ── Skill Names ─────────────────────────────────────────────────
+// ── Abilità di gioco / Skill (skills.json) ─────────────────────
 
 export type SkillName =
   | 'acrobatics'
@@ -22,25 +22,10 @@ export type SkillName =
   | 'stealth'
   | 'survival';
 
-// ── Raw JSON Data Types ────────────────────────────────────────
-
-export interface SkillRawData {
+export interface SkillRaw {
   id: number;
-  name: string;
+  name: SkillName;
   name_it: string;
   ability: Ability;
-  description: string;
-}
-
-// ── Converted Definition ───────────────────────────────────────
-
-export interface SkillDefinition {
-  /** Nome chiave inglese (es. 'sleight_of_hand') */
-  name: SkillName;
-  /** Nome in italiano */
-  labelItalian: string;
-  /** Abilità associata */
-  ability: Ability;
-  /** Descrizione */
   description: string;
 }

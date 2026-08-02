@@ -1,4 +1,4 @@
-import spellsData from '../../../assets/data/spells.json';
+import spellsData from '../../../lib/data/spells.json';
 import type { Spell, ClassName } from '../../../types';
 
 export type { Spell, ClassName };

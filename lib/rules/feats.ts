@@ -1,75 +1,67 @@
-import featsData from '../../assets/data/feats.json';
-import type { FeatRawData, FeatDefinition, FeatPrerequisite } from '../../types';
+import featsData from '../data/feats.json';
+import { getAbilityByAbbreviation } from './abilities';
+import type { FeatCategory, FeatRaw } from '../../types';
 
-// ── Conversione ────────────────────────────────────────────────
+/**
+ * feats.ts — Gestione dei talenti (feats.json).
+ * 86 talenti. Categorie: origin, general, epic_boon, fighting_style.
+ */
 
-function convertRawFeat(raw: FeatRawData): FeatDefinition {
-  return {
-    id: raw.id,
-    name: raw.name,
-    nameEn: raw.name_en,
-    category: raw.category as 'origin' | 'general' | 'epic_boon',
-    levelRequirement: raw.level_requirement,
-    description: raw.description,
-    prerequisites: raw.prerequisites ?? [],
-    hasChoices: raw.has_choices,
-    asiConfig: raw.asi_config,
-    choiceConfig: raw.choice_config,
-    grantedResource: raw.granted_resource,
-    grantedModifiers: raw.granted_modifiers ?? [],
-  };
-}
+export type FeatDefinition = FeatRaw;
 
-// ── Dati esportati ──────────────────────────────────────────
-
-export const FEATS_DATA = (featsData as FeatRawData[]).map(convertRawFeat);
+export const FEATS_DATA: FeatRaw[] = featsData as FeatRaw[];
 
 /** Cerca un talento per ID */
-export function getFeat(id: number): FeatDefinition | undefined {
-  return FEATS_DATA.find(f => f.id === id);
+export function getFeat(id: number): FeatRaw | undefined {
+  return FEATS_DATA.find((f) => f.id === id);
 }
 
 /** Cerca un talento per nome (case-insensitive) */
-export function getFeatByName(name: string): FeatDefinition | undefined {
-  return FEATS_DATA.find(f => f.name.toLowerCase() === name.toLowerCase());
+export function getFeatByName(name: string): FeatRaw | undefined {
+  return FEATS_DATA.find((f) => f.name.toLowerCase() === name.toLowerCase());
 }
 
 /** Restituisce tutti i talenti */
-export function getAllFeats(): FeatDefinition[] {
+export function getAllFeats(): FeatRaw[] {
   return FEATS_DATA;
 }
 
 /** Filtra talenti per categoria */
-export function getFeatsByCategory(category: 'origin' | 'general' | 'epic_boon'): FeatDefinition[] {
-  return FEATS_DATA.filter(f => f.category === category);
+export function getFeatsByCategory(category: FeatCategory): FeatRaw[] {
+  return FEATS_DATA.filter((f) => f.category === category);
 }
 
-/** Restituisce i talenti di origine (livello 1) */
-export function getOriginFeats(): FeatDefinition[] {
+/** Talenti di origine (livello 1) */
+export function getOriginFeats(): FeatRaw[] {
   return getFeatsByCategory('origin');
 }
 
-/** Restituisce i talenti generali (ASI) */
-export function getGeneralFeats(): FeatDefinition[] {
+/** Talenti generali (ASI) */
+export function getGeneralFeats(): FeatRaw[] {
   return getFeatsByCategory('general');
 }
 
-/** Restituisce i doni epici (livello 20) */
-export function getEpicBoons(): FeatDefinition[] {
+/** Doni epici (livello 19/20) */
+export function getEpicBoons(): FeatRaw[] {
   return getFeatsByCategory('epic_boon');
+}
+
+/** Stili di combattimento (Fighter / Paladin / Ranger) */
+export function getFightingStyles(): FeatRaw[] {
+  return getFeatsByCategory('fighting_style');
 }
 
 /** Verifica se un talento ha ASI config (quindi può aumentare caratteristiche) */
 export function hasAsiBonus(featId: number): boolean {
   const feat = getFeat(featId);
-  return feat?.asiConfig !== null && feat?.asiConfig !== undefined;
+  return feat?.asi_config != null;
 }
 
 /** Verifica se un talento è disponibile a un dato livello (senza considerare prerequisiti) */
 export function isFeatAvailableAtLevel(featId: number, level: number): boolean {
   const feat = getFeat(featId);
   if (!feat) return false;
-  return level >= feat.levelRequirement;
+  return level >= feat.level_requirement;
 }
 
 /** Verifica se i prerequisiti di un talento sono soddisfatti */
@@ -85,19 +77,21 @@ export function checkFeatPrerequisites(
   const missing: string[] = [];
 
   for (const prereq of feat.prerequisites) {
-    if (prereq.type === 'ability_score' && prereq.field && prereq.value) {
-      const score = abilities[prereq.field.toLowerCase()] ?? 0;
-      if (score < (prereq.value as number)) {
+    if (prereq.type === 'ability_score' && prereq.field && typeof prereq.value === 'number') {
+      // `field` può essere un'abbreviazione italiana (CAR, FOR, ...) o un nome inglese
+      const ability = getAbilityByAbbreviation(prereq.field)?.name ?? prereq.field.toLowerCase();
+      const score = abilities[ability] ?? abilities[prereq.field.toLowerCase()] ?? 0;
+      if (score < prereq.value) {
         missing.push(`${prereq.field} ${prereq.value} (hai ${score})`);
       }
     }
-    if (prereq.type === 'level' && prereq.value) {
-      if (characterLevel < (prereq.value as number)) {
+    if (prereq.type === 'level' && typeof prereq.value === 'number') {
+      if (characterLevel < prereq.value) {
         missing.push(`Livello ${prereq.value}`);
       }
     }
-    if (prereq.type === 'weapon_proficiency' && prereq.value) {
-      if (!proficiencies.includes(prereq.value as string)) {
+    if (prereq.type === 'weapon_proficiency' && typeof prereq.value === 'string') {
+      if (!proficiencies.includes(prereq.value)) {
         missing.push(`Competenza: ${prereq.value}`);
       }
     }

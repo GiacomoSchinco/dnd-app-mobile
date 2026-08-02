@@ -1,13 +1,15 @@
-import type { SpellCastingClass, SpellProgression } from '../../types';
-import spellcastingData from '../../assets/data/spellcasting.json';
+import spellcastingData from '../data/spellcasting.json';
+import type { SpellcastingDataRaw, SpellProgression } from '../../types';
 
-// ── Tipi dal JSON ──────────────────────────────────────────────
+/**
+ * spellcasting.ts — Gestione di slot e incantesimi per classe (spellcasting.json).
+ * Organizzato per classe/abilità: cantrips, spells known/preparable, slot, pact magic.
+ */
 
-type SpellcastingJSON = typeof spellcastingData;
-type CasterType = 'full' | 'half' | 'pact';
+const DATA = spellcastingData as SpellcastingDataRaw;
 
 /** Tutte le classi che usano magia. */
-export const SPELLCASTING_CLASSES: SpellCastingClass[] = [
+export const SPELLCASTING_CLASSES: string[] = [
   'wizard', 'sorcerer', 'bard', 'cleric', 'druid', 'paladin', 'ranger', 'warlock',
 ];
 
@@ -22,12 +24,12 @@ export const SWAP_CLASSES = ['bard', 'sorcerer', 'ranger', 'warlock'] as const;
 
 // ── Helpers ────────────────────────────────────────────────────
 
-function getCasterType(cls: SpellCastingClass): CasterType | null {
-  return (spellcastingData.caster_types as Record<string, CasterType>)[cls] ?? null;
+function getCasterType(cls: string): 'full' | 'half' | 'pact' | null {
+  return DATA.caster_types[cls] ?? null;
 }
 
-function toNumberKeys(record: Record<string, any>): Record<number, any> {
-  const result: Record<number, any> = {};
+function toNumberKeys(record: Record<string, number>): Record<number, number> {
+  const result: Record<number, number> = {};
   for (const [k, v] of Object.entries(record)) {
     result[Number(k)] = v;
   }
@@ -36,13 +38,13 @@ function toNumberKeys(record: Record<string, any>): Record<number, any> {
 
 // ── Funzione principale ────────────────────────────────────────
 
+/** Progressione di incantesimi di una classe a un dato livello */
 export function getSpellProgression(className: string, level: number): SpellProgression {
-  const casterType = getCasterType(className as SpellCastingClass);
+  const casterType = getCasterType(className);
   if (!casterType) {
     return { cantrips: 0, spellsKnown: null, spellSlots: {} };
   }
 
-  const cls = className as SpellCastingClass;
   const levelKey = String(level);
   const progression: SpellProgression = {
     cantrips: 0,
@@ -51,36 +53,30 @@ export function getSpellProgression(className: string, level: number): SpellProg
   };
 
   // 1. Cantrips
-  const cantripsByClass = spellcastingData.cantrips as Record<string, Record<string, number>>;
-  progression.cantrips = cantripsByClass[cls]?.[levelKey] ?? 0;
+  progression.cantrips = DATA.cantrips[className]?.[levelKey] ?? 0;
 
   // 2. Spells Known / Spells Preparable
-  const preparerClasses = Object.keys(spellcastingData.spells_preparable as Record<string, any>);
-  const knownClasses = Object.keys(spellcastingData.spells_known as Record<string, any>);
+  const preparerClasses = Object.keys(DATA.spells_preparable);
+  const knownClasses = Object.keys(DATA.spells_known);
 
-  if (preparerClasses.includes(cls)) {
+  if (preparerClasses.includes(className)) {
     progression.spellsKnown = null;
-    const preparable = spellcastingData.spells_preparable as Record<string, Record<string, number>>;
-    progression.spellsPreparable = preparable[cls]?.[levelKey] ?? 0;
+    progression.spellsPreparable = DATA.spells_preparable[className]?.[levelKey] ?? 0;
+    progression.preparedModifier = DATA.prepared_modifier[className];
 
-    const preparedMod = spellcastingData.prepared_modifier as Record<string, string>;
-    progression.preparedModifier = preparedMod[cls] as 'int' | 'wis' | 'cha';
-
-    if (cls === 'wizard') {
-      const spellbook = spellcastingData.wizard_spellbook;
+    if (className === 'wizard') {
+      const spellbook = DATA.wizard_spellbook;
       progression.wizardSpellbookSize = spellbook.initial_spells + (level - 1) * spellbook.spells_per_level_up;
     }
   }
 
-  if (knownClasses.includes(cls)) {
-    const known = spellcastingData.spells_known as Record<string, Record<string, number>>;
-    progression.spellsKnown = known[cls]?.[levelKey] ?? 0;
+  if (knownClasses.includes(className)) {
+    progression.spellsKnown = DATA.spells_known[className]?.[levelKey] ?? 0;
   }
 
   // 3. Slot incantesimi e Pact Magic
   if (casterType === 'pact') {
-    const pact = spellcastingData.pact_magic as Record<string, { slots: number; level: number; mystic_arcanum?: number[] }>;
-    const pactData = pact[levelKey] ?? { slots: 0, level: 1 };
+    const pactData = DATA.pact_magic[levelKey] ?? { slots: 0, level: 1 };
     progression.pactMagic = {
       slots: pactData.slots,
       level: pactData.level,
@@ -90,16 +86,15 @@ export function getSpellProgression(className: string, level: number): SpellProg
     }
   } else {
     const slotsKey = casterType === 'full' ? 'full_caster' : 'half_caster';
-    const slots = spellcastingData.spell_slots as Record<string, Record<string, Record<string, number>>>;
-    progression.spellSlots = toNumberKeys(slots[slotsKey]?.[levelKey] ?? {});
+    progression.spellSlots = toNumberKeys(DATA.spell_slots[slotsKey]?.[levelKey] ?? {});
   }
 
   return progression;
 }
 
-// --------------------------------------------------------------
-// 5. FUNZIONE PER IL LEVEL UP - AGGIORNATA 2024
-// --------------------------------------------------------------
+// ── Level up ───────────────────────────────────────────────────
+
+/** Cambiamenti di incantesimi quando si sale di livello */
 export function getLevelUpSpellChanges(
   className: string,
   oldLevel: number,
@@ -116,14 +111,22 @@ export function getLevelUpSpellChanges(
   const oldProg = getSpellProgression(className, oldLevel);
   const newProg = getSpellProgression(className, newLevel);
 
-  // Calcolo dei nuovi slot guadagnati (delta)
+  // Nuovi slot guadagnati (delta)
   const newSpellSlots: Record<number, number> = {};
   for (const [lvl, count] of Object.entries(newProg.spellSlots)) {
-    const delta = (count as number) - (oldProg.spellSlots[Number(lvl)] ?? 0);
+    const delta = count - (oldProg.spellSlots[Number(lvl)] ?? 0);
     if (delta > 0) newSpellSlots[Number(lvl)] = delta;
   }
 
-  const changes: any = {
+  const changes: {
+    newCantrips: number;
+    newSpellsKnown: number;
+    newSpellsPreparable: number;
+    wizardSpellbookAdded?: number;
+    newSpellSlots: Record<number, number>;
+    totalSpellSlots: Record<number, number>;
+    newPactMagic?: SpellProgression['pactMagic'];
+  } = {
     newCantrips: newProg.cantrips - oldProg.cantrips,
     newSpellsKnown: (newProg.spellsKnown ?? 0) - (oldProg.spellsKnown ?? 0),
     newSpellsPreparable: (newProg.spellsPreparable ?? 0) - (oldProg.spellsPreparable ?? 0),
@@ -132,7 +135,7 @@ export function getLevelUpSpellChanges(
     newPactMagic: newProg.pactMagic,
   };
 
-  // Se è un mago, calcola quanti incantesimi gratuiti inserisce nel grimorio salendo di livello
+  // Mago: incantesimi gratuiti nel grimorio salendo di livello
   if (className === 'wizard') {
     changes.wizardSpellbookAdded = (newLevel - oldLevel) * 2;
   }

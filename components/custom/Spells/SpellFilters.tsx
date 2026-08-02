@@ -1,10 +1,11 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { useMemo, useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
+import Modal from '../../ui/modal';
 import { s } from '../../../utils/style-helpers';
 import type { ClassName } from '../../../types';
 import { CLASS_LABELS, SCHOOL_COLORS, getSchoolColor, getLevelCounts } from './types';
-import { useMemo } from 'react';
 
 const SCHOOL_KEYS = Object.keys(SCHOOL_COLORS);
 
@@ -39,6 +40,12 @@ export default function SpellFilters({
 }: Props) {
   const t = useTokens();
   const levelCounts = useMemo(() => getLevelCounts(), []);
+  const [classModalVisible, setClassModalVisible] = useState(false);
+
+  const allClasses = Object.keys(CLASS_LABELS) as ClassName[];
+  const selectedClassName = classFilter
+    ? (CLASS_LABELS[classFilter as ClassName] ?? classFilter)
+    : null;
 
   return (
     <View>
@@ -87,7 +94,7 @@ export default function SpellFilters({
       {/* Class & toggle filters */}
       <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>
         <TouchableOpacity
-          onPress={() => onClassFilterChange(classFilter ? null : (classFilter ?? null))}
+          onPress={() => setClassModalVisible(true)}
           style={{
             paddingHorizontal: t.spacing[2.5], paddingVertical: t.spacing[1],
             borderRadius: t.radius.full,
@@ -97,9 +104,10 @@ export default function SpellFilters({
         >
           <Text style={{
             fontSize: t.typography.xs,
+            fontWeight: classFilter ? '600' : '400',
             color: classFilter ? t.colors.accentForeground : t.colors.foregroundSecondary,
           }}>
-            🎯 Tutte le classi
+            🎯 {selectedClassName ?? 'Tutte le classi'}
           </Text>
         </TouchableOpacity>
 
@@ -149,6 +157,76 @@ export default function SpellFilters({
       }}>
         {filteredCount} incantesimi trovati
       </Text>
+
+      {/* Class picker bottom sheet */}
+      <Modal.Sheet
+        visible={classModalVisible}
+        onClose={() => setClassModalVisible(false)}
+        title="Filtra per classe"
+      >
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TouchableOpacity
+            onPress={() => {
+              onClassFilterChange(null);
+              setClassModalVisible(false);
+            }}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingHorizontal: t.spacing[3],
+              paddingVertical: t.spacing[2.5],
+              borderRadius: t.radius.lg,
+              marginBottom: t.spacing[3],
+              backgroundColor: !classFilter ? t.colors.accent : t.colors.backgroundSecondary,
+              borderWidth: 1,
+              borderColor: !classFilter ? 'transparent' : t.colors.border,
+            }}
+          >
+            <Text style={{
+              fontSize: t.typography.md,
+              fontWeight: '600',
+              color: !classFilter ? t.colors.accentForeground : t.colors.foreground,
+            }}>
+              Tutte le classi
+            </Text>
+            {!classFilter && (
+              <Text style={{ fontSize: t.typography.md, color: t.colors.accentForeground }}>✓</Text>
+            )}
+          </TouchableOpacity>
+
+          <View style={[s.rowWrap, s.gap(t.spacing[2])]}>
+            {allClasses.map((c) => {
+              const active = classFilter?.toLowerCase() === c;
+              return (
+                <TouchableOpacity
+                  key={c}
+                  onPress={() => {
+                    onClassFilterChange(active ? null : c);
+                    setClassModalVisible(false);
+                  }}
+                  style={{
+                    paddingHorizontal: t.spacing[3],
+                    paddingVertical: t.spacing[2],
+                    borderRadius: t.radius.full,
+                    backgroundColor: active ? t.colors.accent : t.colors.backgroundSecondary,
+                    borderWidth: 1,
+                    borderColor: active ? 'transparent' : t.colors.border,
+                  }}
+                >
+                  <Text style={{
+                    fontSize: t.typography.sm,
+                    fontWeight: active ? '600' : '400',
+                    color: active ? t.colors.accentForeground : t.colors.foregroundSecondary,
+                  }}>
+                    {CLASS_LABELS[c]}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
+      </Modal.Sheet>
     </View>
   );
 }

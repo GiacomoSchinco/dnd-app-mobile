@@ -1,52 +1,95 @@
-// ── Raw JSON Data Types ────────────────────────────────────────
+// ── Oggetti (items.json) ────────────────────────────────────────
+
+export type ItemType = 'weapon' | 'armor' | 'gear' | 'consumable' | (string & {});
+
+export type Currency = 'mo' | 'ma' | 'mr' | (string & {});
+
+export interface ItemRaw {
+  id: number;
+  name: string;
+  type: ItemType;
+  weight: number;
+  value: number;
+  currency: Currency;
+  rarity: string;
+  requires_attunement: boolean;
+  category: string;
+  description: string;
+  properties: Record<string, unknown>;
+}
 
 export interface ItemRange {
-  long: number;
+  long?: number;
   normal: number;
 }
 
 export interface WeaponProperties {
-  damage?: string;
   itemType: 'weapon';
-  damageType: string;
+  damage?: string;
+  damageType?: string;
   properties?: string[];
   range?: ItemRange;
   versatileDamage?: string;
+  /** Padronanza dell'arma (regole 2024) — es. 'prosciugamento', 'vessazione' */
+  mastery?: string;
+  magicBonus?: number;
+  extraDamage?: string;
 }
 
 export interface ArmorProperties {
   itemType: 'armor';
-  armorType: 'light' | 'medium' | 'heavy' | 'shield';
-  armorClass: number;
-  addsDexModifier?: boolean;
-  maxDexBonus?: number;
+  armorType?: string;
+  /** Classe armatura: { base, type } con type 'dex' se somma DES, 'base' altrimenti */
+  ac?: { base: number; type?: string };
+  /** 'svantaggio' se l'armatura penalizza la furtività */
+  stealth?: string;
+  strength?: number;
 }
 
-export type ItemProperties = WeaponProperties | ArmorProperties | Record<string, unknown>;
-
-export interface ItemRawData {
-  id: number;
-  name: string;
-  type: 'weapon' | 'armor' | 'gear' | 'consumable' | 'magic' | 'tool';
-  weight: number;
-  value: number;
-  currency: 'po' | 'mo' | 'ma';
-  rarity: 'common' | 'uncommon' | 'rare' | 'very_rare' | 'legendary';
-  requires_attunement: boolean;
-  category: string;
-  description: string;
-  properties: string | ItemProperties;
+export interface AmmunitionProperties {
+  itemType: 'ammunition';
+  ammunitionType?: string;
+  damageBonus?: string;
+  magicBonus?: number;
 }
 
-// ── Converted Definition ───────────────────────────────────────
+export interface ConsumableProperties {
+  itemType: 'consumable';
+  effect?: string;
+}
 
+export interface GearProperties {
+  itemType: 'gear';
+  capacity?: string;
+}
+
+export type ItemTypeName =
+  | 'weapon'
+  | 'armor'
+  | 'gear'
+  | 'consumable'
+  | 'magic'
+  | 'tool'
+  | 'ammunition'
+  | 'currency'
+  | (string & {});
+
+export type ItemProperties =
+  | WeaponProperties
+  | ArmorProperties
+  | AmmunitionProperties
+  | ConsumableProperties
+  | GearProperties
+  | Record<string, unknown>;
+
+/** Definizione di un oggetto pronta per l'uso nella UI */
 export interface ItemDefinition {
   id: number;
   name: string;
-  type: 'weapon' | 'armor' | 'gear' | 'consumable' | 'magic' | 'tool';
+  type: ItemTypeName;
   weight: number;
   value: number;
-  currency: 'po' | 'mo' | 'ma';
+  currency: 'mo' | 'ma' | 'mr' | (string & {});
   rarity: string;
   requiresAttunement: boolean;
   category: string;

@@ -78,11 +78,9 @@ export default function SpellDetailModal({
                 <DetailChip label="Gittata" value={spell.range ?? '—'} t={t} />
                 <DetailChip label="Durata" value={spell.duration ?? '—'} t={t} />
                 <DetailChip label="Componenti" value={spell.components?.join(', ') ?? '—'} t={t} />
-                {spell.material && <DetailChip label="Materiale" value={spell.material} t={t} />}
+                {spell.materials && <DetailChip label="Materiale" value={spell.materials} t={t} />}
                 {spell.concentration && <DetailChip label="Concentrazione" value="Sì" t={t} color={t.colors.accent} />}
                 {spell.ritual && <DetailChip label="Rituale" value="Sì" t={t} color={t.colors.accent} />}
-                {spell.damage && <DetailChip label="Danno" value={spell.damage} t={t} color={t.colors.danger} />}
-                {spell.save && <DetailChip label="TS" value={spell.save} t={t} />}
                 <DetailChip label="Classi" value={spell.classes.map((c) => CLASS_LABELS[c as ClassName] || c).join(', ')} t={t} />
               </View>
 
@@ -91,7 +89,7 @@ export default function SpellDetailModal({
                 {spell.description}
               </Text>
 
-              {spell.upgrade && (
+              {spell.upgrade && spell.upgrade.trim().toLowerCase() !== 'nessuno' && (
                 <View style={[s.mt(t.spacing[3]), { backgroundColor: t.colors.backgroundSecondary, borderRadius: t.radius.md, padding: t.spacing[3] }]}>
                   <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.accent, marginBottom: t.spacing[1] }}>
                     ↗ Potenziamento

@@ -24,7 +24,7 @@
   },
   {
     "id": 2,
-    "name": "Artigiano",
+    "name": "Lavoro Manuale",
     "name_en": "Crafter",
     "category": "origin",
     "level_requirement": 1,
@@ -36,21 +36,18 @@
       "type": "tool_proficiency",
       "pool": "artisan_tools",
       "count": 3,
-      "description": "Ottieni la competenza in tre strumenti da artigiano a tua scelta."
+      "description": "Ottieni la competenza in tre diversi strumenti da artigiano a tua scelta."
     },
     "granted_modifiers": [
       {
         "type": "item_discount",
         "discount_percent": 20,
-        "max_price": 50,
-        "currency": "MO",
-        "description": "Quando acquisti equipaggiamento non magico, ricevi uno sconto del 20% sul prezzo di listino per oggetti di valore pari o inferiore a 50 MO."
+        "description": "Ogni volta che acquisti un oggetto non magico, ottieni il 20% di sconto."
       },
       {
-        "type": "crafting_reduction",
-        "time_reduction_percent": 20,
-        "cost_reduction_percent": 20,
-        "description": "Riduci del 20% il tempo e il costo necessari per creare oggetti non magici."
+        "type": "fast_crafting",
+        "reset_on": "long_rest",
+        "description": "Quando completi un riposo lungo, puoi realizzare uno strumento a scelta (corda, torcia, secchio, ecc.) se hai gli strumenti da artigiano necessari e ne possiedi la competenza. Dura fino al prossimo riposo lungo."
       }
     ]
   },
@@ -248,7 +245,7 @@
   },
   {
     "id": 9,
-    "name": "Attaccante Spietato",
+    "name": "Aggressore Selvaggio",
     "name_en": "Savage Attacker",
     "category": "origin",
     "level_requirement": 1,
@@ -260,8 +257,7 @@
       {
         "type": "reroll_damage",
         "frequency": "once_per_turn",
-        "weapon_type": "melee",
-        "description": "Una volta per turno, quando colpisci una creatura con un'arma da mischia come parte dell'azione di Attacco, puoi tirare due volte i dadi del danno dell'arma e utilizzare il risultato più alto."
+        "description": "Una volta per turno, quando colpisci un bersaglio con un'arma, puoi tirare due volte per i danni e scegliere il risultato che preferisci."
       }
     ]
   },
@@ -284,7 +280,7 @@
   },
   {
     "id": 11,
-    "name": "Rissoso da Taverna",
+    "name": "Lottatore da Taverna",
     "name_en": "Tavern Brawler",
     "category": "origin",
     "level_requirement": 1,
@@ -297,20 +293,26 @@
         "type": "unarmed_strike",
         "damage_die": "1d4",
         "damage_bonus": "strength_modifier",
-        "description": "Il danno dei tuoi colpi senz'armi diventa 1d4 + modificatore di Forza."
+        "description": "Quando colpisci con un colpo senz'armi e infliggi danni, puoi infliggere 1d4 danni contundenti + modificatore di Forza invece dei normali danni."
       },
       {
-        "type": "push_on_hit",
-        "weapon_types": ["unarmed", "improvised"],
-        "push_distance": 5,
-        "max_size": "Large",
-        "description": "Quando colpisci una creatura con un colpo senz'armi o un'arma improvvisata come parte dell'azione di Attacco, puoi infliggere il danno e spingere il bersaglio di 1,5 metri (5 piedi) lontano da te, a patto che sia di taglia Grande o inferiore."
+        "type": "damage_dice_reroll_ones",
+        "weapon_types": ["unarmed"],
+        "description": "Quando tiri per i danni del colpo senz'armi, se ottieni 1 puoi ripetere il tiro. Devi usare il nuovo risultato."
       },
       {
         "type": "improvised_weapon",
         "damage_die": "1d4",
         "proficiency": true,
-        "description": "Sei competente nelle armi improvvisate, che infliggono 1d4 danni."
+        "description": "Sei competente nelle armi improvvisate."
+      },
+      {
+        "type": "push_on_hit",
+        "weapon_types": ["unarmed"],
+        "push_distance": 5,
+        "max_size": "Large",
+        "frequency": "once_per_turn",
+        "description": "Una volta per turno, quando colpisci una creatura con un colpo senz'armi come parte dell'azione di Attacco, puoi infliggere danni e spingerla via di 1,5 metri da te."
       }
     ]
   },
@@ -422,15 +424,21 @@
   },
   {
     "id": 15,
-    "name": "Combattente d'Assalto",
+    "name": "Carica",
     "name_en": "Charger",
     "category": "general",
     "level_requirement": 4,
     "description": "Sfrutti l'impeto della tua corsa per travolgere i nemici o infliggere ferite devastanti.",
     "prerequisites": [
       {
-        "type": "weapon_proficiency",
-        "value": "martial"
+        "type": "ability_score",
+        "field": "FOR",
+        "value": 13
+      },
+      {
+        "type": "ability_score",
+        "field": "DES",
+        "value": 13
       }
     ],
     "has_choices": true,
@@ -442,6 +450,12 @@
       "description": "Aumenta il tuo punteggio di Forza o Destrezza di 1, fino a un massimo di 20."
     },
     "granted_modifiers": [
+      {
+        "type": "dash_speed_bonus",
+        "bonus": 3,
+        "unit": "meters",
+        "description": "Quando effettui l'azione di Scatto, la tua velocità aumenta di 3 metri per quell'azione."
+      },
       {
         "type": "charge_attack",
         "min_distance": 10,
@@ -456,7 +470,7 @@
             "max_size": "Large"
           }
         ],
-        "description": "Se ti muovi in linea retta per almeno 3 metri (10 piedi) subito prima di colpire una creatura con un attacco con arma, puoi scegliere di: infliggere 1d8 danni extra di quel tipo di arma, OPPURE spingere il bersaglio fino a 3 metri lontano da te (se è di taglia Grande o inferiore)."
+        "description": "Se percorri almeno 3 metri in linea retta verso un bersaglio subito prima di colpirlo con un tiro per colpire in mischia come parte dell'azione di Attacco, scegli: 1d8 danni bonus OPPURE spingi il bersaglio di 3 metri (se di taglia Grande o inferiore). Una volta per turno."
       }
     ]
   },
@@ -500,15 +514,16 @@
   },
   {
     "id": 17,
-    "name": "Mirino Balistico (Esperto di Balestre)",
+    "name": "Esperto di Balestre",
     "name_en": "Crossbow Expert",
     "category": "general",
     "level_requirement": 4,
     "description": "Hai sviluppato una coordinazione impeccabile e una velocità d'esecuzione letale con le balestre.",
     "prerequisites": [
       {
-        "type": "weapon_proficiency",
-        "value": "martial"
+        "type": "ability_score",
+        "field": "DES",
+        "value": 13
       }
     ],
     "has_choices": true,
@@ -524,12 +539,19 @@
         "type": "ignore_weapon_property",
         "weapon_type": "crossbow",
         "property": "loading",
-        "description": "Ignori la proprietà Ricarica (Loading) delle balestre con cui sei competente."
+        "description": "Ignori la proprietà Ricarica (Loading) delle balestre. Se ne impugni una, puoi effettuare la ricarica anche se non hai una mano libera."
       },
       {
         "type": "ignore_melee_disadvantage",
         "weapon_type": "crossbow",
-        "description": "Essere entro 1,5 metri da una creatura ostile non ti impone svantaggio ai tiri per colpire a distanza effettuati con le balestre."
+        "description": "Essere entro 1,5 metri da una nemico non ti impone svantaggio ai tiri per colpire con le balestre."
+      },
+      {
+        "type": "bonus_attack_crossbow",
+        "condition": "attack_action_with_one_handed_weapon",
+        "weapon": "hand_crossbow_loaded",
+        "action": "bonus_action",
+        "description": "Quando effettui l'attacco extra sfruttando la proprietà Leggera, puoi aggiungere il tuo modificatore di caratteristica ai danni se l'attacco è eseguito con una balestra leggera."
       }
     ]
   },
@@ -598,17 +620,12 @@
     },
     "granted_modifiers": [
       {
-        "type": "dual_wield",
-        "non_light_allowed": true,
-        "weapon_restrictions": ["one_handed", "not_two_handed"],
-        "description": "Quando usi lo Stile di Combattimento a Due Armi, puoi utilizzare un'arma che non abbia la proprietà Leggera in una mano, a patto che sia un'arma a una mano e non abbia la proprietà Due Mani."
+        "type": "dual_wield_improved",
+        "description": "Quando usi un'azione di Attacco nel tuo turno per attaccare con un'arma leggera, durante lo stesso turno puoi usare un'azione bonus per sferrarne uno extra con un'arma diversa, a patto che sia un'arma da mischia senza la proprietà a Due Mani. Non puoi aggiungere il modificatore di caratteristica all'attacco extra, a meno che non sia negativo."
       },
       {
-        "type": "bonus_attack",
-        "condition": "attack_action_with_light_weapon",
-        "weapon_type": "different_light_weapon",
-        "frequency": "once_per_turn",
-        "description": "Quando effettui l'azione di Attacco nel tuo turno e attacchi con un'arma Leggera, puoi effettuare un attacco aggiuntivo con un'arma Leggera diversa impugnata nell'altra mano come parte della stessa azione (una volta per turno)."
+        "type": "quick_draw",
+        "description": "Puoi estrarre o rinfoderare due armi senza la proprietà a Due Mani quando normalmente potresti farlo solo con una."
       }
     ]
   },
@@ -655,7 +672,7 @@
   },
   {
     "id": 21,
-    "name": "Esperto",
+    "name": "Abilità Impeccabile",
     "name_en": "Expert",
     "category": "general",
     "level_requirement": 4,
@@ -664,15 +681,16 @@
     "has_choices": true,
     "asi_config": {
       "choices_count": 1,
-      "allowed_scores": ["INT", "SAG", "CAR"],
+      "allowed_scores": ["INT", "SAG", "CAR", "FOR", "DES", "COS"],
       "bonus_value": 1,
       "max_cap": 20,
-      "description": "Aumenta il tuo punteggio di Intelligenza, Saggezza o Carisma di 1, fino a un massimo di 20."
+      "description": "Aumenta un punteggio di caratteristica a tua scelta di 1, fino a un massimo di 20."
     },
     "choice_config": {
-      "type": "expertise_gain",
-      "count": 1,
-      "description": "Scegli una competenza nelle abilità che già possiedi. Ottieni Maestrìa (Expertise) in quell'abilità, raddoppiando il tuo bonus di competenza per ogni prova che la utilizza."
+      "type": "hybrid_proficiency_expertise",
+      "skill_count": 1,
+      "expertise_count": 1,
+      "description": "Acquisisci competenza in un'abilità a tua scelta. Poi scegli un'abilità in cui hai competenza (ma non maestria) per ottenere Maestria (Expertise)."
     },
     "granted_modifiers": []
   },
@@ -1065,7 +1083,7 @@
     "name_en": "Observant",
     "category": "general",
     "level_requirement": 4,
-    "description": "Noti dettagli che sfuggono agli altri e sai leggere le labbra con precisione millimetrica.",
+    "description": "Noti dettagli che sfuggono agli altri e hai una percezione acuta dell'ambiente circostante.",
     "prerequisites": [
       {
         "type": "ability_score",
@@ -1086,15 +1104,16 @@
       "max_cap": 20,
       "description": "Aumenta il tuo punteggio di Intelligenza o Saggezza di 1, fino a un massimo di 20."
     },
+    "choice_config": {
+      "type": "observant_skill_choice",
+      "pool": ["insight", "investigation", "perception"],
+      "gain": "proficiency_or_expertise",
+      "description": "Scegli tra Intuizione, Indagare o Percezione. Ottieni competenza se non la possiedi, o maestria se già la possiedi."
+    },
     "granted_modifiers": [
       {
         "type": "bonus_action_search",
-        "description": "Puoi effettuare l'azione di Cercare (Search) come azione bonus nel tuo turno."
-      },
-      {
-        "type": "lip_reading",
-        "condition": "see_lips_and_share_language",
-        "description": "Se vedi una creatura muovere le labbra e parli la sua stessa lingua, puoi capire cosa sta dicendo leggendo le sue labbra."
+        "description": "Puoi utilizzare l'azione di Ricerca (Search) come azione bonus."
       }
     ]
   },
@@ -1166,7 +1185,7 @@
   },
   {
     "id": 36,
-    "name": "Ritualista",
+    "name": "Incantatore Rituale",
     "name_en": "Ritual Caster",
     "category": "general",
     "level_requirement": 4,
@@ -1198,15 +1217,16 @@
     },
     "choice_config": {
       "type": "ritual_spells_gain",
-      "count": 2,
+      "count": "proficiency_bonus",
       "max_level": 1,
       "spell_casting_ability_choices": ["INT", "SAG", "CAR"],
-      "description": "Scegli due incantesimi di 1° livello con la proprietà Rituale da qualsiasi lista di incantesimi di classe. Puoi lanciarli solo come rituali."
+      "description": "Scegli un numero di incantesimi di 1° livello con il descrittore Rituale pari al tuo bonus di competenza. Sono sempre considerati preparati. Ogni volta che il PB aumenta, aggiungi un ulteriore incantesimo rituale."
     },
     "granted_modifiers": [
       {
-        "type": "ritual_spell_copy",
-        "description": "Puoi trascrivere altri incantesimi con la proprietà rituale che trovi durante le tue avventure nel tuo libro dei rituali, spendendo tempo e oro."
+        "type": "ritual_rapid_cast",
+        "frequency": "once_per_long_rest",
+        "description": "Puoi lanciare un incantesimo rituale preparato con il suo tempo di lancio normale invece che esteso, senza consumare uno slot incantesimo. Non puoi riutilizzarlo prima di un riposo lungo."
       }
     ]
   },
@@ -1290,7 +1310,7 @@
   },
   {
     "id": 39,
-    "name": "Combattente con Scudo (Maestro dello Scudo)",
+    "name": "Maestro degli Scudi",
     "name_en": "Shield Master",
     "category": "general",
     "level_requirement": 4,
@@ -1329,7 +1349,7 @@
   },
   {
     "id": 40,
-    "name": "Infiltrato (Furtivo)",
+    "name": "Appostato",
     "name_en": "Skulker",
     "category": "general",
     "level_requirement": 4,
@@ -1351,56 +1371,66 @@
     },
     "granted_modifiers": [
       {
-        "type": "hide_in_light_obscurement",
-        "conditions": ["dim_light", "light_fog"],
-        "description": "Puoi tentare di nasconderti anche quando sei solo parzialmente oscurato (come in luce fioca o nebbia leggera)."
+        "type": "blindsight",
+        "range_feet": 10,
+        "description": "Ottieni Vista Cieca (Blindsight) con un raggio di 3 metri (10 piedi)."
+      },
+      {
+        "type": "stealth_advantage_in_combat",
+        "description": "Ottieni vantaggio alle prove di Destrezza (Furtività) effettuate come parte dell'azione di Nasconderti durante il combattimento."
       },
       {
         "type": "missed_ranged_attack_not_reveal",
-        "description": "Quando sei nascosto da una creatura e la manchi con un attacco con arma a distanza, effettuare l'attacco non rivela la tua posizione."
-      },
-      {
-        "type": "blindsight",
-        "range_feet": 10,
-        "description": "Ottieni Vista Cieca (Blindsight) entro un raggio di 3 metri (10 piedi)."
+        "description": "Se effettui un tiro per colpire mentre sei nascosto e il colpo non va a segno, rimani nascosto."
       }
     ]
   },
   {
     "id": 41,
-    "name": "Assalitore Leggero (Rapido)",
+    "name": "Rapidità",
     "name_en": "Speedy",
     "category": "general",
     "level_requirement": 4,
     "description": "La tua rapidità di gambe ti rende un bersaglio elusivo, capace di sfrecciare tra i pericoli.",
-    "prerequisites": [],
+    "prerequisites": [
+      {
+        "type": "ability_score",
+        "field": "DES",
+        "value": 13
+      },
+      {
+        "type": "ability_score",
+        "field": "COS",
+        "value": 13
+      }
+    ],
     "has_choices": true,
     "asi_config": {
       "choices_count": 1,
-      "allowed_scores": ["FOR", "DES", "COS"],
+      "allowed_scores": ["DES", "COS"],
       "bonus_value": 1,
       "max_cap": 20,
-      "description": "Aumenta un punteggio di caratteristica a tua scelta tra Forza, Destrezza o Costituzione di 1, fino a un massimo di 20."
+      "description": "Aumenta il tuo punteggio di Destrezza o Costituzione di 1, fino a un massimo di 20."
     },
     "granted_modifiers": [
       {
         "type": "speed_bonus",
         "bonus_feet": 10,
-        "description": "La tua velocità di movimento sul terreno aumenta di 3 metri (10 piedi)."
+        "description": "La tua velocità di movimento aumenta di 3 metri (10 piedi)."
+      },
+      {
+        "type": "ignore_difficult_terrain_on_dash",
+        "description": "Quando effettui l'azione di Scatto, il terreno difficile non ti costa movimento extra per il resto del turno."
       },
       {
         "type": "opportunity_attacks_against_have_disadvantage",
         "description": "Gli attacchi di opportunità effettuati contro di te hanno svantaggio."
-      },
-      {
-        "type": "ignore_difficult_terrain_on_dash",
-        "description": "I terreni difficili non ti costano movimento extra quando usi l'azione di Scatto (Dash)."
       }
     ]
   },
   {
     "id": 42,
-    "name": "Mira Focalizzata (Cecchino Incantatore)",
+    "name": "Cecchino Magico",
     "name_en": "Spell Sniper",
     "category": "general",
     "level_requirement": 4,
@@ -1427,13 +1457,14 @@
       },
       {
         "type": "ignore_melee_disadvantage_for_spells",
-        "description": "Essere entro 1,5 metri da una creatura ostile non impone più svantaggio ai tuoi tiri per colpire con un incantesimo."
+        "description": "Anche se ti trovi a 1,5 metri da un nemico, non ottieni svantaggio ai tiri per colpire con gli incantesimi."
       },
       {
-        "type": "spell_range_multiplier",
-        "multiplier": 2,
-        "min_range": 10,
-        "description": "La gittata dei tuoi incantesimi che richiedono un tiro per colpire e hanno una gittata di almeno 3 metri viene raddoppiata."
+        "type": "spell_range_bonus",
+        "bonus": 18,
+        "unit": "meters",
+        "min_range": 3,
+        "description": "Quando lanci un incantesimo con gittata di almeno 3 metri che richiede un tiro per colpire, la sua gittata aumenta di 18 metri."
       }
     ]
   },
@@ -1654,48 +1685,6 @@
     ]
   },
   {
-    "id": 49,
-    "name": "Cecchino (Esperto di Balestre)",
-    "name_en": "Crossbow Expert",
-    "category": "general",
-    "level_requirement": 4,
-    "description": "Hai sviluppato una coordinazione impeccabile e una velocità d'esecuzione letale con le balestre.",
-    "prerequisites": [
-      {
-        "type": "weapon_proficiency",
-        "value": "martial"
-      }
-    ],
-    "has_choices": true,
-    "asi_config": {
-      "choices_count": 1,
-      "allowed_scores": ["DES"],
-      "bonus_value": 1,
-      "max_cap": 20,
-      "description": "Aumenta il tuo punteggio di Destrezza di 1, fino a un massimo di 20."
-    },
-    "granted_modifiers": [
-      {
-        "type": "ignore_weapon_property",
-        "weapon_type": "crossbow",
-        "property": "loading",
-        "description": "Ignori la proprietà Ricarica (Loading) delle balestre con cui sei competente."
-      },
-      {
-        "type": "ignore_melee_disadvantage",
-        "weapon_type": "crossbow",
-        "description": "Essere entro 1,5 metri da una creatura ostile non ti impone svantaggio ai tiri per colpire a distanza effettuati con le balestre."
-      },
-      {
-        "type": "bonus_attack_crossbow",
-        "condition": "attack_action_with_one_handed_weapon",
-        "weapon": "hand_crossbow_loaded",
-        "action": "bonus_action",
-        "description": "Quando effettui l'azione di Attacco e colpisci con un'arma a una mano, puoi usare un'azione bonus per effettuare un attacco aggiuntivo con una balestra a mano carica."
-      }
-    ]
-  },
-  {
     "id": 50,
     "name": "Esploratore di Dungeon",
     "name_en": "Dungeon Delver",
@@ -1729,7 +1718,7 @@
   },
   {
     "id": 51,
-    "name": "Sfidante (Resistente)",
+    "name": "Tenace",
     "name_en": "Durable",
     "category": "general",
     "level_requirement": 4,
@@ -1746,18 +1735,17 @@
     "granted_modifiers": [
       {
         "type": "advantage_on_death_saves",
-        "description": "Ottieni vantaggio ai tiri salvezza contro la morte."
+        "description": "Ottieni vantaggio ai tiri salvezza contro la morte (Sfuggire alla morte)."
       },
       {
-        "type": "minimum_hit_die_healing",
-        "minimum": "constitution_modifier * 2",
-        "description": "Quando spendi un Dado Vita per recuperare punti ferita, il numero minimo di punti ferita che recuperi da quel dado è pari al doppio del tuo modificatore di Costituzione."
+        "type": "bonus_action_hit_die_heal",
+        "description": "Come azione bonus, puoi utilizzare uno dei tuoi Dadi Vita per effettuare un tiro e recuperare un numero di PF pari al risultato ottenuto (Recupero rapido)."
       }
     ]
   },
   {
     "id": 52,
-    "name": "Dono del Recupero Epico",
+    "name": "Dono del Recupero",
     "name_en": "Epic Boon of Recovery",
     "category": "epic_boon",
     "level_requirement": 19,
@@ -1777,13 +1765,20 @@
         "heal_percentage": 50,
         "action": "reaction",
         "reset": "long_rest",
-        "description": "Quando vieni ridotto a 0 punti ferita ma non vieni ucciso sul colpo, puoi usare la tua reazione per recuperare istantaneamente un ammontare di punti ferita pari alla metà dei tuoi punti ferita massimi. Una volta utilizzata questa capacità, non puoi più riutilizzarla finché non completi un riposo lungo."
+        "description": "Quando vieni ridotto a 0 PF ma non ucciso sul colpo, puoi usare la reazione per scendere a 1 PF e recuperare PF pari alla metà dei tuoi PF massimi (Incrollabile)."
+      },
+      {
+        "type": "vitality_reserve",
+        "dice": "10d10",
+        "action": "bonus_action",
+        "reset": "long_rest",
+        "description": "Hai una riserva di dieci d10. Come azione bonus, puoi consumarne alcuni, tirarli e recuperare PF pari al totale (Recupero di vitalità). Recuperi tutti i d10 spesi dopo un riposo lungo."
       }
     ]
   },
   {
     "id": 53,
-    "name": "Dono del Destino",
+    "name": "Dono del Fato",
     "name_en": "Epic Boon of Fate",
     "category": "epic_boon",
     "level_requirement": 19,
@@ -1799,15 +1794,12 @@
     },
     "granted_modifiers": [
       {
-        "type": "destiny_die",
+        "type": "fate_boon",
         "die": "2d4",
         "range": 60,
-        "frequency": "proficiency_bonus",
-        "reset": "long_rest",
-        "target": "other_creature",
-        "effects": ["attack_roll", "ability_check", "saving_throw"],
-        "action": "reaction",
-        "description": "Quando un'altra creatura che puoi vedere entro 18 metri effettua un tiro per colpire, una prova di caratteristica o un tiro salvezza, puoi usare la tua reazione per lanciare un dado di 2d4 e aggiungere o sottrarre il risultato al tiro della creatura. Puoi usare questa capacità un numero di volte pari al tuo bonus di competenza, e recuperi tutti gli utilizzi dopo un riposo lungo."
+        "reset": "initiative_or_short_rest",
+        "target": "self_or_other_creature",
+        "description": "Quando tu o un'altra creatura entro 18 metri superate o fallite una prova con d20, puoi tirare 2d4 e applicare il risultato come bonus o penalità a quella prova. Non puoi riutilizzarlo finché non tiri per l'iniziativa o non completi un riposo breve o lungo."
       }
     ]
   },
@@ -2092,6 +2084,623 @@
         "max_spell_level": 4,
         "chance": "1_in_10",
         "description": "Ogni volta che lanci un incantesimo di livello pari o inferiore al 4° livello utilizzando uno slot incantesimo, tira un d10. Se esce un 10, lo slot incantesimo non viene consumato."
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "name": "Aumento dei Punteggi di Caratteristica",
+    "name_en": "Ability Score Improvement",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "Affini le tue capacità naturali, aumentando i punteggi di caratteristica.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 2,
+      "mode": "asi",
+      "options": [
+        { "type": "single", "bonus": 2, "max_cap": 20 },
+        { "type": "dual", "bonus": 1, "max_cap": 20 }
+      ],
+      "description": "Aumenta un punteggio di caratteristica di 2, oppure aumenta due punteggi di caratteristica di 1. Nessun punteggio può superare 20."
+    },
+    "repeatable": true,
+    "granted_modifiers": []
+  },
+  {
+    "id": 65,
+    "name": "Bisturi da Battaglia",
+    "name_en": "Slashing Expert",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "Sai come infliggere tagli precisi e debilitanti con le tue armi.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "DES"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Forza o Destrezza di 1, fino a un massimo di 20."
+    },
+    "granted_modifiers": [
+      {
+        "type": "speed_reduction_on_slash",
+        "reduction": 3,
+        "unit": "meters",
+        "duration": "until_next_turn",
+        "frequency": "once_per_turn",
+        "description": "Una volta per turno, quando colpisci una creatura con un attacco che infligge danni taglienti, puoi ridurre la sua velocità di 3 metri fino all'inizio del tuo turno successivo."
+      },
+      {
+        "type": "critical_slash_debuff",
+        "effect": "disadvantage_on_attack_rolls",
+        "duration": "until_next_turn",
+        "description": "Quando metti a segno un colpo critico che infligge danni taglienti, il bersaglio ha svantaggio ai tiri per colpire fino all'inizio del tuo turno successivo."
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "name": "Contaminazione Fatata",
+    "name_en": "Fey-Touched",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "La tua esposizione alla magia fatata ti ha infuso di poteri misteriosi.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["INT", "SAG", "CAR"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Intelligenza, Saggezza o Carisma di 1, fino a un massimo di 20."
+    },
+    "choice_config": {
+      "type": "spell_selection",
+      "schools": ["divination", "enchantment"],
+      "spell_level": 1,
+      "count": 1,
+      "description": "Scegli un incantesimo di 1° livello della scuola di Divinazione o Ammaliamento."
+    },
+    "granted_modifiers": [
+      {
+        "type": "spell_grant",
+        "spells": [
+          { "spell_id": 7, "name": "Passo Veloce", "always_prepared": true, "free_cast_per_long_rest": 1 }
+        ]
+      },
+      {
+        "type": "free_cast",
+        "spell": "chosen",
+        "frequency": "once_per_long_rest",
+        "can_use_slots": true,
+        "description": "L'incantesimo scelto e Passo Veloce sono sempre preparati. Puoi lanciare ciascuno una volta senza slot per riposo lungo, o usando gli slot a disposizione."
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "name": "Contaminazione Oscura",
+    "name_en": "Shadow-Touched",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "La tua esposizione alla magia dell'ombra ti ha infuso di poteri occulti.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["INT", "SAG", "CAR"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Intelligenza, Saggezza o Carisma di 1, fino a un massimo di 20."
+    },
+    "choice_config": {
+      "type": "spell_selection",
+      "schools": ["illusion", "necromancy"],
+      "spell_level": 1,
+      "count": 1,
+      "description": "Scegli un incantesimo di 1° livello della scuola di Illusione o Necromanzia."
+    },
+    "granted_modifiers": [
+      {
+        "type": "spell_grant",
+        "spells": [
+          { "spell_id": 100, "name": "Invisibilità", "always_prepared": true, "free_cast_per_long_rest": 1 }
+        ]
+      },
+      {
+        "type": "free_cast",
+        "spell": "chosen",
+        "frequency": "once_per_long_rest",
+        "can_use_slots": true,
+        "description": "L'incantesimo scelto e Invisibilità sono sempre preparati. Puoi lanciare ciascuno una volta senza slot per riposo lungo, o usando gli slot a disposizione."
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "name": "Lottatore",
+    "name_en": "Grappler",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "Sei un maestro nelle tecniche di lotta e afferramento.",
+    "prerequisites": [
+      {
+        "type": "ability_score",
+        "field": "FOR",
+        "value": 13
+      },
+      {
+        "type": "ability_score",
+        "field": "DES",
+        "value": 13
+      }
+    ],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "DES"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Forza o Destrezza di 1, fino a un massimo di 20."
+    },
+    "granted_modifiers": [
+      {
+        "type": "hit_or_grapple",
+        "frequency": "once_per_turn",
+        "description": "Una volta per turno, quando colpisci una creatura con un colpo senz'armi come parte dell'azione di Attacco, puoi scegliere se infliggerle danni o afferrarla."
+      },
+      {
+        "type": "advantage_on_grappled_targets",
+        "description": "Hai vantaggio ai tiri per colpire contro le creature che hai afferrato."
+      },
+      {
+        "type": "fast_grapple_move",
+        "description": "Non hai bisogno di spendere movimento extra se sposti una creatura che hai afferrato, purché sia della tua stessa taglia o inferiore."
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "name": "Maestria dei Veleni",
+    "name_en": "Poisoner",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "Conosci i segreti dei veleni e sai come renderli più letali.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["DES", "INT"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Destrezza o Intelligenza di 1, fino a un massimo di 20."
+    },
+    "granted_modifiers": [
+      {
+        "type": "ignore_poison_resistance",
+        "description": "Quando effettui un tiro per i danni che infligge danni da veleno, ignori la resistenza al veleno del bersaglio."
+      },
+      {
+        "type": "craft_poison",
+        "per_long_rest": "proficiency_bonus",
+        "save_dc_ability": "chosen_asi",
+        "damage": "2d8",
+        "duration": "1_minute_or_until_hit",
+        "description": "Con 1 ora e 50 MO, crei un numero di dosi di veleno pari al tuo PB. Come azione bonus, applichi una dose a un'arma. La creatura colpita deve superare un TS su Costituzione (CD 8 + modificatore + PB) o subire 2d8 danni da veleno e essere Avvelenata fino al termine del turno successivo."
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "name": "Maestro d'Armi",
+    "name_en": "Weapon Mastery",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "La tua abilità con le armi ti permette di sfruttare le proprietà speciali di padronanza.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "DES"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Forza o Destrezza di 1, fino a un massimo di 20."
+    },
+    "granted_modifiers": [
+      {
+        "type": "weapon_mastery_property",
+        "description": "Scegli un tipo di arma semplice o da guerra di cui possiedi già la competenza. Puoi avvalerti della proprietà di padronanza per quel tipo di arma. Ogni volta che completi un riposo lungo, puoi cambiare il tipo di arma scelto."
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "name": "Martello Vivente",
+    "name_en": "Crushing Expert",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "I tuoi colpi contundenti sono così potenti da spostare e sfiancare i nemici.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "COS"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Forza o Costituzione di 1, fino a un massimo di 20."
+    },
+    "granted_modifiers": [
+      {
+        "type": "push_on_bludgeon",
+        "push_distance": 5,
+        "max_target_size_category_difference": 1,
+        "frequency": "once_per_turn",
+        "description": "Una volta per turno, quando colpisci una creatura con un attacco che infligge danni contundenti, puoi spostarla di 1,5 metri in uno spazio libero (se la sua taglia è al massimo di una categoria superiore alla tua)."
+      },
+      {
+        "type": "critical_bludgeon_advantage",
+        "duration": "until_next_turn",
+        "description": "Quando metti a segno un colpo critico che infligge danni contundenti, hai vantaggio ai tiri per colpire contro quella creatura fino all'inizio del tuo turno successivo."
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "name": "Mente Acuta",
+    "name_en": "Keen Mind",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "La tua mente è un archivio vivente di conoscenze e ricordi.",
+    "prerequisites": [
+      {
+        "type": "ability_score",
+        "field": "INT",
+        "value": 13
+      }
+    ],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["INT"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Intelligenza di 1, fino a un massimo di 20."
+    },
+    "choice_config": {
+      "type": "skill_proficiency_or_expertise",
+      "pool": ["arcana", "history", "investigation", "nature", "religion"],
+      "description": "Scegli tra Arcano, Indagare, Natura, Religione o Storia. Ottieni competenza se non la possiedi, o maestria se già la possiedi."
+    },
+    "granted_modifiers": [
+      {
+        "type": "bonus_action_study",
+        "description": "Puoi utilizzare l'azione Studio come azione bonus."
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "name": "Stile Penetrante",
+    "name_en": "Piercing Expert",
+    "category": "general",
+    "level_requirement": 4,
+    "description": "I tuoi attacchi perforanti trovano i punti deboli delle armature nemiche.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "DES"],
+      "bonus_value": 1,
+      "max_cap": 20,
+      "description": "Aumenta il tuo punteggio di Forza o Destrezza di 1, fino a un massimo di 20."
+    },
+    "granted_modifiers": [
+      {
+        "type": "reroll_piercing_damage",
+        "frequency": "once_per_turn",
+        "description": "Una volta per turno, quando colpisci una creatura con un attacco che infligge danni perforanti, puoi ripetere il tiro di uno dei dadi di danno e devi usare il nuovo risultato."
+      },
+      {
+        "type": "critical_piercing_extra_die",
+        "description": "Quando metti a segno un colpo critico che infligge danni perforanti, tira un dado di danno addizionale per determinare i danni perforanti extra."
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "name": "Combattere alla Cieca",
+    "name_en": "Blind Fighting",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "Hai affinato i tuoi sensi per combattere anche senza vedere.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "blindsight",
+        "range_feet": 10,
+        "description": "Ottieni vista cieca con un raggio di 3 metri (10 piedi)."
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "name": "Combattere con Armi da Lancio",
+    "name_en": "Thrown Weapon Fighting",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "I tuoi lanci sono precisi e potenti.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "thrown_damage_bonus",
+        "bonus": 2,
+        "description": "Quando colpisci con un tiro per colpire a distanza usando un'arma da lancio, ottieni un bonus di +2 al tiro per i danni."
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "name": "Combattere con Armi Possenti",
+    "name_en": "Great Weapon Fighting",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "Quando impugni un'arma a due mani, infliggi danni più consistenti.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "great_weapon_damage_reroll",
+        "min_die_result": 3,
+        "description": "Quando tiri per i danni con un'arma da mischia impugnata a due mani, se il risultato è 1 o 2, puoi considerarlo come un 3. L'arma deve avere la proprietà a Due Mani o Versatile."
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "name": "Combattere con Due Armi",
+    "name_en": "Two-Weapon Fighting",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "Combatti con un'arma in ogni mano con grande efficacia.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "two_weapon_damage_ability",
+        "description": "Quando effettui un attacco extra sfruttando un'arma leggera, puoi aggiungere il tuo modificatore di caratteristica al danno di quell'attacco, a patto che non sia già stato aggiunto."
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "name": "Combattere Disarmato",
+    "name_en": "Unarmed Fighting",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "I tuoi pugni e calci sono letali come le armi.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "unarmed_damage_die",
+        "normal_die": "1d6",
+        "free_hands_die": "1d8",
+        "grapple_damage": "1d4",
+        "description": "I tuoi colpi senz'armi infliggono 1d6 + FOR. Se non impugni armi né scudo, il dado diventa 1d8. All'inizio di ogni turno, infliggi 1d4 contundenti a una creatura che hai afferrato."
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "name": "Difesa",
+    "name_en": "Defense",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "La tua padronanza dell'armatura ti protegge dai colpi.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "armor_ac_bonus",
+        "bonus": 1,
+        "condition": "wearing_armor",
+        "description": "Finché indossi un'armatura, ottieni un +1 alla Classe Armatura."
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "name": "Duellare",
+    "name_en": "Dueling",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "Combatti con una sola arma, sfruttando la precisione e la velocità.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "one_handed_damage_bonus",
+        "bonus": 2,
+        "description": "Quando impugni un'arma da mischia in una mano e nessun'altra arma, ottieni +2 ai tiri per i danni con quell'arma."
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "name": "Intercettazione",
+    "name_en": "Interception",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "Intercetti i colpi diretti ai tuoi alleati.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "interception_reaction",
+        "damage_reduction": "1d10 + proficiency_bonus",
+        "range": 5,
+        "description": "Quando una creatura che vedi colpisce un alleato entro 1,5 metri da te, puoi usare una reazione per ridurre i danni di 1d10 + PB. Devi impugnare uno scudo o un'arma."
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "name": "Protezione",
+    "name_en": "Protection",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "Proteggi i tuoi alleati con lo scudo.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "protection_reaction",
+        "range": 5,
+        "description": "Quando una creatura che vedi attacca un bersaglio diverso da te entro 1,5 metri, puoi usare una reazione per imporre svantaggio al tiro per colpire (e a tutti i successivi contro quel bersaglio fino all'inizio del tuo turno successivo), se rimani entro 1,5 metri dal bersaglio e impugni uno scudo."
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "name": "Tiro",
+    "name_en": "Archery",
+    "category": "fighting_style",
+    "level_requirement": 1,
+    "description": "La tua mira con le armi a distanza è eccezionale.",
+    "prerequisites": [
+      { "type": "feature", "value": "fighting_style" }
+    ],
+    "granted_modifiers": [
+      {
+        "type": "ranged_attack_bonus",
+        "bonus": 2,
+        "description": "Ottieni un bonus di +2 ai tiri per colpire con le armi a distanza."
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "name": "Dono dell'Abilità",
+    "name_en": "Epic Boon of Skills",
+    "category": "epic_boon",
+    "level_requirement": 19,
+    "description": "La tua competenza si estende a ogni ambito del sapere.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "DES", "COS", "INT", "SAG", "CAR"],
+      "bonus_value": 1,
+      "max_cap": 30,
+      "description": "Aumenta un punteggio di caratteristica a tua scelta di 1, fino a un massimo di 30."
+    },
+    "choice_config": {
+      "type": "expertise_gain",
+      "count": 1,
+      "description": "Scegli un'abilità in cui non hai maestria per ottenerla."
+    },
+    "granted_modifiers": [
+      {
+        "type": "all_skill_proficiency",
+        "description": "Ottieni competenza in tutte le abilità."
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "name": "Dono delle Abilità di Combattimento",
+    "name_en": "Epic Boon of Combat Prowess",
+    "category": "epic_boon",
+    "level_requirement": 19,
+    "description": "La tua precisione in battaglia è tale che anche i tuoi errori si trasformano in colpi a segno.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "DES", "COS", "INT", "SAG", "CAR"],
+      "bonus_value": 1,
+      "max_cap": 30,
+      "description": "Aumenta un punteggio di caratteristica a tua scelta di 1, fino a un massimo di 30."
+    },
+    "granted_modifiers": [
+      {
+        "type": "reroll_missed_attack",
+        "reset": "start_of_turn",
+        "description": "Quando il tuo tiro per colpire non va a segno, puoi colpire comunque il bersaglio. Non puoi riutilizzare questo beneficio fino all'inizio del tuo turno successivo."
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "name": "Dono dell'Offensiva Irresistibile",
+    "name_en": "Epic Boon of Unstoppable Offense",
+    "category": "epic_boon",
+    "level_requirement": 19,
+    "description": "I tuoi attacchi travolgono ogni difesa e devastano i nemici.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "DES"],
+      "bonus_value": 1,
+      "max_cap": 30,
+      "description": "Aumenta il tuo punteggio di Forza o Destrezza di 1, fino a un massimo di 30."
+    },
+    "granted_modifiers": [
+      {
+        "type": "ignore_bps_resistance",
+        "description": "I danni contundenti, perforanti e taglienti che infliggi ignorano sempre la resistenza."
+      },
+      {
+        "type": "crit_extra_damage",
+        "source": "asi_score",
+        "description": "Quando ottieni un 20 al tiro per colpire, infliggi danni extra pari al punteggio di caratteristica aumentato da questo talento."
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "name": "Dono dello Spirito Notturno",
+    "name_en": "Epic Boon of Night Spirit",
+    "category": "epic_boon",
+    "level_requirement": 19,
+    "description": "Le ombre ti avvolgono come un manto protettivo, rendendoti un'ombra tra le ombre.",
+    "prerequisites": [],
+    "has_choices": true,
+    "asi_config": {
+      "choices_count": 1,
+      "allowed_scores": ["FOR", "DES", "COS", "INT", "SAG", "CAR"],
+      "bonus_value": 1,
+      "max_cap": 30,
+      "description": "Aumenta un punteggio di caratteristica a tua scelta di 1, fino a un massimo di 30."
+    },
+    "granted_modifiers": [
+      {
+        "type": "shadow_invisibility",
+        "conditions": ["darkness", "dim_light"],
+        "action": "bonus_action",
+        "breaks_on": ["action", "bonus_action", "reaction"],
+        "description": "Finché ti trovi in un'area di oscurità o luce fioca, puoi diventare invisibile come azione bonus. La condizione termina dopo che effettui un'azione, un'azione bonus o una reazione."
+      },
+      {
+        "type": "shadow_resistance",
+        "conditions": ["darkness", "dim_light"],
+        "exceptions": ["psychic", "radiant"],
+        "description": "Finché ti trovi in un'area di oscurità o luce fioca, hai resistenza a tutti i tipi di danno, tranne psichico e radioso."
       }
     ]
   }
