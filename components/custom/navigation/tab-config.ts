@@ -2,15 +2,15 @@ import type { ComponentType } from 'react';
 import { ROUTES } from '../../../lib/routes';
 
 // Schermate
-import HomeScreen from '../../../screens/HomeScreen';
-import CharactersScreen from '../../../screens/CharactersScreen';
-import CompendioScreen from '../../../screens/CompendioScreen';
-import ItemsScreen from '../../../screens/ItemsScreen';
-import SpellsScreen from '../../../screens/SpellsScreen';
-import MoreScreen from '../../../screens/MoreScreen';
-import SettingsScreen from '../../../screens/SettingsScreen';
-import CharacterDetailScreen from '../../../screens/CharacterDetailScreen';
-import CharacterCreateScreen from '../../../screens/CharacterCreateScreen';
+import HomeScreen from '../../../screens/home/HomeScreen';
+import CharactersScreen from '../../../screens/characters/CharactersScreen';
+import CompendioScreen from '../../../screens/compendium/CompendioScreen';
+import ItemsScreen from '../../../screens/compendium/ItemsScreen';
+import SpellsScreen from '../../../screens/compendium/SpellsScreen';
+import MoreScreen from '../../../screens/more/MoreScreen';
+import SettingsScreen from '../../../screens/more/SettingsScreen';
+import CharacterDetailScreen from '../../../screens/characters/CharacterDetailScreen';
+import CharacterCreateScreen from '../../../screens/characters/CharacterCreateScreen';
 
 export type NavigationTab = {
   /** Nome della route a cui la tab fa riferimento (usa ROUTES.*) */
@@ -21,13 +21,23 @@ export type NavigationTab = {
   component: ComponentType<any>;
   iconActive: string;
   iconInactive: string;
+  /** Quando mostrare il pulsante: 'always', 'noCharacter', 'withCharacter' */
+  show?: 'always' | 'noCharacter' | 'withCharacter';
   /** Nasconde la tab bar quando questa schermata è attiva */
   hideTabBar?: boolean;
-  /** Se true, il bottone non viene mostrato nella tab bar (utile per schermate nascoste) */
+  /** Se true, il bottone non viene mostrato nella tab bar */
   hideTabButton?: boolean;
 };
 
+/**
+ * Tutte le tab dell'app. Ogni tab ha un gruppo di visibilità:
+ * - `show: 'always'` → sempre visibile (es. Altro, Dadi)
+ * - `show: 'noCharacter'` → visibile solo senza PG attivo (es. Home)
+ * - `show: 'withCharacter'` → visibile solo con PG attivo (es. Scheda PG)
+ * - `hideTabButton: true` → sempre nascosta (schermate interne)
+ */
 export const NAVIGATION_TABS: NavigationTab[] = [
+  // ── HOME ──
   {
     routeName: ROUTES.HOME,
     label: 'Home',
@@ -37,6 +47,48 @@ export const NAVIGATION_TABS: NavigationTab[] = [
     hideTabBar: true,
     hideTabButton: true,
   },
+
+  // ── SCHEDA PG (sostituisce Home nella tab bar quando PG attivo) ──
+  {
+    routeName: ROUTES.CHARACTER_DETAIL,
+    label: 'Scheda',
+    component: CharacterDetailScreen,
+    iconActive: 'person',
+    iconInactive: 'person-outline',
+    show: 'withCharacter',
+  },
+
+  // ── MAGIE ──
+  {
+    routeName: ROUTES.MAGIE,
+    label: 'Magie',
+    component: SpellsScreen,
+    iconActive: 'flash',
+    iconInactive: 'flash-outline',
+    show: 'always',
+  },
+
+  // ── OGGETTI ──
+  {
+    routeName: ROUTES.OGGETTI,
+    label: 'Oggetti',
+    component: ItemsScreen,
+    iconActive: 'cube',
+    iconInactive: 'cube-outline',
+    show: 'always',
+  },
+
+  // ── ALTRO ──
+  {
+    routeName: ROUTES.ALTRO,
+    label: 'Altro',
+    component: MoreScreen,
+    iconActive: 'ellipsis-horizontal',
+    iconInactive: 'ellipsis-horizontal-outline',
+    show: 'always',
+  },
+
+  // ── SCHERMATE NASCOSTE ──
   {
     routeName: ROUTES.PERSONAGGI,
     label: 'Personaggi',
@@ -45,27 +97,6 @@ export const NAVIGATION_TABS: NavigationTab[] = [
     iconInactive: 'people-outline',
     hideTabBar: true,
     hideTabButton: true,
-  },
-  {
-    routeName: ROUTES.OGGETTI,
-    label: 'Oggetti',
-    component: ItemsScreen,
-    iconActive: 'cube',
-    iconInactive: 'cube-outline',
-  },
-  {
-    routeName: ROUTES.MAGIE,
-    label: 'Magie',
-    component: SpellsScreen,
-    iconActive: 'flash',
-    iconInactive: 'flash-outline',
-  },
-  {
-    routeName: ROUTES.ALTRO,
-    label: 'Altro',
-    component: MoreScreen,
-    iconActive: 'ellipsis-horizontal',
-    iconInactive: 'ellipsis-horizontal-outline',
   },
   {
     routeName: ROUTES.COMPENDIO,
@@ -82,15 +113,6 @@ export const NAVIGATION_TABS: NavigationTab[] = [
     component: SettingsScreen,
     iconActive: 'settings',
     iconInactive: 'settings-outline',
-    hideTabBar: true,
-    hideTabButton: true,
-  },
-  {
-    routeName: ROUTES.CHARACTER_DETAIL,
-    label: 'Dettaglio PG',
-    component: CharacterDetailScreen,
-    iconActive: 'person',
-    iconInactive: 'person-outline',
     hideTabBar: true,
     hideTabButton: true,
   },

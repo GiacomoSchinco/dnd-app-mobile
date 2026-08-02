@@ -1,14 +1,14 @@
 import { View, Text, Pressable, FlatList } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { useTokens } from '../components/ui/prism-provider';
-import { Card } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
-import Screen from '../components/custom/Screen';
-import ScreenHeader from '../components/custom/ScreenHeader';
-import { s } from '../utils/style-helpers';
-import { ROUTES } from '../lib/routes';
-import { useCharacterStore } from '../store/useCharacterStore';
-import type { Character } from '../types';
+import { useTokens } from '../../components/ui/prism-provider';
+import { Card } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
+import Screen from '../../components/custom/Screen';
+import ScreenHeader from '../../components/custom/ScreenHeader';
+import { s } from '../../utils/style-helpers';
+import { ROUTES } from '../../lib/routes';
+import { useCharacterStore } from '../../store/useCharacterStore';
+import type { Character } from '../../types';
 import { useCallback } from 'react';
 
 const CLASS_LABELS: Record<string, string> = {
@@ -64,6 +64,7 @@ export default function CharactersScreen() {
   const t = useTokens();
   const navigation = useNavigation<any>();
   const characters = useCharacterStore((st) => st.characters);
+  const setActiveCharacterId = useCharacterStore((st) => st.setActiveCharacterId);
 
   // Ricarica la lista ogni volta che si torna sulla schermata
   useFocusEffect(
@@ -77,7 +78,8 @@ export default function CharactersScreen() {
   };
 
   const handleCharacterPress = (character: Character) => {
-    navigation.navigate(ROUTES.CHARACTER_DETAIL, { characterId: character.id });
+    setActiveCharacterId(character.id);
+    navigation.navigate(ROUTES.CHARACTER_DETAIL);
   };
 
   if (characters.length === 0) {

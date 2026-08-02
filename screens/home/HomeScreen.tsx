@@ -1,10 +1,10 @@
 import { View, Text, Pressable, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useTokens } from '../components/ui/prism-provider';
-import { ROUTES } from '../lib/routes';
-import Screen from '../components/custom/Screen';
-import DndIcon from '../components/custom/DndIcon';
-import { s } from '../utils/style-helpers';
+import { useTokens } from '../../components/ui/prism-provider';
+import { ROUTES } from '../../lib/routes';
+import Screen from '../../components/custom/Screen';
+import DndIcon from '../../components/custom/DndIcon';
+import { s } from '../../utils/style-helpers';
 
 export default function HomeScreen() {
   const t = useTokens();
@@ -16,7 +16,7 @@ export default function HomeScreen() {
       <View style={[{ alignItems: 'center' }, s.mb(t.spacing[12])]}>
         <View style={[s.box(80, 0), s.mb(t.spacing[4])]}>
           <Image
-            source={require('../assets/logo.png')}
+            source={require('../../assets/logo.png')}
             style={{ width: 80, height: 80 }}
             resizeMode="contain"
           />

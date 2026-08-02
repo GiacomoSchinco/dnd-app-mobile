@@ -1,10 +1,10 @@
 import { View, Text, Pressable, ScrollView } from 'react-native';
-import { useTokens } from '../components/ui/prism-provider';
-import Screen from '../components/custom/Screen';
-import ScreenHeader from '../components/custom/ScreenHeader';
-import DndIcon from '../components/custom/DndIcon';
-import { s } from '../utils/style-helpers';
-import type { IconName } from '../components/custom/DndIcon';
+import { useTokens } from '../../components/ui/prism-provider';
+import Screen from '../../components/custom/Screen';
+import ScreenHeader from '../../components/custom/ScreenHeader';
+import DndIcon from '../../components/custom/DndIcon';
+import { s } from '../../utils/style-helpers';
+import type { IconName } from '../../components/custom/DndIcon';
 
 interface CompendioSection {
   key: string;

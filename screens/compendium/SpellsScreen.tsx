@@ -2,10 +2,10 @@ import { useMemo, useState, useCallback, useRef } from 'react';
 import { View, FlatList, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTokens } from '../components/ui/prism-provider';
-import ScreenHeader from '../components/custom/ScreenHeader';
-import { s } from '../utils/style-helpers';
-import spellsData from '../assets/data/spells.json';
+import { useTokens } from '../../components/ui/prism-provider';
+import ScreenHeader from '../../components/custom/ScreenHeader';
+import { s } from '../../utils/style-helpers';
+import spellsData from '../../assets/data/spells.json';
 
 import {
   SpellCard,
@@ -16,7 +16,7 @@ import {
   SCHOOL_COLORS,
   getSchoolColor,
   getLevelCounts,
-} from '../components/custom/Spells';
+} from '../../components/custom/Spells';
 
 export default function SpellsScreen() {
   const t = useTokens();

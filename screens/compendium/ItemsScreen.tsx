@@ -2,16 +2,16 @@ import { useMemo, useState, useCallback, useRef } from 'react';
 import { View, FlatList, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTokens } from '../components/ui/prism-provider';
-import ScreenHeader from '../components/custom/ScreenHeader';
-import { s } from '../utils/style-helpers';
-import itemsData from '../assets/data/items.json';
-import type { ItemDefinition } from '../types';
+import { useTokens } from '../../components/ui/prism-provider';
+import ScreenHeader from '../../components/custom/ScreenHeader';
+import { s } from '../../utils/style-helpers';
+import itemsData from '../../assets/data/items.json';
+import type { ItemDefinition } from '../../types';
 import {
   ItemCard,
   ItemDetailModal,
   ItemFilters,
-} from '../components/custom/Items';
+} from '../../components/custom/Items';
 
 export default function ItemsScreen() {
   const t = useTokens();

@@ -1,9 +1,9 @@
 import { ScrollView, View, Alert } from 'react-native';
-import { useScreenStyles } from '../utils/styles';
-import { Button } from '../components/ui/button';
-import ScreenHeader from '../components/custom/ScreenHeader';
-import BackButton from '../components/custom/BackButton';
-import ThemePicker from '../components/custom/ThemePicker';
+import { useScreenStyles } from '../../utils/styles';
+import { Button } from '../../components/ui/button';
+import ScreenHeader from '../../components/custom/ScreenHeader';
+import BackButton from '../../components/custom/BackButton';
+import ThemePicker from '../../components/custom/ThemePicker';
 
 type Props = {
   onBack?: () => void;

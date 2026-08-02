@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
-import { useTokens } from '../components/ui/prism-provider';
-import { s } from '../utils/style-helpers';
+import { useTokens } from '../../components/ui/prism-provider';
+import { s } from '../../utils/style-helpers';
 
 export default function SpellAssignmentScreen({ characterId, onBack }: { characterId: string; onBack: () => void }) {
   const t = useTokens();

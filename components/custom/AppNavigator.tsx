@@ -11,6 +11,7 @@ import { ROUTES } from '../../lib/routes';
 import { NAVIGATION_TABS, type NavigationTab } from './navigation/tab-config';
 import CentralDiceButton from './navigation/CentralDiceButton';
 import DicePanel from './navigation/DicePanel';
+import { useActiveCharacter } from '../../store/useActiveCharacter';
 
 /** Converte un colore esadecimale (#HEX) in rgba con opacità */
 function hexToRgba(hex: string, alpha: number): string {
@@ -41,6 +42,7 @@ function EmptyScreen() {
 export default function AppNavigator() {
   const t = useTokens();
   const insets = useSafeAreaInsets();
+  const { activeChar } = useActiveCharacter();
   const isDark = isThemeDark(t.colors.background);
   const [isDiceOpen, setIsDiceOpen] = useState(false);
   const navigation = useNavigation();
@@ -63,6 +65,18 @@ export default function AppNavigator() {
   const isTabBarHidden = isHome || NAVIGATION_TABS.some(
     (t) => t.routeName === currentRoute && t.hideTabBar
   );
+
+  // Tab con bottone visibile nella tab bar in base al PG attivo
+  const hasTabButton = (tab: NavigationTab) => {
+    if (tab.hideTabButton) return false;
+    if (!tab.show || tab.show === 'always') return true;
+    if (tab.show === 'noCharacter' && !activeChar) return true;
+    if (tab.show === 'withCharacter' && activeChar) return true;
+    return false;
+  };
+
+  const visibleTabs = NAVIGATION_TABS.filter(hasTabButton);
+  const hiddenTabs = NAVIGATION_TABS.filter((t) => !hasTabButton(t));
 
   // Controller animazione dado
   const animController = useRef(new Animated.Value(0)).current;
@@ -103,9 +117,6 @@ export default function AppNavigator() {
   const navbarBg = hexToRgba(t.colors.card, 0.97);
   const navbarBorder = hexToRgba(t.colors.cardBorder, 0.8);
   const pillRadius = t.radius.xl || 24;
-
-  const visibleTabs = NAVIGATION_TABS.filter((t) => !t.hideTabButton);
-  const hiddenTabs = NAVIGATION_TABS.filter((t) => t.hideTabButton);
 
   const splitIndex = Math.ceil(visibleTabs.length / 2);
   const firstHalfTabs = visibleTabs.slice(0, splitIndex);
@@ -171,7 +182,7 @@ export default function AppNavigator() {
           },
         })}
       >
-        {/* Tab nascoste PRIMA (Home è l'initialRoute) */}
+        {/* Tab nascoste (sempre registrate, senza bottone) */}
         {hiddenTabs.map((tab) => (
           <Tab.Screen
             key={tab.routeName}

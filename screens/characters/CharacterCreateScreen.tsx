@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useTokens } from '../components/ui/prism-provider';
-import { Card } from '../components/ui/card';
-import Screen from '../components/custom/Screen';
-import ScreenHeader from '../components/custom/ScreenHeader';
-import BackButton from '../components/custom/BackButton';
-import { s } from '../utils/style-helpers';
-import { ROUTES } from '../lib/routes';
-import { useCharacterStore } from '../store/useCharacterStore';
-import type { ClassName } from '../types';
+import { useTokens } from '../../components/ui/prism-provider';
+import { Card } from '../../components/ui/card';
+import Screen from '../../components/custom/Screen';
+import ScreenHeader from '../../components/custom/ScreenHeader';
+import BackButton from '../../components/custom/BackButton';
+import { s } from '../../utils/style-helpers';
+import { ROUTES } from '../../lib/routes';
+import { useCharacterStore } from '../../store/useCharacterStore';
+import type { ClassName } from '../../types';
 
 const CLASSES: { key: ClassName; label: string; icon: string; desc: string }[] = [
   { key: 'barbarian', label: 'Barbaro', icon: '🪓', desc: 'Ira primordiale' },

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { useTokens } from '../components/ui/prism-provider';
-import { s } from '../utils/style-helpers';
-import Screen from '../components/custom/Screen';
-import ScreenHeader from '../components/custom/ScreenHeader';
-import DndIcon from '../components/custom/DndIcon';
+import { useTokens } from '../../components/ui/prism-provider';
+import { s } from '../../utils/style-helpers';
+import Screen from '../../components/custom/Screen';
+import ScreenHeader from '../../components/custom/ScreenHeader';
+import DndIcon from '../../components/custom/DndIcon';
 import SettingsScreen from './SettingsScreen';
 
 type SectionKey = 'impostazioni';
