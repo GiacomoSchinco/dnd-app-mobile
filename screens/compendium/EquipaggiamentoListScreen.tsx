@@ -1,12 +1,15 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { AltroStackParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
-import { Card } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import CompendiumList, {
   CompendiumSectionTitle,
   CompendiumRow,
 } from '../../components/custom/Compendium/CompendiumList';
+import DetailBlock from '../../components/custom/Compendium/DetailBlock';
+import ListItem from '../../components/custom/ListItem';
 import { EQUIPMENT_PRESETS_DATA } from '../../lib/rules/equipment-preset';
 import type { EquipmentPresetDefinition } from '../../lib/rules/equipment-preset';
 import { getClassById } from '../../lib/rules/classes';
@@ -24,7 +27,7 @@ function presetTargetName(p: EquipmentPresetDefinition): string {
 
 export default function EquipaggiamentoListScreen() {
   const t = useTokens();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<AltroStackParamList>>();
 
   return (
     <CompendiumList<EquipmentPresetDefinition>
@@ -36,27 +39,19 @@ export default function EquipaggiamentoListScreen() {
       searchPlaceholder="Cerca equipaggiamento..."
       filterBy={(p, q) => presetTargetName(p).toLowerCase().includes(q) || p.description.toLowerCase().includes(q)}
       renderCard={(p, onPress) => (
-        <Pressable onPress={onPress}>
-          <Card variant="elevated" style={{ marginBottom: t.spacing[3] }}>
-            <View style={s.row}>
-              <View style={[s.box(52, t.radius.md), { backgroundColor: t.colors.accent + '18', marginRight: t.spacing[3] }]}>
-                <Text style={{ fontSize: 22 }}>🎒</Text>
-              </View>
-              <View style={s.flex}>
-                <Text style={{ fontSize: t.typography.md, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-                  {presetTargetName(p)}
-                </Text>
-                <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>
-                  <Badge variant="solid" size="sm" color={t.colors.accent}>
-                    {p.type === 'class' ? 'Classe' : 'Background'}
-                  </Badge>
-                  <Badge variant="subtle" size="sm">{p.startingGold} mo</Badge>
-                </View>
-              </View>
-              <Text style={{ color: t.colors.foregroundTertiary, fontSize: 20 }}>›</Text>
-            </View>
-          </Card>
-        </Pressable>
+        <ListItem
+          title={presetTargetName(p)}
+          onPress={onPress}
+          icon={<Text style={{ fontSize: 22 }}>🎒</Text>}
+          badges={
+            <>
+              <Badge variant="solid" size="sm" color={t.colors.accent}>
+                {p.type === 'class' ? 'Classe' : 'Background'}
+              </Badge>
+              <Badge variant="subtle" size="sm">{p.startingGold} mo</Badge>
+            </>
+          }
+        />
       )}
       renderDetail={(p) => (
         <View>
@@ -71,14 +66,11 @@ export default function EquipaggiamentoListScreen() {
 
           <CompendiumSectionTitle>Oggetti ({p.items.length})</CompendiumSectionTitle>
           {p.items.map((it, i) => (
-            <View
-              key={i}
-              style={[s.mb(t.spacing[2]), { backgroundColor: t.colors.backgroundSecondary, borderRadius: t.radius.md, padding: t.spacing[3] }]}
-            >
+            <DetailBlock key={i}>
               <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
                 {it.quantity > 1 ? `${it.quantity}× ` : ''}{it.name}
               </Text>
-            </View>
+            </DetailBlock>
           ))}
         </View>
       )}

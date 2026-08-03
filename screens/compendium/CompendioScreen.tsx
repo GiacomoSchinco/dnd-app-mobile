@@ -1,10 +1,12 @@
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { AltroToTabNav, AltroStackParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import BackButton from '../../components/custom/BackButton';
 import DndIcon from '../../components/custom/DndIcon';
+import ListItem from '../../components/custom/ListItem';
 import { s } from '../../utils/style-helpers';
 import { ROUTES } from '../../lib/routes';
 import { ALTRO_ROUTES } from '../more/altro-routes';
@@ -37,7 +39,7 @@ const SECTIONS: CompendioSection[] = [
 ];
 
 // Mappa voce del menu → schermata dello stack Altro
-const SECTION_ROUTES: Record<string, string> = {
+const SECTION_ROUTES: Record<string, keyof AltroStackParamList> = {
   classi: ALTRO_ROUTES.CLASSI,
   razze: ALTRO_ROUTES.RAZZE,
   background: ALTRO_ROUTES.BACKGROUND,
@@ -58,7 +60,7 @@ const SECTION_COLORS: Record<string, string> = {
 
 export default function CompendioScreen() {
   const t = useTokens();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<AltroToTabNav>();
 
   const handlePress = (key: CompendioSectionKey) => {
     if (key === 'magie') {
@@ -93,34 +95,17 @@ export default function CompendioScreen() {
         {SECTIONS.map((section) => {
           const accentColor = SECTION_COLORS[section.key] || t.colors.accent;
           return (
-            <Pressable
+            <ListItem
               key={section.key}
+              variant="menu"
+              accent={accentColor}
+              iconBoxed
+              iconBg={accentColor + '20'}
+              title={section.label}
+              description={section.description}
+              icon={<DndIcon name={section.icon} size={26} color={accentColor} />}
               onPress={() => handlePress(section.key)}
-              style={({ pressed }) => ({
-                ...s.row,
-                gap: t.spacing[4],
-                padding: t.spacing[4],
-                backgroundColor: pressed ? t.colors.backgroundSecondary : 'transparent',
-                borderRadius: t.radius.lg,
-                borderWidth: 1,
-                borderColor: t.colors.backgroundSecondary,
-                borderLeftWidth: 4,
-                borderLeftColor: accentColor,
-              })}
-            >
-              <View style={[s.box(48, t.radius.md), { backgroundColor: accentColor + '20' }]}>
-                <DndIcon name={section.icon} size={26} color={accentColor} />
-              </View>
-              <View style={s.flex}>
-                <Text style={{ fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
-                  {section.label}
-                </Text>
-                <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: 2 }}>
-                  {section.description}
-                </Text>
-              </View>
-              <Text style={{ color: t.colors.foregroundSecondary, fontSize: 18 }}>›</Text>
-            </Pressable>
+            />
           );
         })}
       </ScrollView>

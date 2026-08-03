@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Card } from '../../components/ui/card';
 import Screen from '../../components/custom/Screen';
@@ -27,7 +29,7 @@ const CLASSES: { key: ClassName; label: string; icon: string; desc: string }[] =
 
 export default function CharacterCreateScreen() {
   const t = useTokens();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const createCharacter = useCharacterStore((st) => st.createCharacter);
 
   const [name, setName] = useState('');

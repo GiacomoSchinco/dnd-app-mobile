@@ -1,4 +1,5 @@
 import { View, Text } from 'react-native';
+import type { ReactNode } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
@@ -11,11 +12,13 @@ type Props = {
   backLabel?: string;
   center?: boolean;
   icon?: keyof typeof Ionicons.glyphMap;
+  /** Icona custom (es. DndIcon SVG): ha precedenza su `icon` */
+  iconNode?: ReactNode;
   iconColor?: string;
   iconSize?: number;
 };
 
-export default function ScreenHeader({ title, subtitle, onBack, backLabel, center = false, icon, iconColor, iconSize = 22 }: Props) {
+export default function ScreenHeader({ title, subtitle, onBack, backLabel, center = false, icon, iconNode, iconColor, iconSize = 22 }: Props) {
   const t = useTokens();
 
   return (
@@ -23,13 +26,14 @@ export default function ScreenHeader({ title, subtitle, onBack, backLabel, cente
       {onBack && <BackButton onPress={onBack} label={backLabel} />}
       
       <View style={[s.row, s.gap(t.spacing[2]), s.fullWidth, { marginBottom: subtitle ? t.spacing[1] : t.spacing[6], justifyContent: center ? 'center' : 'flex-start' }]}>
-        {icon && (
-          <Ionicons
-            name={icon}
-            size={iconSize}
-            color={iconColor ?? t.colors.accent}
-          />
-        )}
+        {iconNode ??
+          (icon && (
+            <Ionicons
+              name={icon}
+              size={iconSize}
+              color={iconColor ?? t.colors.accent}
+            />
+          ))}
         <Text
           style={{
             color: t.colors.foreground,

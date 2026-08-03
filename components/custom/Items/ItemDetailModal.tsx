@@ -7,29 +7,12 @@ import DndIcon from '../DndIcon';
 import type { ItemDefinition } from '../../../types';
 import { TYPE_LABELS, RARITY_LABELS, TYPE_COLORS, getTypeColor, getCategoryLabel, getTypeLabel } from './types';
 import BottomModal from '../BottomModal';
+import DetailChip from '../DetailChip';
 
 type Props = {
   item: ItemDefinition | null;
   onClose: () => void;
 };
-
-function DetailChip({ label, value, t, color }: { label: string; value: string; t: any; color?: string }) {
-  return (
-    <View style={{
-      backgroundColor: t.colors.backgroundSecondary,
-      borderRadius: t.radius.sm,
-      paddingHorizontal: t.spacing[2],
-      paddingVertical: t.spacing[1],
-    }}>
-      <Text style={{ fontSize: 10, color: t.colors.foregroundTertiary, fontWeight: '600', textTransform: 'uppercase' }}>
-        {label}
-      </Text>
-      <Text style={{ fontSize: t.typography.sm, color: color || t.colors.foreground, fontWeight: '500' }}>
-        {value}
-      </Text>
-    </View>
-  );
-}
 
 /** Formatta la CA delle armature ({ base, type } o numero) */
 function formatAc(ac: unknown): string {

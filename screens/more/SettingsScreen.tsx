@@ -1,5 +1,7 @@
 import { ScrollView, View, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { AltroStackParamList } from '../../types/navigation';
 import { useScreenStyles } from '../../utils/styles';
 import { Button } from '../../components/ui/button';
 import ScreenHeader from '../../components/custom/ScreenHeader';
@@ -8,7 +10,7 @@ import ThemePicker from '../../components/custom/ThemePicker';
 
 export default function SettingsScreen() {
   const s = useScreenStyles();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<AltroStackParamList>>();
 
   return (
     <ScrollView style={s.screen} contentContainerStyle={[s.scrollContent, { flexGrow: 1 }]}>

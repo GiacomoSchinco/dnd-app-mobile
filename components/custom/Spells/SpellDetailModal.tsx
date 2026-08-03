@@ -7,6 +7,7 @@ import type { Spell, ClassName, Character } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
 import DndIcon from '../DndIcon';
 import BottomModal from '../BottomModal';
+import DetailChip from '../DetailChip';
 
 type Props = {
   spell: Spell | null;
@@ -15,24 +16,6 @@ type Props = {
   onToggleFavorite: () => void;
   onTogglePrepared: () => void;
 };
-
-function DetailChip({ label, value, t, color }: { label: string; value: string; t: any; color?: string }) {
-  return (
-    <View style={{
-      backgroundColor: t.colors.backgroundSecondary,
-      borderRadius: t.radius.sm,
-      paddingHorizontal: t.spacing[2],
-      paddingVertical: t.spacing[1],
-    }}>
-      <Text style={{ fontSize: 10, color: t.colors.foregroundTertiary, fontWeight: '600', textTransform: 'uppercase' }}>
-        {label}
-      </Text>
-      <Text style={{ fontSize: t.typography.sm, color: color || t.colors.foreground, fontWeight: '500' }}>
-        {value}
-      </Text>
-    </View>
-  );
-}
 
 export default function SpellDetailModal({
   spell,

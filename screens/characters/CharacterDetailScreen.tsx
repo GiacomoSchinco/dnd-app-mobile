@@ -1,17 +1,18 @@
-import { View, Text, Pressable, Image } from 'react-native';
+import { useState } from 'react';
+import { View, Text, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type { TabParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Badge } from '../../components/ui/badge';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
+import ClassAvatar from '../../components/custom/ClassAvatar';
+import BottomModal from '../../components/custom/BottomModal';
+import { getClassNameItalian } from '../../lib/rules/classes';
+import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
-import { getClassToken } from '../../utils/class-tokens';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
-
-const CLASS_LABELS: Record<string, string> = {
-  barbarian: 'Barbaro', bard: 'Bardo', cleric: 'Chierico', druid: 'Druido',
-  fighter: 'Guerriero', monk: 'Monaco', paladin: 'Paladino', ranger: 'Ranger',
-  rogue: 'Ladro', sorcerer: 'Stregone', warlock: 'Warlock', wizard: 'Mago',
-};
 
 const SECTIONS = [
   { key: 'stats', icon: '💪', label: 'Caratteristiche', desc: 'FOR, DES, COS, INT, SAG, CAR' },
@@ -21,9 +22,29 @@ const SECTIONS = [
   { key: 'note', icon: '📝', label: 'Note', desc: 'Appunti e storia del personaggio' },
 ];
 
+const ABILITY_ROWS = [
+  { key: 'strength', label: 'Forza', abbr: 'FOR' },
+  { key: 'dexterity', label: 'Destrezza', abbr: 'DES' },
+  { key: 'constitution', label: 'Costituzione', abbr: 'COS' },
+  { key: 'intelligence', label: 'Intelligenza', abbr: 'INT' },
+  { key: 'wisdom', label: 'Saggezza', abbr: 'SAG' },
+  { key: 'charisma', label: 'Carisma', abbr: 'CAR' },
+] as const;
+
 export default function CharacterDetailScreen() {
   const t = useTokens();
+  const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>();
   const { activeChar } = useActiveCharacter();
+  const [selectedSection, setSelectedSection] = useState<(typeof SECTIONS)[number] | null>(null);
+
+  const handleSection = (key: string) => {
+    if (key === 'magie') navigation.navigate(ROUTES.MAGIE);
+    else if (key === 'equip') navigation.navigate(ROUTES.OGGETTI);
+    else {
+      const sec = SECTIONS.find((x) => x.key === key);
+      if (sec) setSelectedSection(sec);
+    }
+  };
 
   if (!activeChar) {
     return (
@@ -39,8 +60,7 @@ export default function CharacterDetailScreen() {
   }
 
   const mainClass = activeChar.classes[0];
-  const classLabel = mainClass ? CLASS_LABELS[mainClass.className] || mainClass.className : '—';
-  const token = getClassToken(mainClass?.className);
+  const classLabel = mainClass ? getClassNameItalian(mainClass.className) : '—';
 
   return (
     <Screen>
@@ -55,20 +75,7 @@ export default function CharacterDetailScreen() {
         padding: t.spacing[5],
       }]}>
         <View style={s.row}>
-          <View style={{
-            width: 56,
-            height: 56,
-            borderRadius: 28,
-            backgroundColor: t.colors.accent + '18',
-            overflow: 'hidden',
-            marginRight: t.spacing[4],
-          }}>
-            {token ? (
-              <Image source={token} style={{ width: 56, height: 56 }} resizeMode="cover" />
-            ) : (
-              <Text style={{ fontSize: 28 }}>🧙</Text>
-            )}
-          </View>
+          <ClassAvatar className={mainClass?.className} size={56} style={{ marginRight: t.spacing[4] }} />
           <View style={s.flex}>
             <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.bold, color: t.colors.foreground }}>
               {activeChar.name}
@@ -90,7 +97,7 @@ export default function CharacterDetailScreen() {
         {SECTIONS.map((section) => (
           <Pressable
             key={section.key}
-            onPress={() => {}}
+            onPress={() => handleSection(section.key)}
             style={({ pressed }) => ({
               flexDirection: 'row',
               alignItems: 'center',
@@ -123,6 +130,43 @@ export default function CharacterDetailScreen() {
           </Pressable>
         ))}
       </View>
+
+      {selectedSection && (
+        <BottomModal visible={!!selectedSection} onClose={() => setSelectedSection(null)}>
+          <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>
+            {selectedSection.label}
+          </Text>
+
+          {selectedSection.key === 'stats' && (
+            <View style={[s.mt(t.spacing[3]), s.gap(t.spacing[2])]}>
+              {ABILITY_ROWS.map((a) => (
+                <View key={a.key} style={[s.row, { justifyContent: 'space-between' }]}>
+                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+                    {a.label} ({a.abbr})
+                  </Text>
+                  <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+                    {activeChar.abilities[a.key] ?? 10}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+
+          {selectedSection.key === 'talenti' && (
+            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[3] }}>
+              {activeChar.feats && activeChar.feats.length > 0
+                ? activeChar.feats.join(', ')
+                : 'Nessun talento ancora.'}
+            </Text>
+          )}
+
+          {selectedSection.key === 'note' && (
+            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[3] }}>
+              {activeChar.background ? `Background: ${activeChar.background}` : 'Nessuna nota — sezione in arrivo.'}
+            </Text>
+          )}
+        </BottomModal>
+      )}
     </Screen>
   );
 }

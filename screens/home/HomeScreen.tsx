@@ -1,47 +1,27 @@
 import { View, Text, Pressable, FlatList, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { TabToRootNav } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Card } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import { ROUTES } from '../../lib/routes';
+import { getClassNameItalian } from '../../lib/rules/classes';
 import Screen from '../../components/custom/Screen';
+import ClassAvatar from '../../components/custom/ClassAvatar';
 import { s } from '../../utils/style-helpers';
-import { getClassToken } from '../../utils/class-tokens';
 import { useCharacterStore } from '../../store/useCharacterStore';
 import type { Character } from '../../types';
-
-const CLASS_LABELS: Record<string, string> = {
-  barbarian: 'Barbaro',
-  bard: 'Bardo',
-  cleric: 'Chierico',
-  druid: 'Druido',
-  fighter: 'Guerriero',
-  monk: 'Monaco',
-  paladin: 'Paladino',
-  ranger: 'Ranger',
-  rogue: 'Ladro',
-  sorcerer: 'Stregone',
-  warlock: 'Warlock',
-  wizard: 'Mago',
-};
 
 function CharacterCard({ character, onPress }: { character: Character; onPress: () => void }) {
   const t = useTokens();
   const mainClass = character.classes[0];
-  const classLabel = mainClass ? CLASS_LABELS[mainClass.className] || mainClass.className : '—';
-  const token = getClassToken(mainClass?.className);
+  const classLabel = mainClass ? getClassNameItalian(mainClass.className) : '—';
 
   return (
     <Pressable onPress={onPress}>
       <Card variant="elevated" style={{ marginBottom: t.spacing[3] }}>
         <View style={s.row}>
-          <View style={[s.box(52, 26), { backgroundColor: t.colors.accent + '18', marginRight: t.spacing[3], overflow: 'hidden' }]}>
-            {token ? (
-              <Image source={token} style={{ width: 52, height: 52 }} resizeMode="cover" />
-            ) : (
-              <Text style={{ fontSize: 26 }}>🧙</Text>
-            )}
-          </View>
+          <ClassAvatar className={mainClass?.className} size={52} style={{ marginRight: t.spacing[3] }} />
           <View style={s.flex}>
             <Text style={{ fontSize: t.typography.md, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
               {character.name}
@@ -66,7 +46,7 @@ function CharacterCard({ character, onPress }: { character: Character; onPress: 
 
 export default function HomeScreen() {
   const t = useTokens();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<TabToRootNav>();
   const characters = useCharacterStore((st) => st.characters);
   const setActiveCharacterId = useCharacterStore((st) => st.setActiveCharacterId);
 

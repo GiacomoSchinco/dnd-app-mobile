@@ -1,16 +1,18 @@
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
-import { View, Text, TextInput, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../ui/prism-provider';
+import { Input } from '../../ui/input';
 import ScreenHeader from '../ScreenHeader';
 import BackButton from '../BackButton';
 import BottomModal from '../BottomModal';
+import DndIcon, { type IconName } from '../DndIcon';
 import { s } from '../../../utils/style-helpers';
 
 type Props<T> = {
   title: string;
-  icon: string;
+  icon: IconName;
   onBack: () => void;
   items: T[];
   keyExtractor: (item: T) => string;
@@ -56,23 +58,15 @@ export default function CompendiumList<T>({
         }}
       >
         <BackButton onPress={onBack} label="Torna al Compendio" />
-        <ScreenHeader title={title} icon={icon} />
+        <ScreenHeader
+          title={title}
+          iconNode={<DndIcon name={icon} size={22} color={t.colors.accent} />}
+        />
         {searchPlaceholder && (
-          <TextInput
+          <Input
             value={query}
             onChangeText={setQuery}
             placeholder={searchPlaceholder}
-            placeholderTextColor={t.colors.placeholder}
-            style={{
-              backgroundColor: t.colors.input,
-              borderWidth: 1,
-              borderColor: t.colors.inputBorder,
-              borderRadius: t.radius.md,
-              paddingHorizontal: t.spacing[3],
-              paddingVertical: t.spacing[2],
-              fontSize: t.typography.sm,
-              color: t.colors.foreground,
-            }}
           />
         )}
       </View>

@@ -79,6 +79,7 @@ export default function ItemsScreen() {
     <View style={[s.flex, { backgroundColor: t.colors.background }]}>
       {/* Header fisso con safe area */}
       <View style={{ paddingTop: insets.top + t.spacing[4], paddingHorizontal: t.spacing[4], paddingBottom: t.spacing[2] }}>
+        {onBack && <BackButton onPress={onBack} label="Torna al Compendio" />}
         <ScreenHeader title="Oggetti" icon="cube-outline" />
         <ItemFilters
           search={search}

@@ -1,12 +1,14 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { AltroStackParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
-import { Card } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import CompendiumList, {
   CompendiumSectionTitle,
   CompendiumRow,
 } from '../../components/custom/Compendium/CompendiumList';
+import ListItem from '../../components/custom/ListItem';
 import { getAllFeats } from '../../lib/rules/feats';
 import type { FeatRaw } from '../../types';
 import { s } from '../../utils/style-helpers';
@@ -27,7 +29,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export default function TalentiListScreen() {
   const t = useTokens();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<AltroStackParamList>>();
   const feats = getAllFeats();
 
   return (
@@ -40,27 +42,20 @@ export default function TalentiListScreen() {
       searchPlaceholder="Cerca talento..."
       filterBy={(f, q) => f.name.toLowerCase().includes(q) || (f.name_en || '').toLowerCase().includes(q)}
       renderCard={(f, onPress) => (
-        <Pressable onPress={onPress}>
-          <Card variant="elevated" style={{ marginBottom: t.spacing[3] }}>
-            <View style={s.row}>
-              <View style={[s.box(52, t.radius.md), { backgroundColor: (CATEGORY_COLORS[f.category] || t.colors.accent) + '18', marginRight: t.spacing[3] }]}>
-                <Text style={{ fontSize: 22 }}>⭐</Text>
-              </View>
-              <View style={s.flex}>
-                <Text style={{ fontSize: t.typography.md, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-                  {f.name}
-                </Text>
-                <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>
-                  <Badge variant="solid" size="sm" color={CATEGORY_COLORS[f.category] || t.colors.accent}>
-                    {CATEGORY_LABELS[f.category] || f.category}
-                  </Badge>
-                  {f.level_requirement > 0 && <Badge variant="subtle" size="sm">Liv. {f.level_requirement}+</Badge>}
-                </View>
-              </View>
-              <Text style={{ color: t.colors.foregroundTertiary, fontSize: 20 }}>›</Text>
-            </View>
-          </Card>
-        </Pressable>
+        <ListItem
+          title={f.name}
+          onPress={onPress}
+          iconBg={(CATEGORY_COLORS[f.category] || t.colors.accent) + '18'}
+          icon={<Text style={{ fontSize: 22 }}>⭐</Text>}
+          badges={
+            <>
+              <Badge variant="solid" size="sm" color={CATEGORY_COLORS[f.category] || t.colors.accent}>
+                {CATEGORY_LABELS[f.category] || f.category}
+              </Badge>
+              {f.level_requirement > 0 && <Badge variant="subtle" size="sm">Liv. {f.level_requirement}+</Badge>}
+            </>
+          }
+        />
       )}
       renderDetail={(f) => (
         <View>
