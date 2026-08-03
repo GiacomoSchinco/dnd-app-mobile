@@ -1,13 +1,15 @@
-import { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { useCallback, useState } from 'react';
+import { View, Text, Pressable, BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTokens } from '../../components/ui/prism-provider';
 import { s } from '../../utils/style-helpers';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import DndIcon from '../../components/custom/DndIcon';
 import SettingsScreen from './SettingsScreen';
+import CompendioScreen from '../compendium/CompendioScreen';
 
-type SectionKey = 'impostazioni';
+type SectionKey = 'impostazioni' | 'compendio';
 
 interface AltroItem {
   key: SectionKey;
@@ -17,12 +19,38 @@ interface AltroItem {
 }
 
 const ITEMS: AltroItem[] = [
-  { key: 'impostazioni', label: '⚙️ Impostazioni', icon: 'divination', description: 'Temi, info app' },
+  { key: 'impostazioni', label: 'Impostazioni', icon: 'divination', description: 'Temi, info app' },
+  { key: 'compendio', label: 'Compendio', icon: 'd12', description: 'Regole, classi, magie e altro' },
 ];
 
 export default function MoreScreen() {
   const t = useTokens();
   const [activeSection, setActiveSection] = useState<SectionKey | null>(null);
+
+  // Riaprendo la tab "Altro" si torna sempre al menu (lo stato interno non persiste)
+  useFocusEffect(
+    useCallback(() => {
+      setActiveSection(null);
+    }, []),
+  );
+
+  // Con una sezione interna aperta, il back del telefono torna al menu di "Altro"
+  useFocusEffect(
+    useCallback(() => {
+      if (!activeSection) return;
+      const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+        setActiveSection(null);
+        return true;
+      });
+      return () => sub.remove();
+    }, [activeSection]),
+  );
+
+  if (activeSection === 'compendio') {
+    return (
+      <CompendioScreen onBack={() => setActiveSection(null)} />
+    );
+  }
 
   if (activeSection === 'impostazioni') {
     return (

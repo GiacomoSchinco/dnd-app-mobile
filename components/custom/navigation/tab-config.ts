@@ -3,7 +3,6 @@ import { ROUTES } from '../../../lib/routes';
 
 // Schermate
 import HomeScreen from '../../../screens/home/HomeScreen';
-import CharactersScreen from '../../../screens/characters/CharactersScreen';
 import CompendioScreen from '../../../screens/compendium/CompendioScreen';
 import ItemsScreen from '../../../screens/compendium/ItemsScreen';
 import SpellsScreen from '../../../screens/compendium/SpellsScreen';
@@ -44,7 +43,7 @@ export const NAVIGATION_TABS: NavigationTab[] = [
     component: HomeScreen,
     iconActive: 'home',
     iconInactive: 'home-outline',
-    hideTabBar: true,
+    hideTabBar: false,
     hideTabButton: true,
   },
 
@@ -89,15 +88,6 @@ export const NAVIGATION_TABS: NavigationTab[] = [
   },
 
   // ── SCHERMATE NASCOSTE ──
-  {
-    routeName: ROUTES.PERSONAGGI,
-    label: 'Personaggi',
-    component: CharactersScreen,
-    iconActive: 'people',
-    iconInactive: 'people-outline',
-    hideTabBar: true,
-    hideTabButton: true,
-  },
   {
     routeName: ROUTES.COMPENDIO,
     label: 'Compendio',

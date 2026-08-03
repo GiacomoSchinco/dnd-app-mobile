@@ -723,8 +723,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore pronuncia una sequenza di insulti mescolati a impercettibili ammaliamenti contro una creatura entro gittata che è in grado di vedere o di sentire. Il bersaglio deve superare un tiro salvezza su Saggezza, altrimenti subisce 1d6 danni psichici e svantaggio al tiro per colpire successivo che effettua prima della fine del suo turno successivo.\n\nTrucchetto potenziato. I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore pronuncia una sequenza di insulti mescolati a impercettibili ammaliamenti contro una creatura entro gittata che è in grado di vedere o di sentire. Il bersaglio deve superare un tiro salvezza su Saggezza, altrimenti subisce 1d6 danni psichici e svantaggio al tiro per colpire successivo che effettua prima della fine del suo turno successivo.",
+    "upgrade": "I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6)."
   },
   {
     "name": "Benedizione",
@@ -1361,8 +1361,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Guidato da un lampo di intuizione magica, l'incantatore effettua un attacco con l'arma utilizzata per lanciare l'incantesimo. Per determinare il tiro per colpire e il tiro per i danni, l'incantatore utilizza la sua caratteristica da incantatore invece che la Forza o la Destrezza. Se l'attacco infligge danni, possono essere danni radiosi o danni normali inflitti dall'arma (a scelta dell'incantatore).\n\nTrucchetto potenziato. A prescindere dal tipo di danni che l'incantatore sceglie (danni radiosi o danni normali dell'arma), l'attacco infligge danni radiosi extra quando l'incantatore raggiunge il 5° livello (1d6), l'11° livello (2d6) e il 17° livello (3d6).",
-    "upgrade": "nessuno"
+    "description": "Guidato da un lampo di intuizione magica, l'incantatore effettua un attacco con l'arma utilizzata per lanciare l'incantesimo. Per determinare il tiro per colpire e il tiro per i danni, l'incantatore utilizza la sua caratteristica da incantatore invece che la Forza o la Destrezza. Se l'attacco infligge danni, possono essere danni radiosi o danni normali inflitti dall'arma (a scelta dell'incantatore).",
+    "upgrade": "A prescindere dal tipo di danni che l'incantatore sceglie (danni radiosi o danni normali dell'arma), l'attacco infligge danni radiosi extra quando l'incantatore raggiunge il 5° livello (1d6), l'11° livello (2d6) e il 17° livello (3d6)."
   },
   {
     "name": "Colpo Infuocato",
@@ -2044,8 +2044,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore scaglia una scintilla di fuoco verso una creatura o un oggetto situato entro gittata, effettuando un attacco a distanza con incantesimo contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d10 danni da fuoco. Un oggetto infiammabile colpito da questo incantesimo prende fuoco se non indossato o trasportato in quel momento.\n\nTrucchetto potenziato. I danni aumentano di 1d10 quando l'incantatore raggiunge il 5° livello (2d10), l'11° livello (3d10) e il 17° livello (4d10).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore scaglia una scintilla di fuoco verso una creatura o un oggetto situato entro gittata, effettuando un attacco a distanza con incantesimo contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d10 danni da fuoco. Un oggetto infiammabile colpito da questo incantesimo prende fuoco se non indossato o trasportato in quel momento.",
+    "upgrade": "I danni aumentano di 1d10 quando l'incantatore raggiunge il 5° livello (2d10), l'11° livello (3d10) e il 17° livello (4d10)."
   },
   {
     "name": "Dardo Incantato",
@@ -2132,8 +2132,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore scaglia un raggio di energia crepitante, effettuando un attacco a distanza con incantesimo contro una creatura o un oggetto entro gittata. Se il colpo va a segno, il bersaglio subisce 1d10 danni da forza.\n\nTrucchetto potenziato. L'incantesimo crea due raggi al 5° livello, tre raggi all'11° livello e quattro raggi al 17° livello. L'incantatore può indirizzare i raggi contro lo stesso bersaglio o contro bersagli differenti, effettuando un tiro per colpire separato per ogni raggio.",
-    "upgrade": "nessuno"
+    "description": "L'incantatore scaglia un raggio di energia crepitante, effettuando un attacco a distanza con incantesimo contro una creatura o un oggetto entro gittata. Se il colpo va a segno, il bersaglio subisce 1d10 danni da forza.",
+    "upgrade": "L'incantesimo crea due raggi al 5° livello, tre raggi all'11° livello e quattro raggi al 17° livello. L'incantatore può indirizzare i raggi contro lo stesso bersaglio o contro bersagli differenti, effettuando un tiro per colpire separato per ogni raggio."
   },
   {
     "name": "Desiderio",
@@ -2962,8 +2962,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Un bagliore simile a una fiamma discende su una creatura entro gittata che l'incantatore è in grado di vedere. Il bersaglio deve superare un tiro salvezza su Destrezza, altrimenti subisce 1d8 danni radiosi. Per questo tiro salvezza, il bersaglio non trae beneficio dalla mezza copertura o dai tre quarti di copertura.\n\nTrucchetto potenziato. I danni aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8).",
-    "upgrade": "nessuno"
+    "description": "Un bagliore simile a una fiamma discende su una creatura entro gittata che l'incantatore è in grado di vedere. Il bersaglio deve superare un tiro salvezza su Destrezza, altrimenti subisce 1d8 danni radiosi. Per questo tiro salvezza, il bersaglio non trae beneficio dalla mezza copertura o dai tre quarti di copertura.",
+    "upgrade": "I danni aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8)."
   },
   {
     "name": "Fiotto Acido",
@@ -2984,8 +2984,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore crea una bolla di acido in un punto entro gittata, dove la bolla esplode in una sfera del raggio di 1,5 metri. Ogni creatura all'interno della sfera deve superare un tiro salvezza su Destrezza, altrimenti subisce 1d6 danni da acido.\n\nTrucchetto potenziato. I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore crea una bolla di acido in un punto entro gittata, dove la bolla esplode in una sfera del raggio di 1,5 metri. Ogni creatura all'interno della sfera deve superare un tiro salvezza su Destrezza, altrimenti subisce 1d6 danni da acido.",
+    "upgrade": "I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6)."
   },
   {
     "name": "Folata di Vento",
@@ -3213,8 +3213,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore crea una frusta simile a un rampicante e coperta di spine che, al suo comando, sferza fino a una creatura entro gittata, effettuando un attacco in mischia con incantesimo contro il bersaglio. Se il colpo va a segno, quest'ultimo subisce 1d6 danni perforanti e, se è di taglia Grande o inferiore, l'incantatore può tirarlo più vicino a sé di 3 metri.\n\nTrucchetto potenziato. I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore crea una frusta simile a un rampicante e coperta di spine che, al suo comando, sferza fino a una creatura entro gittata, effettuando un attacco in mischia con incantesimo contro il bersaglio. Se il colpo va a segno, quest'ultimo subisce 1d6 danni perforanti e, se è di taglia Grande o inferiore, l'incantatore può tirarlo più vicino a sé di 3 metri.",
+    "upgrade": "I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6)."
   },
   {
     "name": "Fulmine",
@@ -4446,8 +4446,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore lancia un globo di luce contro una creatura o un oggetto entro gittata, effettuando un attacco a distanza con incantesimo contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d8 danni radiosi e, fino al termine del turno successivo dell'incantatore, emette luce fioca nel raggio di 3 metri e non può beneficiare della condizione di invisibilità.\n\nTrucchetto potenziato. I danni aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore lancia un globo di luce contro una creatura o un oggetto entro gittata, effettuando un attacco a distanza con incantesimo contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d8 danni radiosi e, fino al termine del turno successivo dell'incantatore, emette luce fioca nel raggio di 3 metri e non può beneficiare della condizione di invisibilità.",
+    "upgrade": "I danni aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8)."
   },
   {
     "name": "Luci Danzanti",
@@ -5466,8 +5466,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Dall'incantatore fuoriesce una radiosità bruciante in un'emanazione di 1,5 metri. Ogni creatura a sua scelta che è in grado di vedere deve superare un tiro salvezza su Costituzione, altrimenti subisce 1d6 danni radiosi.\n\nTrucchetto potenziato. I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6).",
-    "upgrade": "nessuno"
+    "description": "Dall'incantatore fuoriesce una radiosità bruciante in un'emanazione di 1,5 metri. Ogni creatura a sua scelta che è in grado di vedere deve superare un tiro salvezza su Costituzione, altrimenti subisce 1d6 danni radiosi.",
+    "upgrade": "I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6)."
   },
   {
     "name": "Passapareti",
@@ -5885,8 +5885,8 @@
     "duration": "10 minuti",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Una fiamma tremolante compare nella mano dell'incantatore e permane per la durata dell'incantesimo. La fiamma non emette calore e non può incendiare nulla; emana luce intensa in un raggio di 6 metri e luce fioca per ulteriori 6 metri. L'incantesimo termina se l'incantatore lo lancia di nuovo.\n\nFino al termine dell'incantesimo, l'incantatore può effettuare un'azione di Magia per scagliare la fiamma contro una creatura o un oggetto a 18 metri da lui, effettuando un attacco a distanza con incantesimo. Se il colpo va a segno, il bersaglio subisce 1d8 danni da fuoco.\n\nTrucchetto potenziato. I danni di questo incantesimo aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8).",
-    "upgrade": "nessuno"
+    "description": "Una fiamma tremolante compare nella mano dell'incantatore e permane per la durata dell'incantesimo. La fiamma non emette calore e non può incendiare nulla; emana luce intensa in un raggio di 6 metri e luce fioca per ulteriori 6 metri. L'incantesimo termina se l'incantatore lo lancia di nuovo.\n\nFino al termine dell'incantesimo, l'incantatore può effettuare un'azione di Magia per scagliare la fiamma contro una creatura o un oggetto a 18 metri da lui, effettuando un attacco a distanza con incantesimo. Se il colpo va a segno, il bersaglio subisce 1d8 danni da fuoco.",
+    "upgrade": "I danni di questo incantesimo aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8)."
   },
   {
     "name": "Proibizione",
@@ -6253,8 +6253,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Un raggio gelido di luce bianco-azzurra sfreccia verso una creatura entro gittata, contro cui l'incantatore effettua un attacco a distanza con incantesimo. Se il colpo va a segno, il bersaglio subisce 1d8 danni da freddo e la sua velocità è ridotta di 3 metri fino all'inizio del turno successivo dell'incantatore.\n\nTrucchetto potenziato. I danni aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8).",
-    "upgrade": "nessuno"
+    "description": "Un raggio gelido di luce bianco-azzurra sfreccia verso una creatura entro gittata, contro cui l'incantatore effettua un attacco a distanza con incantesimo. Se il colpo va a segno, il bersaglio subisce 1d8 danni da freddo e la sua velocità è ridotta di 3 metri fino all'inizio del turno successivo dell'incantatore.",
+    "upgrade": "I danni aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8)."
   },
   {
     "name": "Raggio di Infermità",
@@ -6364,8 +6364,8 @@
     "duration": "1 minuto",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Un randello o un bastone ferrato impugnato dall'incantatore è pervaso dal potere della natura. Per la durata dell'incantesimo, l'incantatore usa la propria caratteristica da incantatore anziché la Forza per i tiri per i danni e i tiri per colpire effettuati negli attacchi in mischia usando quell'arma: inoltre, i danni dell'arma sono calcolati con un d8. Se l'attacco infligge danni, possono essere danni da forza o danni normali inflitti dall'arma (a scelta dell'incantatore).\n\nL'incantesimo termina se l'incantatore lo lancia di nuovo o se lascia andare l'arma.\n\nTrucchetto potenziato. I danni sono calcolati con un dado diverso quando l'incantatore raggiunge il 5° livello (d10), l'11° livello (d12) e il 17° livello (2d6).",
-    "upgrade": "nessuno"
+    "description": "Un randello o un bastone ferrato impugnato dall'incantatore è pervaso dal potere della natura. Per la durata dell'incantesimo, l'incantatore usa la propria caratteristica da incantatore anziché la Forza per i tiri per i danni e i tiri per colpire effettuati negli attacchi in mischia usando quell'arma: inoltre, i danni dell'arma sono calcolati con un d8. Se l'attacco infligge danni, possono essere danni da forza o danni normali inflitti dall'arma (a scelta dell'incantatore).\n\nL'incantesimo termina se l'incantatore lo lancia di nuovo o se lascia andare l'arma.",
+    "upgrade": "I danni sono calcolati con un dado diverso quando l'incantatore raggiunge il 5° livello (d10), l'11° livello (d12) e il 17° livello (2d6)."
   },
   {
     "name": "Reggia Meravigliosa di Mordenkainen",
@@ -6830,8 +6830,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore prende di mira una creatura entro gittata che è in grado di vedere, dopodiché si sente il singolo lugubre rintocco di una campana entro 3 metri da essa. Il bersaglio deve superare un tiro salvezza su Saggezza, altrimenti subisce 1d8 danni necrotici. Invece, se al bersaglio mancano punti ferita, subisce 1d12 danni necrotici.\n\nTrucchetto potenziato. I danni dell'incantesimo aumentano di un dado quando l'incantatore raggiunge il 5° livello (2d8 o 2d12), l'11° livello (3d8 o 3d12) e il 17° livello (4d8 o 4d12).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore prende di mira una creatura entro gittata che è in grado di vedere, dopodiché si sente il singolo lugubre rintocco di una campana entro 3 metri da essa. Il bersaglio deve superare un tiro salvezza su Saggezza, altrimenti subisce 1d8 danni necrotici. Invece, se al bersaglio mancano punti ferita, subisce 1d12 danni necrotici.",
+    "upgrade": "I danni dell'incantesimo aumentano di un dado quando l'incantatore raggiunge il 5° livello (2d8 o 2d12), l'11° livello (3d8 o 3d12) e il 17° livello (4d8 o 4d12)."
   },
   {
     "name": "Riparare",
@@ -7048,8 +7048,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Ogni creatura entro un'emanazione del raggio di 1,5 metri, di cui l'incantatore è punto di origine, deve superare un tiro salvezza su Costituzione, altrimenti subisce 1d6 danni da tuono. Il rombo fragoroso dell'incantesimo è udibile fino a 30 metri di distanza.\n\nTrucchetto potenziato. I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6).",
-    "upgrade": "nessuno"
+    "description": "Ogni creatura entro un'emanazione del raggio di 1,5 metri, di cui l'incantatore è punto di origine, deve superare un tiro salvezza su Costituzione, altrimenti subisce 1d6 danni da tuono. Il rombo fragoroso dell'incantesimo è udibile fino a 30 metri di distanza.",
+    "upgrade": "I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6)."
   },
   {
     "name": "Saltare",
@@ -7095,8 +7095,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore sceglie una creatura entro gittata con 0 punti ferita ma che è ancora in vita, facendola diventare stabile.\n\nTrucchetto potenziato. La gittata raddoppia quando l'incantatore raggiunge il 5° livello (9 metri), l'11° livello (18 metri) e il 17° livello (36 metri).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore sceglie una creatura entro gittata con 0 punti ferita ma che è ancora in vita, facendola diventare stabile.",
+    "upgrade": "La gittata raddoppia quando l'incantatore raggiunge il 5° livello (9 metri), l'11° livello (18 metri) e il 17° livello (36 metri)."
   },
   {
     "name": "Santificare",
@@ -7228,8 +7228,8 @@
     "duration": "1 round",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore tenta di spezzare temporaneamente la mente di una creatura entro gittata che è in grado di vedere. La creatura deve superare un tiro salvezza su Intelligenza o subire 1d6 danni psichici e sottrarre 1d4 al tiro salvezza successivo che effettua prima del termine del turno successivo dell'incantatore.\n\nTrucchetto potenziato. I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore tenta di spezzare temporaneamente la mente di una creatura entro gittata che è in grado di vedere. La creatura deve superare un tiro salvezza su Intelligenza o subire 1d6 danni psichici e sottrarre 1d4 al tiro salvezza successivo che effettua prima del termine del turno successivo dell'incantatore.",
+    "upgrade": "I danni aumentano di 1d6 quando l'incantatore raggiunge il 5° livello (2d6), l'11° livello (3d6) e il 17° livello (4d6)."
   },
   {
     "name": "Sciame di Meteore",
@@ -8043,8 +8043,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore spruzza una nebbia tossica contro una creatura entro gittata, effettuando un attacco a distanza con incantesimo contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d12 danni da veleno.\n\nTrucchetto potenziato. I danni aumentano di 1d12 quando l'incantatore raggiunge il 5° livello (2d12), l'11° livello (3d12) e il 17° livello (4d12).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore spruzza una nebbia tossica contro una creatura entro gittata, effettuando un attacco a distanza con incantesimo contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d12 danni da veleno.",
+    "upgrade": "I danni aumentano di 1d12 quando l'incantatore raggiunge il 5° livello (2d12), l'11° livello (3d12) e il 17° livello (4d12)."
   },
   {
     "name": "Stregoneria Esplosiva",
@@ -8064,8 +8064,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "L'incantatore proietta energia stregonesca verso una creatura o un oggetto entro gittata, effettuando un tiro per colpire a distanza contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d8 danni di un tipo a scelta tra: acido, freddo, fuoco, fulmine, psichici, tuono o veleno.\n\nSe l'incantatore ottiene il risultato 8 su un d8, può tirare un altro d8 e aggiungere il risultato ai danni. Quando lancia l'incantesimo, l'incantatore può aggiungere ai danni dell'incantesimo un numero di d8 pari al suo modificatore di caratteristica da incantatore.\n\nTrucchetto potenziato. I danni di questo incantesimo aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8).",
-    "upgrade": "nessuno"
+    "description": "L'incantatore proietta energia stregonesca verso una creatura o un oggetto entro gittata, effettuando un tiro per colpire a distanza contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d8 danni di un tipo a scelta tra: acido, freddo, fuoco, fulmine, psichici, tuono o veleno.\n\nSe l'incantatore ottiene il risultato 8 su un d8, può tirare un altro d8 e aggiungere il risultato ai danni. Quando lancia l'incantesimo, l'incantatore può aggiungere ai danni dell'incantesimo un numero di d8 pari al suo modificatore di caratteristica da incantatore.",
+    "upgrade": "I danni di questo incantesimo aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8)."
   },
   {
     "name": "Stretta Folgorante",
@@ -8086,8 +8086,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Un fulmine si sprigiona dall'incantatore verso una creatura da lui toccata. Con questo incantesimo, l'incantatore effettua un attacco in mischia contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d8 danni da fulmine e non può effettuare attacchi di opportunità fino all'inizio del proprio turno successivo.\n\nTrucchetto potenziato. I danni aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8).",
-    "upgrade": "nessuno"
+    "description": "Un fulmine si sprigiona dall'incantatore verso una creatura da lui toccata. Con questo incantesimo, l'incantatore effettua un attacco in mischia contro il bersaglio. Se il colpo va a segno, il bersaglio subisce 1d8 danni da fulmine e non può effettuare attacchi di opportunità fino all'inizio del proprio turno successivo.",
+    "upgrade": "I danni aumentano di 1d8 quando l'incantatore raggiunge il 5° livello (2d8), l'11° livello (3d8) e il 17° livello (4d8)."
   },
   {
     "name": "Suggestione",
@@ -8471,8 +8471,8 @@
     "duration": "istantanea",
     "concentration": false,
     "source": "Manuale del Giocatore 2024",
-    "description": "Incanalando un flusso di gelo sepolcrale, l'incantatore effettua un attacco con incantesimo in mischia contro un bersaglio a portata. Se il colpo va a segno, il bersaglio subisce 1d10 danni necrotici e non può recuperare punti ferita fino al termine del turno successivo dell'incantatore.\n\nTrucchetto potenziato. I danni aumentano di 1d10 quando l'incantatore raggiunge il 5° livello (2d10), l'11° livello (3d10) e il 17° livello (4d10).",
-    "upgrade": "nessuno"
+    "description": "Incanalando un flusso di gelo sepolcrale, l'incantatore effettua un attacco con incantesimo in mischia contro un bersaglio a portata. Se il colpo va a segno, il bersaglio subisce 1d10 danni necrotici e non può recuperare punti ferita fino al termine del turno successivo dell'incantatore.",
+    "upgrade": "I danni aumentano di 1d10 quando l'incantatore raggiunge il 5° livello (2d10), l'11° livello (3d10) e il 17° livello (4d10)."
   },
   {
     "name": "Trama Ipnotica",

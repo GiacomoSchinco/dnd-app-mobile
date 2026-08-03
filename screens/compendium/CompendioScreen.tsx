@@ -2,6 +2,7 @@ import { View, Text, Pressable, ScrollView } from 'react-native';
 import { useTokens } from '../../components/ui/prism-provider';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
+import BackButton from '../../components/custom/BackButton';
 import DndIcon from '../../components/custom/DndIcon';
 import { s } from '../../utils/style-helpers';
 import type { IconName } from '../../components/custom/DndIcon';
@@ -35,11 +36,16 @@ const SECTION_COLORS: Record<string, string> = {
   equipaggiamento: '#F97316',
 };
 
-export default function CompendioScreen() {
+type Props = {
+  onBack?: () => void;
+};
+
+export default function CompendioScreen({ onBack }: Props) {
   const t = useTokens();
 
   return (
     <Screen>
+      {onBack && <BackButton onPress={onBack} label="Torna al menu" />}
       <ScreenHeader title="Compendio" icon="book-outline" />
       <Text style={{
         fontSize: t.typography.sm,

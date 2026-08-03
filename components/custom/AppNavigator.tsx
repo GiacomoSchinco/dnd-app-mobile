@@ -61,10 +61,11 @@ export default function AppNavigator() {
     return unsubscribe;
   }, [navigation]);
 
-  const isHome = currentRoute === ROUTES.HOME;
-  const isTabBarHidden = isHome || NAVIGATION_TABS.some(
+  const isTabBarHidden = NAVIGATION_TABS.some(
     (t) => t.routeName === currentRoute && t.hideTabBar
   );
+  // Il dado centrale non serve sulla Home (solo lista personaggi)
+  const isHome = currentRoute === ROUTES.HOME;
 
   // Tab con bottone visibile nella tab bar in base al PG attivo
   const hasTabButton = (tab: NavigationTab) => {
@@ -139,7 +140,7 @@ export default function AppNavigator() {
 
       <Tab.Navigator
         initialRouteName={ROUTES.HOME}
-        backBehavior="initialRoute"
+        backBehavior="history"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {
             const currentTab = NAVIGATION_TABS.find((tab) => tab.routeName === route.name);
@@ -213,7 +214,7 @@ export default function AppNavigator() {
       </Tab.Navigator>
 
       <DicePanel
-        isVisible={!isTabBarHidden && isDiceOpen}
+        isVisible={!isTabBarHidden && !isHome && isDiceOpen}
         translateY={dicePanelTranslateY}
         opacity={dicePanelOpacity}
         bottomMargin={bottomMargin}
@@ -222,7 +223,7 @@ export default function AppNavigator() {
         pillRadius={pillRadius}
       />
 
-      {!isTabBarHidden && (
+      {!isTabBarHidden && !isHome && (
         <View
           style={{
             position: 'absolute',

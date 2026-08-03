@@ -1,9 +1,10 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, Image } from 'react-native';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Badge } from '../../components/ui/badge';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import { s } from '../../utils/style-helpers';
+import { getClassToken } from '../../utils/class-tokens';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 
 const CLASS_LABELS: Record<string, string> = {
@@ -39,6 +40,7 @@ export default function CharacterDetailScreen() {
 
   const mainClass = activeChar.classes[0];
   const classLabel = mainClass ? CLASS_LABELS[mainClass.className] || mainClass.className : '—';
+  const token = getClassToken(mainClass?.className);
 
   return (
     <Screen>
@@ -56,12 +58,16 @@ export default function CharacterDetailScreen() {
           <View style={{
             width: 56,
             height: 56,
-            borderRadius: t.radius.md,
+            borderRadius: 28,
             backgroundColor: t.colors.accent + '18',
-            ...s.center,
+            overflow: 'hidden',
             marginRight: t.spacing[4],
           }}>
-            <Text style={{ fontSize: 28 }}>🧙</Text>
+            {token ? (
+              <Image source={token} style={{ width: 56, height: 56 }} resizeMode="cover" />
+            ) : (
+              <Text style={{ fontSize: 28 }}>🧙</Text>
+            )}
           </View>
           <View style={s.flex}>
             <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.bold, color: t.colors.foreground }}>

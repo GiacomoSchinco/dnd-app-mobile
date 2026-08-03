@@ -39,13 +39,13 @@ export default function CharacterCreateScreen() {
   const handleCreate = () => {
     if (!isValid) return;
     createCharacter(name.trim(), selectedClass!, 1);
-    navigation.navigate(ROUTES.PERSONAGGI);
+    navigation.navigate(ROUTES.HOME);
   };
 
   return (
     <Screen>
       <ScreenHeader title="Nuovo Personaggio" icon="person-add-outline" />
-      <BackButton onPress={() => navigation.navigate(ROUTES.PERSONAGGI)} />
+      <BackButton onPress={() => navigation.navigate(ROUTES.HOME)} />
 
       <ScrollView
         showsVerticalScrollIndicator={false}

@@ -10,13 +10,13 @@ import darkFantasyTheme from '../ui/themes/dark_fantasy';
 import lightFantasyTheme from '../ui/themes/light_fantasy';
 
 const themes = [
-  { key: 'default', theme: defaultTheme, label: 'Default', desc: 'Chiaro · stile Apple', emoji: '☀️' },
-  { key: 'obsidian', theme: obsidianTheme, label: 'Obsidian', desc: 'Scuro · viola epico', emoji: '🌑' },
-  { key: 'neon', theme: neonTheme, label: 'Neon', desc: 'Cyberpunk · verde glow', emoji: '💚' },
-  { key: 'stone', theme: stoneTheme, label: 'Stone', desc: 'Caldo · marrone naturale', emoji: '🪨' },
+  { key: 'default', theme: defaultTheme, label: 'Default', desc: 'Chiaro · stile Apple' },
+  //{ key: 'obsidian', theme: obsidianTheme, label: 'Obsidian', desc: 'Scuro · viola epico', emoji: '🌑' },
+  //{ key: 'neon', theme: neonTheme, label: 'Neon', desc: 'Cyberpunk · verde glow', emoji: '💚' },
+  //{ key: 'stone', theme: stoneTheme, label: 'Stone', desc: 'Caldo · marrone naturale', emoji: '🪨' },
   // Nuovi temi Fantasy aggiunti:
-  { key: 'dark_fantasy', theme: darkFantasyTheme, label: 'Dark Fantasy', desc: 'Antracite · oro araldico', emoji: '🐉' },
-  { key: 'light_fantasy', theme: lightFantasyTheme, label: 'Light Fantasy', desc: 'Pergamena · rosso cremisi', emoji: '📜' },
+  { key: 'dark_fantasy', theme: darkFantasyTheme, label: 'Dark Fantasy', desc: 'Antracite · oro araldico'},
+  { key: 'light_fantasy', theme: lightFantasyTheme, label: 'Light Fantasy', desc: 'Pergamena · rosso cremisi' },
 ];
 
 export default function ThemePicker() {
@@ -40,7 +40,6 @@ export default function ThemePicker() {
                 <Card.Body>
                   <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-                      <Text style={{ fontSize: 28 }}>{item.emoji}</Text>
                       <View style={{ flex: 1 }}>
                         <Text style={{ color: t.colors.foreground, fontSize: t.typography.base, fontWeight: t.typography.semibold }}>
                           {item.label}

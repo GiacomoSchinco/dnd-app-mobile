@@ -1,136 +1,172 @@
-import { View, Text, Pressable, Image } from 'react-native';
+import { View, Text, Pressable, FlatList, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTokens } from '../../components/ui/prism-provider';
+import { Card } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
 import { ROUTES } from '../../lib/routes';
 import Screen from '../../components/custom/Screen';
-import DndIcon from '../../components/custom/DndIcon';
 import { s } from '../../utils/style-helpers';
+import { getClassToken } from '../../utils/class-tokens';
+import { useCharacterStore } from '../../store/useCharacterStore';
+import type { Character } from '../../types';
+
+const CLASS_LABELS: Record<string, string> = {
+  barbarian: 'Barbaro',
+  bard: 'Bardo',
+  cleric: 'Chierico',
+  druid: 'Druido',
+  fighter: 'Guerriero',
+  monk: 'Monaco',
+  paladin: 'Paladino',
+  ranger: 'Ranger',
+  rogue: 'Ladro',
+  sorcerer: 'Stregone',
+  warlock: 'Warlock',
+  wizard: 'Mago',
+};
+
+function CharacterCard({ character, onPress }: { character: Character; onPress: () => void }) {
+  const t = useTokens();
+  const mainClass = character.classes[0];
+  const classLabel = mainClass ? CLASS_LABELS[mainClass.className] || mainClass.className : '—';
+  const token = getClassToken(mainClass?.className);
+
+  return (
+    <Pressable onPress={onPress}>
+      <Card variant="elevated" style={{ marginBottom: t.spacing[3] }}>
+        <View style={s.row}>
+          <View style={[s.box(52, 26), { backgroundColor: t.colors.accent + '18', marginRight: t.spacing[3], overflow: 'hidden' }]}>
+            {token ? (
+              <Image source={token} style={{ width: 52, height: 52 }} resizeMode="cover" />
+            ) : (
+              <Text style={{ fontSize: 26 }}>🧙</Text>
+            )}
+          </View>
+          <View style={s.flex}>
+            <Text style={{ fontSize: t.typography.md, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
+              {character.name}
+            </Text>
+            <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>
+              <Badge variant="solid" size="sm" color={t.colors.accent}>
+                {classLabel} {character.level}°
+              </Badge>
+              {character.race && (
+                <Badge variant="subtle" size="sm">
+                  {character.race}
+                </Badge>
+              )}
+            </View>
+          </View>
+          <Text style={{ color: t.colors.foregroundTertiary, fontSize: 20 }}>›</Text>
+        </View>
+      </Card>
+    </Pressable>
+  );
+}
 
 export default function HomeScreen() {
   const t = useTokens();
   const navigation = useNavigation<any>();
+  const characters = useCharacterStore((st) => st.characters);
+  const setActiveCharacterId = useCharacterStore((st) => st.setActiveCharacterId);
+
+  const handleCreate = () => {
+    navigation.navigate(ROUTES.CHARACTER_CREATE);
+  };
+
+  const handleCharacterPress = (character: Character) => {
+    setActiveCharacterId(character.id);
+    navigation.navigate(ROUTES.CHARACTER_DETAIL);
+  };
+
+  if (characters.length === 0) {
+    return (
+      <Screen scrollable={false}>
+        {/* Logo / Titolo */}
+        <View style={[s.fullWidth, { alignItems: 'center' }, s.mb(t.spacing[8])]}>
+          <View style={[s.box(72, 0), s.mb(t.spacing[3])]}>
+            <Image
+              source={require('../../assets/logo.png')}
+              style={{ width: 72, height: 72 }}
+              resizeMode="contain"
+            />
+          </View>
+          <Text style={{ fontSize: t.typography['2xl'], fontWeight: t.typography.heavy, color: t.colors.foreground, textAlign: 'center' }}>
+            DungeonCraft
+          </Text>
+          <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center', marginTop: t.spacing[1] }}>
+            Il tuo compagno di avventure D&D
+          </Text>
+        </View>
+
+        <View style={[s.flex, s.center, s.gap(t.spacing[6]), s.fullWidth]}>
+          <Text style={{ fontSize: 60 }}>👥</Text>
+          <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.semibold, color: t.colors.foreground, textAlign: 'center' }}>
+            Nessun personaggio
+          </Text>
+          <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center' }}>
+            Crea il tuo primo eroe per iniziare{'\n'}l'avventura!
+          </Text>
+          <Pressable
+            onPress={handleCreate}
+            style={({ pressed }) => ({
+              backgroundColor: pressed ? t.colors.accent + 'CC' : t.colors.accent,
+              paddingHorizontal: t.spacing[8],
+              paddingVertical: t.spacing[3],
+              borderRadius: t.radius.md,
+            })}
+          >
+            <Text style={{ color: t.colors.accentForeground, fontSize: t.typography.base, fontWeight: t.typography.semibold }}>
+              + Crea Personaggio
+            </Text>
+          </Pressable>
+        </View>
+      </Screen>
+    );
+  }
 
   return (
-    <Screen scrollable={false} center style={{ justifyContent: 'center' }}>
+    <Screen scrollable={false}>
       {/* Logo / Titolo */}
-      <View style={[{ alignItems: 'center' }, s.mb(t.spacing[12])]}>
-        <View style={[s.box(80, 0), s.mb(t.spacing[4])]}>
+      <View style={[s.fullWidth, { alignItems: 'center' }, s.mb(t.spacing[5])]}>
+        <View style={[s.box(56, 0), s.mb(t.spacing[2])]}>
           <Image
             source={require('../../assets/logo.png')}
-            style={{ width: 80, height: 80 }}
+            style={{ width: 56, height: 56 }}
             resizeMode="contain"
           />
         </View>
-        <Text style={{
-          fontSize: t.typography['3xl'],
-          fontWeight: t.typography.heavy,
-          color: t.colors.foreground,
-          textAlign: 'center',
-        }}>
+        <Text style={{ fontSize: t.typography.xl, fontWeight: t.typography.heavy, color: t.colors.foreground, textAlign: 'center' }}>
           DungeonCraft
         </Text>
-        <Text style={{
-          fontSize: t.typography.base,
-          color: t.colors.foregroundSecondary,
-          textAlign: 'center',
-          marginTop: t.spacing[1],
-        }}>
-          Il tuo compagno di avventure D&D
-        </Text>
       </View>
 
-      {/* Pulsanti grandi */}
-      <View style={[s.fullWidth, s.gap(t.spacing[4])]}>
+      <View style={[s.fullWidth, s.mb(t.spacing[3])]}>
         <Pressable
-          onPress={() => navigation.navigate(ROUTES.PERSONAGGI)}
+          onPress={handleCreate}
           style={({ pressed }) => ({
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: t.spacing[5],
-            backgroundColor: pressed ? t.colors.accent + '20' : t.colors.backgroundSecondary,
-            borderRadius: t.radius.lg,
-            borderWidth: 1,
-            borderColor: t.colors.border,
-          })}
-        >
-          <View style={{
-            width: 50,
-            height: 50,
+            backgroundColor: pressed ? t.colors.accent + 'CC' : t.colors.accent,
+            paddingVertical: t.spacing[2.5],
             borderRadius: t.radius.md,
-            backgroundColor: t.colors.accent + '18',
-            ...s.center,
-            marginRight: t.spacing[4],
-          }}>
-            <Text style={{ fontSize: 24 }}>👥</Text>
-          </View>
-          <View style={s.flex}>
-            <Text style={{ fontSize: t.typography.md, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-              Personaggi
-            </Text>
-            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[0.5] }}>
-              Crea e gestisci i tuoi eroi
-            </Text>
-          </View>
-          <Text style={{ color: t.colors.foregroundTertiary, fontSize: 22 }}>›</Text>
-        </Pressable>
-
-        <Pressable
-          onPress={() => navigation.navigate(ROUTES.COMPENDIO)}
-          style={({ pressed }) => ({
-            flexDirection: 'row',
             alignItems: 'center',
-            padding: t.spacing[5],
-            backgroundColor: pressed ? t.colors.accent + '20' : t.colors.backgroundSecondary,
-            borderRadius: t.radius.lg,
-            borderWidth: 1,
-            borderColor: t.colors.border,
           })}
         >
-          <View style={{
-            width: 50,
-            height: 50,
-            borderRadius: t.radius.md,
-            backgroundColor: t.colors.accent + '18',
-            ...s.center,
-            marginRight: t.spacing[4],
-          }}>
-            <Text style={{ fontSize: 24 }}>📖</Text>
-          </View>
-          <View style={s.flex}>
-            <Text style={{ fontSize: t.typography.md, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-              Compendio
-            </Text>
-            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[0.5] }}>
-              Consulta regole, classi, magie e altro
-            </Text>
-          </View>
-          <Text style={{ color: t.colors.foregroundTertiary, fontSize: 22 }}>›</Text>
-        </Pressable>
-      </View>
-
-      {/* Pulsante Impostazioni */}
-      <View style={[s.center, s.mt(t.spacing[10])]}>
-        <Pressable
-          onPress={() => navigation.navigate(ROUTES.IMPOSTAZIONI)}
-          style={({ pressed }) => ({
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingVertical: t.spacing[2],
-            paddingHorizontal: t.spacing[5],
-            opacity: pressed ? 0.6 : 1,
-          })}
-        >
-          <DndIcon name="gear" size={16} color={t.colors.foregroundTertiary} />
-          <Text style={{
-            fontSize: t.typography.sm,
-            color: t.colors.foregroundTertiary,
-            fontWeight: t.typography.medium,
-            marginLeft: 6,
-          }}>
-            Impostazioni
+          <Text style={{ color: t.colors.accentForeground, fontSize: t.typography.base, fontWeight: t.typography.semibold }}>
+            + Nuovo Personaggio
           </Text>
         </Pressable>
       </View>
+
+      <FlatList
+        data={characters}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <CharacterCard character={item} onPress={() => handleCharacterPress(item)} />
+        )}
+        style={[s.flex, s.fullWidth]}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: t.spacing[8] }}
+      />
     </Screen>
   );
 }
