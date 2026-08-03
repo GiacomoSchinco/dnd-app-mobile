@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Platform, Animated } from 'react-native';
+import React from 'react';
+import { View, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,9 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTokens } from '../ui/prism-provider';
 import { ROUTES } from '../../lib/routes';
 import { NAVIGATION_TABS, type NavigationTab } from './navigation/tab-config';
-import CentralDiceButton from './navigation/CentralDiceButton';
-import DicePanel from './navigation/DicePanel';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
+import { useDiceStore } from '../../store/useDiceStore';
 
 /** Converte un colore esadecimale (#HEX) in rgba con opacità */
 function hexToRgba(hex: string, alpha: number): string {
@@ -44,28 +42,7 @@ export default function AppNavigator() {
   const insets = useSafeAreaInsets();
   const { activeChar } = useActiveCharacter();
   const isDark = isThemeDark(t.colors.background);
-  const [isDiceOpen, setIsDiceOpen] = useState(false);
-  const navigation = useNavigation();
-  const [currentRoute, setCurrentRoute] = useState(
-    () => navigation.getState()?.routes?.[navigation.getState()?.index ?? 0]?.name ?? ROUTES.HOME
-  );
-
-  // Ascolta i cambiamenti di route per nascondere UI sulla Home
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('state', (e: any) => {
-      const state = e.data.state;
-      if (state?.routes?.[state.index]?.name) {
-        setCurrentRoute(state.routes[state.index].name);
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
-
-  const isTabBarHidden = NAVIGATION_TABS.some(
-    (t) => t.routeName === currentRoute && t.hideTabBar
-  );
-  // Il dado centrale non serve sulla Home (solo lista personaggi)
-  const isHome = currentRoute === ROUTES.HOME;
+  const { anim } = useDiceStore();
 
   // Tab con bottone visibile nella tab bar in base al PG attivo
   const hasTabButton = (tab: NavigationTab) => {
@@ -79,39 +56,10 @@ export default function AppNavigator() {
   const visibleTabs = NAVIGATION_TABS.filter(hasTabButton);
   const hiddenTabs = NAVIGATION_TABS.filter((t) => !hasTabButton(t));
 
-  // Controller animazione dado
-  const animController = useRef(new Animated.Value(0)).current;
-
-  const toggleDicePanel = () => {
-    if (isDiceOpen) {
-      Animated.timing(animController, {
-        toValue: 0,
-        duration: 250,
-        useNativeDriver: true,
-      }).start(() => setIsDiceOpen(false));
-    } else {
-      setIsDiceOpen(true);
-      Animated.timing(animController, {
-        toValue: 1,
-        duration: 250,
-        useNativeDriver: true,
-      }).start();
-    }
-  };
-
-  const tabBarTranslateY = animController.interpolate({
+  // La tab bar scivola in basso quando si apre il pannello dado (animazione condivisa via store)
+  const tabBarTranslateY = anim.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 120],
-  });
-
-  const dicePanelTranslateY = animController.interpolate({
-    inputRange: [0, 1],
-    outputRange: [40, 0],
-  });
-
-  const dicePanelOpacity = animController.interpolate({
-    inputRange: [0, 0.4, 1],
-    outputRange: [0, 0, 1],
   });
 
   const bottomMargin = insets.bottom > 0 ? insets.bottom : 16;
@@ -212,32 +160,6 @@ export default function AppNavigator() {
 
         {secondHalfTabs.map(renderTab)}
       </Tab.Navigator>
-
-      <DicePanel
-        isVisible={!isTabBarHidden && !isHome && isDiceOpen}
-        translateY={dicePanelTranslateY}
-        opacity={dicePanelOpacity}
-        bottomMargin={bottomMargin}
-        navbarBg={navbarBg}
-        navbarBorder={navbarBorder}
-        pillRadius={pillRadius}
-      />
-
-      {!isTabBarHidden && !isHome && (
-        <View
-          style={{
-            position: 'absolute',
-            bottom: bottomMargin - 24,
-            left: 0,
-            right: 0,
-            alignItems: 'center',
-            zIndex: 100,
-            pointerEvents: 'box-none',
-          }}
-        >
-          <CentralDiceButton onPress={toggleDicePanel} isExpanded={isDiceOpen} />
-        </View>
-      )}
     </View>
   );
 }

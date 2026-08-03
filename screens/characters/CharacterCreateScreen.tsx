@@ -7,7 +7,6 @@ import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import BackButton from '../../components/custom/BackButton';
 import { s } from '../../utils/style-helpers';
-import { ROUTES } from '../../lib/routes';
 import { useCharacterStore } from '../../store/useCharacterStore';
 import type { ClassName } from '../../types';
 
@@ -39,13 +38,13 @@ export default function CharacterCreateScreen() {
   const handleCreate = () => {
     if (!isValid) return;
     createCharacter(name.trim(), selectedClass!, 1);
-    navigation.navigate(ROUTES.HOME);
+    navigation.goBack();
   };
 
   return (
     <Screen>
       <ScreenHeader title="Nuovo Personaggio" icon="person-add-outline" />
-      <BackButton onPress={() => navigation.navigate(ROUTES.HOME)} />
+      <BackButton onPress={() => navigation.goBack()} />
 
       <ScrollView
         showsVerticalScrollIndicator={false}

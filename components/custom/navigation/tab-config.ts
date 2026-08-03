@@ -3,13 +3,10 @@ import { ROUTES } from '../../../lib/routes';
 
 // Schermate
 import HomeScreen from '../../../screens/home/HomeScreen';
-import CompendioScreen from '../../../screens/compendium/CompendioScreen';
 import ItemsScreen from '../../../screens/compendium/ItemsScreen';
 import SpellsScreen from '../../../screens/compendium/SpellsScreen';
-import MoreScreen from '../../../screens/more/MoreScreen';
-import SettingsScreen from '../../../screens/more/SettingsScreen';
+import AltroStack from '../../../screens/more/AltroStack';
 import CharacterDetailScreen from '../../../screens/characters/CharacterDetailScreen';
-import CharacterCreateScreen from '../../../screens/characters/CharacterCreateScreen';
 
 export type NavigationTab = {
   /** Nome della route a cui la tab fa riferimento (usa ROUTES.*) */
@@ -81,38 +78,9 @@ export const NAVIGATION_TABS: NavigationTab[] = [
   {
     routeName: ROUTES.ALTRO,
     label: 'Altro',
-    component: MoreScreen,
+    component: AltroStack,
     iconActive: 'ellipsis-horizontal',
     iconInactive: 'ellipsis-horizontal-outline',
     show: 'always',
-  },
-
-  // ── SCHERMATE NASCOSTE ──
-  {
-    routeName: ROUTES.COMPENDIO,
-    label: 'Compendio',
-    component: CompendioScreen,
-    iconActive: 'book',
-    iconInactive: 'book-outline',
-    hideTabBar: true,
-    hideTabButton: true,
-  },
-  {
-    routeName: ROUTES.IMPOSTAZIONI,
-    label: 'Impostazioni',
-    component: SettingsScreen,
-    iconActive: 'settings',
-    iconInactive: 'settings-outline',
-    hideTabBar: true,
-    hideTabButton: true,
-  },
-  {
-    routeName: ROUTES.CHARACTER_CREATE,
-    label: 'Crea PG',
-    component: CharacterCreateScreen,
-    iconActive: 'person-add',
-    iconInactive: 'person-add-outline',
-    hideTabBar: true,
-    hideTabButton: true,
   },
 ];

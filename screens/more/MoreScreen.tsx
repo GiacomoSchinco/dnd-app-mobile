@@ -1,62 +1,28 @@
-import { useCallback, useState } from 'react';
-import { View, Text, Pressable, BackHandler } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { View, Text, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useTokens } from '../../components/ui/prism-provider';
 import { s } from '../../utils/style-helpers';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import DndIcon from '../../components/custom/DndIcon';
-import SettingsScreen from './SettingsScreen';
-import CompendioScreen from '../compendium/CompendioScreen';
-
-type SectionKey = 'impostazioni' | 'compendio';
+import { ALTRO_ROUTES } from './altro-routes';
 
 interface AltroItem {
-  key: SectionKey;
+  key: string;
+  route: string;
   label: string;
   icon: string;
   description: string;
 }
 
 const ITEMS: AltroItem[] = [
-  { key: 'impostazioni', label: 'Impostazioni', icon: 'divination', description: 'Temi, info app' },
-  { key: 'compendio', label: 'Compendio', icon: 'd12', description: 'Regole, classi, magie e altro' },
+  { key: 'compendio', route: ALTRO_ROUTES.COMPENDIO, label: 'Compendio', icon: 'd12', description: 'Classi, razze, talenti, oggetti e altro' },
+  { key: 'impostazioni', route: ALTRO_ROUTES.IMPOSTAZIONI, label: 'Impostazioni', icon: 'divination', description: 'Temi, info app' },
 ];
 
 export default function MoreScreen() {
   const t = useTokens();
-  const [activeSection, setActiveSection] = useState<SectionKey | null>(null);
-
-  // Riaprendo la tab "Altro" si torna sempre al menu (lo stato interno non persiste)
-  useFocusEffect(
-    useCallback(() => {
-      setActiveSection(null);
-    }, []),
-  );
-
-  // Con una sezione interna aperta, il back del telefono torna al menu di "Altro"
-  useFocusEffect(
-    useCallback(() => {
-      if (!activeSection) return;
-      const sub = BackHandler.addEventListener('hardwareBackPress', () => {
-        setActiveSection(null);
-        return true;
-      });
-      return () => sub.remove();
-    }, [activeSection]),
-  );
-
-  if (activeSection === 'compendio') {
-    return (
-      <CompendioScreen onBack={() => setActiveSection(null)} />
-    );
-  }
-
-  if (activeSection === 'impostazioni') {
-    return (
-      <SettingsScreen onBack={() => setActiveSection(null)} />
-    );
-  }
+  const navigation = useNavigation<any>();
 
   return (
     <Screen>
@@ -70,7 +36,7 @@ export default function MoreScreen() {
         {ITEMS.map((item) => (
           <Pressable
             key={item.key}
-            onPress={() => setActiveSection(item.key)}
+            onPress={() => navigation.navigate(item.route)}
             style={({ pressed }) => ({
               ...s.row,
               gap: t.spacing[4],
