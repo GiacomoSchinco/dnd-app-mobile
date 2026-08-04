@@ -4,6 +4,7 @@ import { SvgXml } from 'react-native-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
+import BackButton from '../../components/custom/BackButton';
 import { s } from '../../utils/style-helpers';
 import itemsData from '../../lib/data/items.json';
 import type { ItemDefinition } from '../../types';
@@ -13,7 +14,7 @@ import {
   ItemFilters,
 } from '../../components/custom/Items';
 
-export default function ItemsScreen() {
+export default function ItemsScreen({ onBack }: { onBack?: () => void }) {
   const t = useTokens();
   const insets = useSafeAreaInsets();
 

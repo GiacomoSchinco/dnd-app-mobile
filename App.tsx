@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PrismProvider } from './components/ui/prism-provider';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
@@ -30,15 +31,17 @@ export default function App() {
   const showDice = !HIDE_DICE_ROUTES.includes(currentRoute);
 
   return (
-    <SafeAreaProvider>
-      <PrismProvider theme={theme}>
-        <NavigationContainer ref={navigationRef} onReady={onReady}>
-          <View style={{ flex: 1 }}>
-            <RootStack />
-            <DiceOverlay visible={showDice} />
-          </View>
-        </NavigationContainer>
-      </PrismProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <PrismProvider theme={theme}>
+          <NavigationContainer ref={navigationRef} onReady={onReady}>
+            <View style={{ flex: 1 }}>
+              <RootStack />
+              <DiceOverlay visible={showDice} />
+            </View>
+          </NavigationContainer>
+        </PrismProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

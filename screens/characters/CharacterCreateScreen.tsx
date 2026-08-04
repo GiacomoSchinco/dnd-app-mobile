@@ -4,28 +4,21 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
-import { Card } from '../../components/ui/card';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import BackButton from '../../components/custom/BackButton';
+import ClassCarousel from '../../components/custom/ClassCarousel';
+import { getAllClasses } from '../../lib/rules/classes';
 import { s } from '../../utils/style-helpers';
 import { useCharacterStore } from '../../store/useCharacterStore';
 import type { ClassName } from '../../types';
 
-const CLASSES: { key: ClassName; label: string; icon: string; desc: string }[] = [
-  { key: 'barbarian', label: 'Barbaro', icon: '🪓', desc: 'Ira primordiale' },
-  { key: 'bard', label: 'Bardo', icon: '🎵', desc: 'Ispirazione arcana' },
-  { key: 'cleric', label: 'Chierico', icon: '⚜️', desc: 'Potere divino' },
-  { key: 'druid', label: 'Druido', icon: '🌿', desc: 'Forza della natura' },
-  { key: 'fighter', label: 'Guerriero', icon: '⚔️', desc: 'Maestro d\'armi' },
-  { key: 'monk', label: 'Monaco', icon: '🥋', desc: 'Arte marziale' },
-  { key: 'paladin', label: 'Paladino', icon: '🛡️', desc: 'Giuramento sacro' },
-  { key: 'ranger', label: 'Ranger', icon: '🏹', desc: 'Predatore solitario' },
-  { key: 'rogue', label: 'Ladro', icon: '🗡️', desc: 'Astuzia mortale' },
-  { key: 'sorcerer', label: 'Stregone', icon: '🔮', desc: 'Sangue magico' },
-  { key: 'warlock', label: 'Warlock', icon: '☠️', desc: 'Patto oscuro' },
-  { key: 'wizard', label: 'Mago', icon: '📜', desc: 'Sapere arcano' },
-];
+// Dati reali dal JSON delle classi: etichetta italiana + descrizione autentica
+const CLASSES: { key: ClassName; label: string; desc: string }[] = getAllClasses().map((c) => ({
+  key: c.name as ClassName,
+  label: c.labelIt,
+  desc: c.description,
+}));
 
 export default function CharacterCreateScreen() {
   const t = useTokens();
@@ -33,7 +26,7 @@ export default function CharacterCreateScreen() {
   const createCharacter = useCharacterStore((st) => st.createCharacter);
 
   const [name, setName] = useState('');
-  const [selectedClass, setSelectedClass] = useState<ClassName | null>(null);
+  const [selectedClass, setSelectedClass] = useState<ClassName>(CLASSES[0].key);
 
   const isValid = name.trim().length > 0 && selectedClass !== null;
 
@@ -75,41 +68,15 @@ export default function CharacterCreateScreen() {
           />
         </View>
 
-        {/* Classe */}
+        {/* Classe — carousel infinito */}
         <Text style={{ fontSize: t.typography.sm, fontWeight: t.typography.semibold, color: t.colors.foregroundSecondary, marginBottom: t.spacing[1.5] }}>
           CLASSE
         </Text>
-        <View style={{ gap: t.spacing[2] }}>
-          {CLASSES.map((cls) => {
-            const isSelected = selectedClass === cls.key;
-            return (
-              <Pressable key={cls.key} onPress={() => setSelectedClass(cls.key)}>
-                <Card
-                  variant={isSelected ? 'elevated' : 'outlined'}
-                  style={{
-                    borderColor: isSelected ? t.colors.accent : t.colors.border,
-                    borderWidth: isSelected ? 2 : 1,
-                  }}
-                >
-                  <View style={s.row}>
-                    <Text style={{ fontSize: 28, marginRight: t.spacing[3] }}>{cls.icon}</Text>
-                    <View style={s.flex}>
-                      <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-                        {cls.label}
-                      </Text>
-                      <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                        {cls.desc}
-                      </Text>
-                    </View>
-                    {isSelected && (
-                      <Text style={{ color: t.colors.accent, fontSize: 20 }}>✓</Text>
-                    )}
-                  </View>
-                </Card>
-              </Pressable>
-            );
-          })}
-        </View>
+        <ClassCarousel
+          items={CLASSES}
+          selected={selectedClass}
+          onSelect={setSelectedClass}
+        />
       </ScrollView>
 
       {/* Bottone conferma in fondo */}

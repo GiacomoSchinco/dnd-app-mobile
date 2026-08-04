@@ -29,6 +29,33 @@ import Gear from '../../assets/icon/items/gear.svg';
 import Tool from '../../assets/icon/items/tool.svg';
 import Weapon from '../../assets/icon/items/weapon.svg';
 
+import Barbarian from '../../assets/icon/classes/barbarian.svg';
+import Bard from '../../assets/icon/classes/bard.svg';
+import Cleric from '../../assets/icon/classes/cleric.svg';
+import Druid from '../../assets/icon/classes/druid.svg';
+import Fighter from '../../assets/icon/classes/fighter.svg';
+import Monk from '../../assets/icon/classes/monk.svg';
+import Paladin from '../../assets/icon/classes/paladin.svg';
+import Ranger from '../../assets/icon/classes/ranger.svg';
+import Rogue from '../../assets/icon/classes/rogue.svg';
+import Sorcerer from '../../assets/icon/classes/sorcerer.svg';
+import Warlock from '../../assets/icon/classes/warlock.svg';
+import Wizard from '../../assets/icon/classes/wizard.svg';
+
+export type ClassName =
+  | 'barbarian'
+  | 'bard'
+  | 'cleric'
+  | 'druid'
+  | 'fighter'
+  | 'monk'
+  | 'paladin'
+  | 'ranger'
+  | 'rogue'
+  | 'sorcerer'
+  | 'warlock'
+  | 'wizard';
+
 export type DiceName = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20';
 
 export type SchoolName =
@@ -50,7 +77,7 @@ export type ItemName =
   | 'tool'
   | 'weapon';
 
-export type IconName = DiceName | SchoolName | ItemName;
+export type IconName = DiceName | SchoolName | ItemName | ClassName;
 
 const ICONS: Record<IconName, FC<SvgProps>> = {
   d4: D4,
@@ -74,6 +101,18 @@ const ICONS: Record<IconName, FC<SvgProps>> = {
   gear: Gear,
   tool: Tool,
   weapon: Weapon,
+  barbarian: Barbarian,
+  bard: Bard,
+  cleric: Cleric,
+  druid: Druid,
+  fighter: Fighter,
+  monk: Monk,
+  paladin: Paladin,
+  ranger: Ranger,
+  rogue: Rogue,
+  sorcerer: Sorcerer,
+  warlock: Warlock,
+  wizard: Wizard,
 };
 
 type Props = {
