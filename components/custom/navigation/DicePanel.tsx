@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { View, ScrollView, Animated, Platform } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import ScreenHeader from '../ScreenHeader';
@@ -24,6 +25,9 @@ export default function DicePanel({
   pillRadius,
 }: Props) {
   const t = useTokens();
+  // Quando il contenuto cambia (es. compare il risultato del lancio) si
+  // scrolla in fondo: il tasto di lancio resta sempre in basso, visibile.
+  const scrollRef = useRef<ScrollView>(null);
 
   if (!isVisible) return null;
 
@@ -60,7 +64,11 @@ export default function DicePanel({
         }),
       }}
     >
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollRef}
+        showsVerticalScrollIndicator={false}
+        onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: true })}
+      >
         <View style={{ marginBottom: -spacing[6], marginTop: spacing[4] }}>
           <ScreenHeader title="Lancia i tuoi dadi" center={true} />
         </View>

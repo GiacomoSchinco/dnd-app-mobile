@@ -5,7 +5,7 @@ import { Button } from '../../ui/button';
 import { s } from '../../../utils/style-helpers';
 import type { Spell, ClassName, Character } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
-import DndIcon from '../DndIcon';
+import DndIcon, { type IconName } from '../DndIcon';
 import BottomModal from '../BottomModal';
 import DetailChip from '../DetailChip';
 
@@ -33,7 +33,7 @@ export default function SpellDetailModal({
       {/* Header */}
       <View style={[s.row, s.gap(t.spacing[3]), s.mb(t.spacing[3])]}>
                 <View style={[s.box(56, t.radius.xl), { backgroundColor: (SCHOOL_MAP[spell.school]?.color || '#888') + '20' }]}>
-                  <DndIcon name={spell.school} size={30} color={SCHOOL_MAP[spell.school]?.color || '#fff'} />
+                  <DndIcon name={spell.school as IconName} size={30} color={SCHOOL_MAP[spell.school]?.color || '#fff'} />
                 </View>
                 <View style={s.flex}>
                   <View style={[s.row, { justifyContent: 'space-between', alignItems: 'flex-start' }]}>

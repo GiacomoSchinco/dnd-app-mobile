@@ -15,11 +15,11 @@ import theme from './components/ui/themes/default'; // ☀️ Default Apple (chi
 // import theme from './components/ui/themes/stone';    // 🪨 Stone (marrone caldo)
 
 // Route in cui il dado NON deve comparire (Home = lista PG, Crea PG = form a schermo intero)
-const HIDE_DICE_ROUTES = [ROUTES.HOME, ROUTES.CHARACTER_CREATE];
+const HIDE_DICE_ROUTES: string[] = [ROUTES.HOME, ROUTES.CHARACTER_CREATE];
 
 export default function App() {
   const navigationRef = useNavigationContainerRef();
-  const [currentRoute, setCurrentRoute] = useState(ROUTES.HOME);
+  const [currentRoute, setCurrentRoute] = useState<string>(ROUTES.HOME);
 
   // Sincronizza la route attiva (funziona anche con i navigatori annidati)
   const onReady = useCallback(() => {

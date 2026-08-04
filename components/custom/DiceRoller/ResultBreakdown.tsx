@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { s } from '../../../utils/style-helpers';
 import { spacing, radius, fontSizes } from '../../../utils/styles';
@@ -8,10 +8,9 @@ import { formatRollNotation } from '../../../utils/dice';
 type Props = {
   result: RollResult;
   selectedColor: string;
-  onReset: () => void;
 };
 
-export default function ResultBreakdown({ result, selectedColor, onReset }: Props) {
+export default function ResultBreakdown({ result, selectedColor }: Props) {
   const t = useTokens();
 
   return (
@@ -57,13 +56,6 @@ export default function ResultBreakdown({ result, selectedColor, onReset }: Prop
             : `${result.modifier} (modificatore)`}
         </Text>
       )}
-
-      {/* Reset */}
-      <Pressable onPress={onReset} style={[styles.resetBtn, { borderColor: t.colors.border }]}>
-        <Text style={[s.mt(t.spacing[3]), { color: t.colors.foregroundTertiary, textAlign: 'center' }]}>
-          ✕ Annulla
-        </Text>
-      </Pressable>
     </View>
   );
 }
@@ -98,16 +90,5 @@ const styles = StyleSheet.create({
   modifier: {
     fontSize: fontSizes.sm,
     fontStyle: 'italic',
-  },
-  resetBtn: {
-    marginTop: spacing[2],
-    paddingHorizontal: spacing[5],
-    paddingVertical: spacing[1.5],
-    borderRadius: radius.full,
-    borderWidth: 1,
-  },
-  resetText: {
-    fontSize: fontSizes.sm,
-    fontWeight: '600',
   },
 });

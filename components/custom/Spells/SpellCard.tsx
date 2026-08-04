@@ -5,7 +5,7 @@ import { useTokens } from '../../ui/prism-provider';
 import { s } from '../../../utils/style-helpers';
 import type { Spell, ClassName } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
-import DndIcon from '../DndIcon';
+import DndIcon, { type IconName } from '../DndIcon';
 
 type Props = {
   spell: Spell;
@@ -40,7 +40,7 @@ export default function SpellCard({
         <View style={[s.row, s.gap(t.spacing[3])]}>
           {/* School Icon */}
           <View style={[s.box(52, t.radius.xl), { backgroundColor: SCHOOL_MAP[spell.school]?.color + '20' || t.colors.backgroundSecondary }]}>
-            <DndIcon name={spell.school} size={28} color={SCHOOL_MAP[spell.school]?.color || '#fff'} />
+            <DndIcon name={spell.school as IconName} size={28} color={SCHOOL_MAP[spell.school]?.color || '#fff'} />
           </View>
 
           <View style={s.flex}>

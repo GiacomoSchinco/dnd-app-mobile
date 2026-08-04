@@ -74,7 +74,7 @@ export default function CompendiumList<T>({
       <FlatList
         data={filtered}
         keyExtractor={keyExtractor}
-        renderItem={({ item }) => renderCard(item, () => setSelected(item))}
+        renderItem={({ item }) => <>{renderCard(item, () => setSelected(item))}</>}
         contentContainerStyle={{ paddingBottom: insets.bottom + 90, paddingHorizontal: t.spacing[4] }}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"

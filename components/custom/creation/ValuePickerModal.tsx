@@ -1,5 +1,6 @@
 import { Pressable, Text, View } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
+import { Card } from '../../ui/card';
 import { getAbilityLabel, getAbilityModifier } from '../../../lib/rules/abilities';
 import { s } from '../../../utils/style-helpers';
 import BottomModal from '../BottomModal';
@@ -20,15 +21,7 @@ export default function ValuePickerModal({ ability, pool, onSelect, onClose }: P
 
   return (
     <BottomModal visible={ability != null} onClose={onClose}>
-      <View
-        style={{
-          backgroundColor: t.colors.card,
-          borderRadius: t.radius.lg,
-          borderWidth: 1,
-          borderColor: t.colors.cardBorder,
-          padding: t.spacing[5],
-        }}
-      >
+      <Card style={{ padding: t.spacing[5] }}>
         <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.bold, color: t.colors.foreground }}>
           {ability ? getAbilityLabel(ability) : ''}
         </Text>
@@ -60,7 +53,7 @@ export default function ValuePickerModal({ ability, pool, onSelect, onClose }: P
         <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[3] }}>
           Tocca fuori per annullare.
         </Text>
-      </View>
+      </Card>
     </BottomModal>
   );
 }

@@ -141,13 +141,6 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
     setModifier((m) => Math.max(-99, Math.min(99, m + delta)));
   }, []);
 
-  // ── Reset ────────────────────────────────────────────────────────
-  const reset = useCallback(() => {
-    setLastResult(null);
-    setQuantity(1);
-    setModifier(0);
-  }, []);
-
   // ── Helper per il cambio dado ───────────────────────────────────
   const updateDiceType = (newType: DiceType) => {
     setDiceType(newType);
@@ -200,6 +193,9 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
         />
       </View>
 
+      {lastResult && !rolling && (
+        <ResultBreakdown result={lastResult} selectedColor={selectedColor} />
+      )}
       <RollButton
         onPress={roll}
         disabled={rolling}
@@ -208,14 +204,6 @@ export default function DiceRoller({ initialType = 'd20', initialQuantity = 1 }:
         animatedStyle={diceAnimatedStyle}
         selectedColor={selectedColor}
       />
-
-      {lastResult && !rolling && (
-        <ResultBreakdown
-          result={lastResult}
-          selectedColor={selectedColor}
-          onReset={reset}
-        />
-      )}
     </View>
   );
 }

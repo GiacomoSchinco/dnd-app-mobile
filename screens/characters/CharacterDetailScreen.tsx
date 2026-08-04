@@ -9,6 +9,7 @@ import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import ClassAvatar from '../../components/custom/ClassAvatar';
 import BottomModal from '../../components/custom/BottomModal';
+import { Button } from '../../components/ui/button';
 import { getClassNameItalian } from '../../lib/rules/classes';
 import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
@@ -34,8 +35,9 @@ const ABILITY_ROWS = [
 export default function CharacterDetailScreen() {
   const t = useTokens();
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>();
-  const { activeChar, updateCharacter } = useActiveCharacter();
+  const { activeChar, updateCharacter, deleteCharacter } = useActiveCharacter();
   const [selectedSection, setSelectedSection] = useState<(typeof SECTIONS)[number] | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const handleSection = (key: string) => {
     if (key === 'magie') navigation.navigate(ROUTES.MAGIE);
@@ -61,6 +63,14 @@ export default function CharacterDetailScreen() {
     updateCharacter(activeChar.id, {
       hitPoints: { ...hp, temporary: Math.max(0, hp.temporary + delta) },
     });
+  };
+
+  const handleDelete = () => {
+    if (!activeChar) return;
+    deleteCharacter(activeChar.id);
+    setConfirmDelete(false);
+    // Torna alla Home (lista personaggi)
+    navigation.navigate(ROUTES.HOME);
   };
 
   if (!activeChar) {
@@ -187,6 +197,16 @@ export default function CharacterDetailScreen() {
           </Pressable>
         ))}
       </View>
+
+      {/* Eliminazione personaggio */}
+      <Button
+        variant="danger"
+        fullWidth
+        onPress={() => setConfirmDelete(true)}
+        style={{ marginTop: t.spacing[6] }}
+      >
+        Elimina personaggio
+      </Button>
 
       {selectedSection && (
         <BottomModal visible={!!selectedSection} onClose={() => setSelectedSection(null)}>
@@ -321,6 +341,20 @@ export default function CharacterDetailScreen() {
           )}
         </BottomModal>
       )}
+
+      {/* Conferma eliminazione */}
+      <BottomModal visible={confirmDelete} onClose={() => setConfirmDelete(false)}>
+        <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>
+          Eliminare &quot;{activeChar.name}&quot;?
+        </Text>
+        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[2], marginBottom: t.spacing[4] }}>
+          Questa azione è irreversibile: il personaggio e tutti i suoi dati verranno rimossi.
+        </Text>
+        <View style={[s.row, s.gap(t.spacing[3])]}>
+          <Button variant="outline" onPress={() => setConfirmDelete(false)} style={{ flex: 1 }}>Annulla</Button>
+          <Button variant="danger" onPress={handleDelete} style={{ flex: 1 }}>Elimina</Button>
+        </View>
+      </BottomModal>
     </Screen>
   );
 }
