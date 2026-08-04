@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/navigation';
@@ -7,98 +7,165 @@ import { useTokens } from '../../components/ui/prism-provider';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import BackButton from '../../components/custom/BackButton';
-import ClassCarousel from '../../components/custom/ClassCarousel';
-import { getAllClasses } from '../../lib/rules/classes';
+import { Button } from '../../components/ui/button';
 import { s } from '../../utils/style-helpers';
-import { useCharacterStore } from '../../store/useCharacterStore';
-import type { ClassName } from '../../types';
+import StepIndicator from '../../components/custom/creation/StepIndicator';
+import NameStep from '../../components/custom/creation/NameStep';
+import ClassStep from '../../components/custom/creation/ClassStep';
+import LevelStep from '../../components/custom/creation/LevelStep';
+import SubclassStep from '../../components/custom/creation/SubclassStep';
+import SkillsStep from '../../components/custom/creation/SkillsStep';
+import RaceStep from '../../components/custom/creation/RaceStep';
+import BackgroundStep from '../../components/custom/creation/BackgroundStep';
+import AbilitiesStep from '../../components/custom/creation/AbilitiesStep';
+import HpStep from '../../components/custom/creation/HpStep';
+import ValuePickerModal from '../../components/custom/creation/ValuePickerModal';
+import { useCharacterWizard } from '../../components/custom/creation/useCharacterWizard';
 
-// Dati reali dal JSON delle classi: etichetta italiana + descrizione autentica
-const CLASSES: { key: ClassName; label: string; desc: string }[] = getAllClasses().map((c) => ({
-  key: c.name as ClassName,
-  label: c.labelIt,
-  desc: c.description,
-}));
-
+/**
+ * Schermata del wizard di creazione personaggio.
+ * Renderer sottile: tutta la logica (stato, derivati, validazione, creazione)
+ * vive in `useCharacterWizard`; ogni passo è un componente presentational.
+ */
 export default function CharacterCreateScreen() {
   const t = useTokens();
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const createCharacter = useCharacterStore((st) => st.createCharacter);
-
-  const [name, setName] = useState('');
-  const [selectedClass, setSelectedClass] = useState<ClassName>(CLASSES[0].key);
-
-  const isValid = name.trim().length > 0 && selectedClass !== null;
-
-  const handleCreate = () => {
-    if (!isValid) return;
-    createCharacter(name.trim(), selectedClass!, 1);
-    navigation.goBack();
-  };
+  const w = useCharacterWizard();
 
   return (
-    <Screen>
+    // Il padding bottom di default (safePadding) riserva spazio per la floating tab
+    // bar; su questa schermata pushata non c'è, quindi lo riduciamo a solo safe area.
+    <Screen scrollable={false} center={false} style={{ paddingBottom: insets.bottom + t.spacing[3] }}>
       <ScreenHeader title="Nuovo Personaggio" icon="person-add-outline" />
       <BackButton onPress={() => navigation.goBack()} />
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: t.spacing[12] }}
-      >
-        {/* Nome */}
-        <View style={[s.mb(t.spacing[5])]}>
-          <Text style={{ fontSize: t.typography.sm, fontWeight: t.typography.semibold, color: t.colors.foregroundSecondary, marginBottom: t.spacing[1.5] }}>
-            NOME DEL PERSONAGGIO
-          </Text>
-          <TextInput
-            value={name}
-            onChangeText={setName}
-            placeholder="Es. Aric Elvendusk"
-            placeholderTextColor={t.colors.placeholder}
-            style={{
-              backgroundColor: t.colors.input,
-              borderWidth: 1,
-              borderColor: t.colors.inputBorder,
-              borderRadius: t.radius.md,
-              paddingHorizontal: t.spacing[3],
-              paddingVertical: t.spacing[2.5],
-              fontSize: t.typography.md,
-              color: t.colors.foreground,
-            }}
-          />
-        </View>
+      <StepIndicator steps={w.activeSteps} current={w.step} onSelect={w.setStep} />
 
-        {/* Classe — carousel infinito */}
-        <Text style={{ fontSize: t.typography.sm, fontWeight: t.typography.semibold, color: t.colors.foregroundSecondary, marginBottom: t.spacing[1.5] }}>
-          CLASSE
-        </Text>
-        <ClassCarousel
-          items={CLASSES}
-          selected={selectedClass}
-          onSelect={setSelectedClass}
-        />
-      </ScrollView>
-
-      {/* Bottone conferma in fondo */}
-      <View style={[s.px(t.spacing[4]), s.py(t.spacing[3])]}>
-        <Pressable
-          onPress={handleCreate}
-          disabled={!isValid}
-          style={({ pressed }) => ({
-            backgroundColor: isValid
-              ? pressed ? t.colors.accent + 'CC' : t.colors.accent
-              : t.colors.backgroundTertiary,
-            paddingVertical: t.spacing[3],
-            borderRadius: t.radius.md,
-            alignItems: 'center',
-            opacity: isValid ? 1 : 0.5,
-          })}
+      <View style={s.flex}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ flex: 1 }}
+          contentContainerStyle={{ paddingBottom: t.spacing[12] }}
         >
-          <Text style={{ color: isValid ? t.colors.accentForeground : t.colors.foregroundTertiary, fontSize: t.typography.md, fontWeight: t.typography.semibold }}>
-            Crea Personaggio
-          </Text>
-        </Pressable>
+          {w.step === 'name' && <NameStep value={w.name} onChange={w.setName} />}
+
+          {w.step === 'class' && (
+            <ClassStep items={w.classes} selected={w.selectedClass} onSelect={w.setSelectedClass} />
+          )}
+
+          {w.step === 'skills' && (
+            <SkillsStep
+              classNameLabel={w.classLabel}
+              skillOptions={w.classSkillOptions}
+              skillCount={w.skillCount}
+              selectedSkills={w.classSkills}
+              onToggleSkill={w.toggleSkill}
+            />
+          )}
+
+          {w.step === 'level' && (
+            <LevelStep
+              level={w.level}
+              onLevelChange={w.setLevel}
+              hitDie={w.hitDie}
+              levelFeatures={w.levelFeatures}
+            />
+          )}
+
+          {w.step === 'subclass' && w.subclassUnlocked && (
+            <SubclassStep
+              subclassLabel={w.subclassLabel}
+              firstSubclassLevel={w.subclassLevels[0]}
+              subclassId={w.subclassId}
+              onSubclassChange={w.setSubclassId}
+              subclasses={w.subclasses}
+            />
+          )}
+
+          {w.step === 'race' && (
+            <RaceStep
+              raceId={w.raceId}
+              onRaceChange={w.setRaceId}
+              lineageId={w.lineageId}
+              onLineageChange={w.setLineageId}
+            />
+          )}
+
+          {w.step === 'background' && (
+            <BackgroundStep backgroundId={w.backgroundId} onSelect={w.setBackgroundId} />
+          )}
+
+          {w.step === 'abilities' && (
+            <AbilitiesStep
+              assigned={w.assigned}
+              onEditAbility={w.openAbilityPicker}
+              onClear={w.clearAbility}
+              showBoosts={w.showBoosts}
+              allowedAbilities={w.allowedAbilities}
+              plusTwoPlusOne={w.plusTwoPlusOne}
+              picks={w.picks}
+              onTogglePick={w.togglePick}
+              asiLevels={w.asiLevelsApplied}
+              asiAssignments={w.asiAssignments}
+              onAsiModeChange={w.setAsiMode}
+              onAsiToggleAbility={w.toggleAsiAbility}
+              finalResult={w.finalResult}
+            />
+          )}
+
+          {w.step === 'hp' && (
+            <HpStep
+              hitDie={w.hitDie}
+              level={w.level}
+              conMod={w.conMod}
+              averagePerLevel={w.averagePerLevel}
+              hpRoll={w.hpRoll}
+              onRoll={w.setHpRoll}
+              onTakeMax={w.takeMaxHp}
+            />
+          )}
+
+          {w.error && (
+            <Text style={{ fontSize: t.typography.sm, color: t.colors.danger, marginTop: t.spacing[3] }}>{w.error}</Text>
+          )}
+        </ScrollView>
       </View>
+
+      {/* Barra di navigazione in fondo */}
+      <View style={[s.row, s.gap(t.spacing[3]), s.py(t.spacing[3]), {
+        borderTopWidth: 1,
+        borderTopColor: t.colors.border,
+        backgroundColor: t.colors.background,
+      }]}>
+        {w.stepIndex > 0 ? (
+          <Button variant="outline" onPress={w.goPrev} style={{ flex: 1 }}>Indietro</Button>
+        ) : (
+          // Sul primo passo non c'è "Indietro": uno spacer mantiene "Avanti"
+          // in basso a destra con la stessa dimensione delle altre pagine.
+          <View style={{ flex: 1 }} />
+        )}
+        {!w.isLastStep ? (
+          <Button onPress={w.goNext} disabled={!w.canGoNext} style={{ flex: 1 }}>Avanti</Button>
+        ) : (
+          <Button
+            onPress={w.handleCreate}
+            disabled={!w.canCreate}
+            fullWidth
+          >
+            Crea Personaggio
+          </Button>
+        )}
+      </View>
+
+      {/* Modale scelta valore per un'abilità */}
+      <ValuePickerModal
+        ability={w.editingAbility}
+        pool={w.pool}
+        onSelect={(value) => { if (w.editingAbility) w.assignToAbility(w.editingAbility, value); }}
+        onClose={w.closeAbilityPicker}
+      />
     </Screen>
   );
 }
+

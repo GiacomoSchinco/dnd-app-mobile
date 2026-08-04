@@ -25,7 +25,7 @@ export default function CharacterBar({ activeChar, onPress }: Props) {
             {CLASS_LABELS[activeChar.classes?.[0]?.className] || activeChar.classes?.[0]?.className} · Livello {activeChar.level}
           </Text>
           <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: 2 }}>
-            {activeChar.preparedSpells.length} preparate · {activeChar.favoriteSpells.length} preferite
+            {(activeChar.preparedSpells ?? []).length} preparate · {(activeChar.favoriteSpells ?? []).length} preferite
           </Text>
         </View>
       ) : (

@@ -34,7 +34,7 @@ const ABILITY_ROWS = [
 export default function CharacterDetailScreen() {
   const t = useTokens();
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>();
-  const { activeChar } = useActiveCharacter();
+  const { activeChar, updateCharacter } = useActiveCharacter();
   const [selectedSection, setSelectedSection] = useState<(typeof SECTIONS)[number] | null>(null);
 
   const handleSection = (key: string) => {
@@ -44,6 +44,23 @@ export default function CharacterDetailScreen() {
       const sec = SECTIONS.find((x) => x.key === key);
       if (sec) setSelectedSection(sec);
     }
+  };
+
+  // ── Gestione punti ferita ───────────────────────────────────
+  const changeHp = (delta: number) => {
+    if (!activeChar?.hitPoints) return;
+    const hp = activeChar.hitPoints;
+    updateCharacter(activeChar.id, {
+      hitPoints: { ...hp, current: Math.max(0, Math.min(hp.max, hp.current + delta)) },
+    });
+  };
+
+  const changeTempHp = (delta: number) => {
+    if (!activeChar?.hitPoints) return;
+    const hp = activeChar.hitPoints;
+    updateCharacter(activeChar.id, {
+      hitPoints: { ...hp, temporary: Math.max(0, hp.temporary + delta) },
+    });
   };
 
   if (!activeChar) {
@@ -90,6 +107,46 @@ export default function CharacterDetailScreen() {
             </View>
           </View>
         </View>
+
+        {/* Statistiche derivate (popolate da createCharacterFull) */}
+        {(activeChar.hitPoints || activeChar.armorClass != null || activeChar.proficiencyBonus != null) && (
+          <View style={[s.row, s.gap(t.spacing[3]), s.mt(t.spacing[4]), {
+            borderTopWidth: 1,
+            borderTopColor: t.colors.border,
+            paddingTop: t.spacing[3],
+          }]}>
+            <View style={s.flex}>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>PF</Text>
+              <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
+                {activeChar.hitPoints ? `${activeChar.hitPoints.current}/${activeChar.hitPoints.max}` : '—'}
+              </Text>
+            </View>
+            <View style={s.flex}>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>CA</Text>
+              <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
+                {activeChar.armorClass ?? '—'}
+              </Text>
+            </View>
+            <View style={s.flex}>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>PB</Text>
+              <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
+                {activeChar.proficiencyBonus != null ? `+${activeChar.proficiencyBonus}` : '—'}
+              </Text>
+            </View>
+            <View style={s.flex}>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>Velocità</Text>
+              <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
+                {activeChar.speed != null ? `${activeChar.speed} m` : '—'}
+              </Text>
+            </View>
+            <View style={s.flex}>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>Iniz.</Text>
+              <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
+                {activeChar.initiative != null ? `${activeChar.initiative >= 0 ? '+' : ''}${activeChar.initiative}` : '—'}
+              </Text>
+            </View>
+          </View>
+        )}
       </View>
 
       {/* Sezioni — stesso stile dei pulsanti HomeScreen */}
@@ -138,17 +195,114 @@ export default function CharacterDetailScreen() {
           </Text>
 
           {selectedSection.key === 'stats' && (
-            <View style={[s.mt(t.spacing[3]), s.gap(t.spacing[2])]}>
-              {ABILITY_ROWS.map((a) => (
-                <View key={a.key} style={[s.row, { justifyContent: 'space-between' }]}>
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                    {a.label} ({a.abbr})
-                  </Text>
+            <View style={[s.mt(t.spacing[3]), s.gap(t.spacing[4])]}>
+              {/* Punti ferita */}
+              <View style={{
+                backgroundColor: t.colors.backgroundSecondary,
+                borderRadius: t.radius.md,
+                borderWidth: 1,
+                borderColor: t.colors.border,
+                padding: t.spacing[4],
+                gap: t.spacing[3],
+              }}>
+                <View style={[s.row, { justifyContent: 'space-between' }]}>
                   <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                    {activeChar.abilities[a.key] ?? 10}
+                    Punti Ferita
+                  </Text>
+                  <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+                    Dadi vita:{' '}
+                    {activeChar.hitPoints
+                      ? `${activeChar.hitPoints.hitDiceCurrent}/${activeChar.hitPoints.hitDiceMax} × ${activeChar.hitPoints.hitDie}`
+                      : '—'}
                   </Text>
                 </View>
-              ))}
+
+                {/* Attuali — danno / cura */}
+                <View style={[s.row, { justifyContent: 'space-between' }]}>
+                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Attuali</Text>
+                  <View style={[s.row, s.gap(t.spacing[3])]}>
+                    <Pressable
+                      onPress={() => changeHp(-1)}
+                      hitSlop={8}
+                      style={({ pressed }) => ({
+                        width: 34,
+                        height: 34,
+                        borderRadius: t.radius.sm,
+                        backgroundColor: pressed ? t.colors.accent : t.colors.accent + '18',
+                        ...s.center,
+                      })}
+                    >
+                      <Text style={{ fontSize: t.typography.base, fontWeight: '700', color: t.colors.accent }}>−</Text>
+                    </Pressable>
+                    <Text style={{ minWidth: 56, textAlign: 'center', fontSize: t.typography.lg, fontWeight: '700', color: t.colors.foreground }}>
+                      {activeChar.hitPoints?.current ?? 0}/{activeChar.hitPoints?.max ?? 0}
+                    </Text>
+                    <Pressable
+                      onPress={() => changeHp(1)}
+                      hitSlop={8}
+                      style={({ pressed }) => ({
+                        width: 34,
+                        height: 34,
+                        borderRadius: t.radius.sm,
+                        backgroundColor: pressed ? t.colors.accent : t.colors.accent + '18',
+                        ...s.center,
+                      })}
+                    >
+                      <Text style={{ fontSize: t.typography.base, fontWeight: '700', color: t.colors.accent }}>+</Text>
+                    </Pressable>
+                  </View>
+                </View>
+
+                {/* Temporanei */}
+                <View style={[s.row, { justifyContent: 'space-between' }]}>
+                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Temporanei</Text>
+                  <View style={[s.row, s.gap(t.spacing[3])]}>
+                    <Pressable
+                      onPress={() => changeTempHp(-1)}
+                      hitSlop={8}
+                      style={({ pressed }) => ({
+                        width: 34,
+                        height: 34,
+                        borderRadius: t.radius.sm,
+                        backgroundColor: pressed ? t.colors.accent : t.colors.accent + '18',
+                        ...s.center,
+                      })}
+                    >
+                      <Text style={{ fontSize: t.typography.base, fontWeight: '700', color: t.colors.accent }}>−</Text>
+                    </Pressable>
+                    <Text style={{ minWidth: 56, textAlign: 'center', fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
+                      {activeChar.hitPoints?.temporary ?? 0}
+                    </Text>
+                    <Pressable
+                      onPress={() => changeTempHp(1)}
+                      hitSlop={8}
+                      style={({ pressed }) => ({
+                        width: 34,
+                        height: 34,
+                        borderRadius: t.radius.sm,
+                        backgroundColor: pressed ? t.colors.accent : t.colors.accent + '18',
+                        ...s.center,
+                      })}
+                    >
+                      <Text style={{ fontSize: t.typography.base, fontWeight: '700', color: t.colors.accent }}>+</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+
+              {/* Caratteristiche */}
+              <View style={[s.gap(t.spacing[2])]}>
+                {ABILITY_ROWS.map((a) => (
+                  <View key={a.key} style={[s.row, { justifyContent: 'space-between' }]}>
+                    <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+                      {a.label} ({a.abbr})
+                    </Text>
+                    <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+                      {activeChar.abilities[a.key] ?? 10}
+                    </Text>
+                  </View>
+                ))}
+              </View>
             </View>
           )}
 

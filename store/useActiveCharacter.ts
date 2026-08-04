@@ -10,6 +10,7 @@ export function useActiveCharacter(): ActiveCharacterActions {
   const useSpellSlot = useCharacterStore((s) => s.useSpellSlot);
   const restoreSpellSlots = useCharacterStore((s) => s.restoreSpellSlots);
   const createCharacter = useCharacterStore((s) => s.createCharacter);
+  const createCharacterFull = useCharacterStore((s) => s.createCharacterFull);
   const deleteCharacter = useCharacterStore((s) => s.deleteCharacter);
   const updateCharacter = useCharacterStore((s) => s.updateCharacter);
 
@@ -25,6 +26,7 @@ export function useActiveCharacter(): ActiveCharacterActions {
     useSpellSlot,
     restoreSpellSlots,
     createCharacter,
+    createCharacterFull,
     deleteCharacter,
     updateCharacter,
   };

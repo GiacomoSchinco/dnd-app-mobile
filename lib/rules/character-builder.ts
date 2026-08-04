@@ -264,6 +264,8 @@ export interface AbilityAssignment {
   allowedBoosts?: AbilityAbbreviation[];
   /** Modalità di distribuzione consentite (distributionModes del background) — per validazione */
   distributionModes?: string[];
+  /** ASI applicati (5.5e: +2 a una caratteristica oppure +1 a due), tetto 20 */
+  asiBoosts?: AbilityBoost[];
 }
 
 export type AbilityAssignmentResult =
@@ -316,6 +318,26 @@ export function calculateFinalAbilities(assignment: AbilityAssignment): AbilityA
       return { success: false, error: `L'abilità "${boost.ability}" supererebbe 20` };
     }
     scores[boost.ability] += boost.amount;
+  }
+
+  // 3. ASI (5.5e): ogni ASI = +2 a UNA caratteristica OPPURE +1 a DUE.
+  // I +1 devono essere in coppia; tetto 20.
+  const asiBoosts = assignment.asiBoosts ?? [];
+  if (asiBoosts.length > 0) {
+    let plusOnes = 0;
+    for (const boost of asiBoosts) {
+      if (boost.amount !== 1 && boost.amount !== 2) {
+        return { success: false, error: `Aumento ASI non valido per ${boost.ability}: ${boost.amount}` };
+      }
+      if (boost.amount === 1) plusOnes += 1;
+      if (scores[boost.ability] + boost.amount > 20) {
+        return { success: false, error: `L'abilità "${boost.ability}" supererebbe 20 con l'ASI` };
+      }
+      scores[boost.ability] += boost.amount;
+    }
+    if (plusOnes % 2 !== 0) {
+      return { success: false, error: "Gli aumenti +1 dell'ASI vanno applicati a coppie (+1 a due caratteristiche)" };
+    }
   }
 
   return { success: true, scores };
@@ -423,6 +445,12 @@ export interface CharacterBuildPlan {
   boosts?: AbilityBoost[];
   /** Metodo di generazione punteggi usato (standard | point_buy | manual) */
   abilityMethod?: AbilityAssignment['method'];
+  /** Skill di classe scelte (competenze) */
+  classSkills?: SkillName[];
+  /** ASI applicati (5.5e) */
+  asiBoosts?: AbilityBoost[];
+  /** Tiro del dado vita al 1° livello (se assente, si usa il dado MAX) */
+  hpRoll?: number;
 }
 
 /** Costruisce un PG completo dal livello 1 */
@@ -431,6 +459,10 @@ export function buildCharacter(params: {
   classChoice: ClassChoice;
   background: BackgroundChoice;
   abilities: AbilityAssignment;
+  /** Skill di classe scelte dal giocatore (competenze) */
+  classSkills?: SkillName[];
+  /** Tiro del dado vita al 1° livello (opzionale) */
+  hpRoll?: number;
 }): CharacterBuildPlan | { success: false; error: string } {
   const raceResult = applyRace(params.race);
   if (!raceResult.success) return { success: false, error: raceResult.error! };
@@ -464,6 +496,9 @@ export function buildCharacter(params: {
     startingEquipment: equipment,
     boosts: params.abilities.boosts,
     abilityMethod: params.abilities.method,
+    classSkills: params.classSkills,
+    asiBoosts: params.abilities.asiBoosts,
+    hpRoll: params.hpRoll,
   };
 }
 
@@ -541,8 +576,9 @@ export function buildCharacterSheet(
   const dexMod = getAbilityModifier(abilities.dexterity);
   const proficiencyBonus = getProficiencyBonus(level);
 
-  // PF: 1° livello = dado vita MAX + CON; livelli successivi = media + CON
-  const maxHp = classDef.hitDie + conMod + (level - 1) * Math.max(classDef.hitPoints.average + conMod, 1);
+  // PF: 1° livello = tiro del dado vita (o MAX se non tirato) + CON; livelli successivi = media + CON
+  const lvl1Hp = plan.hpRoll ?? classDef.hitDie;
+  const maxHp = lvl1Hp + conMod + (level - 1) * Math.max(classDef.hitPoints.average + conMod, 1);
 
   // Competenze
   const armor = classDef.proficiencies.armor
@@ -553,7 +589,8 @@ export function buildCharacterSheet(
     .filter((w): w is WeaponType => w != null);
   const tools = [...classDef.proficiencies.tools];
   if (bgData.toolProficiency?.toolId) tools.push(bgData.toolProficiency.toolId);
-  const skills: SkillName[] = [...bgData.skills];
+  // Skill: quelle del background + le scelte di classe
+  const skills: SkillName[] = [...bgData.skills, ...(plan.classSkills ?? [])];
   const savingThrows: Ability[] = classDef.savingThrows;
 
   // Effetti risolti (razza + lineage)
@@ -630,7 +667,8 @@ export function buildCharacterSheet(
   // Scelte di creazione (per riproducibilità)
   const choices: CharacterChoices = {
     abilityBoosts: plan.boosts,
-    skillChoices: [],
+    asiBoosts: plan.asiBoosts ?? [],
+    skillChoices: plan.classSkills ?? [],
     toolChoices: bgData.toolProficiency?.type === 'CHOICE' ? [] : undefined,
     featChoice: bgData.feat.requiresChoice ? '' : undefined,
   };

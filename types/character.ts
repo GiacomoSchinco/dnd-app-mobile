@@ -1,4 +1,4 @@
-import type { Ability, AbilityScores } from './ability';
+import type { Ability, AbilityAbbreviation, AbilityScores } from './ability';
 import type { SkillName } from './skill';
 import type { EffectRaw } from './effects';
 import type { SpellSlot, SpellProgression } from './spellcasting';
@@ -163,6 +163,8 @@ export interface CharacterMoney {
 export interface CharacterChoices {
   /** Boost abilità applicati dal background */
   abilityBoosts?: { ability: Ability; amount: 1 | 2 }[];
+  /** ASI applicati (5.5e: +2 a una caratteristica oppure +1 a due) */
+  asiBoosts?: { ability: Ability; amount: 1 | 2 }[];
   /** Competenze abilità scelte (classe / razza / talenti) */
   skillChoices?: SkillName[];
   /** Competenze strumenti scelte */
@@ -241,12 +243,40 @@ export interface Character {
   notes?: string;
 }
 
+// ── Bozza di creazione (input del wizard) ──────────────────────
+
+/**
+ * Input completi per creare un personaggio (wizard → `createCharacterFull`).
+ * Strutturalmente compatibile con RaceChoice/ClassChoice/BackgroundChoice/
+ * AbilityAssignment di `lib/rules/character-builder.ts`.
+ */
+export interface CharacterDraft {
+  name: string;
+  race: { raceId?: number; raceName?: string; lineageId?: number };
+  classChoice: { classId?: number; className?: string; subclassId?: number; level: number };
+  background: { backgroundId: number; chosenSkills?: string[] };
+  /** Skill di classe scelte (competenze dalla classe) */
+  classSkills?: SkillName[];
+  /** Tiro del dado vita al 1° livello (opzionale: se assente, PF = dado MAX + CON) */
+  hpRoll?: number;
+  abilities: {
+    method: 'standard' | 'point_buy' | 'manual';
+    scores: AbilityScores;
+    boosts?: { ability: Ability; amount: 1 | 2 }[];
+    asiBoosts?: { ability: Ability; amount: 1 | 2 }[];
+    allowedBoosts?: AbilityAbbreviation[];
+    distributionModes?: string[];
+  };
+}
+
 /** Stato dello store dei personaggi */
 export interface CharacterState {
   characters: Character[];
   activeCharacterId: string | null;
 
   createCharacter: (name: string, className: ClassName, level?: number) => void;
+  /** Crea un personaggio COMPLETO dal wizard (buildCharacter + buildCharacterSheet) */
+  createCharacterFull: (draft: CharacterDraft) => Character | null;
   deleteCharacter: (id: string) => void;
   setActiveCharacterId: (id: string | null) => void;
   updateCharacter: (id: string, updates: Partial<Omit<Character, 'id'>>) => void;
@@ -268,6 +298,8 @@ export interface ActiveCharacterActions {
   useSpellSlot: (level: number) => void;
   restoreSpellSlots: (level?: number) => void;
   createCharacter: (name: string, className: ClassName, level?: number) => void;
+  /** Crea un personaggio COMPLETO dal wizard (buildCharacter + buildCharacterSheet) */
+  createCharacterFull: (draft: CharacterDraft) => Character | null;
   deleteCharacter: (id: string) => void;
   updateCharacter: (id: string, updates: Partial<Omit<Character, 'id'>>) => void;
 }

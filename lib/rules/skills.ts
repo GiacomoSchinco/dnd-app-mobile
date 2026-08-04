@@ -43,6 +43,12 @@ export function getSkillNameItalian(name: string): string {
   return getSkill(name as SkillName)?.nameIt ?? name;
 }
 
+/** Converte un nome italiano in SkillName (es. 'Atletica' → 'athletics') */
+export function parseSkillFromItalian(name: string): SkillName | undefined {
+  const lower = name.toLowerCase();
+  return SKILLS_DATA.find((s) => s.nameIt.toLowerCase() === lower)?.name;
+}
+
 /** Restituisce l'abilità associata a una skill */
 export function getSkillAbility(skillName: SkillName): Ability | undefined {
   return getSkill(skillName)?.ability;
