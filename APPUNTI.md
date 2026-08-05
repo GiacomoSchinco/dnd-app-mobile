@@ -114,12 +114,42 @@ cambiando l'import in `App.tsx`. I temi supportano transizioni animate, haptic e
 ## 💡 Comandi
 
 ```bash
-npm start          # Avvia Expo dev server
-npm run ios        # Avvia su iOS simulator
-npm run android    # Avvia su Android emulator
-npm run web        # Avvia su browser
+# ── Dev server ──────────────────────────────────────────────
+npm start                # Avvia Expo dev server
+npm run ios              # Avvia su iOS simulator
+npm run android          # Avvia su Android emulator
+npm run web              # Avvia su browser
 npx expo start --clear   # Riavvia Metro pulendo la cache (dopo modifiche a babel/metro/nuovi moduli nativi)
+
+# ── Build Android APK locale (senza EAS, senza Android Studio) ──
+cd android
+.\gradlew.bat assembleRelease        # APK di release (firmato con debug keystore)
+.\gradlew.bat assembleDebug          # APK di debug
+cd ..
+
+# APK generato →  android\app\build\outputs\apk\release\app-release.apk
+# (si installa direttamente su dispositivo via sideload; NON per il Play Store)
 ```
+
+### 🛠️ Setup build locale (già configurato, solo se ri-fai `prebuild --clean`)
+
+Due prerequisiti necessari per `gradlew` (mancavano entrambi → build in errore):
+
+1. **JDK 17** (Gradle 8.14.3 non supporta il JDK 25 installato → errore
+   *"Unsupported class file major version 69"*).
+   Portable in `C:\Users\giaco\.jdks\jdk-17.0.20+8`, puntato da
+   `org.gradle.java.home=` in `android\gradle.properties`.
+   > Se il JDK 17 non c'è più: scaricarlo da
+   > `https://api.adoptium.net/v3/binary/latest/17/ga/windows/x64/jdk/hotspot/normal/eclipse`
+   > (zip) ed estrarlo in `%USERPROFILE%\.jdks`.
+
+2. **Android SDK** in `C:\Users\giaco\Android\Sdk` (mancava → errore
+   *"SDK location not found"*), puntato da `sdk.dir=` in `android\local.properties`.
+   > Se manca: installare command-line tools + pacchetti
+   > (`platforms;android-36`, `build-tools;36.0.0`). NDK e CMake li installa Gradle da solo.
+
+⚠️ **`npx expo prebuild --clean` rigenera `android/`**: va riapplicato
+`org.gradle.java.home` (gradle.properties) e `sdk.dir` (local.properties).
 
 ## 📝 Regole (per me)
 

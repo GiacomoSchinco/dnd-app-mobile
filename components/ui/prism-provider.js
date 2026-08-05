@@ -1,6 +1,10 @@
-import React, { createContext, useContext, useState, useCallback } from 'react'
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { Vibration, Platform } from 'react-native'
 import defaultTheme from './themes/default.js'
+import { THEMES } from './themes/registry.js'
+import { fileSystemStorage } from '../../store/file-system-storage'
+
+const THEME_STORAGE_KEY = 'app-theme'
 
 const PrismContext = createContext(null)
 
@@ -19,13 +23,40 @@ const triggerHaptic = (type) => {
 }
 
 export function PrismProvider({ theme = defaultTheme, children }) {
-  const [activeTheme, setActiveTheme] = useState(theme)
+  // Stato iniziale: su web lo storage è sincrono → possiamo leggere subito
+  // il tema salvato ed evitare il "flash" del tema sbagliato all'avvio.
+  const [activeTheme, setActiveTheme] = useState(() => {
+    if (Platform.OS === 'web') {
+      try {
+        const saved = fileSystemStorage.getItem(THEME_STORAGE_KEY)
+        if (saved && THEMES[saved]) return THEMES[saved]
+      } catch {}
+    }
+    return theme
+  })
   const [transitioning, setTransitioning] = useState(false)
   const [prevTheme, setPrevTheme] = useState(null)
+
+  // Su nativo lo storage è asincrono: carica il tema salvato dopo il mount.
+  useEffect(() => {
+    if (Platform.OS === 'web') return
+    let mounted = true
+    ;(async () => {
+      try {
+        const saved = await fileSystemStorage.getItem(THEME_STORAGE_KEY)
+        if (mounted && saved && THEMES[saved]) setActiveTheme(THEMES[saved])
+      } catch {}
+    })()
+    return () => { mounted = false }
+  }, [])
 
   const setTheme = useCallback((newTheme, options = {}) => {
     const { animated = true, haptic = true } = options
     if (haptic && newTheme.haptic?.enabled) { triggerHaptic(newTheme.haptic.type || 'medium') }
+    // Persisti la scelta (chiave = newTheme.name) per ripristinarla al prossimo avvio
+    try {
+      Promise.resolve(fileSystemStorage.setItem(THEME_STORAGE_KEY, newTheme.name)).catch(() => {})
+    } catch {}
     if (animated && newTheme.transition?.enabled) {
       setPrevTheme(activeTheme)
       setTransitioning(true)
