@@ -91,7 +91,12 @@ export default function CharacterDetailScreen() {
 
   return (
     <Screen>
-      <ScreenHeader title="Scheda Personaggio" icon="person-outline" />
+      <ScreenHeader
+        title="Scheda Personaggio"
+        icon="person-outline"
+        onBack={() => navigation.navigate(ROUTES.HOME)}
+        backLabel="Personaggi"
+      />
 
       {/* Card nome e classe — stile HomeScreen */}
       <View style={[s.fullWidth, s.mb(t.spacing[5]), {

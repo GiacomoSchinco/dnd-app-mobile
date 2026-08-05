@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { AltroStackParamList } from '../../types/navigation';
+import type { RootStackParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Badge } from '../../components/ui/badge';
 import CompendiumList, {
@@ -16,7 +16,7 @@ import { s } from '../../utils/style-helpers';
 
 export default function RazzeListScreen() {
   const t = useTokens();
-  const navigation = useNavigation<NativeStackNavigationProp<AltroStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const races = getAllRaces();
 
   return (

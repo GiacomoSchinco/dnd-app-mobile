@@ -1,6 +1,7 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { AltroToTabNav, AltroStackParamList } from '../../types/navigation';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
@@ -8,7 +9,6 @@ import BackButton from '../../components/custom/BackButton';
 import DndIcon from '../../components/custom/DndIcon';
 import ListItem from '../../components/custom/ListItem';
 import { s } from '../../utils/style-helpers';
-import { ROUTES } from '../../lib/routes';
 import { ALTRO_ROUTES } from '../more/altro-routes';
 import type { IconName } from '../../components/custom/DndIcon';
 
@@ -38,14 +38,15 @@ const SECTIONS: CompendioSection[] = [
   { key: 'equipaggiamento', label: 'Equipaggiamento', icon: 'gear', description: 'Equipaggiamento da avventuriero' },
 ];
 
-// Mappa voce del menu → schermata dello stack Altro
-const SECTION_ROUTES: Record<string, keyof AltroStackParamList> = {
+// Mappa voce del menu → schermata dello stack radice (RootStack)
+const SECTION_ROUTES: Record<string, keyof RootStackParamList> = {
   classi: ALTRO_ROUTES.CLASSI,
   razze: ALTRO_ROUTES.RAZZE,
   background: ALTRO_ROUTES.BACKGROUND,
   talenti: ALTRO_ROUTES.TALENTI,
   oggetti: ALTRO_ROUTES.OGGETTI,
   equipaggiamento: ALTRO_ROUTES.EQUIPAGGIAMENTO,
+  magie: ALTRO_ROUTES.COMPENDIO_MAGIE,
 };
 
 const SECTION_COLORS: Record<string, string> = {
@@ -60,21 +61,17 @@ const SECTION_COLORS: Record<string, string> = {
 
 export default function CompendioScreen() {
   const t = useTokens();
-  const navigation = useNavigation<AltroToTabNav>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const handlePress = (key: CompendioSectionKey) => {
-    if (key === 'magie') {
-      // Gli incantesimi vivono nella tab Magie esistente
-      navigation.navigate(ROUTES.MAGIE);
-      return;
-    }
+    // Tutte le sezioni (inclusa "Incantesimi") aprono una schermata dello stack radice
     const route = SECTION_ROUTES[key];
     if (route) navigation.navigate(route);
   };
 
   return (
     <Screen>
-      <BackButton onPress={() => navigation.goBack()} label="Torna al menu" />
+      <BackButton onPress={() => navigation.goBack()} label="Torna alla Home" />
       <ScreenHeader title="Compendio" icon="book-outline" />
       <Text
         style={{

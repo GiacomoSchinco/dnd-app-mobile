@@ -120,10 +120,76 @@ export const useCharacterStore = create<CharacterState>()(
         }));
       },
 
-      togglePreparedSpell: (_slug) => { /* TODO */ },
-      toggleFavoriteSpell: (_slug) => { /* TODO */ },
-      useSpellSlot: (_level) => { /* TODO */ },
-      restoreSpellSlots: (_level) => { /* TODO */ },
+      togglePreparedSpell: (spellName) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) =>
+              c.id === id
+                ? {
+                    ...c,
+                    preparedSpells: c.preparedSpells.includes(spellName)
+                      ? c.preparedSpells.filter((n) => n !== spellName)
+                      : [...c.preparedSpells, spellName],
+                  }
+                : c,
+            ),
+          };
+        }),
+
+      toggleFavoriteSpell: (spellName) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) =>
+              c.id === id
+                ? {
+                    ...c,
+                    favoriteSpells: c.favoriteSpells.includes(spellName)
+                      ? c.favoriteSpells.filter((n) => n !== spellName)
+                      : [...c.favoriteSpells, spellName],
+                  }
+                : c,
+            ),
+          };
+        }),
+
+      useSpellSlot: (level) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) => {
+              if (c.id !== id) return c;
+              const slot = c.spellSlots?.[level];
+              if (!slot) return c;
+              return {
+                ...c,
+                spellSlots: { ...c.spellSlots, [level]: { ...slot, current: Math.max(0, slot.current - 1) } },
+              };
+            }),
+          };
+        }),
+
+      restoreSpellSlots: (level) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) => {
+              if (c.id !== id) return c;
+              const slots = { ...c.spellSlots };
+              const keys = level != null ? [level] : Object.keys(slots).map(Number);
+              keys.forEach((lvl) => {
+                const slot = slots[lvl];
+                if (slot) slots[lvl] = { ...slot, current: slot.max };
+              });
+              return { ...c, spellSlots: slots };
+            }),
+          };
+        }),
     }),
     {
       name: 'dnd-characters',

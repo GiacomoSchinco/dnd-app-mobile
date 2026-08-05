@@ -8,9 +8,11 @@ import { ROUTES } from '../../lib/routes';
 import { getClassNameItalian } from '../../lib/rules/classes';
 import Screen from '../../components/custom/Screen';
 import ClassAvatar from '../../components/custom/ClassAvatar';
+import HomeQuickActions from '../../components/custom/HomeQuickActions';
 import { s } from '../../utils/style-helpers';
 import { useCharacterStore } from '../../store/useCharacterStore';
 import type { Character } from '../../types';
+import type { QuickActionRoute } from '../../components/custom/HomeQuickActions';
 
 function CharacterCard({ character, onPress }: { character: Character; onPress: () => void }) {
   const t = useTokens();
@@ -59,6 +61,11 @@ export default function HomeScreen() {
     navigation.navigate(ROUTES.CHARACTER_DETAIL);
   };
 
+  // Accesso diretto a Impostazioni/Compendio: pusha sullo stack radice (schermo intero, back = Home)
+  const handleQuickAction = (screen: QuickActionRoute) => {
+    navigation.navigate(screen);
+  };
+
   if (characters.length === 0) {
     return (
       <Screen scrollable={false}>
@@ -101,6 +108,8 @@ export default function HomeScreen() {
             </Text>
           </Pressable>
         </View>
+
+        <HomeQuickActions onPress={handleQuickAction} />
       </Screen>
     );
   }
@@ -147,6 +156,8 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: t.spacing[8] }}
       />
+
+      <HomeQuickActions onPress={handleQuickAction} />
     </Screen>
   );
 }

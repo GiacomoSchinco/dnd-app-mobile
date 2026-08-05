@@ -1,4 +1,4 @@
-import type { CompositeNavigationProp } from '@react-navigation/native';
+import type { CompositeNavigationProp, NavigatorScreenParams } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -6,17 +6,14 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
  * Parametri delle route di navigazione (per tipizzare `useNavigation`).
  */
 
-/** Stack radice (Main = tab navigator + schermate pushate) */
+/** Stack radice (Main = tab navigator + schermate pushate a schermo intero) */
 export type RootStackParamList = {
   Main: undefined;
   CharacterCreate: undefined;
-};
-
-/** Stack interno della tab Altro (AltroStack) */
-export type AltroStackParamList = {
-  AltroMenu: undefined;
+  /** Sezioni consultive — raggiungibili SOLO dalla Home, senza storico nel menu Altro */
   Impostazioni: undefined;
   Compendio: undefined;
+  CompendioMagie: undefined;
   Classi: undefined;
   Razze: undefined;
   Background: undefined;
@@ -25,13 +22,20 @@ export type AltroStackParamList = {
   Oggetti: undefined;
 };
 
+/** Stack interno della tab Altro (AltroStack) — ora contiene solo il menu */
+export type AltroStackParamList = {
+  AltroMenu: undefined;
+};
+
 /** Tab navigator (Main) */
 export type TabParamList = {
   Home: undefined;
   CharacterDetail: undefined;
   Magie: undefined;
   Oggetti: undefined;
-  Altro: undefined;
+  /** Tab "Altro" = AltroStack annidato: consente di navigare a una sua schermata
+   *  direttamente (es. `navigate('Altro', { screen: 'Impostazioni' })`). */
+  Altro: NavigatorScreenParams<AltroStackParamList>;
   Dadi: undefined;
 };
 
@@ -39,10 +43,4 @@ export type TabParamList = {
 export type TabToRootNav = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamList>,
   NativeStackNavigationProp<RootStackParamList>
->;
-
-/** Navigazione da una schermata AltroStack verso la tab bar (es. Compendio → Magie) */
-export type AltroToTabNav = CompositeNavigationProp<
-  NativeStackNavigationProp<AltroStackParamList>,
-  BottomTabNavigationProp<TabParamList>
 >;

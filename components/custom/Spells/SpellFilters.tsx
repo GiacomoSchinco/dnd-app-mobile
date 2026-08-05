@@ -3,11 +3,14 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
 import Modal from '../../ui/modal';
+import FilterChip from '../FilterChip';
 import { s } from '../../../utils/style-helpers';
 import type { ClassName } from '../../../types';
 import { CLASS_LABELS, SCHOOL_COLORS, getSchoolColor, getLevelCounts } from './types';
 
 const SCHOOL_KEYS = Object.keys(SCHOOL_COLORS);
+const LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const CLASS_KEYS = Object.keys(CLASS_LABELS) as ClassName[];
 
 type Props = {
   search: string;
@@ -22,6 +25,8 @@ type Props = {
   onFavoritesOnlyChange: (v: boolean) => void;
   filteredCount: number;
   hasActiveCharacter: boolean;
+  /** Classe "bloccata" del PG attivo: la lista è filtrata su di essa e il filtro non è modificabile */
+  lockedClass?: string | null;
 };
 
 export default function SpellFilters({
@@ -37,12 +42,14 @@ export default function SpellFilters({
   onFavoritesOnlyChange,
   filteredCount,
   hasActiveCharacter,
+  lockedClass,
 }: Props) {
   const t = useTokens();
   const levelCounts = useMemo(() => getLevelCounts(), []);
   const [classModalVisible, setClassModalVisible] = useState(false);
 
-  const allClasses = Object.keys(CLASS_LABELS) as ClassName[];
+  // Se il PG attivo ha una classe il filtro è forzato su di essa → il tasto sparisce
+  const isClassLocked = !!lockedClass;
   const selectedClassName = classFilter
     ? (CLASS_LABELS[classFilter as ClassName] ?? classFilter)
     : null;
@@ -59,92 +66,54 @@ export default function SpellFilters({
       {/* Level filter */}
       <View style={s.mb(t.spacing[3])}>
         <View style={[s.rowWrap, s.gap(t.spacing[1.5])]}>
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((lvl) => {
+          {LEVELS.map((lvl) => {
             const active = levelFilter === lvl;
             return (
-              <TouchableOpacity
+              <FilterChip
                 key={lvl}
+                active={active}
                 onPress={() => onLevelFilterChange(active ? null : lvl)}
-                style={{
-                  paddingHorizontal: t.spacing[2.5],
-                  paddingVertical: t.spacing[1],
-                  borderRadius: t.radius.full,
-                  backgroundColor: active ? getSchoolColor(SCHOOL_KEYS[lvl % SCHOOL_KEYS.length]) : t.colors.backgroundSecondary,
-                  borderWidth: 1,
-                  borderColor: active ? 'transparent' : t.colors.border,
-                }}
-              >
-                <Text style={{
-                  fontSize: t.typography.xs,
-                  fontWeight: active ? '600' : '400',
-                  color: active ? '#FFFFFF' : t.colors.foregroundSecondary,
-                }}>
-                  {lvl === 0 ? '☆' : `${lvl}°`}
-                  {' '}
-                  {levelCounts[lvl] != null && (
-                    <Text style={{ opacity: 0.6 }}>{levelCounts[lvl]}</Text>
-                  )}
-                </Text>
-              </TouchableOpacity>
+                activeBg={getSchoolColor(SCHOOL_KEYS[lvl % SCHOOL_KEYS.length])}
+                activeFg="#FFFFFF"
+                label={
+                  <>
+                    {lvl === 0 ? '☆' : `${lvl}°`}
+                    {' '}
+                    {levelCounts[lvl] != null && (
+                      <Text style={{ opacity: 0.6 }}>{levelCounts[lvl]}</Text>
+                    )}
+                  </>
+                }
+              />
             );
           })}
         </View>
       </View>
 
-      {/* Class & toggle filters */}
+      {/* Class & toggle filters — il filtro classe sparisce se la lista è legata al PG */}
       <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>
-        <TouchableOpacity
-          onPress={() => setClassModalVisible(true)}
-          style={{
-            paddingHorizontal: t.spacing[2.5], paddingVertical: t.spacing[1],
-            borderRadius: t.radius.full,
-            backgroundColor: classFilter ? t.colors.accent : t.colors.backgroundSecondary,
-            borderWidth: 1, borderColor: classFilter ? 'transparent' : t.colors.border,
-          }}
-        >
-          <Text style={{
-            fontSize: t.typography.xs,
-            fontWeight: classFilter ? '600' : '400',
-            color: classFilter ? t.colors.accentForeground : t.colors.foregroundSecondary,
-          }}>
-            🎯 {selectedClassName ?? 'Tutte le classi'}
-          </Text>
-        </TouchableOpacity>
+        {!isClassLocked && (
+          <FilterChip
+            label={`🎯 ${selectedClassName ?? 'Tutte le classi'}`}
+            active={!!classFilter}
+            onPress={() => setClassModalVisible(true)}
+          />
+        )}
 
         {hasActiveCharacter && (
           <>
-            <TouchableOpacity
+            <FilterChip
+              label="✓ Preparate"
+              active={showPreparedOnly}
               onPress={() => onPreparedOnlyChange(!showPreparedOnly)}
-              style={{
-                paddingHorizontal: t.spacing[2.5], paddingVertical: t.spacing[1],
-                borderRadius: t.radius.full,
-                backgroundColor: showPreparedOnly ? t.colors.accent : t.colors.backgroundSecondary,
-                borderWidth: 1, borderColor: showPreparedOnly ? 'transparent' : t.colors.border,
-              }}
-            >
-              <Text style={{
-                fontSize: t.typography.xs,
-                color: showPreparedOnly ? t.colors.accentForeground : t.colors.foregroundSecondary,
-              }}>
-                ✓ Preparate
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+            />
+            <FilterChip
+              label="★ Preferite"
+              active={showFavoritesOnly}
               onPress={() => onFavoritesOnlyChange(!showFavoritesOnly)}
-              style={{
-                paddingHorizontal: t.spacing[2.5], paddingVertical: t.spacing[1],
-                borderRadius: t.radius.full,
-                backgroundColor: showFavoritesOnly ? '#F59E0B' : t.colors.backgroundSecondary,
-                borderWidth: 1, borderColor: showFavoritesOnly ? 'transparent' : t.colors.border,
-              }}
-            >
-              <Text style={{
-                fontSize: t.typography.xs,
-                color: showFavoritesOnly ? '#FFFFFF' : t.colors.foregroundSecondary,
-              }}>
-                ★ Preferite
-              </Text>
-            </TouchableOpacity>
+              activeBg="#F59E0B"
+              activeFg="#FFFFFF"
+            />
           </>
         )}
       </View>
@@ -196,32 +165,19 @@ export default function SpellFilters({
           </TouchableOpacity>
 
           <View style={[s.rowWrap, s.gap(t.spacing[2])]}>
-            {allClasses.map((c) => {
+            {CLASS_KEYS.map((c) => {
               const active = classFilter?.toLowerCase() === c;
               return (
-                <TouchableOpacity
+                <FilterChip
                   key={c}
+                  size="sm"
+                  active={active}
                   onPress={() => {
                     onClassFilterChange(active ? null : c);
                     setClassModalVisible(false);
                   }}
-                  style={{
-                    paddingHorizontal: t.spacing[3],
-                    paddingVertical: t.spacing[2],
-                    borderRadius: t.radius.full,
-                    backgroundColor: active ? t.colors.accent : t.colors.backgroundSecondary,
-                    borderWidth: 1,
-                    borderColor: active ? 'transparent' : t.colors.border,
-                  }}
-                >
-                  <Text style={{
-                    fontSize: t.typography.sm,
-                    fontWeight: active ? '600' : '400',
-                    color: active ? t.colors.accentForeground : t.colors.foregroundSecondary,
-                  }}>
-                    {CLASS_LABELS[c]}
-                  </Text>
-                </TouchableOpacity>
+                  label={CLASS_LABELS[c]}
+                />
               );
             })}
           </View>
