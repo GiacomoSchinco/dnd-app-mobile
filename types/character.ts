@@ -1,6 +1,7 @@
 import type { Ability, AbilityAbbreviation, AbilityScores } from './ability';
 import type { SkillName } from './skill';
 import type { EffectRaw } from './effects';
+import type { FeatModifierRaw } from './feat';
 import type { SpellSlot, SpellProgression } from './spellcasting';
 
 // ── Classi di personaggio (className) ──────────────────────────
@@ -77,6 +78,8 @@ export interface CharacterProficiencies {
   weapons: WeaponType[];
   tools: string[];
   skills: SkillName[];
+  /** Skill con Maestria (Expertise): bonus di competenza raddoppiato */
+  expertise?: SkillName[];
   savingThrows: Ability[];
   languages: string[];
 }
@@ -160,6 +163,16 @@ export interface CharacterMoney {
 
 // ── Scelte fatte in creazione (per riproducibilità) ────────────
 
+/** Scelta incantesimi del talento "Iniziato alla Magia" */
+export interface FeatSpellChoice {
+  /** Caratteristica da incantatore scelta (INT/SAG/CAR) */
+  ability: Ability;
+  /** Trucchetti imparati (nomi incantesimo) */
+  cantrips: string[];
+  /** Incantesimo di 1° livello imparato */
+  spells: string[];
+}
+
 export interface CharacterChoices {
   /** Boost abilità applicati dal background */
   abilityBoosts?: { ability: Ability; amount: 1 | 2 }[];
@@ -171,8 +184,8 @@ export interface CharacterChoices {
   toolChoices?: string[];
   /** Talento origine scelto (es. da effetto "Versatile") */
   originFeatChoice?: string;
-  /** Scelta per i feat con requires_choice */
-  featChoice?: string;
+  /** Scelta per i feat: stringa per quelli semplici, oggetto per "Iniziato alla Magia" */
+  featChoice?: string | FeatSpellChoice;
   /** Incantesimi scelti come noti/preparati */
   spellChoices?: string[];
 }
@@ -219,6 +232,8 @@ export interface Character {
   // Talenti / Doni epici
   feats?: string[];
   epicBoons?: string[];
+  /** Modificatori concessi dai talenti (granted_modifiers aggregati) */
+  featModifiers?: FeatModifierRaw[];
 
   // Tratti (effetti risolti: razza + lineage + talenti)
   effects?: EffectRaw[];
@@ -257,6 +272,16 @@ export interface CharacterDraft {
   background: { backgroundId: number; chosenSkills?: string[] };
   /** Skill di classe scelte (competenze dalla classe) */
   classSkills?: SkillName[];
+  /** Strumenti scelti per la competenza a scelta del background (CHOICE) */
+  bgToolChoices?: string[];
+  /** Strumenti scelti per il choice_config del talento (tool_proficiency) */
+  featToolChoices?: string[];
+  /** Abilità scelte per il talento "Abile" (hybrid_proficiency) */
+  featSkillChoices?: SkillName[];
+  /** Scelta incantesimi per il talento "Iniziato alla Magia" (spellcasting) */
+  featSpellChoice?: FeatSpellChoice;
+  /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità", Elfo "Sensi Acuti") */
+  raceSkillChoices?: SkillName[];
   /** Tiro del dado vita al 1° livello (opzionale: se assente, PF = dado MAX + CON) */
   hpRoll?: number;
   abilities: {

@@ -53,9 +53,12 @@ export function PrismProvider({ theme = defaultTheme, children }) {
   const setTheme = useCallback((newTheme, options = {}) => {
     const { animated = true, haptic = true } = options
     if (haptic && newTheme.haptic?.enabled) { triggerHaptic(newTheme.haptic.type || 'medium') }
-    // Persisti la scelta (chiave = newTheme.name) per ripristinarla al prossimo avvio
+    // Persisti la scelta usando la CHIAVE del registro: `theme.name` può differire
+    // dalla chiave (es. 'darkFantasy' vs 'dark_fantasy') e al reload si legge
+    // THEMES[chiave] → senza questo il tema non veniva ripristinato all'avvio.
+    const key = Object.keys(THEMES).find((k) => THEMES[k] === newTheme) ?? newTheme.name
     try {
-      Promise.resolve(fileSystemStorage.setItem(THEME_STORAGE_KEY, newTheme.name)).catch(() => {})
+      Promise.resolve(fileSystemStorage.setItem(THEME_STORAGE_KEY, key)).catch(() => {})
     } catch {}
     if (animated && newTheme.transition?.enabled) {
       setPrevTheme(activeTheme)

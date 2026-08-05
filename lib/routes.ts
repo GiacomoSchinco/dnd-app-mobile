@@ -4,7 +4,7 @@
  */
 export const ROUTES = {
   HOME: 'Home',
-  OGGETTI: 'Oggetti',
+  ABILITA: 'Abilita',
   MAGIE: 'Magie',
   ALTRO: 'Altro',
   DADI: 'Dadi',

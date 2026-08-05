@@ -1,0 +1,106 @@
+import { View, Text, ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTokens } from '../../components/ui/prism-provider';
+import TabHeader from '../../components/custom/TabHeader';
+import EmptyState from '../../components/custom/EmptyState';
+import CharacterBar from '../../components/custom/Spells/CharacterBar';
+import { getAllSkills } from '../../lib/rules/skills';
+import { getAllAbilities, getAbilityModifier, formatModifier } from '../../lib/rules/abilities';
+import { useActiveCharacter } from '../../store/useActiveCharacter';
+import { s } from '../../utils/style-helpers';
+
+/** Le 6 caratteristiche in ordine canonico (FOR → CAR) */
+const ABILITIES = getAllAbilities();
+
+/**
+ * Tab "Abilità" — elenco leggibile delle 18 skill del PG attivo.
+ * Modificatore = abilità + bonus di competenza (raddoppiato per maestria/expertise).
+ * Le competenze includono quelle da classe, background, talenti e razza.
+ */
+export default function SkillsScreen() {
+  const t = useTokens();
+  const insets = useSafeAreaInsets();
+  const { activeChar } = useActiveCharacter();
+
+  if (!activeChar) {
+    return (
+      <EmptyState
+        emoji="🎯"
+        title="Nessun personaggio selezionato"
+        message="Apri un personaggio dalla Home per vedere le sue abilità."
+      />
+    );
+  }
+
+  const pb = activeChar.proficiencyBonus ?? 0;
+  const profSkills = activeChar.proficiencies?.skills ?? [];
+  const expSkills = activeChar.proficiencies?.expertise ?? [];
+
+  return (
+    <View style={[s.flex, { backgroundColor: t.colors.background }]}>
+      <TabHeader title="Abilità" icon="bulb-outline">
+        <CharacterBar activeChar={activeChar} />
+        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[1] }}>
+          ✓ competenza · ⭐ maestria (expertise) — qui decidi cosa fare fuori dal combattimento
+        </Text>
+      </TabHeader>
+
+      <ScrollView
+        contentContainerStyle={{ paddingHorizontal: t.spacing[4], paddingBottom: insets.bottom + 88 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {ABILITIES.map((ab) => {
+          const group = getAllSkills().filter((sk) => sk.ability === ab.name);
+          if (group.length === 0) return null;
+          return (
+            <View key={ab.name} style={{ marginBottom: t.spacing[4] }}>
+              <View style={[s.row, { justifyContent: 'space-between', marginBottom: t.spacing[1] }]}>
+                <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                  {ab.nameIt}
+                </Text>
+                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>{ab.abbreviation}</Text>
+              </View>
+              <View style={{ borderRadius: t.radius.lg, borderWidth: 1, borderColor: t.colors.border, backgroundColor: t.colors.backgroundSecondary, overflow: 'hidden' }}>
+                {group.map((skill, idx) => {
+                  const prof = profSkills.includes(skill.name);
+                  const exp = expSkills.includes(skill.name);
+                  const abMod = getAbilityModifier(activeChar.abilities[skill.ability] ?? 10);
+                  const total = abMod + (exp ? pb * 2 : prof ? pb : 0);
+                  return (
+                    <View
+                      key={skill.name}
+                      style={[
+                        s.row,
+                        { justifyContent: 'space-between', paddingHorizontal: t.spacing[3], paddingVertical: t.spacing[2.5] },
+                        idx > 0 && { borderTopWidth: 1, borderTopColor: t.colors.border },
+                      ]}
+                    >
+                      <View style={[s.row, s.gap(t.spacing[2])]}>
+                        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, width: 16 }}>
+                          {exp ? '⭐' : prof ? '✓' : ''}
+                        </Text>
+                        <Text style={{ fontSize: t.typography.sm, color: prof || exp ? t.colors.foreground : t.colors.foregroundSecondary, fontWeight: prof || exp ? '600' : '400' }}>
+                          {skill.nameIt}
+                        </Text>
+                      </View>
+                      <View style={[s.row, s.gap(t.spacing[1.5])]}>
+                        {(prof || exp) && (
+                          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+                            {formatModifier(abMod)} + {exp ? pb * 2 : pb}
+                          </Text>
+                        )}
+                        <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: prof || exp ? t.colors.accent : t.colors.foreground, minWidth: 32, textAlign: 'right' }}>
+                          {formatModifier(total)}
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+}

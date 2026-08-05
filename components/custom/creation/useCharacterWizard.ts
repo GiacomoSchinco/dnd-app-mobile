@@ -4,10 +4,14 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getAllClasses, getClass } from '../../../lib/rules/classes';
 import { getSubclassesByClassId, type SubclassDefinition } from '../../../lib/rules/subclasses';
 import { getClassProgression, getFeaturesAtLevel, getAsiLevels } from '../../../lib/rules/progression';
-import { hasLineages } from '../../../lib/rules/races';
+import { hasLineages, getRaceEffects } from '../../../lib/rules/races';
 import { getBackground } from '../../../lib/rules/backgrounds';
-import { STANDARD_ARRAY, parseAbilityFromAbbreviation, getAbilityModifier } from '../../../lib/rules/abilities';
-import { parseSkillFromItalian } from '../../../lib/rules/skills';
+import { getFeat } from '../../../lib/rules/feats';
+import { getToolOptions, type ToolOption } from '../../../lib/rules/apply-feat';
+import { STANDARD_ARRAY, parseAbilityFromAbbreviation, getAbilityLabel, getAbilityModifier } from '../../../lib/rules/abilities';
+import { parseSkillFromItalian, getAllSkills, getSkillNameItalian } from '../../../lib/rules/skills';
+import { getClassSpellsAtLevel } from '../../../lib/rules/spells';
+import type { FeatChoiceState, FeatChoiceType } from './FeatChoice';
 import { calculateFinalAbilities, type AbilityBoost } from '../../../lib/rules/character-builder';
 import type { AbilityAssignmentResult } from '../../../lib/rules/character-builder';
 import { useCharacterStore } from '../../../store/useCharacterStore';
@@ -80,10 +84,21 @@ export interface CharacterWizard {
   setRaceId: (id: number) => void;
   lineageId: number | null;
   setLineageId: (id: number | null) => void;
+  raceSkillOptions: { key: SkillName; label: string }[];
+  raceSkills: SkillName[];
+  raceSkillCount: number;
+  toggleRaceSkill: (skill: SkillName) => void;
 
   // ── Background ──
   backgroundId: number | null;
   setBackgroundId: (id: number) => void;
+
+  // ── Talento di origine ──
+  bgToolOptions: ToolOption[];
+  bgToolChoices: string[];
+  bgToolCount: number;
+  toggleBgTool: (slug: string) => void;
+  featChoice: FeatChoiceState;
 
   // ── Punteggi ──
   assigned: Partial<Record<Ability, number>>;
@@ -135,9 +150,110 @@ export function useCharacterWizard(): CharacterWizard {
   const [editingAbility, setEditingAbility] = useState<Ability | null>(null);
   const [picks, setPicks] = useState<(Ability | null)[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [bgToolChoices, setBgToolChoices] = useState<string[]>([]);
+  const [featToolChoices, setFeatToolChoices] = useState<string[]>([]);
+  const [featSkillChoices, setFeatSkillChoices] = useState<SkillName[]>([]);
+  const [featSpellAbility, setFeatSpellAbility] = useState<Ability | null>(null);
+  const [featCantrips, setFeatCantrips] = useState<string[]>([]);
+  const [featSpell, setFeatSpell] = useState<string | null>(null);
+  const [raceSkills, setRaceSkills] = useState<SkillName[]>([]);
 
   // ── Derivati: classe / progressione ──
   const background = backgroundId != null ? getBackground(backgroundId) : undefined;
+
+  // ── Derivati: talento di origine + scelte strumenti ──
+  const originFeat = useMemo(() => {
+    if (!background) return undefined;
+    const fid = background.feat.featId;
+    return fid != null ? getFeat(fid) : undefined;
+  }, [background]);
+  const featChoiceConfig = originFeat?.choice_config as
+    | {
+        type?: string;
+        pool?: string;
+        count?: number;
+        spell_list?: string;
+        cantrips_count?: number;
+        first_level_spells_count?: number;
+        spell_casting_ability_choices?: string[];
+      }
+    | null
+    | undefined;
+  const bgToolOptions = useMemo<ToolOption[]>(() => {
+    const tp = background?.toolProficiency;
+    return tp?.type === 'CHOICE' && tp.category ? getToolOptions(tp.category) : [];
+  }, [background]);
+  const bgToolCount = bgToolOptions.length > 0 ? 1 : 0;
+  const featToolOptions = useMemo<ToolOption[]>(() => {
+    return featChoiceConfig?.type === 'tool_proficiency'
+      ? getToolOptions(featChoiceConfig.pool)
+      : [];
+  }, [featChoiceConfig]);
+  const featToolCount =
+    featChoiceConfig?.type === 'tool_proficiency'
+      ? (featChoiceConfig.count ?? featToolOptions.length)
+      : 0;
+  const featChoiceType = featChoiceConfig?.type as FeatChoiceType | undefined;
+  // "Abile" (hybrid_proficiency): tutte le skill + tutti gli strumenti, budget totale
+  const featSkillOptions = useMemo<{ key: SkillName; label: string }[]>(
+    () => getAllSkills().map((sk) => ({ key: sk.name, label: sk.nameIt })),
+    [],
+  );
+  const allToolOptions = useMemo<ToolOption[]>(() => getToolOptions(), []);
+  const hybridTotal =
+    featChoiceType === 'hybrid_proficiency' ? (featChoiceConfig?.count ?? 3) : 0;
+  // "Iniziato alla Magia" (spellcasting): caratteristica + trucchetti + incantesimo
+  const featAbilityOptions = useMemo<{ key: Ability; label: string }[]>(
+    () =>
+      (featChoiceConfig?.spell_casting_ability_choices ?? [])
+        .map((ab) => parseAbilityFromAbbreviation(ab))
+        .filter((a): a is Ability => a != null)
+        .map((a) => ({ key: a, label: getAbilityLabel(a) })),
+    [featChoiceConfig],
+  );
+  const featCantripOptions = useMemo(
+    () =>
+      featChoiceConfig?.type === 'spellcasting' && featChoiceConfig.spell_list
+        ? getClassSpellsAtLevel(featChoiceConfig.spell_list, 0).map((sp) => ({
+            key: sp.name,
+            label: sp.name,
+          }))
+        : [],
+    [featChoiceConfig],
+  );
+  const featSpellOptions = useMemo(
+    () =>
+      featChoiceConfig?.type === 'spellcasting' && featChoiceConfig.spell_list
+        ? getClassSpellsAtLevel(featChoiceConfig.spell_list, 1).map((sp) => ({
+            key: sp.name,
+            label: sp.name,
+          }))
+        : [],
+    [featChoiceConfig],
+  );
+  const featCantripCount =
+    featChoiceType === 'spellcasting' ? (featChoiceConfig?.cantrips_count ?? 0) : 0;
+
+  // ── Derivati: competenze in abilità dalla razza (Umano "Pluriabilità", Elfo "Sensi Acuti") ──
+  const raceSkillEffects = useMemo(() => {
+    if (raceId == null) return [];
+    return getRaceEffects(raceId, lineageId ?? undefined).filter(
+      (e) => e.type === 'choice' && e.choice_type === 'skill_proficiency',
+    );
+  }, [raceId, lineageId]);
+  const raceSkillOptions = useMemo<{ key: SkillName; label: string }[]>(() => {
+    if (raceSkillEffects.length === 0) return [];
+    const hasFreeChoice = raceSkillEffects.some(
+      (e) => !Array.isArray(e.options) || e.options.length === 0,
+    );
+    if (hasFreeChoice) return getAllSkills().map((sk) => ({ key: sk.name, label: sk.nameIt }));
+    const keys = [
+      ...new Set(raceSkillEffects.flatMap((e) => (e.options ?? []) as SkillName[])),
+    ];
+    return keys.map((key) => ({ key, label: getSkillNameItalian(key) }));
+  }, [raceSkillEffects]);
+  const raceSkillCount = raceSkillEffects.reduce((n, e) => n + (e.count ?? 0), 0);
+
   const classDef = useMemo(() => getClass(selectedClass), [selectedClass]);
   const progression = useMemo(
     () => (classDef ? getClassProgression(classDef.name) : undefined),
@@ -191,6 +307,12 @@ export function useCharacterWizard(): CharacterWizard {
   useEffect(() => {
     const slots = plusTwoPlusOne ? 2 : 3;
     setPicks(Array.from({ length: slots }, () => null));
+    setBgToolChoices([]);
+    setFeatToolChoices([]);
+    setFeatSkillChoices([]);
+    setFeatSpellAbility(null);
+    setFeatCantrips([]);
+    setFeatSpell(null);
     setError(null);
   }, [backgroundId, plusTwoPlusOne]);
 
@@ -209,6 +331,11 @@ export function useCharacterWizard(): CharacterWizard {
     setAsiAssignments(asiLevelsApplied.map(() => ({ mode: 'plus_two', slots: [null] })));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asiLevels, level]);
+
+  // Reset delle skill scelte quando cambia razza/sottorazza
+  useEffect(() => {
+    setRaceSkills([]);
+  }, [raceId, lineageId]);
 
   // ── Derivati: punteggi ──
   const pool = useMemo(
@@ -283,8 +410,26 @@ export function useCharacterWizard(): CharacterWizard {
       case 'subclass':
         return subclassUnlocked && subclasses.length > 0 ? subclassId != null : true;
       case 'race':
-        return raceId != null && (!hasLineages(raceId) || lineageId != null);
-      case 'background': return backgroundId != null;
+        return (
+          raceId != null &&
+          (!hasLineages(raceId) || lineageId != null) &&
+          raceSkills.length === raceSkillCount
+        );
+      case 'background': {
+        const featDone = (() => {
+          if (featChoiceType === 'tool_proficiency') return featToolChoices.length === featToolCount;
+          if (featChoiceType === 'hybrid_proficiency')
+            return featSkillChoices.length + featToolChoices.length === hybridTotal;
+          if (featChoiceType === 'spellcasting')
+            return (
+              featSpellAbility != null &&
+              featCantrips.length === featCantripCount &&
+              featSpell != null
+            );
+          return true;
+        })();
+        return backgroundId != null && bgToolChoices.length === bgToolCount && featDone;
+      }
       case 'abilities': return allAssigned && boostsComplete && asiComplete;
       case 'hp': return hpRoll != null;
     }
@@ -344,6 +489,58 @@ export function useCharacterWizard(): CharacterWizard {
       return [...prev, skill];
     });
   };
+  const toggleBgTool = (slug: string) => {
+    setBgToolChoices((prev) => {
+      if (prev.includes(slug)) return prev.filter((s) => s !== slug);
+      if (bgToolCount === 0 || prev.length >= bgToolCount) return prev;
+      return [...prev, slug];
+    });
+    setError(null);
+  };
+  const toggleFeatTool = (slug: string) => {
+    setFeatToolChoices((prev) => {
+      if (prev.includes(slug)) return prev.filter((s) => s !== slug);
+      const budget =
+        featChoiceType === 'hybrid_proficiency'
+          ? Math.max(0, hybridTotal - featSkillChoices.length)
+          : featToolCount;
+      if (budget === 0 || prev.length >= budget) return prev;
+      return [...prev, slug];
+    });
+    setError(null);
+  };
+  const toggleFeatSkill = (skill: SkillName) => {
+    setFeatSkillChoices((prev) => {
+      if (prev.includes(skill)) return prev.filter((s) => s !== skill);
+      if (featToolChoices.length + prev.length >= hybridTotal) return prev;
+      return [...prev, skill];
+    });
+    setError(null);
+  };
+  const toggleRaceSkill = (skill: SkillName) => {
+    setRaceSkills((prev) => {
+      if (prev.includes(skill)) return prev.filter((s) => s !== skill);
+      if (prev.length >= raceSkillCount) return prev;
+      return [...prev, skill];
+    });
+    setError(null);
+  };
+  const selectFeatSpellAbility = (a: Ability) => {
+    setFeatSpellAbility((prev) => (prev === a ? null : a));
+    setError(null);
+  };
+  const toggleFeatCantrip = (name: string) => {
+    setFeatCantrips((prev) => {
+      if (prev.includes(name)) return prev.filter((s) => s !== name);
+      if (prev.length >= featCantripCount) return prev;
+      return [...prev, name];
+    });
+    setError(null);
+  };
+  const selectFeatSpell = (name: string) => {
+    setFeatSpell((prev) => (prev === name ? null : name));
+    setError(null);
+  };
   const setAsiMode = (index: number, mode: AsiMode) => {
     setAsiAssignments((prev) => {
       const next = [...prev];
@@ -382,6 +579,14 @@ export function useCharacterWizard(): CharacterWizard {
       classChoice: { className: selectedClass, level, subclassId: subclassId ?? undefined },
       background: { backgroundId: background.id },
       classSkills,
+      raceSkillChoices: raceSkills.length > 0 ? raceSkills : undefined,
+      bgToolChoices: bgToolChoices.length > 0 ? bgToolChoices : undefined,
+      featToolChoices: featToolChoices.length > 0 ? featToolChoices : undefined,
+      featSkillChoices: featSkillChoices.length > 0 ? featSkillChoices : undefined,
+      featSpellChoice:
+        featSpellAbility != null && featCantrips.length > 0 && featSpell != null
+          ? { ability: featSpellAbility, cantrips: featCantrips, spells: [featSpell] }
+          : undefined,
       hpRoll: hpRoll ?? undefined,
       abilities: {
         method: 'standard',
@@ -408,7 +613,32 @@ export function useCharacterWizard(): CharacterWizard {
     raceId,
     setRaceId: (id) => { setRaceId(id); setLineageId(null); },
     lineageId, setLineageId,
+    raceSkillOptions, raceSkills, raceSkillCount, toggleRaceSkill,
     backgroundId, setBackgroundId,
+    bgToolOptions, bgToolChoices, bgToolCount, toggleBgTool,
+    featChoice: {
+      name: background?.feat.name,
+      type: featChoiceType,
+      hasChoices: !!originFeat?.has_choices,
+      toolOptions: featToolOptions,
+      toolSelected: featToolChoices,
+      toolCount: featToolCount,
+      toggleTool: toggleFeatTool,
+      skillOptions: featSkillOptions,
+      skillSelected: featSkillChoices,
+      total: hybridTotal,
+      toggleSkill: toggleFeatSkill,
+      abilityOptions: featAbilityOptions,
+      abilitySelected: featSpellAbility,
+      selectAbility: selectFeatSpellAbility,
+      cantripOptions: featCantripOptions,
+      cantripSelected: featCantrips,
+      cantripCount: featCantripCount,
+      toggleCantrip: toggleFeatCantrip,
+      spellOptions: featSpellOptions,
+      spellSelected: featSpell,
+      selectSpell: selectFeatSpell,
+    },
     assigned, editingAbility, openAbilityPicker, closeAbilityPicker,
     assignToAbility, clearAbility, pool, allowedAbilities,
     showBoosts: background != null && allowedAbilities.length > 0,

@@ -32,7 +32,7 @@ export type TabParamList = {
   Home: undefined;
   CharacterDetail: undefined;
   Magie: undefined;
-  Oggetti: undefined;
+  Abilita: undefined;
   /** Tab "Altro" = AltroStack annidato: consente di navigare a una sua schermata
    *  direttamente (es. `navigate('Altro', { screen: 'Impostazioni' })`). */
   Altro: NavigatorScreenParams<AltroStackParamList>;

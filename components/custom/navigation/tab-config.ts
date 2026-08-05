@@ -3,7 +3,7 @@ import { ROUTES } from '../../../lib/routes';
 
 // Schermate
 import HomeScreen from '../../../screens/home/HomeScreen';
-import ItemsScreen from '../../../screens/compendium/ItemsScreen';
+import SkillsScreen from '../../../screens/characters/SkillsScreen';
 import SpellsScreen from '../../../screens/compendium/SpellsScreen';
 import AltroStack from '../../../screens/more/AltroStack';
 import CharacterDetailScreen from '../../../screens/characters/CharacterDetailScreen';
@@ -64,13 +64,13 @@ export const NAVIGATION_TABS: NavigationTab[] = [
     show: 'always',
   },
 
-  // ── OGGETTI ──
+  // ── ABILITÀ (sostituisce la tab Oggetti) ──
   {
-    routeName: ROUTES.OGGETTI,
-    label: 'Oggetti',
-    component: ItemsScreen,
-    iconActive: 'cube',
-    iconInactive: 'cube-outline',
+    routeName: ROUTES.ABILITA,
+    label: 'Abilità',
+    component: SkillsScreen,
+    iconActive: 'bulb',
+    iconInactive: 'bulb-outline',
     show: 'always',
   },
 

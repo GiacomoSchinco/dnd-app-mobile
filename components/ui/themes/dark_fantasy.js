@@ -1,5 +1,5 @@
 const darkFantasyTheme = {
-  name: 'darkFantasy',
+  name: 'dark_fantasy',
   colors: {
     // Sfondi ispirati a pietra profonda, sotterranei e ferro
     background: '#121316',          // Lavagna scurissima / Antracite d'abisso

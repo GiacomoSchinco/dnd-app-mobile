@@ -30,11 +30,10 @@ export default function CharacterBar({ activeChar, onPress }: Props) {
           {(activeChar.preparedSpells ?? []).length} preparate · {(activeChar.favoriteSpells ?? []).length} preferite
         </Text>
       </View>
-      <Text style={{ fontSize: 15, color: t.colors.accent, marginLeft: t.spacing[2] }}>🔒</Text>
     </>
   ) : (
     <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary }}>
-      👤 Nessun personaggio — aprine uno dalla Home per gestire le magie
+      👤 Nessun personaggio — aprine uno dalla Home per gestire abilità e magie
     </Text>
   );
 

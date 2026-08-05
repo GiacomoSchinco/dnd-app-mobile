@@ -4,8 +4,7 @@ import { SvgXml } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
-import ScreenHeader from '../../components/custom/ScreenHeader';
-import BackButton from '../../components/custom/BackButton';
+import TabHeader from '../../components/custom/TabHeader';
 import { s } from '../../utils/style-helpers';
 import spellsData from '../../lib/data/spells.json';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
@@ -116,10 +115,12 @@ export default function SpellsScreen({ standalone = false }: Props) {
   // ── Main render ──
   return (
     <View style={[s.flex, { backgroundColor: t.colors.background }]}>
-      {/* Header fisso con safe area */}
-      <View style={{ paddingTop: insets.top + t.spacing[4], paddingHorizontal: t.spacing[4], paddingBottom: t.spacing[2] }}>
-        {standalone && <BackButton onPress={() => navigation.goBack()} label="Torna al Compendio" />}
-        <ScreenHeader title="Magie" icon="flash-outline" />
+      <TabHeader
+        title="Magie"
+        icon="flash-outline"
+        onBack={standalone ? () => navigation.goBack() : undefined}
+        backLabel="Torna al Compendio"
+      >
         {!standalone && <CharacterBar activeChar={activeChar} />}
         <SpellFilters
           search={search}
@@ -136,7 +137,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
           filteredCount={filteredSpells.length}
           hasActiveCharacter={hasActiveCharacter}
         />
-      </View>
+      </TabHeader>
 
       <FlatList
         ref={flatListRef}

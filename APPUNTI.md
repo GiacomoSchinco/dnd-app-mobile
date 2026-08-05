@@ -13,28 +13,37 @@
    │   ├── prism-provider.js← Provider temi (useTokens/useTheme, haptic, transizioni)
    │   ├── themes/          ← default · obsidian · neon · stone · dark_fantasy · light_fantasy
    │   └── avatar/ badge/ button/ card/ input/ modal/ skeleton/ tabs/ toast/
-   └── custom/              ← COMPONENTI MIEI
+   └── custom/              ← COMPONENTI MIEI → **RIUSARE, non rifare!**
        ├── navigation/
        │   ├── RootStack.tsx    ← Stack radice (Main + schermate di dettaglio)
        │   ├── tab-config.ts    ← Config tab (route, icone, visibilità)
        │   ├── CentralDiceButton.tsx · DicePanel.tsx
-       ├── AppNavigator.tsx     ← Tab navigator (Scheda, Magie, Oggetti, Altro, Dadi)
+       ├── AppNavigator.tsx     ← Tab navigator (Scheda, Magie, Abilità, Altro, Dadi)
+       ├── TabHeader.tsx        ← Header fisso tab con safe-area (Abilità, Magie)
        ├── ScreenHeader.tsx     ← Titolo schermata (icon Ionicons oppure iconNode DndIcon)
+       ├── EmptyState.tsx       ← Stato vuoto centrato (emoji + titolo + messaggio)
        ├── DndIcon.tsx          ← ICONE SVG custom (dadi, scuole, oggetti, classi)
-       ├── ClassCarousel.tsx    ← Carousel infinito scelta classe (reanimated-carousel)
+       ├── CardCarousel.tsx     ← Carousel infinito GENERICO riutilizzabile
+       ├── ClassCarousel.tsx    ← Carousel classi (wrapper di CardCarousel + token PNG)
        ├── ClassAvatar.tsx      ← Avatar circolare classe (token PNG)
        ├── DiceOverlay.tsx      ← Overlay globale dado (sopra tutto)
-       ├── ListItem.tsx · DetailChip.tsx · BottomModal.tsx · BackButton.tsx · Screen.tsx
+       ├── HomeQuickActions.tsx ← Pulsanti rapidi Home (Impostazioni, Compendio)
+       ├── ListItem.tsx · DetailChip.tsx · FilterChip.tsx · BottomModal.tsx · BackButton.tsx · Screen.tsx
+       ├── creation/            ← WIZARD creazione PG
+       │   ├── useCharacterWizard.ts ← TUTTA la logica/stato/validazione del wizard (hook)
+       │   ├── NameStep · ClassStep · LevelStep · SubclassStep · SkillsStep · RaceStep
+       │   ├── BackgroundStep · FeatChoice · AbilitiesStep · HpStep
+       │   ├── Chip.tsx (pill) · StepIndicator · StepLabel · ValuePickerModal · wizardSteps.ts
        ├── Compendium/          ← CompendiumList.tsx · DetailBlock.tsx
        ├── DiceRoller/          ← DiceTypeGrid · RollButton · ResultBreakdown · StepperControl
        ├── Items/               ← ItemCard · ItemDetailModal · ItemFilters
-       └── Spells/              ← SpellCard · SpellDetailModal · SpellFilters · SpellSlotManager · CharacterBar · CharacterPickerModal
+       └── Spells/              ← SpellCard · SpellDetailModal · SpellFilters · CharacterBar
 
 📁 screens/
-   ├── home/        → HomeScreen (lista PG)
-   ├── characters/  → CharacterCreateScreen (carousel classi) · CharacterDetailScreen (Scheda PG)
-   ├── compendium/  → CompendioScreen · Classi · Razze · Background · Talenti · Equipaggiamento · Oggetti
-   └── more/        → AltroStack · MoreScreen · SettingsScreen · altro-routes
+   ├── home/        → HomeScreen (lista PG + pulsanti rapidi)
+   ├── characters/  → CharacterCreateScreen (wizard) · CharacterDetailScreen (Scheda PG) · SkillsScreen (tab Abilità)
+   ├── compendium/  → CompendioScreen · Classi · Razze · Background · Talenti · Equipaggiamento · Oggetti · Magie (standalone)
+   └── more/        → AltroStack · MoreScreen (Altro=vuoto 🧭) · SettingsScreen (Impostazioni, su RootStack) · altro-routes
 
 📁 lib/
    ├── data/        → JSON (fonte unica: classi, razze, magie, oggetti, ecc.)
@@ -55,6 +64,40 @@
 📄 App.tsx           → GestureHandlerRootView + SafeAreaProvider + PrismProvider + RootStack + DiceOverlay
 📄 ICONE_DA_SOSTITUIRE.md ← Checklist icone NON DndIcon da sostituire
 ```
+
+## 🧩 Componenti custom riutilizzabili (RIUSARE, non rifare!)
+
+> **Regola**: prima di scrivere a mano un Pressable/card/chip/modal/header/stato vuoto,
+> controlla questa tabella. Se esiste già → usalo.
+
+| Componente | Cosa fa | Quando usarlo |
+|---|---|---|
+| `Screen` | Wrapper schermata: bg tema + safe-area + ScrollView/View | Tutte le schermate pushate (non tab) |
+| `ScreenHeader` | Titolo + icona/iconNode + back opzionale | Intestazione di qualsiasi schermata |
+| `TabHeader` | Header fisso tab con safe-area (notch) + ScreenHeader + contenuto sotto | Tab con lista scrollabile sotto (Abilità, Magie) |
+| `EmptyState` | Stato vuoto centrato (emoji + titolo + messaggio) | "Nessun personaggio", liste vuote |
+| `ListItem` | Riga `[icona][titolo/badge/desc][›]` — variant `card`/`menu` | Liste Compendio, menu |
+| `FilterChip` | Chip filtro selezionabile (size `xs`/`sm`, activeBg/Fg) | Filtri (SpellFilters, ItemFilters) |
+| `Chip` (in `creation/`) | Pill selezionabile wizard (`selected`, `compact`, `selectedSuffix`) | Step wizard: skill, boost, ASI, sottorazze, modalità |
+| `DetailChip` | Chip etichetta→valore | Dettagli nei modali (Item/Spell) |
+| `ClassAvatar` | Avatar circolare classe (token PNG) | Home, Scheda PG, lista Classi |
+| `CardCarousel` | Carousel infinito generico (items + dot custom) | Scelte a carousel |
+| `ClassCarousel` | Wrapper di `CardCarousel` per le classi (token PNG) | Step Classe |
+| `Button` (`ui/button`) | Pulsante animato (solid/outline/ghost/danger/subtle, sm/md/lg, fullWidth, loading) | **TUTTI i pulsanti** — mai Pressable raw per bottoni |
+| `Card` (`ui/card`) | Card con varianti (default/elevated/outlined/ghost) | Contenitori elevati |
+| `Badge` (`ui/badge`) | Etichetta (solid/outline/subtle, color) | Badge classe/livello/rarità/scuola |
+| `Input` (`ui/input`) | Campo testo con label/error | Nome PG, ricerca |
+| `BottomModal` | Modal dal basso | Conferme, sezioni scheda, picker |
+| `DndIcon` | Icone SVG custom (dadi/scuole/oggetti/classi) | Icone custom — mai emoji come icone |
+| `StepperControl` | Stepper ± circolare (theme-safe) | Quantità/modificatore dadi |
+| `CharacterBar` | Barra PG attivo (nome + classe + livello) | Tab legate al PG (Magie, Abilità) |
+| `useActiveCharacter()` | Hook store: centralizza le sottoscrizioni al PG attivo | Ogni schermata che legge il PG attivo |
+
+**Wizard creazione**: la schermata (`CharacterCreateScreen`) è un renderer sottile →
+tutta la logica vive in `useCharacterWizard` (hook) e ogni passo è un componente
+presentational in `components/custom/creation/`. Per aggiungere/modificare un passo:
+1. tocca il componente step (es. `RaceStep.tsx`) o lo stato in `useCharacterWizard.ts`,
+2. se serve un nuovo passo, aggiorna `wizardSteps.ts` (`STEPS`/`StepKey`) e `stepValid`.
 
 ## 🎨 Temi disponibili
 
@@ -121,6 +164,10 @@ npm run android          # Avvia su Android emulator
 npm run web              # Avvia su browser
 npx expo start --clear   # Riavvia Metro pulendo la cache (dopo modifiche a babel/metro/nuovi moduli nativi)
 
+# ── Verifica qualità (PRIMA di ogni commit) ─────────────────
+npx tsc --noEmit                  # Type-check: deve uscire con exit 0, ZERO errori
+npx expo export --platform web    # Build bundle web: verifica import/compilazione (es. file cancellati)
+
 # ── Build Android APK locale (senza EAS, senza Android Studio) ──
 cd android
 .\gradlew.bat assembleRelease        # APK di release (firmato con debug keystore)
@@ -153,10 +200,25 @@ Due prerequisiti necessari per `gradlew` (mancavano entrambi → build in errore
 
 ## 📝 Regole (per me)
 
-- I colori vanno sempre presi dal tema con `useTokens()` — mai hardcodati
-- I componenti nuovi vanno in `components/custom/`
-- Le pagine/viste vanno in `screens/`
-- `APPUNTI.md` sono appunti personali — tenerlo aggiornato
+### 🎨 Tema (sicurezza al cambio tema)
+- I colori vanno **sempre** dal tema con `useTokens()` → `t.colors.*` — mai hardcodati.
+- **Eccezioni OK** (non cambiano col tema): colori di CATEGORIA (rarità oggetti, scuole di
+  magia, tipi) e `shadowColor: '#000'`. `#FFF` va bene SOLO su sfondo accent
+  (= `accentForeground`). MAI testo bianco su sfondo `backgroundSecondary` (invisibile su light!).
+- Spacing/radius/font: dai token `t.spacing`/`t.radius`/`t.typography` oppure dalle costanti
+  statiche `utils/styles.ts` (`spacing`, `radius`, `fontSizes`) — mai numeri magici.
+- Safe area: sempre `useSafeAreaInsets()` o i wrapper (`Screen`, `TabHeader`).
+  Mai hardcodare 44/20 per notch/tab bar.
+
+### 🔁 Riuso (prima di scrivere codice)
+- Prima di creare un Pressable/card/chip/modal/header/stato vuoto → controllare la tabella
+  "Componenti custom riutilizzabili" qui sopra. Se esiste → usarlo.
+- I pulsanti usano SEMPRE `Button` (mai Pressable raw).
+- I componenti nuovi vanno in `components/custom/`; le pagine/viste in `screens/`.
+- Lista abilità: usare `getAllAbilities()` da `lib/rules/abilities.ts` (NON ridefinirla).
+- `APPUNTI.md` sono appunti personali — tenerlo aggiornato.
+
+### 📐 Altro
 - Prism UI supporta cambio tema runtime (tramite ThemePicker o `setTheme()`)
 - Per il TypeScript: quando usi `useTheme()`, serve un cast perché il context è js puro
 - **Icone**: usare sempre `DndIcon` (`components/custom/DndIcon.tsx`) per le icone custom
@@ -165,9 +227,8 @@ Due prerequisiti necessari per `gradlew` (mancavano entrambi → build in errore
   Checklist delle icone "non DndIcon" da sostituire in `ICONE_DA_SOSTITUIRE.md`.
 - **Header**: se passi `icon="d8"` (nome DndIcon) a `ScreenHeader` ottieni un warning
   "not a valid icon name for family ionicons" → usare `iconNode={<DndIcon name="..." />}`.
-- **Carousel**: `ClassCarousel` usa `react-native-reanimated-carousel` v5. NIENTE `width`/`height`
-  come prop (rimossi in v5): si dimensiona con `style={{ width, height }}`. `loop` per l'infinito,
-  `Pagination` con `progress` (SharedValue via `useSharedValue` + `onProgressChange`).
+- **Carousel**: `ClassCarousel`/`CardCarousel` usano `react-native-reanimated-carousel` v5.
+  NIENTE `width`/`height` come prop (rimossi in v5): si dimensiona con `style={{ width, height }}`.
 - **Web (Expo 54)**: zustand usa `import.meta` → fix in `babel.config.js`
   (plugin `inline-transform-import-meta`). Dopo modifiche a babel: riavviare con `--clear`.
 - **Storage**: PG salvati con `expo-file-system` (`store/file-system-storage.ts`).

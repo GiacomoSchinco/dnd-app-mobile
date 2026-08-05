@@ -86,6 +86,11 @@ export const useCharacterStore = create<CharacterState>()(
           background: draft.background,
           abilities: draft.abilities,
           classSkills: draft.classSkills,
+          bgToolChoices: draft.bgToolChoices,
+          featToolChoices: draft.featToolChoices,
+          featSkillChoices: draft.featSkillChoices,
+          featSpellChoice: draft.featSpellChoice,
+          raceSkillChoices: draft.raceSkillChoices,
           hpRoll: draft.hpRoll,
         });
         // Il ramo di successo di buildCharacter NON ha `success` (è un

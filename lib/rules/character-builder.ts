@@ -2,6 +2,7 @@ import { getClass, getClassById } from './classes';
 import { getRace, getRaceById, getLineageById, getRaceEffects, getRaceEffectIds, hasLineages, type RaceDefinition } from './races';
 import { getBackground, type BackgroundFeat } from './backgrounds';
 import { getFeat } from './feats';
+import { applyFeat, getToolOptions, type FeatApplyResult } from './apply-feat';
 import { getSubclass } from './subclasses';
 import { getSpellProgression, getLevelUpSpellChanges } from './spellcasting';
 import { getClassProgression, getFeaturesAtLevel, getAsiLevels, getResourceValue, getProficiencyBonus, getClassResources } from './progression';
@@ -25,6 +26,7 @@ import type {
   CharacterChoices,
   CharacterMoney,
   EquipmentItem,
+  FeatSpellChoice,
 } from '../../types';
 
 /**
@@ -440,6 +442,12 @@ export interface CharacterBuildPlan {
   abilities: AbilityScores;
   featId?: number;
   feat?: ReturnType<typeof getFeat>;
+  /** Concessioni meccaniche del talento di origine (modificatori, strumenti, risorse) */
+  featApply?: FeatApplyResult;
+  /** Strumenti scelti per la competenza a scelta del background (CHOICE) */
+  bgToolProficiencies?: string[];
+  /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità", Elfo "Sensi Acuti") */
+  raceSkills?: SkillName[];
   startingEquipment?: { name: string; itemId: number; quantity: number }[];
   /** Boost abilità applicati (per registrare la scelta in `choices.abilityBoosts`) */
   boosts?: AbilityBoost[];
@@ -461,6 +469,16 @@ export function buildCharacter(params: {
   abilities: AbilityAssignment;
   /** Skill di classe scelte dal giocatore (competenze) */
   classSkills?: SkillName[];
+  /** Strumenti scelti per la competenza a scelta del background (CHOICE) */
+  bgToolChoices?: string[];
+  /** Strumenti scelti per il choice_config del talento (tool_proficiency) */
+  featToolChoices?: string[];
+  /** Abilità scelte per il talento "Abile" (hybrid_proficiency) */
+  featSkillChoices?: SkillName[];
+  /** Scelta incantesimi per il talento "Iniziato alla Magia" (spellcasting) */
+  featSpellChoice?: FeatSpellChoice;
+  /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità") */
+  raceSkillChoices?: SkillName[];
   /** Tiro del dado vita al 1° livello (opzionale) */
   hpRoll?: number;
 }): CharacterBuildPlan | { success: false; error: string } {
@@ -486,6 +504,39 @@ export function buildCharacter(params: {
     ? getStartingEquipment(backgroundResult.data.equipmentPresetId)
     : undefined;
 
+  // Talento di origine → concessioni meccaniche (modificatori, competenze, incantesimi, risorse)
+  const featApply = feat
+    ? applyFeat(feat, {
+        toolChoices: params.featToolChoices,
+        skillChoices: params.featSkillChoices,
+        spellChoice: params.featSpellChoice,
+      })
+    : undefined;
+
+  // Competenza strumenti del background (type CHOICE → pool di strumenti, ne sceglie 1)
+  const bgToolProficiencies: string[] = [];
+  const bgTool = backgroundResult.data?.toolProficiency;
+  if (bgTool?.type === 'CHOICE' && bgTool.category) {
+    const options = getToolOptions(bgTool.category);
+    const picked = (params.bgToolChoices ?? []).filter((t) =>
+      options.some((o) => o.slug === t),
+    );
+    bgToolProficiencies.push(...picked.slice(0, 1));
+  }
+
+  // Competenze in abilità scelte dalla razza (effetti choice_type skill_proficiency)
+  const raceSkillEffects =
+    raceResult.data?.effects.filter(
+      (e) => e.type === 'choice' && e.choice_type === 'skill_proficiency',
+    ) ?? [];
+  const raceSkillOptionsAll = raceSkillEffects.flatMap((e) =>
+    Array.isArray(e.options) && e.options.length > 0 ? (e.options as SkillName[]) : [],
+  );
+  const raceSkillTotal = raceSkillEffects.reduce((n, e) => n + (e.count ?? 0), 0);
+  const raceSkills = (params.raceSkillChoices ?? [])
+    .filter((s) => raceSkillOptionsAll.length === 0 || raceSkillOptionsAll.includes(s))
+    .slice(0, raceSkillTotal);
+
   return {
     raceResult,
     classResult,
@@ -493,6 +544,9 @@ export function buildCharacter(params: {
     abilities: abilitiesResult.scores,
     featId,
     feat,
+    featApply,
+    bgToolProficiencies: bgToolProficiencies.length > 0 ? bgToolProficiencies : undefined,
+    raceSkills: raceSkills.length > 0 ? raceSkills : undefined,
     startingEquipment: equipment,
     boosts: params.abilities.boosts,
     abilityMethod: params.abilities.method,
@@ -589,8 +643,19 @@ export function buildCharacterSheet(
     .filter((w): w is WeaponType => w != null);
   const tools = [...classDef.proficiencies.tools];
   if (bgData.toolProficiency?.toolId) tools.push(bgData.toolProficiency.toolId);
-  // Skill: quelle del background + le scelte di classe
-  const skills: SkillName[] = [...bgData.skills, ...(plan.classSkills ?? [])];
+  // Strumenti scelti dal background (CHOICE) e dal talento di origine
+  for (const t of plan.bgToolProficiencies ?? []) if (!tools.includes(t)) tools.push(t);
+  for (const t of plan.featApply?.toolProficiencies ?? []) if (!tools.includes(t)) tools.push(t);
+  // Skill: background + scelte di classe + abilità del talento (Abile) + scelte della razza
+  const skills: SkillName[] = [];
+  for (const s of [
+    ...bgData.skills,
+    ...(plan.classSkills ?? []),
+    ...(plan.featApply?.skills ?? []),
+    ...(plan.raceSkills ?? []),
+  ] as SkillName[]) {
+    if (!skills.includes(s)) skills.push(s);
+  }
   const savingThrows: Ability[] = classDef.savingThrows;
 
   // Effetti risolti (razza + lineage)
@@ -637,6 +702,19 @@ export function buildCharacterSheet(
       };
     }
   }
+  // Risorse dai talenti (granted_resource, es. Punti Fortuna)
+  for (const grant of plan.featApply?.resources ?? []) {
+    if (resources[grant.key]) continue;
+    const max = grant.max === 'proficiency_bonus' ? proficiencyBonus : grant.max;
+    if (typeof max === 'number') {
+      resources[grant.key] = {
+        label: grant.label,
+        max,
+        current: max,
+        resetOn: grant.resetOn,
+      };
+    }
+  }
 
   // Incantesimi
   let spellcasting: CharacterSpellcasting | undefined;
@@ -645,7 +723,11 @@ export function buildCharacterSheet(
       ability: classData.spellcasting.ability ?? 'intelligence',
       progression: classData.spellProgression,
       slotDetails: spellSlots,
-      knownSpells: [],
+      // Incantesimi del talento "Iniziato alla Magia" (trucchetti + 1° livello)
+      knownSpells: [
+        ...(plan.featApply?.spellcasting?.cantrips ?? []),
+        ...(plan.featApply?.spellcasting?.spells ?? []),
+      ],
       preparedSpells: [],
       favoriteSpells: [],
     };
@@ -668,9 +750,21 @@ export function buildCharacterSheet(
   const choices: CharacterChoices = {
     abilityBoosts: plan.boosts,
     asiBoosts: plan.asiBoosts ?? [],
-    skillChoices: plan.classSkills ?? [],
-    toolChoices: bgData.toolProficiency?.type === 'CHOICE' ? [] : undefined,
-    featChoice: bgData.feat.requiresChoice ? '' : undefined,
+    skillChoices: [
+      ...(plan.classSkills ?? []),
+      ...(plan.featApply?.skills ?? []),
+      ...(plan.raceSkills ?? []),
+    ],
+    toolChoices:
+      bgData.toolProficiency?.type === 'CHOICE' ||
+      (plan.featApply?.toolProficiencies.length ?? 0) > 0
+        ? [...(plan.bgToolProficiencies ?? []), ...(plan.featApply?.toolProficiencies ?? [])]
+        : undefined,
+    featChoice: plan.featApply?.spellcasting
+      ? plan.featApply.spellcasting
+      : bgData.feat.requiresChoice
+        ? ''
+        : undefined,
   };
 
   return {
@@ -709,6 +803,7 @@ export function buildCharacterSheet(
     proficiencies: { armor, weapons, tools, skills, savingThrows, languages: [] },
     feats: [bgData.feat.name],
     epicBoons: [],
+    featModifiers: plan.featApply?.modifiers ?? [],
     effects,
     spellcasting,
     spellSlots,

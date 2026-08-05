@@ -4,6 +4,7 @@ import type { TabToRootNav } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Card } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
+import { Button } from '../../components/ui/button';
 import { ROUTES } from '../../lib/routes';
 import { getClassNameItalian } from '../../lib/rules/classes';
 import Screen from '../../components/custom/Screen';
@@ -13,6 +14,31 @@ import { s } from '../../utils/style-helpers';
 import { useCharacterStore } from '../../store/useCharacterStore';
 import type { Character } from '../../types';
 import type { QuickActionRoute } from '../../components/custom/HomeQuickActions';
+
+/** Intestazione con logo e titolo, riusata in entrambi gli stati della Home */
+function LogoHeader({ size = 72, subtitle }: { size?: number; subtitle?: string }) {
+  const t = useTokens();
+  const big = size >= 72;
+  return (
+    <View style={[s.fullWidth, { alignItems: 'center' }, s.mb(t.spacing[big ? 8 : 5])]}>
+      <View style={[s.box(size, 0), s.mb(t.spacing[big ? 3 : 2])]}>
+        <Image
+          source={require('../../assets/logo.png')}
+          style={{ width: size, height: size }}
+          resizeMode="contain"
+        />
+      </View>
+      <Text style={{ fontSize: big ? t.typography['2xl'] : t.typography.xl, fontWeight: t.typography.heavy, color: t.colors.foreground, textAlign: 'center' }}>
+        DungeonCraft
+      </Text>
+      {subtitle && (
+        <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center', marginTop: t.spacing[1] }}>
+          {subtitle}
+        </Text>
+      )}
+    </View>
+  );
+}
 
 function CharacterCard({ character, onPress }: { character: Character; onPress: () => void }) {
   const t = useTokens();
@@ -69,22 +95,7 @@ export default function HomeScreen() {
   if (characters.length === 0) {
     return (
       <Screen scrollable={false}>
-        {/* Logo / Titolo */}
-        <View style={[s.fullWidth, { alignItems: 'center' }, s.mb(t.spacing[8])]}>
-          <View style={[s.box(72, 0), s.mb(t.spacing[3])]}>
-            <Image
-              source={require('../../assets/logo.png')}
-              style={{ width: 72, height: 72 }}
-              resizeMode="contain"
-            />
-          </View>
-          <Text style={{ fontSize: t.typography['2xl'], fontWeight: t.typography.heavy, color: t.colors.foreground, textAlign: 'center' }}>
-            DungeonCraft
-          </Text>
-          <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center', marginTop: t.spacing[1] }}>
-            Il tuo compagno di avventure D&D
-          </Text>
-        </View>
+        <LogoHeader size={72} subtitle="Il tuo compagno di avventure D&D" />
 
         <View style={[s.flex, s.center, s.gap(t.spacing[6]), s.fullWidth]}>
           <Text style={{ fontSize: 60 }}>👥</Text>
@@ -94,19 +105,7 @@ export default function HomeScreen() {
           <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center' }}>
             Crea il tuo primo eroe per iniziare{'\n'}l'avventura!
           </Text>
-          <Pressable
-            onPress={handleCreate}
-            style={({ pressed }) => ({
-              backgroundColor: pressed ? t.colors.accent + 'CC' : t.colors.accent,
-              paddingHorizontal: t.spacing[8],
-              paddingVertical: t.spacing[3],
-              borderRadius: t.radius.md,
-            })}
-          >
-            <Text style={{ color: t.colors.accentForeground, fontSize: t.typography.base, fontWeight: t.typography.semibold }}>
-              + Crea Personaggio
-            </Text>
-          </Pressable>
+          <Button onPress={handleCreate} size="md">+ Crea Personaggio</Button>
         </View>
 
         <HomeQuickActions onPress={handleQuickAction} />
@@ -116,34 +115,10 @@ export default function HomeScreen() {
 
   return (
     <Screen scrollable={false}>
-      {/* Logo / Titolo */}
-      <View style={[s.fullWidth, { alignItems: 'center' }, s.mb(t.spacing[5])]}>
-        <View style={[s.box(56, 0), s.mb(t.spacing[2])]}>
-          <Image
-            source={require('../../assets/logo.png')}
-            style={{ width: 56, height: 56 }}
-            resizeMode="contain"
-          />
-        </View>
-        <Text style={{ fontSize: t.typography.xl, fontWeight: t.typography.heavy, color: t.colors.foreground, textAlign: 'center' }}>
-          DungeonCraft
-        </Text>
-      </View>
+      <LogoHeader size={56} />
 
       <View style={[s.fullWidth, s.mb(t.spacing[3])]}>
-        <Pressable
-          onPress={handleCreate}
-          style={({ pressed }) => ({
-            backgroundColor: pressed ? t.colors.accent + 'CC' : t.colors.accent,
-            paddingVertical: t.spacing[2.5],
-            borderRadius: t.radius.md,
-            alignItems: 'center',
-          })}
-        >
-          <Text style={{ color: t.colors.accentForeground, fontSize: t.typography.base, fontWeight: t.typography.semibold }}>
-            + Nuovo Personaggio
-          </Text>
-        </Pressable>
+        <Button onPress={handleCreate} fullWidth size="md">+ Nuovo Personaggio</Button>
       </View>
 
       <FlatList

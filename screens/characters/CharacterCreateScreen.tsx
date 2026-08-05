@@ -89,11 +89,23 @@ export default function CharacterCreateScreen() {
               onRaceChange={w.setRaceId}
               lineageId={w.lineageId}
               onLineageChange={w.setLineageId}
+              raceSkillOptions={w.raceSkillOptions}
+              raceSkills={w.raceSkills}
+              raceSkillCount={w.raceSkillCount}
+              toggleRaceSkill={w.toggleRaceSkill}
             />
           )}
 
           {w.step === 'background' && (
-            <BackgroundStep backgroundId={w.backgroundId} onSelect={w.setBackgroundId} />
+            <BackgroundStep
+              backgroundId={w.backgroundId}
+              onSelect={w.setBackgroundId}
+              bgToolOptions={w.bgToolOptions}
+              bgToolChoices={w.bgToolChoices}
+              bgToolCount={w.bgToolCount}
+              toggleBgTool={w.toggleBgTool}
+              featChoice={w.featChoice}
+            />
           )}
 
           {w.step === 'abilities' && (

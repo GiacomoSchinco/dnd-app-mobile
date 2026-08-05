@@ -1,5 +1,5 @@
 const lightFantasyTheme = {
-  name: 'lightFantasy',
+  name: 'light_fantasy',
   colors: {
     background: '#FAF6EE',          // Pergamena pulita / Avorio chiaro
     backgroundSecondary: '#F3EFE3', // Pagina d'altri tempi (sfondo delle card)
