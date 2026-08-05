@@ -8,29 +8,38 @@ import { Badge } from '../../components/ui/badge';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import EmptyState from '../../components/custom/EmptyState';
+import StatsGrid from '../../components/custom/StatsGrid';
 import ClassAvatar from '../../components/custom/ClassAvatar';
 import BottomModal from '../../components/custom/BottomModal';
 import { Button } from '../../components/ui/button';
 import { getClassNameItalian } from '../../lib/rules/classes';
-import { getSkillNameItalian } from '../../lib/rules/skills';
-import { getToolLabel } from '../../lib/rules/apply-feat';
-import { getAllAbilities } from '../../lib/rules/abilities';
 import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 
 const SECTIONS = [
-  { key: 'stats', icon: '💪', label: 'Caratteristiche', desc: 'FOR, DES, COS, INT, SAG, CAR' },
   { key: 'magie', icon: '🔮', label: 'Incantesimi', desc: 'Slot, preparati e preferiti' },
   { key: 'talenti', icon: '⭐', label: 'Talenti', desc: 'Talenti e abilità speciali' },
   { key: 'note', icon: '📝', label: 'Note', desc: 'Appunti e storia del personaggio' },
 ];
 
-/** Statistica derivata dell'header (PF, CA, PB, Velocità, Iniz.) */
+/** Statistica derivata dell'header — quadrato con etichetta + valore */
 function StatItem({ label, value }: { label: string; value: string }) {
   const t = useTokens();
   return (
-    <View style={s.flex}>
+    <View
+      style={{
+        flex: 1,
+        aspectRatio: 1,
+        backgroundColor: t.colors.card,
+        borderRadius: t.radius.md,
+        borderWidth: 1,
+        borderColor: t.colors.border,
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: t.spacing[1],
+      }}
+    >
       <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>{label}</Text>
       <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
         {value}
@@ -113,13 +122,14 @@ export default function CharacterDetailScreen() {
   const classLabel = mainClass ? getClassNameItalian(mainClass.className) : '—';
 
   return (
-    <Screen>
-      <ScreenHeader
+    <>
+      <Screen>
+        <ScreenHeader
         title="Scheda Personaggio"
         icon="person-outline"
         onBack={() => navigation.navigate(ROUTES.HOME)}
         backLabel="Personaggi"
-      />
+        />
 
       {/* Card nome e classe — stile HomeScreen */}
       <View style={[s.fullWidth, s.mb(t.spacing[5]), {
@@ -146,17 +156,9 @@ export default function CharacterDetailScreen() {
           </View>
         </View>
 
-        {/* Statistiche derivate (popolate da createCharacterFull) */}
-        {(activeChar.hitPoints || activeChar.armorClass != null || activeChar.proficiencyBonus != null) && (
-          <View style={[s.row, s.gap(t.spacing[3]), s.mt(t.spacing[4]), {
-            borderTopWidth: 1,
-            borderTopColor: t.colors.border,
-            paddingTop: t.spacing[3],
-          }]}>
-            <StatItem
-              label="PF"
-              value={activeChar.hitPoints ? `${activeChar.hitPoints.current}/${activeChar.hitPoints.max}` : '—'}
-            />
+        {/* Statistiche derivate — 4 quadrati in fila */}
+        {(activeChar.armorClass != null || activeChar.proficiencyBonus != null || activeChar.speed != null || activeChar.initiative != null) && (
+          <View style={[s.mt(t.spacing[4]), s.row, { gap: t.spacing[2] }]}>
             <StatItem label="CA" value={activeChar.armorClass != null ? String(activeChar.armorClass) : '—'} />
             <StatItem label="PB" value={activeChar.proficiencyBonus != null ? `+${activeChar.proficiencyBonus}` : '—'} />
             <StatItem label="Velocità" value={activeChar.speed != null ? `${activeChar.speed} m` : '—'} />
@@ -167,6 +169,86 @@ export default function CharacterDetailScreen() {
           </View>
         )}
       </View>
+
+      {/* Punti Ferita — gestione diretta (danno / cura / temporanei) */}
+      <View style={[s.fullWidth, s.mb(t.spacing[4]), {
+        backgroundColor: t.colors.backgroundSecondary,
+        borderRadius: t.radius.md,
+        borderWidth: 1,
+        borderColor: t.colors.border,
+        padding: t.spacing[4],
+        gap: t.spacing[3],
+      }]}>
+        <View style={[s.row, { justifyContent: 'space-between' }]}>
+          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+            Punti Ferita
+          </Text>
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+            Dadi vita:{' '}
+            {activeChar.hitPoints
+              ? `${activeChar.hitPoints.hitDiceCurrent}/${activeChar.hitPoints.hitDiceMax} × ${activeChar.hitPoints.hitDie}`
+              : '—'}
+          </Text>
+        </View>
+
+        {/* Attuali — danno / cura */}
+        <View style={[s.row, { justifyContent: 'space-between' }]}>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Attuali</Text>
+          <View style={[s.row, s.gap(t.spacing[3])]}>
+            <StepperButton onPress={() => changeHp(-1)}>−</StepperButton>
+            <Text style={{ minWidth: 56, textAlign: 'center', fontSize: t.typography.lg, fontWeight: '700', color: t.colors.foreground }}>
+              {activeChar.hitPoints?.current ?? 0}/{activeChar.hitPoints?.max ?? 0}
+            </Text>
+            <StepperButton onPress={() => changeHp(1)}>+</StepperButton>
+          </View>
+        </View>
+
+        {/* Temporanei */}
+        <View style={[s.row, { justifyContent: 'space-between' }]}>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Temporanei</Text>
+          <View style={[s.row, s.gap(t.spacing[3])]}>
+            <StepperButton onPress={() => changeTempHp(-1)}>−</StepperButton>
+            <Text style={{ minWidth: 56, textAlign: 'center', fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
+              {activeChar.hitPoints?.temporary ?? 0}
+            </Text>
+            <StepperButton onPress={() => changeTempHp(1)}>+</StepperButton>
+          </View>
+        </View>
+      </View>
+
+      {/* Caratteristiche — griglia 3×2 con icone, rombo e bonus */}
+      <View style={[s.fullWidth, s.mb(t.spacing[4])]}>
+        <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: t.spacing[2] }}>
+          Caratteristiche
+        </Text>
+        <StatsGrid scores={activeChar.abilities} />
+      </View>
+
+      {/* Risorse (Punti Fortuna, Ira, Ki…) */}
+      {activeChar.resources && Object.keys(activeChar.resources).length > 0 && (
+        <View style={[s.fullWidth, s.mb(t.spacing[4]), {
+          backgroundColor: t.colors.backgroundSecondary,
+          borderRadius: t.radius.md,
+          borderWidth: 1,
+          borderColor: t.colors.border,
+          padding: t.spacing[4],
+          gap: t.spacing[2],
+        }]}>
+          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+            Risorse
+          </Text>
+          {Object.entries(activeChar.resources).map(([key, res]) => (
+            <View key={key} style={[s.row, { justifyContent: 'space-between' }]}>
+              <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+                {res.label}
+              </Text>
+              <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+                {res.current}/{res.max}
+              </Text>
+            </View>
+          ))}
+        </View>
+      )}
 
       {/* Sezioni — stesso stile dei pulsanti HomeScreen */}
       <View style={[s.fullWidth, s.gap(t.spacing[3])]}>
@@ -216,125 +298,13 @@ export default function CharacterDetailScreen() {
       >
         Elimina personaggio
       </Button>
+      </Screen>
 
       {selectedSection && (
         <BottomModal visible={!!selectedSection} onClose={() => setSelectedSection(null)}>
           <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>
             {selectedSection.label}
           </Text>
-
-          {selectedSection.key === 'stats' && (
-            <View style={[s.mt(t.spacing[3]), s.gap(t.spacing[4])]}>
-              {/* Punti ferita */}
-              <View style={{
-                backgroundColor: t.colors.backgroundSecondary,
-                borderRadius: t.radius.md,
-                borderWidth: 1,
-                borderColor: t.colors.border,
-                padding: t.spacing[4],
-                gap: t.spacing[3],
-              }}>
-                <View style={[s.row, { justifyContent: 'space-between' }]}>
-                  <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                    Punti Ferita
-                  </Text>
-                  <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
-                    Dadi vita:{' '}
-                    {activeChar.hitPoints
-                      ? `${activeChar.hitPoints.hitDiceCurrent}/${activeChar.hitPoints.hitDiceMax} × ${activeChar.hitPoints.hitDie}`
-                      : '—'}
-                  </Text>
-                </View>
-
-                {/* Attuali — danno / cura */}
-                <View style={[s.row, { justifyContent: 'space-between' }]}>
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Attuali</Text>
-                  <View style={[s.row, s.gap(t.spacing[3])]}>
-                    <StepperButton onPress={() => changeHp(-1)}>−</StepperButton>
-                    <Text style={{ minWidth: 56, textAlign: 'center', fontSize: t.typography.lg, fontWeight: '700', color: t.colors.foreground }}>
-                      {activeChar.hitPoints?.current ?? 0}/{activeChar.hitPoints?.max ?? 0}
-                    </Text>
-                    <StepperButton onPress={() => changeHp(1)}>+</StepperButton>
-                  </View>
-                </View>
-
-                {/* Temporanei */}
-                <View style={[s.row, { justifyContent: 'space-between' }]}>
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Temporanei</Text>
-                  <View style={[s.row, s.gap(t.spacing[3])]}>
-                    <StepperButton onPress={() => changeTempHp(-1)}>−</StepperButton>
-                    <Text style={{ minWidth: 56, textAlign: 'center', fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
-                      {activeChar.hitPoints?.temporary ?? 0}
-                    </Text>
-                    <StepperButton onPress={() => changeTempHp(1)}>+</StepperButton>
-                  </View>
-                </View>
-              </View>
-
-              {/* Caratteristiche */}
-              <View style={[s.gap(t.spacing[2])]}>
-                {getAllAbilities().map((a) => (
-                  <View key={a.name} style={[s.row, { justifyContent: 'space-between' }]}>
-                    <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                      {a.nameIt} ({a.abbreviation})
-                    </Text>
-                    <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                      {activeChar.abilities[a.name] ?? 10}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-
-              {/* Competenze (skill, strumenti, lingue) — incluse quelle dei talenti */}
-              <View style={[s.gap(t.spacing[2])]}>
-                <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                  Competenze
-                </Text>
-                {(activeChar.proficiencies?.skills ?? []).length > 0 && (
-                  <View style={[s.rowWrap, s.gap(t.spacing[1.5])]}>
-                    {(activeChar.proficiencies.skills).map((sk) => (
-                      <Badge key={`sk-${sk}`} variant="subtle" size="sm">
-                        {getSkillNameItalian(sk)}
-                      </Badge>
-                    ))}
-                  </View>
-                )}
-                {(activeChar.proficiencies?.tools ?? []).length > 0 && (
-                  <View style={[s.rowWrap, s.gap(t.spacing[1.5])]}>
-                    {(activeChar.proficiencies.tools).map((tl) => (
-                      <Badge key={`tl-${tl}`} variant="subtle" size="sm">
-                        {getToolLabel(tl)}
-                      </Badge>
-                    ))}
-                  </View>
-                )}
-                {(activeChar.proficiencies?.languages ?? []).length > 0 && (
-                  <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary }}>
-                    Lingue: {(activeChar.proficiencies.languages).join(', ')}
-                  </Text>
-                )}
-              </View>
-
-              {/* Risorse (Punti Fortuna, Ira, Ki…) */}
-              {activeChar.resources && Object.keys(activeChar.resources).length > 0 && (
-                <View style={[s.gap(t.spacing[2])]}>
-                  <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                    Risorse
-                  </Text>
-                  {Object.entries(activeChar.resources).map(([key, res]) => (
-                    <View key={key} style={[s.row, { justifyContent: 'space-between' }]}>
-                      <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                        {res.label}
-                      </Text>
-                      <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                        {res.current}/{res.max}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-            </View>
-          )}
 
           {selectedSection.key === 'talenti' && (
             <View style={{ marginTop: t.spacing[3] }}>
@@ -396,6 +366,6 @@ export default function CharacterDetailScreen() {
           <Button variant="danger" onPress={handleDelete} style={{ flex: 1 }}>Elimina</Button>
         </View>
       </BottomModal>
-    </Screen>
+    </>
   );
 }

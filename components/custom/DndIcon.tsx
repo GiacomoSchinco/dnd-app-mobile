@@ -42,6 +42,13 @@ import Sorcerer from '../../assets/icon/classes/sorcerer.svg';
 import Warlock from '../../assets/icon/classes/warlock.svg';
 import Wizard from '../../assets/icon/classes/wizard.svg';
 
+import Strength from '../../assets/icon/stats/icon_strength.svg';
+import Dexterity from '../../assets/icon/stats/icon_dexterity.svg';
+import Constitution from '../../assets/icon/stats/icon_constitution.svg';
+import Intelligence from '../../assets/icon/stats/icon_intelligence.svg';
+import Wisdom from '../../assets/icon/stats/icon_wisdom.svg';
+import Charisma from '../../assets/icon/stats/icon_charisma.svg';
+
 export type ClassName =
   | 'barbarian'
   | 'bard'
@@ -77,7 +84,15 @@ export type ItemName =
   | 'tool'
   | 'weapon';
 
-export type IconName = DiceName | SchoolName | ItemName | ClassName;
+export type StatName =
+  | 'strength'
+  | 'dexterity'
+  | 'constitution'
+  | 'intelligence'
+  | 'wisdom'
+  | 'charisma';
+
+export type IconName = DiceName | SchoolName | ItemName | ClassName | StatName;
 
 const ICONS: Record<IconName, FC<SvgProps>> = {
   d4: D4,
@@ -113,6 +128,12 @@ const ICONS: Record<IconName, FC<SvgProps>> = {
   sorcerer: Sorcerer,
   warlock: Warlock,
   wizard: Wizard,
+  strength: Strength,
+  dexterity: Dexterity,
+  constitution: Constitution,
+  intelligence: Intelligence,
+  wisdom: Wisdom,
+  charisma: Charisma,
 };
 
 type Props = {

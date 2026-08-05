@@ -22,7 +22,8 @@
        ├── TabHeader.tsx        ← Header fisso tab con safe-area (Abilità, Magie)
        ├── ScreenHeader.tsx     ← Titolo schermata (icon Ionicons oppure iconNode DndIcon)
        ├── EmptyState.tsx       ← Stato vuoto centrato (emoji + titolo + messaggio)
-       ├── DndIcon.tsx          ← ICONE SVG custom (dadi, scuole, oggetti, classi)
+       ├── StatsGrid.tsx        ← Griglia 6 statistiche (3×2): icona DndIcon + rombo + bonus
+       ├── DndIcon.tsx          ← ICONE SVG custom (dadi, scuole, oggetti, classi, statistiche)
        ├── CardCarousel.tsx     ← Carousel infinito GENERICO riutilizzabile
        ├── ClassCarousel.tsx    ← Carousel classi (wrapper di CardCarousel + token PNG)
        ├── ClassAvatar.tsx      ← Avatar circolare classe (token PNG)
@@ -58,7 +59,7 @@
        ├── dice/         ← d4 · d6 · d8 · d10 · d12 · d20
        ├── items/        ← ammunition · armor · consumable · currency · gear · tool · weapon
        ├── schoolspells/ ← 8 scuole di magia
-       ├── stats/        ← 6 abilità (NON esposte in DndIcon)
+       ├── stats/        ← 6 abilità (esposte in DndIcon: strength, dexterity, constitution, intelligence, wisdom, charisma)
        └── utility/      ← spell-book.svg (NON esposto)
 
 📄 App.tsx           → GestureHandlerRootView + SafeAreaProvider + PrismProvider + RootStack + DiceOverlay
@@ -76,6 +77,7 @@
 | `ScreenHeader` | Titolo + icona/iconNode + back opzionale | Intestazione di qualsiasi schermata |
 | `TabHeader` | Header fisso tab con safe-area (notch) + ScreenHeader + contenuto sotto | Tab con lista scrollabile sotto (Abilità, Magie) |
 | `EmptyState` | Stato vuoto centrato (emoji + titolo + messaggio) | "Nessun personaggio", liste vuote |
+| `StatsGrid` | Griglia 6 statistiche 3×2: icona DndIcon di sfondo + rombo con abbreviazione + punteggio + bonus (+3…). Props: `scores` (valori mancanti → 10) | Scheda PG → sezione Caratteristiche |
 | `ListItem` | Riga `[icona][titolo/badge/desc][›]` — variant `card`/`menu` | Liste Compendio, menu |
 | `FilterChip` | Chip filtro selezionabile (size `xs`/`sm`, activeBg/Fg) | Filtri (SpellFilters, ItemFilters) |
 | `Chip` (in `creation/`) | Pill selezionabile wizard (`selected`, `compact`, `selectedSuffix`) | Step wizard: skill, boost, ASI, sottorazze, modalità |
@@ -222,7 +224,7 @@ Due prerequisiti necessari per `gradlew` (mancavano entrambi → build in errore
 - Prism UI supporta cambio tema runtime (tramite ThemePicker o `setTheme()`)
 - Per il TypeScript: quando usi `useTheme()`, serve un cast perché il context è js puro
 - **Icone**: usare sempre `DndIcon` (`components/custom/DndIcon.tsx`) per le icone custom
-  (dadi, scuole, oggetti, classi). Aggiungere un'icona = mettere l'SVG in `assets/icon/` e
+  (dadi, scuole, oggetti, classi, statistiche). Aggiungere un'icona = mettere l'SVG in `assets/icon/` e
   esporlo in `DndIcon` (agganciato anche a `IconName`). NIENTE emoji come icone.
   Checklist delle icone "non DndIcon" da sostituire in `ICONE_DA_SOSTITUIRE.md`.
 - **Header**: se passi `icon="d8"` (nome DndIcon) a `ScreenHeader` ottieni un warning

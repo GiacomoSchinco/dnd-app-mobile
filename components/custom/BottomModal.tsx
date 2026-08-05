@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, ScrollView, Dimensions } from 'react-native';
+import { View, Pressable, ScrollView, Dimensions, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
@@ -34,7 +34,10 @@ export default function BottomModal({
   return (
     <View
       style={{
-        position: 'absolute',
+        // Su web 'fixed' = relativo alla VIEWPORT visibile (lo schermo che si sta
+        // usando), non al contenuto scrollabile dove è renderizzato il modale.
+        // Su nativo 'absolute' resta relativo al padre (schermo intero).
+        position: (Platform.OS === 'web' ? 'fixed' : 'absolute') as 'absolute',
         top: 0,
         left: 0,
         right: 0,
