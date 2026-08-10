@@ -1,4 +1,4 @@
-import { View, Text, Pressable, FlatList, Image } from 'react-native';
+import { View, Text, Pressable, FlatList, Image, type StyleProp, type ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { TabToRootNav } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
@@ -16,11 +16,11 @@ import type { Character } from '../../types';
 import type { QuickActionRoute } from '../../components/custom/HomeQuickActions';
 
 /** Intestazione con logo e titolo, riusata in entrambi gli stati della Home */
-function LogoHeader({ size = 72, subtitle }: { size?: number; subtitle?: string }) {
+function LogoHeader({ size = 72, subtitle, style }: { size?: number; subtitle?: string; style?: StyleProp<ViewStyle> }) {
   const t = useTokens();
   const big = size >= 72;
   return (
-    <View style={[s.fullWidth, { alignItems: 'center' }, s.mb(t.spacing[big ? 8 : 5])]}>
+    <View style={[s.fullWidth, { alignItems: 'center' }, s.mb(t.spacing[big ? 8 : 5]), style]}>
       <View style={[s.box(size, 0), s.mb(t.spacing[big ? 3 : 2])]}>
         <Image
           source={require('../../assets/logo.png')}
@@ -95,9 +95,9 @@ export default function HomeScreen() {
   if (characters.length === 0) {
     return (
       <Screen scrollable={false}>
-        <LogoHeader size={72} subtitle="Il tuo compagno di avventure D&D" />
+        <LogoHeader size={72} subtitle="Il tuo compagno di avventure D&D" style={{ marginBottom: t.spacing[0] }} />
 
-        <View style={[s.flex, s.center, s.gap(t.spacing[6]), s.fullWidth]}>
+        <View style={[s.flex, s.center, s.gap(t.spacing[6]), s.fullWidth, { paddingBottom: t.spacing[10] }]}>
           <Text style={{ fontSize: 60 }}>👥</Text>
           <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.semibold, color: t.colors.foreground, textAlign: 'center' }}>
             Nessun personaggio
@@ -105,7 +105,7 @@ export default function HomeScreen() {
           <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center' }}>
             Crea il tuo primo eroe per iniziare{'\n'}l'avventura!
           </Text>
-          <Button onPress={handleCreate} size="md">+ Crea Personaggio</Button>
+          <Button onPress={handleCreate} size="md" style={{ alignSelf: 'center' }}>+ Crea Personaggio</Button>
         </View>
 
         <HomeQuickActions onPress={handleQuickAction} />

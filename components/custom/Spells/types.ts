@@ -35,6 +35,9 @@ export const LEVEL_LABELS: Record<number, string> = {
   5: '5°', 6: '6°', 7: '7°', 8: '8°', 9: '9°',
 };
 
+/** Colore di stato per le magie PREFERITE (ambra) — unica fonte, cambiarlo qui */
+export const FAVORITE_COLOR = '#F59E0B';
+
 export const SCHOOL_COLORS: Record<string, string> = {
   abjuration:    '#4A90D9',
   conjuration:   '#D4A84B',

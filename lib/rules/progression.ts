@@ -110,3 +110,38 @@ export function getResourceValue(className: string, resourceKey: string, level: 
   if (!resource?.per_level) return undefined;
   return resource.per_level[String(level)];
 }
+
+/**
+ * Massimo di usi di una risorsa per classe e livello.
+ * Gestisce anche il formato `uses_per_rest` (es. Ispirazione Bardica =
+ * modificatore di Carisma) che `getResourceValue` non copre, perché
+ * `bardic_inspiration` in progression.json NON ha `per_level`.
+ */
+export function getResourceMax(
+  className: string,
+  resourceKey: string,
+  level: number,
+  getModifier?: (ability: string) => number
+): number | string | undefined {
+  const resources = getClassResources(className);
+  const resource = resources[resourceKey];
+  if (!resource) return undefined;
+  if (resource.per_level) return resource.per_level[String(level)];
+  if (resource.uses_per_rest === 'charisma_modifier') {
+    return getModifier ? getModifier('charisma') : undefined;
+  }
+  return undefined;
+}
+
+/** Dado associato a una risorsa per un livello (es. Ispirazione Bardica → 'd6' al lv 1) */
+export function getResourceDie(className: string, resourceKey: string, level: number): string | undefined {
+  const resource = getClassResources(className)[resourceKey];
+  if (!resource) return undefined;
+  const die = resource.die_size;
+  if (typeof die === 'string') return die;
+  if (die && typeof die === 'object') {
+    const d = (die as Record<string, string>)[String(level)];
+    if (typeof d === 'string') return d;
+  }
+  return undefined;
+}

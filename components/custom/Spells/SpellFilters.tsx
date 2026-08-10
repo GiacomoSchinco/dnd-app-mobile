@@ -6,7 +6,7 @@ import Modal from '../../ui/modal';
 import FilterChip from '../FilterChip';
 import { s } from '../../../utils/style-helpers';
 import type { ClassName } from '../../../types';
-import { CLASS_LABELS, SCHOOL_COLORS, getSchoolColor, getLevelCounts } from './types';
+import { CLASS_LABELS, SCHOOL_COLORS, FAVORITE_COLOR, getSchoolColor, getLevelCounts } from './types';
 
 const SCHOOL_KEYS = Object.keys(SCHOOL_COLORS);
 const LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -111,7 +111,7 @@ export default function SpellFilters({
               label="★ Preferite"
               active={showFavoritesOnly}
               onPress={() => onFavoritesOnlyChange(!showFavoritesOnly)}
-              activeBg="#F59E0B"
+              activeBg={FAVORITE_COLOR}
               activeFg="#FFFFFF"
             />
           </>

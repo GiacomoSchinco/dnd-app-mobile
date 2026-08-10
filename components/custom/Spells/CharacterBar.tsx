@@ -12,9 +12,11 @@ type Props = {
    * del personaggio (il PG si cambia solo dalla Home).
    */
   onPress?: () => void;
+  /** Se true mostra il conteggio incantesimi preparati/preferiti sotto il nome (default: true) */
+  spellInformation?: boolean;
 };
 
-export default function CharacterBar({ activeChar, onPress }: Props) {
+export default function CharacterBar({ activeChar, onPress, spellInformation = true }: Props) {
   const t = useTokens();
 
   const content = activeChar ? (
@@ -26,9 +28,12 @@ export default function CharacterBar({ activeChar, onPress }: Props) {
         <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
           {CLASS_LABELS[activeChar.classes?.[0]?.className] || activeChar.classes?.[0]?.className} · Livello {activeChar.level}
         </Text>
-        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: 2 }}>
+        {spellInformation && (
+                  <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: 2 }}>
           {(activeChar.preparedSpells ?? []).length} preparate · {(activeChar.favoriteSpells ?? []).length} preferite
         </Text>
+        )}
+
       </View>
     </>
   ) : (

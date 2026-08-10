@@ -4,6 +4,7 @@ import CharacterCreateScreen from '../../../screens/characters/CharacterCreateSc
 import SettingsScreen from '../../../screens/more/SettingsScreen';
 import CompendioScreen from '../../../screens/compendium/CompendioScreen';
 import CompendioMagieScreen from '../../../screens/compendium/CompendioMagieScreen';
+import CharacterSpellAssignScreen from '../../../screens/compendium/CharacterSpellAssignScreen';
 import ClassiListScreen from '../../../screens/compendium/ClassiListScreen';
 import RazzeListScreen from '../../../screens/compendium/RazzeListScreen';
 import BackgroundListScreen from '../../../screens/compendium/BackgroundListScreen';
@@ -27,6 +28,7 @@ export default function RootStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Main" component={AppNavigator} />
       <Stack.Screen name={ROUTES.CHARACTER_CREATE} component={CharacterCreateScreen} />
+      <Stack.Screen name={ROUTES.SPELL_ASSIGN} component={CharacterSpellAssignScreen} />
 
       {/* Sezioni consultive: raggiungibili solo dalla Home */}
       <Stack.Screen name={ALTRO_ROUTES.IMPOSTAZIONI} component={SettingsScreen} />

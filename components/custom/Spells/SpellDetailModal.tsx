@@ -13,14 +13,17 @@ type Props = {
   spell: Spell | null;
   activeChar: Character | null;
   onClose: () => void;
-  onToggleFavorite: () => void;
-  onTogglePrepared: () => void;
+  /** Se fornito mostra il pulsante "Lancia incantesimo" (consuma lo slot) */
+  onCast?: (spell: Spell) => void;
+  onToggleFavorite?: () => void;
+  onTogglePrepared?: () => void;
 };
 
 export default function SpellDetailModal({
   spell,
   activeChar,
   onClose,
+  onCast,
   onToggleFavorite,
   onTogglePrepared,
 }: Props) {
@@ -83,25 +86,40 @@ export default function SpellDetailModal({
                 </View>
               )}
 
-              {/* Action buttons */}
-              {activeChar && (
+              {/* Action buttons — nella sezione Magie solo "Lancia" (consuma slot) */}
+              {onCast && (
+                <Button
+                  variant="solid"
+                  size="md"
+                  fullWidth
+                  onPress={() => onCast(spell)}
+                  style={{ marginTop: t.spacing[4] }}
+                >
+                  {spell.level === 0 ? 'Lancia (trucchetto)' : `Lancia (slot ${spell.level}°)`}
+                </Button>
+              )}
+              {(onToggleFavorite || onTogglePrepared) && (
                 <View style={[s.row, s.gap(t.spacing[2]), s.mt(t.spacing[4])]}>
-                  <Button
-                    variant={activeChar.favoriteSpells.includes(spell.name) ? 'solid' : 'outline'}
-                    size="md"
-                    onPress={onToggleFavorite}
-                    style={{ flex: 1 }}
-                  >
-                    {activeChar.favoriteSpells.includes(spell.name) ? '★ Preferita' : '☆ Preferita'}
-                  </Button>
-                  <Button
-                    variant={activeChar.preparedSpells.includes(spell.name) ? 'solid' : 'outline'}
-                    size="md"
-                    onPress={onTogglePrepared}
-                    style={{ flex: 1 }}
-                  >
-                    {activeChar.preparedSpells.includes(spell.name) ? '✓ Preparata' : '+ Prepara'}
-                  </Button>
+                  {onToggleFavorite && (
+                    <Button
+                      variant={activeChar?.favoriteSpells.includes(spell.name) ? 'solid' : 'outline'}
+                      size="md"
+                      onPress={onToggleFavorite}
+                      style={{ flex: 1 }}
+                    >
+                      {activeChar?.favoriteSpells.includes(spell.name) ? '★ Preferita' : '☆ Preferita'}
+                    </Button>
+                  )}
+                  {onTogglePrepared && (
+                    <Button
+                      variant={activeChar?.preparedSpells.includes(spell.name) ? 'solid' : 'outline'}
+                      size="md"
+                      onPress={onTogglePrepared}
+                      style={{ flex: 1 }}
+                    >
+                      {activeChar?.preparedSpells.includes(spell.name) ? '✓ Preparata' : '+ Prepara'}
+                    </Button>
+                  )}
                 </View>
               )}
       </>

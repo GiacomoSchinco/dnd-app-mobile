@@ -4,7 +4,7 @@ import { Badge } from '../../ui/badge';
 import { useTokens } from '../../ui/prism-provider';
 import { s } from '../../../utils/style-helpers';
 import type { Spell, ClassName } from '../../../types';
-import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
+import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP, FAVORITE_COLOR } from './types';
 import DndIcon, { type IconName } from '../DndIcon';
 
 type Props = {
@@ -66,7 +66,7 @@ export default function SpellCard({
             <View style={[s.row, s.gap(t.spacing[1])]}>
               <TouchableOpacity
                 onPress={onToggleFavorite}
-                style={[s.box(32, 16), { backgroundColor: isFavorite ? '#F59E0B' : t.colors.backgroundSecondary }]}
+                style={[s.box(32, 16), { backgroundColor: isFavorite ? FAVORITE_COLOR : t.colors.backgroundSecondary }]}
               >
                 <Text style={{ fontSize: 16 }}>{isFavorite ? '★' : '☆'}</Text>
               </TouchableOpacity>

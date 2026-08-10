@@ -3,9 +3,9 @@ import { getRace, getRaceById, getLineageById, getRaceEffects, getRaceEffectIds,
 import { getBackground, type BackgroundFeat } from './backgrounds';
 import { getFeat } from './feats';
 import { applyFeat, getToolOptions, type FeatApplyResult } from './apply-feat';
-import { getSubclass } from './subclasses';
+import { getSubclass, getSubclassFeaturesUpToLevel } from './subclasses';
 import { getSpellProgression, getLevelUpSpellChanges } from './spellcasting';
-import { getClassProgression, getFeaturesAtLevel, getAsiLevels, getResourceValue, getProficiencyBonus, getClassResources } from './progression';
+import { getClassProgression, getFeaturesAtLevel, getAsiLevels, getResourceValue, getProficiencyBonus, getClassResources, getResourceMax, getResourceDie } from './progression';
 import { getStartingEquipment, getClassPreset } from './equipment-preset';
 import { getAbilityModifier } from './abilities';
 import type {
@@ -661,6 +661,14 @@ export function buildCharacterSheet(
   // Effetti risolti (razza + lineage)
   const effects = raceData.effects;
 
+  // Feature di classe (per livello, ASI esclusi) e della sottoclasse
+  const classFeatures: { level: number; name: string }[] = [];
+  for (const lvl of classData.features) {
+    for (const name of lvl.features) classFeatures.push({ level: lvl.level, name });
+  }
+  const subclassFeatures =
+    classData.subclass?.id != null ? getSubclassFeaturesUpToLevel(classData.subclass.id, level) : [];
+
   // Slot incantesimi (max = disponibili)
   const spellSlots: Record<number, SpellSlot> = {};
   const progSlots = classData.spellProgression?.spellSlots;
@@ -673,10 +681,19 @@ export function buildCharacterSheet(
   // Risorse (Ira, Ki, …) da progression.json + effetti con risorsa
   const resources: Record<string, CharacterResource> = {};
   for (const [key, res] of Object.entries(getClassResources(classDef.name))) {
-    const max = getResourceValue(classDef.name, key, level);
+    const max = getResourceMax(
+      classDef.name,
+      key,
+      level,
+      (ability) => getAbilityModifier((abilities as Record<string, number>)[ability] ?? 10)
+    );
     if (typeof max === 'number') {
+      // Mostra il dado associato (es. Ispirazione Bardica → "Ispirazione Bardica (d6)")
+      let label = res.label;
+      const die = getResourceDie(classDef.name, key, level);
+      if (die) label = `${label} (${die})`;
       resources[key] = {
-        label: res.label,
+        label,
         max,
         current: max,
         resetOn: typeof res.recovery === 'string' ? res.recovery : 'long_rest',
@@ -717,18 +734,32 @@ export function buildCharacterSheet(
   }
 
   // Incantesimi
+  // Magie da fonti AUTOMATICHE: talento del background (Iniziato alla Magia) +
+  // effetti razza/lineage (spell_grant) con req_level <= livello attuale.
+  const autoSpells: string[] = [];
+  const pushAutoSpell = (name?: string) => {
+    if (name && !autoSpells.includes(name)) autoSpells.push(name);
+  };
+  for (const cantrip of plan.featApply?.spellcasting?.cantrips ?? []) pushAutoSpell(cantrip);
+  for (const spell of plan.featApply?.spellcasting?.spells ?? []) pushAutoSpell(spell);
+  for (const eff of effects) {
+    if (eff.type !== 'spell_grant') continue;
+    const granted = eff.spells;
+    if (!Array.isArray(granted)) continue;
+    for (const sp of granted as Array<{ name?: string; req_level?: number }>) {
+      if (sp.name && (sp.req_level ?? 1) <= level) pushAutoSpell(sp.name);
+    }
+  }
+
   let spellcasting: CharacterSpellcasting | undefined;
   if (classData.spellcasting) {
     spellcasting = {
       ability: classData.spellcasting.ability ?? 'intelligence',
       progression: classData.spellProgression,
       slotDetails: spellSlots,
-      // Incantesimi del talento "Iniziato alla Magia" (trucchetti + 1° livello)
-      knownSpells: [
-        ...(plan.featApply?.spellcasting?.cantrips ?? []),
-        ...(plan.featApply?.spellcasting?.spells ?? []),
-      ],
-      preparedSpells: [],
+      // Incantesimi da fonti automatiche (talento background + razza/lineage)
+      knownSpells: [...autoSpells],
+      preparedSpells: [...autoSpells],
       favoriteSpells: [],
     };
   }
@@ -804,10 +835,12 @@ export function buildCharacterSheet(
     feats: [bgData.feat.name],
     epicBoons: [],
     featModifiers: plan.featApply?.modifiers ?? [],
+    classFeatures,
+    subclassFeatures,
     effects,
     spellcasting,
     spellSlots,
-    preparedSpells: [],
+    preparedSpells: [...autoSpells],
     favoriteSpells: [],
     resources: Object.keys(resources).length > 0 ? resources : undefined,
     equipment,

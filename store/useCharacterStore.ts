@@ -4,7 +4,9 @@ import type { CharacterState, Character, ClassName, CharacterDraft } from '../ty
 import { buildCharacter, buildCharacterSheet } from '../lib/rules/character-builder';
 import { getClass } from '../lib/rules/classes';
 import { getAbilityModifier } from '../lib/rules/abilities';
-import { getProficiencyBonus } from '../lib/rules/progression';
+import { getProficiencyBonus, getAllFeaturesUpToLevel } from '../lib/rules/progression';
+import { getSubclassFeaturesUpToLevel } from '../lib/rules/subclasses';
+import { getRaceEffects } from '../lib/rules/races';
 import { fileSystemStorage } from './file-system-storage';
 
 let counter = 0;
@@ -33,6 +35,38 @@ function backfillDerivedStats(c: Character): Character {
     c.hitPoints?.max ??
     hitDie + conMod + (level - 1) * Math.max(average + conMod, 1);
 
+  // Feature di classe + sottoclasse (per i PG creati prima di questa feature)
+  const classFeatures =
+    c.classFeatures ??
+    getAllFeaturesUpToLevel(cls.className, level)
+      .flatMap(({ level: lv, features }) =>
+        features
+          .filter((f) => f !== 'Aumento dei Punteggi di Caratteristica')
+          .map((name) => ({ level: lv, name }))
+      );
+  const subclassFeatures =
+    c.subclassFeatures ??
+    (cls.subclassId != null ? getSubclassFeaturesUpToLevel(cls.subclassId, level) : undefined);
+
+  // Magie da fonti automatiche (talento bg + razza/lineage) → tra le assegnate
+  const autoSpells: string[] = [];
+  const pushAutoSpell = (name?: string) => {
+    if (name && !autoSpells.includes(name)) autoSpells.push(name);
+  };
+  const featChoice = c.choices?.featChoice;
+  if (featChoice && typeof featChoice === 'object') {
+    featChoice.cantrips.forEach(pushAutoSpell);
+    featChoice.spells.forEach(pushAutoSpell);
+  }
+  for (const eff of c.raceId != null ? getRaceEffects(c.raceId, c.lineageId) : []) {
+    if (eff.type !== 'spell_grant') continue;
+    const granted = eff.spells;
+    if (!Array.isArray(granted)) continue;
+    for (const sp of granted as Array<{ name?: string; req_level?: number }>) {
+      if (sp.name && (sp.req_level ?? 1) <= level) pushAutoSpell(sp.name);
+    }
+  }
+
   return {
     ...c,
     level,
@@ -47,6 +81,10 @@ function backfillDerivedStats(c: Character): Character {
     proficiencyBonus: c.proficiencyBonus ?? getProficiencyBonus(level),
     armorClass: c.armorClass ?? 10 + dexMod,
     initiative: c.initiative ?? dexMod,
+    classFeatures,
+    subclassFeatures,
+    // Unisce le magie automatiche a quelle già assegnate (senza rimuoverne di manuali)
+    preparedSpells: [...new Set([...autoSpells, ...(c.preparedSpells ?? [])])],
   };
 }
 
@@ -173,6 +211,23 @@ export const useCharacterStore = create<CharacterState>()(
               return {
                 ...c,
                 spellSlots: { ...c.spellSlots, [level]: { ...slot, current: Math.max(0, slot.current - 1) } },
+              };
+            }),
+          };
+        }),
+
+      recoverSpellSlot: (level) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) => {
+              if (c.id !== id) return c;
+              const slot = c.spellSlots?.[level];
+              if (!slot) return c;
+              return {
+                ...c,
+                spellSlots: { ...c.spellSlots, [level]: { ...slot, current: Math.min(slot.max, slot.current + 1) } },
               };
             }),
           };

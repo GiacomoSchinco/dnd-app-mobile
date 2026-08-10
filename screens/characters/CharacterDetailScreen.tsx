@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, type TextStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { TabParamList } from '../../types/navigation';
@@ -22,6 +22,17 @@ const SECTIONS = [
   { key: 'talenti', icon: '⭐', label: 'Talenti', desc: 'Talenti e abilità speciali' },
   { key: 'note', icon: '📝', label: 'Note', desc: 'Appunti e storia del personaggio' },
 ];
+
+/** Raggruppa le feature di classe per livello (ordine di apprendimento) */
+function groupClassFeaturesByLevel(features: { level: number; name: string }[]) {
+  const groups: { level: number; names: string[] }[] = [];
+  for (const f of features) {
+    const g = groups.find((x) => x.level === f.level);
+    if (g) g.names.push(f.name);
+    else groups.push({ level: f.level, names: [f.name] });
+  }
+  return groups;
+}
 
 /** Statistica derivata dell'header — quadrato con etichetta + valore */
 function StatItem({ label, value }: { label: string; value: string }) {
@@ -74,6 +85,15 @@ export default function CharacterDetailScreen() {
   const { activeChar, updateCharacter, deleteCharacter } = useActiveCharacter();
   const [selectedSection, setSelectedSection] = useState<(typeof SECTIONS)[number] | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const sectionTitle: TextStyle = {
+    fontSize: t.typography.xs,
+    fontWeight: '600',
+    color: t.colors.foregroundTertiary,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: t.spacing[1],
+  };
 
   const handleSection = (key: string) => {
     if (key === 'magie') navigation.navigate(ROUTES.MAGIE);
@@ -307,40 +327,80 @@ export default function CharacterDetailScreen() {
           </Text>
 
           {selectedSection.key === 'talenti' && (
-            <View style={{ marginTop: t.spacing[3] }}>
-              {(activeChar.feats ?? []).length === 0 ? (
-                <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                  Nessun talento ancora.
-                </Text>
-              ) : (
-                (activeChar.feats ?? []).map((f) => (
-                  <View key={f} style={{ marginBottom: t.spacing[3] }}>
-                    <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
-                      🎖 {f}
-                    </Text>
-                    {(activeChar.featModifiers ?? [])
-                      .filter((m) => m.description)
-                      .map((m, i) => (
-                        <Text
-                          key={i}
-                          style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[1] }}
-                        >
-                          • {m.description}
+            <View style={{ marginTop: t.spacing[3], gap: t.spacing[5] }}>
+              {/* Talenti (origine dal background) */}
+              <View style={{ gap: t.spacing[2] }}>
+                <Text style={sectionTitle}>Talenti</Text>
+                {(activeChar.feats ?? []).length === 0 ? (
+                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+                    Nessun talento.
+                  </Text>
+                ) : (
+                  (activeChar.feats ?? []).map((f) => (
+                    <View key={f}>
+                      <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
+                        🎖 {f}
+                      </Text>
+                      {(activeChar.featModifiers ?? [])
+                        .filter((m) => m.description)
+                        .map((m, i) => (
+                          <Text
+                            key={i}
+                            style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[1] }}
+                          >
+                            • {m.description}
+                          </Text>
+                        ))}
+                      {/* Scelta incantesimi (Iniziato alla Magia) */}
+                      {typeof activeChar.choices?.featChoice === 'object' && (
+                        <View style={{ marginTop: t.spacing[2], gap: t.spacing[1] }}>
+                          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+                            🔮 Trucchetti: {activeChar.choices.featChoice.cantrips.join(', ')}
+                          </Text>
+                          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+                            Incantesimo: {activeChar.choices.featChoice.spells.join(', ')}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  ))
+                )}
+              </View>
+
+              {/* Caratteristiche di classe */}
+              {(activeChar.classFeatures ?? []).length > 0 && (
+                <View style={{ gap: t.spacing[3] }}>
+                  <Text style={sectionTitle}>Caratteristiche di classe</Text>
+                  {groupClassFeaturesByLevel(activeChar.classFeatures ?? []).map(({ level, names }) => (
+                    <View key={level}>
+                      <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, marginBottom: t.spacing[1] }}>
+                        Livello {level}
+                      </Text>
+                      {names.map((name) => (
+                        <Text key={name} style={{ fontSize: t.typography.sm, color: t.colors.foreground, marginBottom: t.spacing[0.5] }}>
+                          • {name}
                         </Text>
                       ))}
-                    {/* Scelta incantesimi (Iniziato alla Magia) */}
-                    {typeof activeChar.choices?.featChoice === 'object' && (
-                      <View style={{ marginTop: t.spacing[2], gap: t.spacing[1] }}>
-                        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                          🔮 Trucchetti: {activeChar.choices.featChoice.cantrips.join(', ')}
-                        </Text>
-                        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                          Incantesimo: {activeChar.choices.featChoice.spells.join(', ')}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                ))
+                    </View>
+                  ))}
+                </View>
+              )}
+
+              {/* Privilegi della sottoclasse */}
+              {(activeChar.subclassFeatures ?? []).length > 0 && (
+                <View style={{ gap: t.spacing[2] }}>
+                  <Text style={sectionTitle}>Sottoclasse — {activeChar.classes[0]?.subclass ?? ''}</Text>
+                  {(activeChar.subclassFeatures ?? []).map((f) => (
+                    <View key={f.name}>
+                      <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
+                        {f.name}
+                      </Text>
+                      <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[1], lineHeight: 19 }}>
+                        {f.description}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
               )}
             </View>
           )}

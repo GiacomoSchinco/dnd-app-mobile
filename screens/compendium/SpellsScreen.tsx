@@ -5,8 +5,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import TabHeader from '../../components/custom/TabHeader';
+import EmptyState from '../../components/custom/EmptyState';
+import { Input } from '../../components/ui/input';
+import { Button } from '../../components/ui/button';
 import { s } from '../../utils/style-helpers';
 import spellsData from '../../lib/data/spells.json';
+import { ROUTES } from '../../lib/routes';
+import type { TabToRootNav } from '../../types/navigation';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 
 import {
@@ -14,17 +19,17 @@ import {
   SpellFilters,
   SpellDetailModal,
   CharacterBar,
+  SpellSlotsBar,
+  SpellCastRow,
   Spell,
-  spellMatchesClass,
-  SCHOOL_COLORS,
-  getSchoolColor,
-  getLevelCounts,
+  useSpellFilters,
+  applySpellFilters,
 } from '../../components/custom/Spells';
 
 type Props = {
   /**
    * Se true, l'elenco è STANDALONE (usato dal Compendio): NIENTE legame col PG —
-   * niente CharacterBar, niente filtro classe bloccato, niente toggle prepara/preferita.
+   * niente CharacterBar, niente slot, niente toggle prepara/preferita.
    */
   standalone?: boolean;
 };
@@ -32,13 +37,21 @@ type Props = {
 export default function SpellsScreen({ standalone = false }: Props) {
   const t = useTokens();
   const insets = useSafeAreaInsets();
-  const navigation = useNavigation();
-  const { activeChar: boundChar, togglePreparedSpell, toggleFavoriteSpell } = useActiveCharacter();
+  const navigation = useNavigation<TabToRootNav>();
+  const {
+    activeChar: boundChar,
+    togglePreparedSpell,
+    toggleFavoriteSpell,
+    useSpellSlot,
+    recoverSpellSlot,
+    restoreSpellSlots,
+  } = useActiveCharacter();
   // In modalità standalone il PG viene ignorato del tutto
   const activeChar = standalone ? null : boundChar;
   const hasActiveCharacter = !!activeChar;
+  // "Scheda magie del PG": solo con PG attivo e NON standalone → lista delle SUE magie
+  const isSheet = hasActiveCharacter && !standalone;
 
-  // In modalità standalone non c'è la tab bar → meno spazio in basso
   const bottomClearance = standalone ? insets.bottom + t.spacing[6] : insets.bottom + 80;
 
   // ── Scroll to top ──
@@ -46,20 +59,26 @@ export default function SpellsScreen({ standalone = false }: Props) {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const handleScroll = useCallback((event: any) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    setShowScrollTop(offsetY > 300);
+    setShowScrollTop(event.nativeEvent.contentOffset.y > 300);
   }, []);
 
   const scrollToTop = useCallback(() => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, []);
 
-  // ── Filters ──
-  const [search, setSearch] = useState('');
-  const [levelFilter, setLevelFilter] = useState<number | null>(null);
-  const [classFilter, setClassFilter] = useState<string | null>(null);
-  const [showPreparedOnly, setShowPreparedOnly] = useState(false);
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  // ── Filtri magie (hook condiviso: compendio, scheda PG, gestione magie) ──
+  const {
+    search,
+    setSearch,
+    levelFilter,
+    setLevelFilter,
+    classFilter,
+    setClassFilter,
+    showPreparedOnly,
+    setShowPreparedOnly,
+    showFavoritesOnly,
+    setShowFavoritesOnly,
+  } = useSpellFilters();
 
   // ── Modal state ──
   const [selectedSpell, setSelectedSpell] = useState<Spell | null>(null);
@@ -70,34 +89,41 @@ export default function SpellsScreen({ standalone = false }: Props) {
   /** Classe del PG attivo: la lista magie è filtrata e bloccata su di essa */
   const lockedClass = activeChar?.classes?.[0]?.className ?? null;
 
-  // ── Filtered spells ──
-  const filteredSpells = useMemo(() => {
-    let list = spellsData as Spell[];
+  // ── Elenco completo (filtri attivi) — usato nel compendio ──
+  const filteredSpells = useMemo(
+    () =>
+      applySpellFilters(spellsData as Spell[], {
+        search,
+        levelFilter,
+        classFilter,
+        lockedClass,
+        showPreparedOnly,
+        showFavoritesOnly,
+        prepared,
+        favorites,
+      }),
+    [search, levelFilter, classFilter, lockedClass, showPreparedOnly, showFavoritesOnly, prepared, favorites]
+  );
 
-    if (search) {
-      const q = search.toLowerCase();
-      list = list.filter((s) => s.name.toLowerCase().includes(q));
-    }
-    if (levelFilter !== null) {
-      list = list.filter((s) => s.level === levelFilter);
-    }
-    // Con PG attivo la lista è BLOCCATA alla sua classe (il filtro manuale viene ignorato)
-    if (lockedClass) {
-      list = list.filter((s) => spellMatchesClass(s, lockedClass));
-    } else if (classFilter) {
-      list = list.filter((s) => spellMatchesClass(s, classFilter));
-    }
-    if (showPreparedOnly) {
-      list = list.filter((s) => prepared.includes(s.name));
-    }
-    if (showFavoritesOnly) {
-      list = list.filter((s) => favorites.includes(s.name));
-    }
+  // ── Magie ASSEGNATE al PG (le sue preparate), risolte dall'elenco ──
+  const sheetSpells = useMemo(() => {
+    if (!isSheet) return [];
+    const byName = new Map((spellsData as Spell[]).map((s) => [s.name, s]));
+    const list = (activeChar?.preparedSpells ?? [])
+      .map((n) => byName.get(n))
+      .filter((s): s is Spell => !!s);
+    return applySpellFilters(list, { search, levelFilter }).sort(
+      (a, b) => a.level - b.level || a.name.localeCompare(b.name)
+    );
+  }, [isSheet, activeChar?.preparedSpells, search, levelFilter]);
 
-    return list;
-  }, [search, levelFilter, classFilter, lockedClass, showPreparedOnly, showFavoritesOnly, prepared, favorites]);
+  // ── Lancia: consuma uno slot del livello (i trucchetti non hanno slot) ──
+  const handleCast = useCallback((spell: Spell) => {
+    if (spell.level === 0) return;
+    useSpellSlot(spell.level);
+  }, [useSpellSlot]);
 
-  // ── Render spell (legato al PG attivo) ──
+  // ── Render compendio ──
   const renderSpell = useCallback(({ item }: { item: Spell }) => {
     return (
       <SpellCard
@@ -112,6 +138,11 @@ export default function SpellsScreen({ standalone = false }: Props) {
     );
   }, [prepared, favorites, hasActiveCharacter, toggleFavoriteSpell, togglePreparedSpell]);
 
+  // ── Render foglio PG ──
+  const renderSheetSpell = useCallback(({ item }: { item: Spell }) => (
+    <SpellCastRow spell={item} t={t} onCast={handleCast} onInfo={setSelectedSpell} />
+  ), [t, handleCast]);
+
   // ── Main render ──
   return (
     <View style={[s.flex, { backgroundColor: t.colors.background }]}>
@@ -122,36 +153,64 @@ export default function SpellsScreen({ standalone = false }: Props) {
         backLabel="Torna al Compendio"
       >
         {!standalone && <CharacterBar activeChar={activeChar} />}
-        <SpellFilters
-          search={search}
-          onSearchChange={setSearch}
-          levelFilter={levelFilter}
-          onLevelFilterChange={setLevelFilter}
-          classFilter={classFilter}
-          onClassFilterChange={setClassFilter}
-          lockedClass={lockedClass}
-          showPreparedOnly={showPreparedOnly}
-          onPreparedOnlyChange={setShowPreparedOnly}
-          showFavoritesOnly={showFavoritesOnly}
-          onFavoritesOnlyChange={setShowFavoritesOnly}
-          filteredCount={filteredSpells.length}
-          hasActiveCharacter={hasActiveCharacter}
-        />
+
+        {isSheet ? (
+          <View style={[s.row, s.gap(t.spacing[2]), s.mb(t.spacing[2])]}>
+            <Input placeholder="Cerca le tue magie..." value={search} onChangeText={setSearch} style={{ flex: 1 }} />
+            <Button variant="outline" size="md" onPress={() => navigation.navigate(ROUTES.SPELL_ASSIGN)}>+ Aggiungi</Button>
+          </View>
+        ) : (
+          <SpellFilters
+            search={search}
+            onSearchChange={setSearch}
+            levelFilter={levelFilter}
+            onLevelFilterChange={setLevelFilter}
+            classFilter={classFilter}
+            onClassFilterChange={setClassFilter}
+            lockedClass={lockedClass}
+            showPreparedOnly={showPreparedOnly}
+            onPreparedOnlyChange={setShowPreparedOnly}
+            showFavoritesOnly={showFavoritesOnly}
+            onFavoritesOnlyChange={setShowFavoritesOnly}
+            filteredCount={filteredSpells.length}
+            hasActiveCharacter={hasActiveCharacter}
+          />
+        )}
       </TabHeader>
 
-      <FlatList
-        ref={flatListRef}
-        data={filteredSpells}
-        renderItem={renderSpell}
-        keyExtractor={(item) => item.name}
-        contentContainerStyle={{ paddingBottom: bottomClearance }}
-        showsVerticalScrollIndicator={false}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        style={{ paddingHorizontal: t.spacing[4] }}
-      />
+      {isSheet && sheetSpells.length === 0 ? (
+        <View style={[s.flex, { paddingHorizontal: t.spacing[4] }]}>
+          <EmptyState
+            emoji="🔮"
+            title="Nessuna magia assegnata"
+            message="Tocca '+ Aggiungi' per scegliere le magie del personaggio dalla sua classe."
+          />
+        </View>
+      ) : (
+        <FlatList
+          ref={flatListRef}
+          data={isSheet ? sheetSpells : filteredSpells}
+          renderItem={isSheet ? renderSheetSpell : renderSpell}
+          keyExtractor={(item) => item.name}
+          ListHeaderComponent={
+            isSheet ? (
+              <SpellSlotsBar
+                spellSlots={activeChar?.spellSlots}
+                onUseSlot={useSpellSlot}
+                onRecoverSlot={recoverSpellSlot}
+                onRestoreAll={() => restoreSpellSlots()}
+              />
+            ) : null
+          }
+          contentContainerStyle={{ paddingBottom: bottomClearance }}
+          showsVerticalScrollIndicator={false}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          style={{ paddingHorizontal: t.spacing[4] }}
+        />
+      )}
 
-      {/* Pulsante "Torna su" flottante — nascosto se il modale è aperto */}
+      {/* Pulsante "Torna su" flottante — nascosto se un modale è aperto */}
       {showScrollTop && !selectedSpell && (
         <Pressable
           onPress={scrollToTop}
@@ -181,8 +240,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
         spell={selectedSpell}
         activeChar={activeChar}
         onClose={() => setSelectedSpell(null)}
-        onToggleFavorite={() => selectedSpell && toggleFavoriteSpell(selectedSpell.name)}
-        onTogglePrepared={() => selectedSpell && togglePreparedSpell(selectedSpell.name)}
+        onCast={handleCast}
       />
     </View>
   );

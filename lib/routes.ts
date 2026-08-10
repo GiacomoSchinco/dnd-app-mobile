@@ -10,6 +10,7 @@ export const ROUTES = {
   DADI: 'Dadi',
   CHARACTER_DETAIL: 'CharacterDetail',
   CHARACTER_CREATE: 'CharacterCreate',
+  SPELL_ASSIGN: 'SpellAssign',
 } as const;
 
 export type RouteName = (typeof ROUTES)[keyof typeof ROUTES];

@@ -10,6 +10,8 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParamList = {
   Main: undefined;
   CharacterCreate: undefined;
+  /** Gestione magie assegnate al PG — raggiungibile dalla tab Magie */
+  SpellAssign: undefined;
   /** Sezioni consultive — raggiungibili SOLO dalla Home, senza storico nel menu Altro */
   Impostazioni: undefined;
   Compendio: undefined;

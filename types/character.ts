@@ -1,4 +1,5 @@
 import type { Ability, AbilityAbbreviation, AbilityScores } from './ability';
+import type { ClassFeatureRaw } from './class';
 import type { SkillName } from './skill';
 import type { EffectRaw } from './effects';
 import type { FeatModifierRaw } from './feat';
@@ -235,6 +236,12 @@ export interface Character {
   /** Modificatori concessi dai talenti (granted_modifiers aggregati) */
   featModifiers?: FeatModifierRaw[];
 
+  // Caratteristiche di classe / sottoclasse
+  /** Feature di classe per livello (da progression.json, ASI esclusi) */
+  classFeatures?: { level: number; name: string }[];
+  /** Feature della sottoclasse (da subclasses.json, con descrizione) */
+  subclassFeatures?: ClassFeatureRaw[];
+
   // Tratti (effetti risolti: razza + lineage + talenti)
   effects?: EffectRaw[];
 
@@ -309,6 +316,7 @@ export interface CharacterState {
   togglePreparedSpell: (spellSlug: string) => void;
   toggleFavoriteSpell: (spellSlug: string) => void;
   useSpellSlot: (level: number) => void;
+  recoverSpellSlot: (level: number) => void;
   restoreSpellSlots: (level?: number) => void;
 }
 
@@ -321,6 +329,7 @@ export interface ActiveCharacterActions {
   togglePreparedSpell: (slug: string) => void;
   toggleFavoriteSpell: (slug: string) => void;
   useSpellSlot: (level: number) => void;
+  recoverSpellSlot: (level: number) => void;
   restoreSpellSlots: (level?: number) => void;
   createCharacter: (name: string, className: ClassName, level?: number) => void;
   /** Crea un personaggio COMPLETO dal wizard (buildCharacter + buildCharacterSheet) */
