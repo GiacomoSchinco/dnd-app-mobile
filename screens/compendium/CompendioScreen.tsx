@@ -81,7 +81,7 @@ export default function CompendioScreen() {
           alignSelf: 'flex-start',
         }}
       >
-        Consulta tutte le conoscenze di DungeonCraft
+        Consulta tutte le conoscenze di Campaign Chronicle
       </Text>
 
       <ScrollView

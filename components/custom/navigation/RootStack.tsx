@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AppNavigator from '../AppNavigator';
 import CharacterCreateScreen from '../../../screens/characters/CharacterCreateScreen';
+import NotesScreen from '../../../screens/characters/NotesScreen';
 import SettingsScreen from '../../../screens/more/SettingsScreen';
 import CompendioScreen from '../../../screens/compendium/CompendioScreen';
 import CompendioMagieScreen from '../../../screens/compendium/CompendioMagieScreen';
@@ -29,6 +30,7 @@ export default function RootStack() {
       <Stack.Screen name="Main" component={AppNavigator} />
       <Stack.Screen name={ROUTES.CHARACTER_CREATE} component={CharacterCreateScreen} />
       <Stack.Screen name={ROUTES.SPELL_ASSIGN} component={CharacterSpellAssignScreen} />
+      <Stack.Screen name={ROUTES.NOTES} component={NotesScreen} />
 
       {/* Sezioni consultive: raggiungibili solo dalla Home */}
       <Stack.Screen name={ALTRO_ROUTES.IMPOSTAZIONI} component={SettingsScreen} />

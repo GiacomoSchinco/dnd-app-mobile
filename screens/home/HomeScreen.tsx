@@ -29,7 +29,7 @@ function LogoHeader({ size = 72, subtitle, style }: { size?: number; subtitle?: 
         />
       </View>
       <Text style={{ fontSize: big ? t.typography['2xl'] : t.typography.xl, fontWeight: t.typography.heavy, color: t.colors.foreground, textAlign: 'center' }}>
-        DungeonCraft
+        Campaign Chronicle
       </Text>
       {subtitle && (
         <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center', marginTop: t.spacing[1] }}>

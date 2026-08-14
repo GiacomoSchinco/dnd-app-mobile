@@ -1,4 +1,4 @@
-# 📓 Appunti — DungeonCraft
+# 📓 Appunti — Campaign Chronicle
 
 ## ⚠️ REGOLA PRINCIPALE
 

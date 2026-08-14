@@ -271,6 +271,17 @@ export interface Character {
 
   // Note / storia
   notes?: string;
+  /** Todo-list di appunti (note prese durante il gioco) */
+  notesList?: NoteItem[];
+}
+
+// ── Appunti / todo-list ────────────────────────────────────────
+
+/** Singolo appunto della todo-list del PG */
+export interface NoteItem {
+  id: string;
+  text: string;
+  done: boolean;
 }
 
 // ── Bozza di creazione (input del wizard) ──────────────────────

@@ -19,7 +19,7 @@ export default function SettingsScreen() {
         <ScreenHeader title="Impostazioni" icon="settings-outline" />
         <ThemePicker />
 
-        <Button variant="ghost" size="lg" fullWidth style={{ marginTop: 'auto' }} onPress={() => Alert.alert('Info', 'DungeonCraft v1.0.0\nCreato con Prism UI 🎨')}>
+        <Button variant="ghost" size="lg" fullWidth style={{ marginTop: 'auto' }} onPress={() => Alert.alert('Info', 'Campaign Chronicle v1.0.0\nCreato con Prism UI 🎨')}>
           ℹ️ Info app
         </Button>
       </View>

@@ -4,13 +4,16 @@
  */
 export const ROUTES = {
   HOME: 'Home',
-  ABILITA: 'Abilita',
-  MAGIE: 'Magie',
-  ALTRO: 'Altro',
-  DADI: 'Dadi',
+  ABILITA: 'Skills',
+  MAGIE: 'Spells',
+  TALENTI: 'Feats',
+  EQUIPAGGIAMENTO: 'Equipment',
+  ALTRO: 'More',
+  DADI: 'Dice',
   CHARACTER_DETAIL: 'CharacterDetail',
   CHARACTER_CREATE: 'CharacterCreate',
   SPELL_ASSIGN: 'SpellAssign',
+  NOTES: 'Notes',
 } as const;
 
 export type RouteName = (typeof ROUTES)[keyof typeof ROUTES];

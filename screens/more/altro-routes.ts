@@ -6,16 +6,16 @@
  * Separate da ROUTES (le tab) per evitare collisioni di nomi tra navigatori.
  */
 export const ALTRO_ROUTES = {
-  MENU: 'AltroMenu',
-  IMPOSTAZIONI: 'Impostazioni',
-  COMPENDIO: 'Compendio',
-  COMPENDIO_MAGIE: 'CompendioMagie',
-  CLASSI: 'Classi',
-  RAZZE: 'Razze',
+  MENU: 'MoreMenu',
+  IMPOSTAZIONI: 'Settings',
+  COMPENDIO: 'Compendium',
+  COMPENDIO_MAGIE: 'CompendiumSpells',
+  CLASSI: 'Classes',
+  RAZZE: 'Races',
   BACKGROUND: 'Background',
-  TALENTI: 'Talenti',
-  EQUIPAGGIAMENTO: 'Equipaggiamento',
-  OGGETTI: 'Oggetti',
+  TALENTI: 'Feats',
+  EQUIPAGGIAMENTO: 'Equipment',
+  OGGETTI: 'Items',
 } as const;
 
 export type AltroRoute = (typeof ALTRO_ROUTES)[keyof typeof ALTRO_ROUTES];

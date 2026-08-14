@@ -1,4 +1,4 @@
-# 🐉 DungeonCraft — Resoconto Progetto (dnd-app-mobile)
+# 🐉 Campaign Chronicle — Resoconto Progetto (dnd-app-mobile)
 
 > **Scopo di questo file**: dare un resoconto immediato e aggiornato di *cosa fa* il
 > progetto, dell'architettura e dello stato attuale. Aggiornare questo file quando

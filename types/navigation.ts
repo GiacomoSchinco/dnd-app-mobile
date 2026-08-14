@@ -10,35 +10,39 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParamList = {
   Main: undefined;
   CharacterCreate: undefined;
-  /** Gestione magie assegnate al PG — raggiungibile dalla tab Magie */
+  /** Gestione magie assegnate al PG — raggiungibile dalla tab Spells */
   SpellAssign: undefined;
-  /** Sezioni consultive — raggiungibili SOLO dalla Home, senza storico nel menu Altro */
-  Impostazioni: undefined;
-  Compendio: undefined;
-  CompendioMagie: undefined;
-  Classi: undefined;
-  Razze: undefined;
+  /** Appunti / todo-list del PG attivo — raggiungibile dalla Scheda */
+  Notes: undefined;
+  /** Sezioni consultive — raggiungibili SOLO dalla Home, senza storico nel menu More */
+  Settings: undefined;
+  Compendium: undefined;
+  CompendiumSpells: undefined;
+  Classes: undefined;
+  Races: undefined;
   Background: undefined;
-  Talenti: undefined;
-  Equipaggiamento: undefined;
-  Oggetti: undefined;
+  Feats: undefined;
+  Equipment: undefined;
+  Items: undefined;
 };
 
 /** Stack interno della tab Altro (AltroStack) — ora contiene solo il menu */
 export type AltroStackParamList = {
-  AltroMenu: undefined;
+  MoreMenu: undefined;
 };
 
 /** Tab navigator (Main) */
 export type TabParamList = {
   Home: undefined;
   CharacterDetail: undefined;
-  Magie: undefined;
-  Abilita: undefined;
-  /** Tab "Altro" = AltroStack annidato: consente di navigare a una sua schermata
-   *  direttamente (es. `navigate('Altro', { screen: 'Impostazioni' })`). */
-  Altro: NavigatorScreenParams<AltroStackParamList>;
-  Dadi: undefined;
+  Spells: undefined;
+  Skills: undefined;
+  Feats: undefined;
+  Equipment: undefined;
+  /** Tab "More" = AltroStack annidato: consente di navigare a una sua schermata
+   *  direttamente (es. `navigate('More', { screen: 'Settings' })`). */
+  More: NavigatorScreenParams<AltroStackParamList>;
+  Dice: undefined;
 };
 
 /** Navigazione da una schermata tab verso lo stack radice (es. Home → Crea PG) */

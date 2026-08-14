@@ -5,6 +5,8 @@ import { ROUTES } from '../../../lib/routes';
 import HomeScreen from '../../../screens/home/HomeScreen';
 import SkillsScreen from '../../../screens/characters/SkillsScreen';
 import SpellsScreen from '../../../screens/compendium/SpellsScreen';
+import FeatsScreen from '../../../screens/characters/FeatsScreen';
+import EquipmentScreen from '../../../screens/characters/EquipmentScreen';
 import AltroStack from '../../../screens/more/AltroStack';
 import CharacterDetailScreen from '../../../screens/characters/CharacterDetailScreen';
 
@@ -51,6 +53,26 @@ export const NAVIGATION_TABS: NavigationTab[] = [
     component: CharacterDetailScreen,
     iconActive: 'person',
     iconInactive: 'person-outline',
+    show: 'withCharacter',
+  },
+
+  // ── TALENTI (solo con PG attivo) ──
+  {
+    routeName: ROUTES.TALENTI,
+    label: 'Talenti',
+    component: FeatsScreen,
+    iconActive: 'star',
+    iconInactive: 'star-outline',
+    show: 'withCharacter',
+  },
+
+  // ── EQUIPAGGIAMENTO (solo con PG attivo) ──
+  {
+    routeName: ROUTES.EQUIPAGGIAMENTO,
+    label: 'Equip.',
+    component: EquipmentScreen,
+    iconActive: 'bag-handle',
+    iconInactive: 'bag-handle-outline',
     show: 'withCharacter',
   },
 

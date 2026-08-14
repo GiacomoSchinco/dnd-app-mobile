@@ -87,15 +87,15 @@ export default function AppNavigator() {
             const iconName = (currentTab
               ? (focused ? currentTab.iconActive : currentTab.iconInactive)
               : 'help-outline') as any;
-            return <Ionicons name={iconName} size={22} color={color} />;
+            return <Ionicons name={iconName} size={20} color={color} />;
           },
           tabBarActiveTintColor: t.colors.accent,
           tabBarInactiveTintColor: t.colors.foregroundTertiary,
           tabBarLabelStyle: {
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: '600',
-            letterSpacing: 0.2,
-            marginBottom: 4,
+            letterSpacing: 0.1,
+            marginBottom: 2,
           },
           headerShown: false,
           tabBarStyle: {
@@ -103,13 +103,13 @@ export default function AppNavigator() {
             bottom: bottomMargin,
             left: 16,
             right: 16,
-            height: 64,
+            height: 60,
             borderRadius: pillRadius,
             backgroundColor: navbarBg,
             borderWidth: 1,
             borderColor: navbarBorder,
-            paddingTop: 8,
-            paddingBottom: 4,
+            paddingTop: 6,
+            paddingBottom: 2,
             transform: [{ translateY: tabBarTranslateY }],
             ...Platform.select({
               ios: {

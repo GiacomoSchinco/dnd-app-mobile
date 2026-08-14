@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { View, Text, Pressable, type TextStyle } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import type { TabParamList } from '../../types/navigation';
+import type { TabToRootNav } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Badge } from '../../components/ui/badge';
 import Screen from '../../components/custom/Screen';
@@ -13,8 +12,7 @@ import ClassAvatar from '../../components/custom/ClassAvatar';
 import BottomModal from '../../components/custom/BottomModal';
 import SectionButton from '../../components/custom/SectionButton';
 import { Button } from '../../components/ui/button';
-import { getClassNameItalian, getClass } from '../../lib/rules/classes';
-import { getFeatByName } from '../../lib/rules/feats';
+import { getClassNameItalian } from '../../lib/rules/classes';
 import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
@@ -23,54 +21,6 @@ const SECTIONS = [
   { key: 'talenti', icon: '⭐', label: 'Talenti', desc: 'Talenti e abilità speciali' },
   { key: 'note', icon: '📝', label: 'Note', desc: 'Appunti e storia del personaggio' },
 ];
-
-/** Raggruppa le feature di classe per livello (ordine di apprendimento) */
-function groupClassFeaturesByLevel(features: { level: number; name: string }[]) {
-  const groups: { level: number; names: string[] }[] = [];
-  for (const f of features) {
-    const g = groups.find((x) => x.level === f.level);
-    if (g) g.names.push(f.name);
-    else groups.push({ level: f.level, names: [f.name] });
-  }
-  return groups;
-}
-
-/** Mostra un talento/dono con nome + descrizione completa (regole sempre leggibili) */
-function FeatDetail({ name, icon }: { name: string; icon: string }) {
-  const t = useTokens();
-  const feat = getFeatByName(name);
-  return (
-    <View style={{ gap: t.spacing[1] }}>
-      <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
-        {icon} {name}
-      </Text>
-      {feat ? (
-        <>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 18 }}>
-            {feat.description}
-          </Text>
-          {feat.granted_modifiers.filter((m) => m.description).map((m, i) => (
-            <Text
-              key={i}
-              style={{
-                fontSize: t.typography.xs,
-                color: t.colors.foregroundSecondary,
-                lineHeight: 17,
-                marginLeft: t.spacing[2],
-              }}
-            >
-              • {m.description}
-            </Text>
-          ))}
-        </>
-      ) : (
-        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
-          Descrizione non disponibile.
-        </Text>
-      )}
-    </View>
-  );
-}
 
 /** Statistica derivata dell'header — quadrato con etichetta + valore */
 function StatItem({ label, value }: { label: string; value: string }) {
@@ -119,26 +69,14 @@ function StepperButton({ onPress, children }: { onPress: () => void; children: s
 
 export default function CharacterDetailScreen() {
   const t = useTokens();
-  const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>();
+  const navigation = useNavigation<TabToRootNav>();
   const { activeChar, updateCharacter, deleteCharacter } = useActiveCharacter();
-  const [selectedSection, setSelectedSection] = useState<(typeof SECTIONS)[number] | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
-
-  const sectionTitle: TextStyle = {
-    fontSize: t.typography.xs,
-    fontWeight: '600',
-    color: t.colors.foregroundTertiary,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    marginBottom: t.spacing[1],
-  };
 
   const handleSection = (key: string) => {
     if (key === 'magie') navigation.navigate(ROUTES.MAGIE);
-    else {
-      const sec = SECTIONS.find((x) => x.key === key);
-      if (sec) setSelectedSection(sec);
-    }
+    else if (key === 'talenti') navigation.navigate(ROUTES.TALENTI);
+    else if (key === 'note') navigation.navigate(ROUTES.NOTES);
   };
 
   // ── Gestione punti ferita ───────────────────────────────────
@@ -178,16 +116,6 @@ export default function CharacterDetailScreen() {
 
   const mainClass = activeChar.classes[0];
   const classLabel = mainClass ? getClassNameItalian(mainClass.className) : '—';
-  // Info delle feature di classe (descrizione + tabella): prima dal PG, poi classes.json
-  const classFeatureInfo = new Map<string, { description?: string; table?: string }>();
-  for (const f of activeChar.classFeatures ?? []) {
-    classFeatureInfo.set(f.name, { description: f.description, table: f.table });
-  }
-  for (const f of mainClass ? getClass(mainClass.className)?.features ?? [] : []) {
-    if (!classFeatureInfo.has(f.name)) {
-      classFeatureInfo.set(f.name, { description: f.description, table: f.table });
-    }
-  }
 
   return (
     <>
@@ -331,118 +259,6 @@ export default function CharacterDetailScreen() {
         ))}
       </View>
       </Screen>
-
-      {selectedSection && (
-        <BottomModal visible={!!selectedSection} onClose={() => setSelectedSection(null)}>
-          <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>
-            {selectedSection.label}
-          </Text>
-
-          {selectedSection.key === 'talenti' && (
-            <View style={{ marginTop: t.spacing[3], gap: t.spacing[5] }}>
-              {/* Talenti (origine + generali + stili) — sempre con descrizione completa */}
-              <View style={{ gap: t.spacing[3] }}>
-                <Text style={sectionTitle}>Talenti</Text>
-                {(activeChar.feats ?? []).length === 0 ? (
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                    Nessun talento.
-                  </Text>
-                ) : (
-                  (activeChar.feats ?? []).map((f) => <FeatDetail key={f} name={f} icon="🎖" />)
-                )}
-                {/* Scelta incantesimi (Iniziato alla Magia) */}
-                {typeof activeChar.choices?.featChoice === 'object' && (
-                  <View style={{ marginTop: t.spacing[1], gap: t.spacing[1] }}>
-                    <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                      🔮 Trucchetti: {activeChar.choices.featChoice.cantrips.join(', ')}
-                    </Text>
-                    <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                      Incantesimo: {activeChar.choices.featChoice.spells.join(', ')}
-                    </Text>
-                  </View>
-                )}
-              </View>
-
-              {/* Doni epici — sempre con descrizione completa */}
-              {(activeChar.epicBoons ?? []).length > 0 && (
-                <View style={{ gap: t.spacing[2] }}>
-                  <Text style={sectionTitle}>Doni epici</Text>
-                  {(activeChar.epicBoons ?? []).map((b) => <FeatDetail key={b} name={b} icon="🏆" />)}
-                </View>
-              )}
-
-              {/* Caratteristiche di classe */}
-              {(activeChar.classFeatures ?? []).length > 0 && (
-                <View style={{ gap: t.spacing[3] }}>
-                  <Text style={sectionTitle}>Caratteristiche di classe</Text>
-                  {groupClassFeaturesByLevel(activeChar.classFeatures ?? []).map(({ level, names }) => (
-                    <View key={level} style={{ gap: t.spacing[1.5] }}>
-                      <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, marginBottom: t.spacing[0.5] }}>
-                        Livello {level}
-                      </Text>
-                      {names.map((name) => {
-                        const info = classFeatureInfo.get(name);
-                        const desc = info?.description;
-                        const table = info?.table;
-                        return (
-                          <View key={name} style={{ gap: t.spacing[0.5] }}>
-                            <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                              • {name}
-                            </Text>
-                            {desc ? (
-                              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 17, marginLeft: t.spacing[2] }}>
-                                {desc}
-                              </Text>
-                            ) : null}
-                            {table ? (
-                              <View
-                                style={{
-                                  marginLeft: t.spacing[2],
-                                  marginTop: t.spacing[0.5],
-                                  padding: t.spacing[2],
-                                  borderRadius: t.radius.sm,
-                                  backgroundColor: t.colors.backgroundTertiary,
-                                }}
-                              >
-                                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 16 }}>
-                                  {table}
-                                </Text>
-                              </View>
-                            ) : null}
-                          </View>
-                        );
-                      })}
-                    </View>
-                  ))}
-                </View>
-              )}
-
-              {/* Privilegi della sottoclasse */}
-              {(activeChar.subclassFeatures ?? []).length > 0 && (
-                <View style={{ gap: t.spacing[2] }}>
-                  <Text style={sectionTitle}>Sottoclasse — {activeChar.classes[0]?.subclass ?? ''}</Text>
-                  {(activeChar.subclassFeatures ?? []).map((f) => (
-                    <View key={f.name}>
-                      <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
-                        {f.name}
-                      </Text>
-                      <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[1], lineHeight: 19 }}>
-                        {f.description}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-            </View>
-          )}
-
-          {selectedSection.key === 'note' && (
-            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[3] }}>
-              {activeChar.background ? `Background: ${activeChar.background}` : 'Nessuna nota — sezione in arrivo.'}
-            </Text>
-          )}
-        </BottomModal>
-      )}
 
       {/* Conferma eliminazione */}
       <BottomModal visible={confirmDelete} onClose={() => setConfirmDelete(false)}>

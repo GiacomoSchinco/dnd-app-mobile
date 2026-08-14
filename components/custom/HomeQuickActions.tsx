@@ -5,7 +5,7 @@ import { useTokens } from '../ui/prism-provider';
 import { FLOATING_TAB_HEIGHT, FLOATING_TAB_GAP } from '../../utils/styles';
 
 /** Route dello stack RADICE aperte dai pulsanti rapidi della Home */
-export type QuickActionRoute = 'Impostazioni' | 'Compendio';
+export type QuickActionRoute = 'Settings' | 'Compendium';
 
 type Props = {
   onPress: (screen: QuickActionRoute) => void;
@@ -16,13 +16,13 @@ const ACTIONS = [
     key: 'impostazioni',
     label: 'Impostazioni',
     icon: 'settings' as const,
-    screen: 'Impostazioni' as QuickActionRoute,
+    screen: 'Settings' as QuickActionRoute,
   },
   {
     key: 'compendio',
     label: 'Compendio',
     icon: 'book' as const,
-    screen: 'Compendio' as QuickActionRoute,
+    screen: 'Compendium' as QuickActionRoute,
   },
 ];
 
