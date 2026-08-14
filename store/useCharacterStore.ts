@@ -36,14 +36,29 @@ function backfillDerivedStats(c: Character): Character {
     hitDie + conMod + (level - 1) * Math.max(average + conMod, 1);
 
   // Feature di classe + sottoclasse (per i PG creati prima di questa feature)
+  // — con descrizione/tabella risolte da classes.json quando disponibili
+  const cfFor = (lv: number, name: string) =>
+    classDef?.featuresByLevel[lv]?.find((f) => f.name === name);
   const classFeatures =
-    c.classFeatures ??
-    getAllFeaturesUpToLevel(cls.className, level)
-      .flatMap(({ level: lv, features }) =>
-        features
-          .filter((f) => f !== 'Aumento dei Punteggi di Caratteristica')
-          .map((name) => ({ level: lv, name }))
-      );
+    c.classFeatures && c.classFeatures.length > 0
+      ? c.classFeatures.map((f) => {
+          const cf = cfFor(f.level, f.name);
+          return {
+            level: f.level,
+            name: f.name,
+            description: f.description ?? cf?.description,
+            table: f.table ?? cf?.table,
+          };
+        })
+      : getAllFeaturesUpToLevel(cls.className, level)
+          .flatMap(({ level: lv, features }) =>
+            features
+              .filter((f) => f !== 'Aumento dei Punteggi di Caratteristica')
+              .map((name) => {
+                const cf = cfFor(lv, name);
+                return { level: lv, name, description: cf?.description, table: cf?.table };
+              })
+          );
   const subclassFeatures =
     c.subclassFeatures ??
     (cls.subclassId != null ? getSubclassFeaturesUpToLevel(cls.subclassId, level) : undefined);
@@ -128,6 +143,10 @@ export const useCharacterStore = create<CharacterState>()(
           featToolChoices: draft.featToolChoices,
           featSkillChoices: draft.featSkillChoices,
           featSpellChoice: draft.featSpellChoice,
+          generalFeatIds: draft.generalFeatIds,
+          fightingStyleId: draft.fightingStyleId,
+          epicBoonId: draft.epicBoonId,
+          featAsiPicks: draft.featAsiPicks,
           raceSkillChoices: draft.raceSkillChoices,
           hpRoll: draft.hpRoll,
         });

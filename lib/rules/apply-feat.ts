@@ -231,7 +231,10 @@ export function applyFeat(feat: FeatRaw, options: FeatApplyOptions = {}): FeatAp
   if (asiConfig && Array.isArray(asiConfig.allowed_scores)) {
     const count = asiConfig.choices_count ?? 1;
     const bonus = (asiConfig.bonus_value as 1 | 2) ?? 1;
-    const allowed = asiConfig.allowed_scores as Ability[];
+    // allowed_scores nel JSON sono abbreviazioni italiane (FOR/DES/...) → slug Ability
+    const allowed = (asiConfig.allowed_scores as string[])
+      .map((a) => parseAbilityFromAbbreviation(a))
+      .filter((a): a is Ability => a != null);
     const chosen = (options.asiChoices ?? []).filter((a) => allowed.includes(a));
     for (let i = 0; i < Math.min(count, chosen.length); i++) {
       asiBoosts.push({ ability: chosen[i], amount: bonus });

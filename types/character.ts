@@ -187,6 +187,14 @@ export interface CharacterChoices {
   originFeatChoice?: string;
   /** Scelta per i feat: stringa per quelli semplici, oggetto per "Iniziato alla Magia" */
   featChoice?: string | FeatSpellChoice;
+  /** Id dei talenti generali scelti (per riproducibilità) */
+  generalFeatIds?: number[];
+  /** Id dello stile di combattimento scelto */
+  fightingStyleId?: number;
+  /** Id del dono epico scelto */
+  epicBoonId?: number;
+  /** Scelte caratteristica per gli ASI dei talenti */
+  featAsiPicks?: Record<number, Ability[]>;
   /** Incantesimi scelti come noti/preparati */
   spellChoices?: string[];
 }
@@ -237,8 +245,8 @@ export interface Character {
   featModifiers?: FeatModifierRaw[];
 
   // Caratteristiche di classe / sottoclasse
-  /** Feature di classe per livello (da progression.json, ASI esclusi) */
-  classFeatures?: { level: number; name: string }[];
+  /** Feature di classe per livello (da progression.json/classes.json, ASI esclusi) */
+  classFeatures?: { level: number; name: string; description?: string; table?: string }[];
   /** Feature della sottoclasse (da subclasses.json, con descrizione) */
   subclassFeatures?: ClassFeatureRaw[];
 
@@ -289,6 +297,14 @@ export interface CharacterDraft {
   featSpellChoice?: FeatSpellChoice;
   /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità", Elfo "Sensi Acuti") */
   raceSkillChoices?: SkillName[];
+  /** Id dei talenti generali scelti (uno per livello ASI) */
+  generalFeatIds?: number[];
+  /** Id dello stile di combattimento (Fighter/Paladin/Ranger) */
+  fightingStyleId?: number;
+  /** Id del dono epico (livello 19+) */
+  epicBoonId?: number;
+  /** Scelte caratteristica per gli ASI concessi dai talenti (chiave = feat id) */
+  featAsiPicks?: Record<number, Ability[]>;
   /** Tiro del dado vita al 1° livello (opzionale: se assente, PF = dado MAX + CON) */
   hpRoll?: number;
   abilities: {

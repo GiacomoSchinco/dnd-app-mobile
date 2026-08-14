@@ -38,19 +38,105 @@
     "spellcasting": null,
     "features": [
       {
-        "name": "Difesa Senza Armatura",
+        "name": "Difesa senza armatura",
         "level": 1,
-        "description": "Quando non indossi un'armatura, la tua Classe Armatura è 10 + modificatore Destrezza + modificatore Costituzione. Puoi usare uno scudo e ottenere comunque questo beneficio."
+        "description": "Se il barbaro non indossa un'armatura, la Classe Armatura base corrisponde a 10 più i modificatori di Destrezza e Costituzione. Un barbaro può usare uno scudo e otte nere comunque questo beneficio."
       },
       {
         "name": "Ira",
         "level": 1,
-        "description": "Come azione bonus, puoi entrare in ira per 10 minuti. Ottieni vantaggio alle prove di Forza e ai tiri salvezza di Forza, resistenza ai danni contundenti, perforanti e taglienti. Recuperi un utilizzo dopo un riposo breve e tutti gli utilizzi dopo un riposo lungo."
+        "description": "Può infondere in se stesso un potere primordiale chia mato \"ira\", una forza che conferisce una potenza e una resistenza straordinarie. Può entrare in ira come azione bonus se non sta indossando un'armatura pesante. Il barbaro può entrare in ira il numero di volte indicato I per il proprio livello da barbaro nella colonna Ire della I tabella Privilegi del barbaro. Per quanto riguarda gli utilizzi consumati, ne recupera uno dopo aver completato un riposo breve ed entrambi dopo un riposo lungo. Quando è in atto, l'ira segue le regole indicate di seguito. Resistenza ai danni. Un barbaro dispone di resistenza ai danni contundenti, perforanti e taglienti. Danni dell'ira. Quando effettua un attacco con un'arma o con un colpo senz'armi usando Forza e infligge danni al bersaglio, il barbaro ottiene un bonus ai danni che aumenta man mano che sale di livello, come indicato nella colonna Danni dell'ira della tabella Privilegi del barbaro. Vantaggio nella Forza. Il barbaro dispone di vantaggio alle prove di Forza e ai tiri salvezza su Forza. Niente concentrazione o incantesimi. Il barbaro non può mantenere la concentrazione e non può lanciare incantesimi. Durata. L'ira dura fino al termine del turno successivo del barbaro e termina anticipatamente se il barbaro indossa un'armatura pesante o è incapacitato. Se l'ira è ancora in atto nel suo turno successivo, è possibile pro lungarla per un altro turno eseguendo una delle seguenti azioni: Effettuando un tiro per colpire contro un nemico. Costringendo un nemico a effettuare un tiro salvezza. Effettuando un'azione bonus per prolungare l'ira. Ogni volta che l'ira viene prolungata, dura fino alla fine del turno successivo del barbaro. Si può mantenere un'ira per un massimo di 10 minuti."
       },
       {
-        "name": "Padronanza d'Armi",
+        "name": "Padronanza d'armi",
         "level": 1,
-        "description": "Scegli due armi da mischia semplici o da guerra e ottieni l'accesso alle loro proprietà di padronanza. Dopo un riposo lungo, puoi esercitarti e cambiarne una."
+        "description": "La competenza nell'uso delle armi permette al barbaro di avvalersi della proprietà di padronanza per due tipi di armi da mischia semplici o da guerra a scelta, come le grandasce e le asce. Ogni volta che termina un riposo lungo, può esercitarsi con le armi e cambiare una delle armi scelte. Quando si raggiungono determinati livelli da barbaro, si ottiene la capacità di utilizzare le proprietà di padro nanza di più tipi di armi, come indicato nella colonna Padronanza d'armi della tabella Privilegi del barbaro.",
+        "table": "PRIVILEGI DEL BARBARO Bonus di Livello Competenza Privilegi di classe 2 Difesa senza armatura, ira, padronan 2 2 Attacco irruento, percezione del peric 3 2 Conoscenza primordiale, sottoclasse 4 2 Aumento dei punteggi di caratteristic 5 3 Attacco Extra, Movimento Veloce 6 3 Privilegio della sottoclasse 7 3 Balzo istintivo, istinto ferino 8 3 Aumento dei punteggi di caratteristic 9 4 Colpo brutale 10 4 Privilegio della sottoclasse 11 4 Ira Implacabile 12 4 Aumento dei punteggi di caratteristic 13 5 Colpo brutale migliorato 14 5 Privilegio della sottoclasse 15 5 Ira Persistente 16 5 Aumento dei punteggi di caratteristic 17 6 Colpo brutale migliorato 18 6 Potenza Indomabile 19 6 Dono epico 20 6 Campione primordiale."
+      },
+      {
+        "name": "Attacco irruento",
+        "level": 2,
+        "description": "Il barbaro può ignorare ogni preoccupazione per la sua difesa e attaccare in preda a una maggiore ferocia. Quando effettua il primo tiro per colpire nel suo turno, può decidere di sferrare un attacco irruento. Così facendo, fino all'inizio del turno successivo, dispone di vantaggio ai tiri per colpire che usano Forza; tuttavia, anche i tiri per colpire contro il barbaro dispongono di vantaggio."
+      },
+      {
+        "name": "Percezione del pericolo",
+        "level": 2,
+        "description": "Il barbaro ottiene una percezione prodigiosa di tutto ciò che nei paraggi non è come dovrebbe essere, cosa che lo agevola quando deve evitare i pericoli. Dispone di vantaggio nei tiri salvezza su Destrezza, a meno che non sia incapacitato."
+      },
+      {
+        "name": "Conoscenza primordiale",
+        "level": 3,
+        "description": "Il barbaro acquisisce competenza in un'altra abilità a scelta dalla lista delle abilità disponibili per i barbari di 1° livello. Inoltre, mentre l'ira è in atto, può incanalare il potere primordiale quando compie dei tentativi per la riuscita di determinate attività; ogni volta che effettua una prova di caratteristica utilizzando una delle seguenti abilità, può effettuarla come prova di Forza anche se normalmente usa una caratteristica diversa: Acrobazia, Intimidire, Percezione, Furtività o Sopravvivenza. Quando usa questa caratteristica, la Forza rappresenta il potere primordiale che scorre nel suo corpo, affinandone l'agilità, l'orientamento e i sensi. Danni Padronanza Ira dell'ira d'armi nza d'armi 2 2 2 colo 2 2 2 e del barbaro 3 2 2 ca 3 2 3 3 2 3 4 2 3 4 2 3 ca 4 2 3 4 3 3 4 3 4 4 3 4 ca 5 3 4 5 3 4 5 3 4 5 3 4 ca 5 4 4 6 4 4 6 4 4 6 4 4 6 4 4."
+      },
+      {
+        "name": "Sottoclasse del barbaro",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del barbaro a scelta. Dopo la descrizione di questa classe, troverai una spiegazione per ciascuna delle seguenti sottoclassi: Cammino del Berserker, Cammino del Cuore Selvaggio, Cammino dell'Albero del Mondo e Cammino dello Zelota. Una sottoclasse è una specializzazione che conferisce dei privilegi a determinati livelli da barbaro. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da barbaro attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da barbaro."
+      },
+      {
+        "name": "Attacco Extra",
+        "level": 5,
+        "description": "Quando effettua l'azione di Attacco nel proprio turno, il barbaro può attaccare due volte anziché una."
+      },
+      {
+        "name": "Movimento Veloce",
+        "level": 5,
+        "description": "La velocità del barbaro aumenta di 3 metri, purché non indossi un'armatura pesante."
+      },
+      {
+        "name": "Balzo istintivo",
+        "level": 7,
+        "description": "Come parte dell'azione bonus che il personaggio esegue per entrare in ira, può muoversi fino alla metà della sua velocità."
+      },
+      {
+        "name": "Istinto ferino",
+        "level": 7,
+        "description": "Gli istinti del barbaro sono talmente affinati da fornirgli vantaggio ai tiri per l'iniziativa."
+      },
+      {
+        "name": "Colpo brutale",
+        "level": 9,
+        "description": "Usando Attacco Irruento, nel proprio turno il personaggio può rinunciare a qualsiasi vantaggio su un tiro per colpire a scelta basato sulla Forza. Il tiro per colpire scelto non deve disporre di svantaggio. Se il tiro per colpire va a segno, il bersaglio subisce 1d10 di danni extra dello stesso tipo di danni inflitti dall'arma o dal colpo senz'armi, e il personaggio può causare uno degli effetti di Colpo Brutale tra quelli elencati di seguito. Colpo spaccaossa. La velocità del bersaglio viene ridotta di 4,5 metri fino all'inizio del turno successivo del barbaro. Un bersaglio può essere influenzato da un solo Colpo spaccaossa alla volta, quello più recente. Colpo violento. Il bersaglio viene spinto a 4,5 metri di distanza dal person·aggio. In seguito, il personaggio può muoversi fino alla metà della sua velocità in linea retta verso il bersaglio senza provocare attacchi di opportunità."
+      },
+      {
+        "name": "Ira implacabile",
+        "level": 11,
+        "description": "Grazie alla sua ira, il barbaro può continuare a combattere nonostante le ferite più gravi. Se scende a 0 punti ferita mentre è in preda all'ira e non è ucciso sul colpo, può effettuare un tiro salvezza su Costituzione con CD 10. Se lo supera, i punti ferita cambiano invece in un numero pari al doppio del livello da barbaro. Ogni volta che utilizza questo privilegio dopo la prima, la CD aumenta di 5. Quando completa un riposo breve o lungo, la CD è ripristinata a 10."
+      },
+      {
+        "name": "Colpo brutale migliorato",
+        "level": 13,
+        "description": "Il barbaro ha affinato nuovi metodi per attaccare furio samente. I seguenti effetti si aggiungono alle opzioni di Colpo brutale. Colpo sbalorditivo. Il bersaglio dispone di svantaggio al prossimo tiro salvezza e non può effettuare attacchi di opportunità fino all'inizio del turno successivo. Colpo di scissione. Prima dell'inizio del turno successivo del barbaro, il prossimo tiro per colpire effettuato da un'altra creatura contro il bersaglio ottiene un bonus di 5 al tiro. Un tiro per colpire può ottenere un solo bonus Colpo di scissione."
+      },
+      {
+        "name": "Ira persistente",
+        "level": 15,
+        "description": "Quando effettua un tiro per l'iniziativa, il barbaro può recuperare tutti gli utilizzi di ira spesi. Dopo aver recuperato gli utilizzi di ira in questo modo, non può ripetere l'azione prima di aver completato un riposo lungo. Inoltre, la sua ira è così feroce che ora dura 10 minuti senza che debba fare nulla per prolungarla a ogni round. L'ira termina anticipatamente se il personaggio è privo di sensi (e non semplicemente incapacitato) o indossa un'armatura pesante."
+      },
+      {
+        "name": "Colpo brutale migliorato (2d10)",
+        "level": 17,
+        "description": "I danni extra del Colpo brutale aumentano a 2d10. Inoltre, il barbaro può utilizzare due diversi effetti del Colpo brutale quando usa questo privilegio."
+      },
+      {
+        "name": "Potenza indomabile",
+        "level": 18,
+        "description": "Se il totale di una prova di Forza o di un tiro salvezza su Forza del barbaro è inferiore al suo punteggio di Forza, il barbaro può usare quel punteggio al posto del totale."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono dell'attacco inarrestabile."
+      },
+      {
+        "name": "Campione primordiale",
+        "level": 20,
+        "description": "Il barbaro diventa un'incarnazione del potere primordiale. Il suo punteggio di Forza e Costituzione aumenta di 4, fino a un massimo di 25."
       }
     ],
     "hit_points": {
@@ -104,9 +190,66 @@
     },
     "features": [
       {
+        "name": "Incantesimi",
+        "level": 1,
+        "description": "Il bardo impara a lanciare incantesimi attraverso le arti bardiche. Consulta il capitolo 7 per le regole relative al l lancio degli incantesimi. Le informazioni sottostanti spie gano come applicare tali regole agli incantesimi da bardo, elencati nella relativa lista degli incantesimi più avanti nella descrizione della classe. Trucchetti. Un bardo conosce due trucchetti a scelta tratti dalla lista degli incantesimi da bardo. Sono consi gliati beffa crudele e luci danzanti. Ogni volta che il personaggio ottiene un livello da bardo, può sostituire uno dei suoi trucchetti con un altro trucchetto a scelta dalla lista degli incantesimi da bardo. j Quando il personaggio raggiunge il 4° e il 10° livello da bardo, impara un altro trucchetto a scelta dalla lista degli incantesimi da bardo, come indicato nella colonna Trucchetti della tabella Privilegi del bardo. Slot incantesimo. La tabella Privilegi del bardo mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consu mati vengono ripristinati una volta completato un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie quattro incantesimi di 1° livello dalla lista degli incantesimi da bardo. Sono consigliati charme su persone, parola guaritrice, spruzzo colorato, sussurri dissonanti. Il numero di incantesimi nella lista aumenta man mano che si ottengono livelli da bardo, come mostrato nella colonna Incantesimi preparati della tabella Privilegi del bardo. Ogni volta che il numero cresce, il bardo deve scegliere altri incantesimi dalla lista degli incantesimi da bardo finché il numero di incantesimi sulla sua lista non combacia con quello mostrato nella tabella. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un bardo di 3° livello, la sua lista di incantesimi preparati può includere sei incantesimi di 1° e 2° livello in qualsiasi combinazione. Se un altro privilegio gli fornisce incantesimi che sono sempre preparati, questi non contano ai fini del numero di incantesimi preparabili con questo privilegio. Tuttavia, valgono comunque come incantesimi da bardo. Cambiare gli incantesimi preparati. Quando ottiene un livello da bardo, il personaggio può sostituire un incantesimo sulla propria lista con un altro incantesimo da bardo di cui possiede degli slot. Caratteristica da incantatore. Carisma è la caratteristica da incantatore per gli incantesimi da bardo. Focus da incantatore. Un bardo può usare uno stru mento musicale come focus da incantatore per i suoi incantesimi da bardo.",
+        "table": "PRIVILEGI DEL BARDO Bonus di Dado Livello competenza Privilegi di classe bardico T 2 Incantesimi, ispirazione bardica DG 2 2 Factotum, maestria DG 3 2 Sottoclasse del bardo DG 4 2 Aumento dei punteggi DG di caratteristica 5 3 Fonte di ispirazione D8 G 3 Privilegio della sottoclasse D8 7 3 Controfascino D8 8 3 Aumento dei punteggi D8 di caratteristica 9 4 Maestria D8 10 4 Segreti magici D10 11 4 D10 12 4 Aumento dei punteggi D10 di caratteristica 13 5 D10 14 5 Privilegio della sottoclasse D10 15 5 D12 lG 5 Aumento dei punteggi D12 di caratteristica 17 G D12 18 G Ispirazione superiore D12 19 G Dono epico D12 20 G Parole della creazione D12."
+      },
+      {
         "name": "Ispirazione Bardica",
         "level": 1,
-        "description": "Come azione bonus, puoi ispirare una creatura entro 18 metri che può vederti o sentirti, dandole un dado di Ispirazione Bardica (d6). Entro l'ora successiva, quando fallisce una prova con d20, può tirare il dado e aggiungere il risultato. Il numero di utilizzi è pari al tuo modificatore di Carisma (minimo 1). Recuperi tutti gli utilizzi dopo un riposo lungo."
+        "description": "Un bardo può ispirare gli altri in maniera soprannaturale tramite le parole, la musica o la danza. Questa ispirazione è rappresentata dal dado di Ispirazione Bardica, un d6. Utilizzare l'Ispirazione Bardica. Come azione bonus, il bardo può ispirare un'altra creatura entro 18 metri da sé che può vederlo o sentirlo. Quella creatura ottiene uno dei suoi dadi di Ispirazione Bardica. Una creatura può possedere un solo dado di Ispirazione Bardica alla volta. Una volta entro l'ora successiva, quando fallisce una prova con d20, la creatura può tirare il dado di Ispirazione Bardica e aggiungere il risultato al d20, trasformando potenzialmente il fallimento in un successo. Un dado di Ispirazione Bardica viene speso quando viene tirato. Numero di utilizzi. Il bardo può conferire un dado di Ispirazione Bardica un numero di volte pari al valore del suo modificatore di Carisma (minimo di una volta) e recuperare tutti gli utilizzi spesi quando completa un riposo lungo. Ai livelli superiori. Il dado di Ispirazione Bardica cambia quando si raggiungono..determinatili\\relli da bardo, come indicato nella colonna Dado bardico della tabella Privilegi del bardo. Il dado diventa un d8 al 5° livello, un d10 al 10° livello e un d12 al 15° livello. -Slot incantesimo per livello Incantesimi di incantesimoTrucchetti preparati 2 3 4 5 6 7 8 9 2 4 2 2 5 3 2 G 4 2 3 7 4 3 3 9 4 3 2 3 10 4 3 3 3 11 4 3 3 3 12 4 3 3 2 3 14 4 3 3 3 4 15 4 3 3 3 2 4 lG 4 3 3 3 2 4 lG 4 3 3 3 2 4 17 4 3 3 3 2 4 17 4 3 3 3 2 4 18 4 3 3 3 2 4 18 4 3 3 3 2 4 19 4 3 3 3 2 4 20 4 3 3 3 3 4 21 4 3 3 3 3 2 4 22 4 3 3 3 3 2 2."
+      },
+      {
+        "name": "Factotum",
+        "level": 2,
+        "description": "Il bardo può aggiungere metà del suo bonus di competenza (arrotondato per difetto) a qualsiasi prova di caratteristica effettuata che utilizzi competenza in un'abilità che non ha ancora appreso e che non utilizzi il suo bonus di competenza. Per esempio, se effettua una prova di Forza (Atletica) ed è privo di competenza in Atletica, può aggiungere metà del suo bonus di competenza alla prova."
+      },
+      {
+        "name": "Maestria",
+        "level": 2,
+        "description": "Il bardo ottiene maestria (vedi il Glossario delle regole) in due competenze nelle abilità a scelta. Sono consigliate Intrattenere e Persuasione se il personaggio ha competenza in queste due. Al livello 9, il bardo ottiene maestria in altre due compe tenze nelle abilità a scelta."
+      },
+      {
+        "name": "Sottoclasse del Bardo",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del bardo a scelta. Dopo la descrizione di questa classe, troverai una spie gazione per ciascuna delle seguenti sottoclassi: Collegio della Danza, Collegio del Fascino, Collegio della Sapienza e Collegio del Valore. Una sottoclasse è una specializ zazione che conferisce dei privilegi a determinati livelli IL.",
+        "table": "REPERTORIO DI UN BARDO Il tuo bardo suona un tamburo mentre canta le gesta di antichi eroi? Strimpella un liuto cantando melodie romantiche? Intona arie così potenti da commuovere? Recita monologhi drammatici tratti da tragedie classiche? Usa il ritmo di una danza popolare per coordinare il movimento degli alleati in battaglia? Compone versi maliziosi? Quando interpreti un bardo, rifletti sullo stile di per formance artistica che preferisci, sugli stati d'animo che potresti evocare e sui temi che ispirano le tue creazioni. Le poesie del bardo si ispirano a momenti di bellezza naturale o sono riflessioni cupe sulla perdita? Preferisce gli inni solenni o le chiassose canzoni da osteria? t attratto dai lamenti per i caduti o dalle celebrazioni della gioia? Esegue danze allegre o elaborate coreografie interpretative? Si concentra su uno stile di performance o si sforza di padroneggiarli tutti? da bardo. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da bardo attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da bardo."
+      },
+      {
+        "name": "Fonte di Ispirazione",
+        "level": 5,
+        "description": "Il bardo recupera tutti i suoi utilizzi spesi di Ispirazione Bardica quando completa un riposo breve o lungo. Inoltre, può spendere uno slot incantesimo (nessuna azione richiesta) per recuperare un utilizzo speso di Ispirazione Bardica."
+      },
+      {
+        "name": "Controfascino",
+        "level": 7,
+        "description": "Il bardo ottiene la capacità di usare note musicali o parole del potere per interferire negli effetti di influenza mentale. Se il bardo o una creatura entro 9 metri da sé fallisce un tiro salvezza contro un effetto che applica la condizione affascinato o spaventato, il bardo può usare una reazione per far sì che il tiro salvezza venga ripetuto e che il nuovo tiro disponga di vantaggio."
+      },
+      {
+        "name": "Segreti Magici",
+        "level": 10,
+        "description": "Il bardo ha attinto ai segreti provenienti da una vasta gamma di tradizioni magiche. Ogni volta che il personaggio raggiunge un livello da bardo (incluso il livello attuale) e il numero di incantesimi preparati nella tabella Privilegi da bardo aumenta, il personaggio può scegliere un nuovo incantesimo preparato qualsiasi dalle liste degli incantesimi da bardo, chierico, druido e mago. Per il personaggio, gli incantesimi scelti contano come incantesimi da bardo (vedi la sezione di ciascuna classe per i rispettivi incantesimi). Inoltre, ogni volta che sostituisce un incantesimo preparato per la propria classe, può farlo con un incantesimo di queste liste."
+      },
+      {
+        "name": "Ispirazione superiore",
+        "level": 18,
+        "description": "Quando il bardo tira per l'iniziativa, se ha meno di due utilizzi di Ispirazione Bardica, li recupera finché non ne ha due."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono dell'incantesimo memorizzato."
+      },
+      {
+        "name": "Parole della creazione",
+        "level": 20,
+        "description": "Il bardo padroneggia due Parole della Creazione: le parole della vita e della morte. Pertanto, gli incantesimi parola del potere guarire e parola del potere uccidere sono sempre con siderati preparati. Quando lancia uno dei due incantesimi, il bardo può bersagliare una seconda creatura se questa si trova entro 3 metri dal primo bersaglio."
       }
     ],
     "hit_points": {
@@ -157,14 +300,60 @@
     },
     "features": [
       {
-        "name": "Ordine Divino",
+        "name": "Incantesimi",
         "level": 1,
-        "description": "Scegli un ruolo sacro: Protettore (competenza in armi da guerra e armature pesanti) o Taumaturgo (un trucchetto extra e bonus alle prove di Arcano o Religione pari al modificatore di Saggezza, minimo +1)."
+        "description": "Il chierico impara a lanciare incantesimi attraverso la preghiera e la meditazione. Consulta il capitolo 7 per le I regole relative al lancio degli incantesimi. Le informazioni I\\ sottostanti spiegano come applicarle agli incantesimi del chierico, elencati nella relativa lista degli incantesimi più avanti nella descrizione della classe. Trucchetti. Il chierico conosce tre trucchetti a scelta tratti dalla lista degli incantesimi da chierico. Sono consi gliati guida, fiamma sacra e taumaturgia. Ogni volta che il personaggio ottiene un livello da chie rico, può sostituire uno dei suoi trucchetti con un altro trucchetto a scelta dalla lista degli incantesimi da chierico. Quando il personaggio raggiunge il 4° e il 10° livello da chierico, impara un altro trucchetto a scelta dalla lista degli incantesimi da chierico, come indicato nella colonna Trucchetti della tabella Privilegi del chierico. Slot incantesimo. La tabella Privilegi del chierico mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consumati vengono ripristinati una volta completato un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie quattro incantesimi di 1° livello dalla lista degli incantesimi da chierico. Sono consigliati benedizione, cura ferite, dardo tracciante e scudo della fede. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da chierico, come mostrato nella colonna Incantesimi preparati della tabella Privilegi del chierico. Ogni volta che il numero cresce, il chierico deve scegliere altri incantesimi dalla lista degli incantesimi da chierico finché il numero di incantesimi sulla sua lista non combacia con quello mostrato nella tabella. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un chierico di 3° livello, la sua lista di incantesimi preparati può includere sei incantesimi di 1° e 2° livello in qualsiasi combinazione. Se un altro privilegio gli fornisce incantesimi che sono sempre preparati, questi non contano ai fini del numero di incantesimi preparabili con questo privilegio. Tuttavia, valgono comunque come incantesimi da chierico. Cambiare gli incantesimi preparati. Quando il chierico completa un riposo lungo, può modificare la sua lista di incantesimi preparati, sostituendo quelli che preferisce con altri incantesimi da chierico di cui possiede degli slot incantesimo. Caratteristica da Incantatore. Saggezza è la caratteri stica da incantatore usata per gli incantesimi da chierico. Focus da incantatore. Il chierico può usare un simbolo sacro come focus da incantatore per i suoi incantesimi da chierico.",
+        "table": "PRIVILEGI DEL CHIERICO Bonus di Incanalare Livello competenza Privilegi di classe divinità T 2 Incantesimi, ordine divino 2 2 Incanalare divinità 2 3 2 Sottoclasse del chierico 2 4 2 Aumento dei punteggi 2 di caratteristica 5 3 Bruciare i non morti 2 6 3 Privilegio della sottoclasse 3 7 3 Colpi benedetti 3 8 3 Aumento dei punteggi 3 di caratteristica 9 4 3 10 4 Intervento divino 3 11 4 3 12 4 Aumento dei punteggi 3 di caratteristica 13 5 3 14 5 Colpi benedetti migliorati 3 15 5 3 16 5 Aumento dei punteggi 3 di caratteristica 17 6 Privilegio della sottoclasse 3 18 6 4 19 6 Dono epico 4 20 6 Intervento divino superiore 4."
       },
       {
-        "name": "Incanalare Divinità",
+        "name": "Ordine divino",
+        "level": 1,
+        "description": "Il chierico si dedica a uno dei seguenti ruoli sacri a scelta. Protettore. Addestrato a combattere, il chierico ha acquisito competenza con le armi da guerra e con le armature pesanti. Taumaturgo. Il chierico conosce un trucchetto extra dalla lista degli incantesimi da chierico. Inoltre, la con nessione mistica con il divino gli conferisce un bonus alle prove di Intelligenza (Arcano o Religione). Il bonus è pari al suo modificatore di Saggezza (minimo di 1)."
+      },
+      {
+        "name": "Incanalare divinità",
         "level": 2,
-        "description": "Puoi incanalare energia divina per manifestare effetti sacri, come Scacciare Non Morti o Scintilla Divina. Puoi usarlo 2 volte. Recuperi un utilizzo dopo un riposo breve e tutti gli utilizzi dopo un riposo lungo."
+        "description": "Il chierico può incanalare l'energia divina direttamente dai Piani Esterni, usandola per alimentare gli effetti magici. Un chierico parte con due effetti: scintilla divina e scacciare non morti, ciascuno descritto di seguito. Ogni volta che il personaggio usa Incanalare Divinità, è possi bile scegliere l'effetto desiderato della classe. Con livelli superiori da chierico si ottengono opzioni di effetto aggiuntive. Il chierico può usare Incanalare Divinità due volte. Per quanto riguarda gli utilizzi consumati, ne recupera uno dopo aver completato un riposo breve ed entrambi dopo un riposo lungo. Quando il personaggio raggiunge determinati livelli da chierico, ottiene degli usi aggiuntivi, -Slot incantesimo per livello di incantesimoIncantesimi Trucchetti preparati 2 3 4 5 6 7 8 9 3 4 2 3 5 3 3 6 4 2 4 7 4 3 4 9 4 3 2 4 10 4 3 3 4 11 4 3 3 4 12 4 3 3 2 4 14 4 3 3 3 5 15 4 3 3 3 2 5 16 4 3 3 3 2 5 16 4 3 3 3 2 5 17 4 3 3 3 2 5 17 4 3 3 3 2 5 18 4 3 3 3 2 5 18 4 3 3 3 2 5 19 4 3 3 3 2 5 20 4 3 3 3 3 5 21 4 3 3 3 3 2 5 22 4 3 3 3 3 2 2 come mostrato nella colonna Incanalare Divinità della tabella Privilegi del chierico. Se un effetto di Incanalare Divinità richiede un tiro salvezza, la CD equivale alla CD del tiro salvezza sull'incantesimo del privilegio Incantesimi di questa classe. Scacciare non morti. Come azione di Magia, il chierico brandisce il simbolo sacro e condanna le creature non morte. Ogni non morto a scelta entro 9 metri dal chierico deve effettuare un tiro salvezza su Saggezza. Se la crea tura fallisce il tiro salvezza, è spaventata e incapacitata per 1 minuto. Per tutta la durata, la creatura cerca di allontanarsi il più possibile dal chierico durante i suoi turni. L'effetto termina anticipatamente se la creatura subisce danni, o se il chierico è incapacitato o morto. Scintilla divina. Come azione di Magia, il chierico punta il simbolo sacro verso una creatura entro 9 metri e che si trova nel suo campo visivo e concentra l'energia divina su di essa. Poi, tira 1d8 e aggiunge il suo modificatore di Sag gezza. Ristora i punti ferita della creatura di un numero pari a quello del totale o costringe la creatura a effettuare un tiro salvezza su Costituzione. Se lo fallisce, la creatura subisce danni necrotici o radiosi (a scelta) pari al risultato del tiro. Se invece lo supera, subisce la metà di quei danni (arrotondati per difetto). Il personaggio tira un d8 aggiuntivo quando raggiunge il 7° (2d8), il 13° (3d8) e il 18° (4d8) livello da chierico."
+      },
+      {
+        "name": "Sottoclasse del Chierico",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del chierico a scelta. Dopo la descrizione di questa classe, troverai una spie gazione per ciascuna delle seguenti sottoclassi: Dominio della Vita, Dominio della Luce, Dominio dell'Inganno e Dominio della Guerra. Una sottoclasse è una specializ zazione che conferisce dei privilegi a determinati livelli da chierico. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da chierico attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da chierico."
+      },
+      {
+        "name": "Bruciare i non morti",
+        "level": 5,
+        "description": "Ogni volta che il chierico usa scacciare non morti, può tirare un numero di d8 pari al modificatore di Saggezza (minimo di 1d8) e sommarli. Ogni non morto che fallisce il tiro salvezza contro quell'utilizzo di scacciare non morti subisce danni radiosi pari alla somma dei tiri. I danni non interrompono l'effetto di scacciare non morti."
+      },
+      {
+        "name": "Colpi benedetti",
+        "level": 7,
+        "description": "In battaglia, il chierico è permeato di potere divino e ottiene una delle seguenti opzioni a scelta (se ottiene entrambe le opzioni da una sottoclasse del chierico di un manuale più vecchio, usa solo l'opzione scelta per questo privilegio). Colpo divino. Una volta per ogni suo turno, quando il chierico colpisce una creatura con un tiro per colpire usando un'arma, può far sì che il bersaglio subisca 1d8 danni necrotici o radiosi extra (a scelta). Incantesimi potenti. Il personaggio aggiunge il suo modificatore di Saggezza al danno che infligge con qualsiasi trucchetto da chierico."
+      },
+      {
+        "name": "Intervento divino",
+        "level": 10,
+        "description": "Il chierico può invocare una divinità o un pantheon affinché intervenga a suo favore. Come azione di Magia, sceglie un incantesimo da chierico qualsiasi di 5° livello o inferiore che non richieda una reazione per essere lanciato. Come parte della stessa azione, il chierico lancia quell'incantesimo senza spendere uno slot incantesimo o senza avere bisogno di componenti materiali. Non può riutilizzare questo privilegio prima di aver completato un riposo lungo."
+      },
+      {
+        "name": "Colpi benedetti migliorati",
+        "level": 14,
+        "description": "L'opzione scelta per i Colpi benedetti diventa più potente. Colpo divino. I danni extra del Colpo divino aumentano a 2d8. Incantesimi potenti. Quando lancia un trucchetto da chierico infliggendo danni a una creatura, il chierico può infondere vitalità in se stesso o in un'altra creatura entro 18 metri da sé, concedendo un numero di punti ferita tem poranei pari al doppio del suo modificatore di Saggezza."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) oun altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono del fato."
+      },
+      {
+        "name": "Intervento divino superiore",
+        "level": 20,
+        "description": "Il chierico può invocare un intervento divino ancora più potente. Quando usa il privilegio Intervento Divino, può scegliere desiderio tra gli incantesimi. Se lo fa, non può usare di nuovo Intervento Divino finché non completa 2d4 riposi lunghi."
       }
     ],
     "hit_points": {
@@ -219,14 +408,71 @@
     },
     "features": [
       {
-        "name": "Druidico",
+        "name": "Incantesimi",
         "level": 1,
-        "description": "Conosci il Druidico, la lingua segreta dell'ordine dei druidi. Puoi usarlo per lasciare messaggi nascosti. Inoltre, l'incantesimo Parlare con gli Animali è sempre preparato."
+        "description": "Il druido ha imparato a lanciare incantesimi attraverso lo studio delle forze mistiche della natura. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le informazioni sottostanti spiegano come applicarle agli incantesimi del druido, elencati nella relativa lista degli incantesimi più avanti nella descrizione della classe. Trucchetti. Un druido conosce due trucchetti a scelta tratti dalla lista degli incantesimi da druido. Sono consi gliati artificio druidico e produrre fiamma. Ogni volta che il personaggio ottiene un livello da druido, può sostituire uno dei suoi trucchetti con un altro trucchetto a scelta dalla lista degli incantesimi da druido. Quando il personaggio raggiunge il 4° e il 10° livello da druido, impara un altro trucchetto a scelta dalla lista degli incantesimi da druido, come indicato nella colonna Trucchetti della tabella Privilegi del druido. Slot incantesimo. La tabella Privilegi del druido mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consumati vengono ripristinati una volta completato un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, il personaggio sceglie quattro incantesimi di 1° livello dalla lista degli incantesimi da druido. Sono consigliati amicizia con gli animali, curaf erite, luminescenza e onda tonante. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da druido, come mostrato nella colonna Incantesimi preparati della tabella Privilegi del druido. Ogni volta che il numero cresce, il druido deve scegliere altri incantesimi dalla lista degli incantesimi da druido finché il numero di incantesimi sulla sua lista non combacia con quello mostrato nella tabella. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un druido di 3° livello, la sua lista di incantesimi preparati può includere sei incantesimi di 1° e 2° livello in qualsiasi combinazione. Se un altro privilegio gli fornisce incantesimi che sono sempre preparati, questi non contano ai fini del numero di incantesimi preparabili con questo privilegio. Tuttavia, valgono comunque come incantesimi da druido. Cambiare gli incantesimi preparati. Quando il druido completa un riposo lungo, può modificare la sua lista di incantesimi preparati, sostituendo quelli che preferisce con altri incantesimi da druido cui possiede degli slot incantesimo. Caratteristica da Incantatore. Saggezza è la caratteri stica da incantatore usata per gli incantesimi da druido. Focus da incantatore. Il druido può usare un focus druidico come focus da incantatore per i suoi incantesimi da druido.",
+        "table": "PRIVILEGI DEL DRUIDO Bonus di Forma Livello competenza Privilegi di classe selvatica T 2 Druidico, incantesimi e ordine primordiale 2 2 Compagno selvatico, 2 forma selvatica 3 2 Sottoclasse del druido 2 4 2 Aumento dei punteggi 2 di caratteristica 5 3 Rinascita selvatica 2 6 3 Privilegio della sottoclasse 3 7 3 Furia elementale 3 8 3 Aumento dei punteggi 3 di caratteristica 9 4 3 10 4 Privilegio della sottoclasse 3 11 4 3 12 4 Aumento dei punteggi 3 di caratteristica 13 5 3 14 5 Privilegio della sottoclasse 3 15 S Furia elementale migliorata 3 16 S Aumento dei punteggi 3 di caratteristica 17 6 4 18 6 Incantesimi bestiali 4 19 6 Dono epico 4 20 6 Arcidruido 4."
       },
       {
-        "name": "Ordine Primordiale",
+        "name": "Druidico",
         "level": 1,
-        "description": "Scegli un ruolo primordiale: Custode (competenza in armi da guerra e armature pesanti) o Mago (un trucchetto extra e bonus alle prove di Arcano o Natura pari al modificatore di Saggezza, minimo +1)."
+        "description": "Un druido conosce il druidico, la lingua segreta del suo ordine. Imparando questa lingua antica, ha sbloccato anche la magia della comunicazione con gli animali; l'incantesimo parlare con gli animali è sempre considerato preparato. Il druido può usare il druidico per lasciare messaggi nascosti. Il druido e coloro che conoscono il druidico sono in grado di individuare tali messaggi automaticamente. Altri possono notare la presenza di un messaggio supe rando una prova di Intelligenza (Indagare) con CD 15, ma non possono decifrarlo senza l'aiuto della magia."
+      },
+      {
+        "name": "Ordine primordiale",
+        "level": 1,
+        "description": "Il chierico si dedica a uno dei seguenti ruoli sacri a scelta. Custode. Addestrato a combattere, il druido ha acquisito competenza con le armi da guerra e con le armature pesanti. Mago. Il druido conosce un trucchetto extra dalla lista degli incantesimi da druido. Inoltre, la connessione mistica con natura gli conferisce un bonus alle prove di Intelligenza (Arcano o Natura). Il bonus è pari al suo modificatore di Saggezza (bonus minimo di 1). -Slot incantesimo per livello di incantesimoIncantesimi Trucchetti preparati l 2 3 4 s 6 7 8 9 2 4 2 2 5 3 - - - - - - - - 2 6 4 2 3 7 4 3 3 9 4 3 2 3 10 4 3 3 3 11 4 3 3 3 12 4 3 3 2 3 14 4 3 3 3 4 15 4 3 3 3 2 4 16 4 3 3 3 2 4 16 4 3 3 3 2 4 17 4 3 3 3 2 4 17 4 3 3 3 2 4 18 4 3 3 3 2 4 18 4 3 3 3 2 4 19 4 3 3 3 2 4 20 4 3 3 3 3 4 21 4 3 3 3 3 2 4 22 4 3 3 3 3 2 2."
+      },
+      {
+        "name": "Compagno selvatico",
+        "level": 2,
+        "description": "Il druido può evocare in suo soccorso uno spirito della natura che assume una forma animale. Come azione di Magia, il druido può spendere uno slot incantesimo o un utilizzo di Forma Selvatica per lanciare l'incantesimo trovafamiglio senza l'ausilio di componenti materiali. Una volta lanciato l'incantesimo in questo modo, il famiglia evocato sarà un folletto e svanirà quando il druido avrà completato un riposo lungo."
+      },
+      {
+        "name": "Forma selvatica",
+        "level": 2,
+        "description": "La forza della natura permette al druido di assumere la forma di un animale. Come azione bonus, il druido assume le sembianze di una bestia di cui ha appreso la forma per questo privilegio (vedi \"Forme conosciute\" di seguito). Rimane in quella forma per un numero di ore pari alla metà del livello da druido o finché non utilizza di nuovo Forma Selvatica, o non è incapacitato o morto. Il druido può anche abbandonare la forma da animale anticipatamente come azione bonus. Numero di utilizzi. Il druido può utilizzare Forma Selva tica due volte. Per quanto riguarda gli utilizzi consumati, ne recupera uno dopo aver completato un riposo breve ed entrambi dopo un riposo lungo. Quando il personaggio raggiunge determinati livelli da druido, ottiene degli usi aggiuntivi, come mostrato nella colonna Forma Selvatica della tabella Privilegi del druido. Forme conosciute. Per questo privilegio, il druido conosce quattro forme bestiali scelte tra le schede delle statistiche delle bestie con un grado di sfida massimo pari a 1/4 e che siano prive di velocità di volo (vedi appendice B per le schede delle statistiche). Sono consigliati il topo, il cavallo da galoppo, il ragno e il lupo. Al termine di un riposo lungo, il druido può sostituire una delle forme conosciute con un'altra. Quando il personaggio raggiunge determinati livelli da druido, il numero di forme conosciute e il grado di sfida massimo per queste forme aumenta, come indicato nella tabella Forme bestiali. Inoltre, a partire dall'8° livello, il druido può adottare una forma dotata di velocità di volo. Quando scegli le forme conosciute, puoi consultare il Manuale dei Mostri o la fonte che preferisci per trovare le bestie adeguate, sempre che il Dungeon Master lo consenta.",
+        "table": "FORME BESTIALI Livello da Forme Velocità druido conosciute GS max di volo 2 4 1/4 No 4 6 1/2 No 8 8 Sì Regole durante il mutamento della forma. Mentre assume una determinata forma, il druido mantiene la sua persona lità, i ricordi e la capacità di parlare. Si applicano le regole seguenti: Punti ferita temporanei. Quando assume una Forma Selvatica, il druido ottiene un numero di punti ferita temporanei pari al suo livello da druido. Statistiche di gioco. Le statistiche di gioco del druido vengono sostituite dalle statistiche della bestia, ma il druido conserva il proprio tipo di creatura, i punti ferita, i Dadi Vita, i punteggi di Intelligenza, Saggezza e Carisma, i propri privilegi di classe, le proprie lingue e i propri talenti. Conserva inoltre tutte le sue abilità e competenze nei tiri salvezza, per le quali utilizza il suo bonus di competenza, oltre a ottenere quelle della creatura. Se la creatura possiede un'abilità o un modificatore del tiro salvezza superiori a quelli del druido, il personaggio usa la scheda delle statistiche della creatura anziché la propria. Non si possono lanciare incantesimi. Il druido non può lanciare incantesimi, ma il mutamento della forma non interrompe la sua concentrazione e non interferisce con un incantesimo già lanciato. Oggetti. La capacità di maneggiare gli oggetti è deter minata dagli arti della forma bestiale e non dai propri. In più, un druido può scegliere se lasciare cadere l'equi paggiamento nel suo spazio, se tale equipaggiamento si fonde nella sua nuova forma o se indossarlo. L'equipag giamento indossato funziona normalmente, ma spetta al DM decidere se è pratico o meno che la nuova forma indossi ogni determinato oggetto d'equipaggiamento, in base alla taglia e alla forma della creatura. L'equipaggia mento del druido non cambia per adattarsi alla nuova forma, e ogni oggetto di equipaggiamento che la nuova forma non può indossare deve cadere a terra o fondersi nella nuova forma del druido. L'equipaggiamento fuso alla nuova forma non ha alcun effetto finché il druido non abbandona quella forma."
+      },
+      {
+        "name": "Sottoclasse del Druido",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del druido a scelta. Dopo la descrizione di questa classe, troverai una spie gazione per ciascuna delle seguenti sottoclassi: Circolo della Terra, Circolo della Luna, Circolo del Mare e Circolo delle Stelle. Una sottoclasse è una specializzazione che conferisce dei privilegi a determinati livelli da druido. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da druido attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo S) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da druido."
+      },
+      {
+        "name": "Rinascita selvatica",
+        "level": 5,
+        "description": "Una volta per ogni suo turno, se il druido ha consumato tutti i suoi utilizzi di Forma Selvatica, può ripristinare un utilizzo spendendo uno slot incantesimo (nessuna azione richiesta). Inoltre, può spendere un utilizzo di Forma Selvatica (nessuna azione richiesta) per ottenere uno slot incantesimo di 1° livello, ma non potrà farlo di nuovo finché non completa un riposo lungo."
+      },
+      {
+        "name": "Furia elementale",
+        "level": 7,
+        "description": "La forza degli elementi scorre attraverso il druido, facen dogli ottenere una delle seguenti opzioni a scelta. Colpo primordiale. Una volta per ogni suo turno, quando il druido colpisce una creatura con un tiro per colpire usando un'arma o un attacco della forma bestiale in Forma Selvatica, può far sì che il bersaglio subisca 1d8 danni da freddo, fuoco, fulmine o tuono extra (a scelta). Incantesimi potenti. Il personaggio aggiunge il suo modificatore di Saggezza al danno che infligge con qualsiasi trucchetto da druido."
+      },
+      {
+        "name": "Furia elementale migliorata",
+        "level": 15,
+        "description": "L'opzione scelta per la Furia Elementale diventa più potente, come descritto di seguito. Colpo primordiale. I danni extra del Colpo primordiale aumentano a 2d8. Incantesimi potenti. Quando il personaggio lancia un trucchetto da druido con un raggio pari o superiore a 3 metri, la gittata dell'incantesimo aumenta di 90 metri.."
+      },
+      {
+        "name": "Incantesimi bestiali",
+        "level": 18,
+        "description": "Mentre utilizza Forma Selvatica, il druido può lanciare incantesimi in forma bestiale, fatta eccezione per gli incantesimi che abbiano bisogno di componenti materiali con un costo specificato o che consumino la propria componente materiale."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) oun altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono del viaggio dimensionale."
+      },
+      {
+        "name": "Arcidruido",
+        "level": 20,
+        "description": "La vitalità della natura fiorisce costantemente all'interno del druido, concedendogli i seguenti benefici. Forma selvatica sempreverde. Ogni volta che il druido tira per l'iniziativa e non ha utilizzi disponibili di Forma Selvatica, ne recupera uno. Mago della natura. Il druido può convertire gli utilizzi di Forma Selvatica in slot incantesimo (nessuna azione richiesta). Sceglie un numero di utilizzi di Forma Selvatica non spesi e li converte in un singolo slot incantesimo; ogni utilizzo contribuisce a 2 livelli di incantesimo. Per esempio, se converte due utilizzi di Forma Selvatica, ottiene uno slot incantesimo di 4° livello. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo. Corpo senza tempo. La magia primordiale che fluisce nel druido rallenta il suo invecchiamento. Per ogni 10 anni trascorsi, il corpo del druido invecchia soltanto di 1 anno."
       }
     ],
     "hit_points": {
@@ -238,7 +484,18 @@
     "id": 5,
     "name": "Fighter",
     "progression_key": "fighter",
-    "fighting_styles": [74, 75, 76, 77, 78, 79, 80, 81, 82, 83],
+    "fighting_styles": [
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83
+    ],
     "description": "I guerrieri sono maestri del combattimento, abili con ogni arma e armatura.",
     "hit_die": "d10",
     "primary_ability": [
@@ -279,19 +536,80 @@
     "spellcasting": null,
     "features": [
       {
-        "name": "Padronanza d'Armi",
+        "name": "Padronanza d'armi",
         "level": 1,
-        "description": "Scegli tre armi semplici o da guerra e ottieni l'accesso alle loro proprietà di padronanza. Dopo un riposo lungo, puoi esercitarti e cambiarne una."
+        "description": "La competenza nell'uso delle armi permette al guerriero di avvalersi delle proprietà di padronanza per tre tipi di armi semplici o da guerra a scelta. Ogni volta che termina un riposo lungo, può esercitarsi con le armi e cambiare una delle armi scelte. Quando si raggiungono determinati livelli da guerriero, si ottiene la capacità di utilizzare le proprietà di padro nanza di più tipi di armi, come indicato nella colonna Padronanza d'armi della tabella Privilegi del guerriero."
       },
       {
-        "name": "Recuperare Energie",
+        "name": "Recuperare energie",
         "level": 1,
-        "description": "Come azione bonus, recuperi punti ferita pari a 1d10 + il tuo livello da guerriero. Puoi usare questo privilegio 2 volte. Recuperi un utilizzo dopo un riposo breve e tutti gli utilizzi dopo un riposo lungo."
+        "description": "Un guerriero possiede una riserva limitata di resistenza I fisica e mentale a cui può attingere. Come azione bonus, I può usarla per recuperare punti ferita pari a 1d10 più I il suo livello da guerriero. Può utilizzare questo privilegio due volte. Per quanto riguarda gli utilizzi consumati, ne recupera uno dopo aver completato un riposo breve ed entrambi dopo un riposo lungo. Quando il personaggio raggiunge determinati livelli da guerriero, ottiene più utilizzi di questo privilegio, come indicato nella colonna Recuperare Energie della tabella Privilegi del guerriero."
       },
       {
-        "name": "Stile di Combattimento",
+        "name": "Stile di combattimento",
         "level": 1,
-        "description": "Scegli un talento Stile di Combattimento (es. Difesa). Ogni volta che ottieni un livello da guerriero, puoi sostituirlo con un altro Stile di Combattimento."
+        "description": "Il guerriero ha affinato le sue doti marziali e ottiene un talento Stile di Combattimento a scelta (vedi capitolo 5). È consigliata la Difesa. Ogni volta che il personaggio ottiene un livello da guerriero, può sostituire il talento scelto con un altro talento Stile di Combattimento."
+      },
+      {
+        "name": "Azione impetuosa",
+        "level": 2,
+        "description": "Il guerriero può spingersi oltre i suoi normali limiti per un istante. Nel suo turno, può effettuare un'azione aggiun tiva, fatta eccezione per l'azione di Magia. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo breve o lungo. A partire dal 17° livello, il guerriero può utilizzare questo privilegio due volte prima di un riposo, ma soltanto una volta nello stesso turno."
+      },
+      {
+        "name": "Mente tattica",
+        "level": 2,
+        "description": "Il guerriero possiede una mente tattica sia sul campo di battaglia che fuori. Quando fallisce una prova di caratteristica, può spendere un utilizzo di Recuperare Energie per spingersi verso il successo. Invece di recuperare punti ferita, il guerriero tira 1d10 e aggiunge il risultato alla prova di caratteristica, trasformandola potenzialmente in un successo. Se la prova fallisce di nuovo, questo utilizzo di Recuperare Energie non viene speso.",
+        "table": "PRIVILEGI DEL GUERRIERO Bonus di Livello Competenza Privilegi di classe 2 Padronanza d'armi, recuperare energie e 2 2 Azione impetuosa (un utilizzo). mente t 3 2 Sottoclasse del guerriero 4 2 Aumento dei punteggi di caratteristica 5 3 Attacco extra, spostamento tattico 6 3 Aumento dei punteggi di caratteristica 7 3 Privilegio della sottoclasse 8 3 Aumento dei punteggi di caratteristica 9 4 Indomabile (un utilizzo), signore delle ta 10 4 Privilegio della sottoclasse 11 4 Due attacchi extra 12 4 Aumento dei punteggi di caratteristica 13 S Attacchi studiati, indomabile (due utilizz 14 S Aumento dei punteggi di caratteristica 15 S Privilegio della sottoclasse 16 S Aumento dei punteggi di caratteristica 17 6 Azione impetuosa (due utilizzi), indoma 18 6 Privilegio della sottoclasse 19 6 Dono epico 20 6 Tre attacchi extra."
+      },
+      {
+        "name": "Sottoclasse del guerriero",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del guerriero a scelta. Dopo la descrizione di questa classe, troverai una spiegazione per ciascuna delle seguenti sottoclassi: Maestro di Battaglia, Campione, Cavaliere Mistico e Guerriero Psionico. Una sottoclasse è una specializza zione che conferisce dei privilegi a determinati livelli da guerriero. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da guerriero attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente al 6°, all'8°, al 12°, al 14° e al 16° livello da guerriero."
+      },
+      {
+        "name": "Attacco Extra",
+        "level": 5,
+        "description": "Quando effettua l'azione di Attacco nel proprio turno, il guerriero può attaccare due volte anziché una."
+      },
+      {
+        "name": "Spostamento tattico",
+        "level": 5,
+        "description": "Ogni volta che il guerriero attiva Recuperare Energie con un'azione bonus, può muoversi fino a metà della sua velocità senza provocare attacchi di opportunità."
+      },
+      {
+        "name": "Indomabile",
+        "level": 9,
+        "description": "Se il personaggio fallisce un tiro salvezza, può ripetere il tiro con un bonus pari al suo livello da guerriero. Recuperare Padronanza energie d'armi e stile di combattimento 2 3 attica 2 3 2 3 3 4 3 4 3 4 3 4 3 4 attiche 3 4 4 5 4 5 4 5 zi) 4 5 4 5 4 5 4 6 abile (tre utilizzi) 4 6 4 6 4 6 4 6 Deve usare il nuovo risultato e non può riutilizzare questo privilegio prima di aver completato un riposo lungo. Prima di un riposo lungo, il personaggio può utilizzare questo privilegio due volte a partire dal 13° livello e tre volte a partire dal 17° livello."
+      },
+      {
+        "name": "Signore delle tattiche",
+        "level": 9,
+        "description": "Quando il guerriero attacca con un'arma di cui può utilizzare la proprietà di padronanza, per quell'attacco può sostituirla con le proprietà spinta, prosciugamento orallentamento."
+      },
+      {
+        "name": "Due attacchi extra",
+        "level": 11,
+        "description": "Quando effettua l'azione di attacco nel proprio turno, il guerriero può attaccare tre volte anziché una."
+      },
+      {
+        "name": "Attacchi studiati",
+        "level": 13,
+        "description": "Il guerriero studia gli avversari e apprende da ogni attacco che effettua. Se effettua un tiro per colpire contro una creatura e manca il bersaglio, dispone di vantaggio sul tiro per colpire successivo che effettua contro quella creatura prima della fine del suo turno successivo."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) oun altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono delle abilità di combattimento."
+      },
+      {
+        "name": "Tre attacchi extra",
+        "level": 20,
+        "description": "Quando effettua l'azione di attacco nel proprio turno, il guerriero può attaccare quattro volte anziché una."
       }
     ],
     "hit_points": {
@@ -342,24 +660,95 @@
     "spellcasting": null,
     "features": [
       {
-        "name": "Attacco Furtivo",
+        "name": "Attacco furtivo",
         "level": 1,
-        "description": "Una volta per turno, puoi infliggere 1d6 danni extra a una creatura colpita con un'arma accurata o a distanza se hai vantaggio al tiro per colpire. Non hai bisogno di vantaggio se un alleato si trova entro 1,5 m dal bersaglio e non è incapacitato."
+        "description": "Il ladro sa come colpire con precisione sfruttando la distrazione di un avversario. Una volta per turno, può infliggere 1d6 danni extra a una creatura che colpisce con un tiro per colpire, se dispone di vantaggio al tiro I e l'attacco è eseguito con un'arma accurata o a distanza. Il danno aggiuntivo è dello stesso tipo di quello dell'arma. Non è necessario avere vantaggio al tiro per colpire se almeno uno degli alleati si trova entro 1,5 metri dal bersa glio, l'alleato non è incapacitato e il ladro non dispone di svantaggio al tiro per colpire. Il danno extra aumenta man mano che il ladro sale di livello, come mostrato nella colonna Attacco Furtivo della tabella Privilegi del ladro."
       },
       {
-        "name": "Gergo Ladresco",
+        "name": "Gergo ladresco",
         "level": 1,
-        "description": "Conosci il Gergo Ladresco e un'altra lingua a scelta."
+        "description": "Il ladro ha appreso varie lingue nelle comunità in cui ha affinato le proprie competenze furtive. Per questo, conosce il Gergo Ladresco e un'altra lingua a scelta, sele zionabili dalle tabelle delle lingue al capitolo 2."
       },
       {
         "name": "Maestria",
         "level": 1,
-        "description": "Scegli due competenze nelle abilità in cui hai competenza; raddoppia il bonus di competenza per ogni prova effettuata con esse. Al livello 6 ottieni altre due Maestrie."
+        "description": "Il ladro ottiene maestria in due competenze nelle abilità a scelta. Se il personaggio ha competenza in Rapidità di Mano e Furtività, è consigliabile scegliere queste due. Al livello 6, il ladro ottiene maestria in altre due compe tenze nelle abilità a tua scelta."
       },
       {
-        "name": "Padronanza d'Armi",
+        "name": "Padronanza d'armi",
         "level": 1,
-        "description": "Scegli due tipi di armi in cui hai competenza e ottieni l'accesso alle loro proprietà di padronanza. Dopo un riposo lungo, puoi cambiare i tipi di armi scelti."
+        "description": "Il ladro è addestrato nell'uso delle armi, e per questo può avvalersi delle proprietà di padronanza per due tipi di armi a sua scelta in cui ha competenza, come i pugnali e gli archi corti. Ogni volta che completa un riposo lungo, può cambiare il tipo di arma utilizzato. Per esempio, è possibile passare alle proprietà di padronanza per scimitarre e spade corte."
+      },
+      {
+        "name": "Azione scaltra",
+        "level": 2,
+        "description": "La prontezza di spirito e l'agilità del ladro gli consentono di muoversi e di agire in fretta. Per questo, durante il suo turno può eseguire una delle seguenti azioni come azione bonus: Scatto, Disimpegno o Nascondersi."
+      },
+      {
+        "name": "Mira ferma",
+        "level": 3,
+        "description": "Come azione bonus, il ladro ottiene un vantaggio al pros simo tiro per colpire durante il turno in corso. Può uti lizzare questo privilegio solo se non si è mosso durante questo turno e, dopo averlo usato, la sua velocità è ridotta a 0 fino al termine del turno.",
+        "table": "PRIVILEGI DEL LADRO Bonus di Livello competenza Privilegi di classe 2 Attacco furtivo, Gergo ladresco, Maestria 2 2 Azione scaltra 3 2 Mira ferma, Sottoclasse del ladro 4 2 Aumento dei punteggi di caratteristica s 3 Colpo astuto, Schivata prodigiosa 6 3 Maestria 7 3 Dote affidabile, Elusione 8 3 Aumento dei punteggi di caratteristica 9 4 Privilegio della sottoclasse 10 4 Aumento dei punteggi di caratteristica 11 4 Colpo astuto migliorato 12 4 Aumento dei punteggi di caratteristica 13 S Privilegio della sottoclasse 14 S Colpi infidi 15 S Mente sfuggente 16 S Aumento dei punteggi di caratteristica 17 6 Privilegio della sottoclasse 18 6 Inafferrabile 19 6 Dono Epico 20 6 Colpo di Fortuna."
+      },
+      {
+        "name": "Sottoclasse del Ladro",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del ladro a scelta. Dopo la descrizione di questa classe, troverai una spiega zione per ciascuna delle seguenti sottoclassi: Mistificatore Arcano, Assassino, Lama Spirituale e Furfante. Una sot toclasse è una specializzazione che conferisce dei privilegi a determinati livelli da ladro. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da ladro attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 10°, al 12° e al 16° livello da ladro."
+      },
+      {
+        "name": "Colpo astuto",
+        "level": 5,
+        "description": "Il ladro ha ideato modi più astuti di utilizzare il proprio Attacco Furtivo. Quando infligge danni da Attacco Furtivo, è possibile aggiungere uno dei seguenti effetti del Colpo Astuto. Ogni effetto prevede un costo in dadi di danno dell'Attacco Furtivo. Il dado da spendere viene rimosso prima del tiro e l'effetto entra in vigore subito dopo aver inflitto i danni dell'attacco. Per esempio, se si aggiunge il veleno, è necessario rimuovere 1d6 dai danni dell'Attacco Furtivo prima di tirare. Se uno degli effetti di Colpo astuto richiede un tiro salvezza, la CD equivale a 8 più il modificatore di Destrezza + il bonus di competenza. Attacco furtivo a, Padronanza d'armi 1d6 1d6 2d6 2d6 3d6 3d6 4d6 4d6 Sd6 Sd6 6d6 6d6 7d6 7d6 8d6 8d6 9d6 9d6 10d6 10d6 Inciampo (costo: 1d6). Se il bersaglio è una creatura di taglia Grande o di dimensioni inferiori, deve superare un tiro salvezza su Destrezza, altrimenti cade a terra prona. Ritirata (costo: 1d6). Subito dopo l'attacco, il ladro può muoversi fino a metà della sua velocità senza provocare attacchi di opportunità. Veleno (costo: 1d6). Il ladro aggiunge una tossina al proprio attacco, costringendo il bersaglio a effettuare un tiro salvezza su Costituzione. Se lo fallisce, è avvelenato per 1 minuto. Alla fine di ogni suo turno, il bersaglio avvelenato ripete il tiro salvezza e, se lo supera, l'effetto svanisce. Per utilizzare questo effetto, è necessario avere con sé le sostanze da avvelenatore."
+      },
+      {
+        "name": "Schivata prodigiosa",
+        "level": 5,
+        "description": "Quando subisce un attacco da un attaccante nel suo campo visivo, il ladro può usare la sua reazione per dimezzare i danni che subirebbe (arrotondando per difetto)."
+      },
+      {
+        "name": "Dote affidabile",
+        "level": 7,
+        "description": "Ogni volta che il ladro effettua una prova di caratteristica in un'abilità o uno strumento in cui ha competenza, può considerare un tiro di d20 dal 9 in giù come 10."
+      },
+      {
+        "name": "Elusione",
+        "level": 7,
+        "description": "Ora il ladro può schivare agilmente determinati pericoli. Quando è soggetto a un effetto che gli consente di effettuare un tiro salvezza su Destrezza per dimezzare i danni, non subisce alcun danno se lo supera, e soltanto la metà dei danni se lo fallisce. Il personaggio non può utilizzare questo privilegio se è incapacitato."
+      },
+      {
+        "name": "Colpo astuto migliorato",
+        "level": 11,
+        "description": "Il ladro può utilizzare fino a due effetti di Colpo Astuto quando infligge danni da Attacco Furtivo, pagando il relativo costo in dadi per ciascuno di essi."
+      },
+      {
+        "name": "Colpi infidi",
+        "level": 14,
+        "description": "Il ladro ha scoperto nuovi modi più infidi di utilizzare il proprio Attacco Furtivo. I seguenti effetti si aggiungono alle opzioni di Colpo Astuto. Atterramento (costo: 6d6). Il bersaglio deve superare un tiro salvezza su Costituzione, altrimenti diventa privo di sensi per 1 minuto o finché non subisce dei danni. Dopo diché, ripete il tiro salvezza alla fine di ogni suo turno e, se lo supera, l'effetto svanisce. Confusione (costo: 2d6). Il bersaglio deve superare un tiro salvezza su Costituzione, altrimenti nel suo turno successivo potrà fare solo una delle seguenti azioni: muo versi o effettuare un'azione o un'azione bonus. Rabbuio (costo: 3d6). Il bersaglio deve superare un tiro salvezza su Destrezza, altrimenti è accecato fino al termine del proprio turno successivo."
+      },
+      {
+        "name": "Mente sfuggente",
+        "level": 15,
+        "description": "La mente arguta del ladro è particolarmente difficile da controllare, per questo ottiene competenza nei tiri salvezza su Saggezza e Carisma."
+      },
+      {
+        "name": "Inafferrabile",
+        "level": 18,
+        "description": "Il ladro è talmente sfuggente che gli attaccanti riescono raramente ad avere il sopravvento su di lui. Nessun tiro per colpire può avere vantaggio contro il ladro, a meno che non sia incapacitato."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono dello spirito notturno."
+      },
+      {
+        "name": "Colpo di fortuna",
+        "level": 20,
+        "description": "Il ladro ha un'incredibile propensione per avere successo quando ne ha bisogno. Se fallisce una prova con d20, può trasformare il risultato in un 20. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo breve o lungo."
       }
     ],
     "hit_points": {
@@ -408,14 +797,56 @@
     },
     "features": [
       {
-        "name": "Adepto dei Rituali",
+        "name": "Incantesimi",
         "level": 1,
-        "description": "Puoi lanciare qualsiasi incantesimo con il descrittore rituale dal tuo libro degli incantesimi come rituale, anche se non è preparato."
+        "description": "In quanto studioso della magia arcana, il mago ha impa rato a lanciare incantesimi. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le informazioni sottostanti spiegano come applicare tali regole agli incantesimi del mago, elencati nella relativa lista degli incantesimi più avanti nella descrizione della classe. Trucchetti. Il mago conosce tre trucchetti a scelta. Sono consigliati luce, mano magica e raggio di gelo. Ogni volta che il personaggio completa un riposo lungo, puoi sostituire uno dei suoi trucchetti di questo privilegio con un altro trucchetto a scelta. Dopo aver raggiunto il 4° e il 10° livello da mago, il personaggio apprende un altro trucchetto a scelta, come mostrato nella colonna Trucchetti della tabella Privilegi del mago. Libro degli incantesimi. Lo studio delle arti arcane da parte del mago ha raggiunto il suo apice con la creazione di un particolare tomo: il suo libro degli incantesimi. Si tratta di un oggetto minuscolo che pesa 1,5 chilo grammi, conta 100 pagine e può essere letto solo dal personaggio o da qualcuno che lanci identificare. L'aspetto e i materiali che compongono il libro sono a tua discre zione: potrebbe essere un tomo dal dorso dorato o una raccolta di pergamene tenute insieme con della corda. Il libro contiene gli incantesimi di 1° livello o superiore noti al personaggio. Inizia con sei incantesimi da mago di 1° livello a scelta. Sono consigliati individuazione del magico, caduta morbida, armatura magica, dardo incantato, sonno e onda tonante. Ogni volta che il personaggio acquisisce un livello da mago dopo il 1°, puoi aggiungere due incantesimi da mago a scelta al libro degli incantesimi. Ognuno di essi deve essere di un livello di cui il mago possiede degli slot incantesimo, come indicato nella tabella Privilegi del mago. Gli incantesimi rappresentano il culmine delle ricerche arcane svolte regolarmente dal personaggio. Slot incantesimo. La tabella Privilegi del mago mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consumati vengono ripristinati una volta completato un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per farlo, devi scegliere quattro incantesimi dal suo libro degli incante simi. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. III.",
+        "table": "PRIVILEGI DEL MAGO Bonus di Livello competenza Privilegi di classe Tr 2 Incantesimi, Adepto dei Rituali, Recupero Arcano 2 2 Studioso 3 2 Sottoclasse del mago 4 2 Aumento dei punteggi di caratteristica 5 3 Memorizzare incantesimi 6 3 Privilegio della sottoclasse 7 3 8 3 Aumento dei punteggi di caratteristica 9 4 10 4 Privilegio della sottoclasse 11 4 12 4 Aumento dei punteggi di caratteristica 13 5 14 5 Privilegio della sottoclasse 15 5 16 5 Aumento dei punteggi di caratteristica 17 6 18 6 Maestria negli Incantesimi 19 6 Dono epico 20 6 Incantesimi personali Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da mago, come mostrato nella colonna Incantesimi preparati della tabella Privilegi del mago. Ogni volta che il numero cresce, il mago deve scegliere altri incantesimi finché il numero sulla lista non combacia con quello mostrato nella tabella Privilegi del mago. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un mago di 3° livello, la sua lista di incantesimi preparati può includere sei incantesimi di 1° e 2° livello in qual siasi combinazione presi dal suo libro degli incantesimi. Se un altro privilegio gli fornisce incantesimi che sono sempre preparati, questi non contano ai fini del numero di incantesimi preparabili con questo privilegio. Tuttavia, valgono comunque come incantesimi da mago. Cambiare gli incantesimi preparati. Quando il mago completa un riposo lungo, può modificare la sua lista di incantesimi preparati, sostituendo quelli che preferisce con altri incantesimi inclusi nel suo libro. Caratteristica da incantatore. Intelligenza è la caratteri stica da incantatore per gli incantesimi da mago. Focus da incantatore. Il mago può usare un focus arcano o il suo libro degli incantesimi come focus da incantatore per i propri incantesimi da mago. -Slot incantesimo per livello di incantesimoIncantesimi Trucchetti preparati 2 3 4 5 6 7 8 9 3 4 2 3 5 3 3 6 4 2 4 7 4 3 4 9 4 3 2 4 10 4 3 3 4 11 4 3 3 4 12 4 3 3 2 4 14 4 3 3 3 5 15 4 3 3 3 2 5 16 4 3 3 3 2 5 16 4 3 3 3 2 5 17 4 3 3 3 2 5 18 4 3 3 3 2 5 19 4 3 3 3 2 5 21 4 3 3 3 2 5 22 4 3 3 3 2 5 23 4 3 3 3 3 5 24 4 3 3 3 3 2 5 25 4 3 3 3 3 2 2."
+      },
+      {
+        "name": "Adepto dei rituali",
+        "level": 1,
+        "description": "Il mago può lanciare qualsiasi incantesimo come rituale se quell'incantesimo possiede il descrittore rituale ed è presente nel suo libro degli incantesimi. Non è necessa rio che sia preparato, ma per poterlo lanciare in questo modo è necessario leggere il libro."
       },
       {
         "name": "Recupero Arcano",
         "level": 1,
-        "description": "Una volta al giorno, dopo aver completato un riposo breve, puoi scegliere di recuperare una parte dei tuoi slot incantesimo spesi."
+        "description": "Il mago può recuperare parte della sua energia magica studiando il libro degli incantesimi. Quando completa un riposo breve, sceglie quali slot incantesimo spesi desidera recuperare. Gli slot incantesimo possono avere un livello totale pari o inferiore alla metà del livello da mago (arrotondato per eccesso) e nessuno slot può essere di livello pari o superiore al 6°. Per esempio, se il mago è di 4° livello, può recuperare un massimo di due livelli di slot incantesimo, ripristinando o uno slot incantesimo di 2° livello o due di 1° livello. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo."
+      },
+      {
+        "name": "Studioso",
+        "level": 2,
+        "description": "Durante il suo studio della magia, il mago si è specializzato anche in un'altra disciplina. Scegli una delle seguenti abi lità in cui avere competenza: Arcano, Indagare, Medicina, Natura, Religione o Storia. Il mago possiederà maestria nell'abilità selezionata.",
+        "table": "INCANTESIMI Gli incantesimi che il mago aggiunge al proprio libro sono un riflesso degli studi magici che conduce. Tuttavia, durante le sue avventure potrebbe trovarne degli altri da aggiungere al suo repertorio. Per esem pio, il personaggio potrebbe scoprirne uno su una pergamena magica e copiarlo nel proprio libro. Copiare un incantesimo nel libro. Quando il personaggio trova un incantesimo da mago di 1° livello osuperiore, può aggiungerlo al proprio libro degli incantesimi se è di un livello che ne consente la preparazione e se c'è abbastanza tempo per copiarlo. Per ogni livello dell'incantesimo, la trascrizione richiede 2 ore e costa 50 mo. Dopodiché, il mago può preparare l'incantesimo come tutti gli altri già presenti nel proprio libro. Copiare il libro. Il mago può copiare un incantesimo dal proprio libro in un altro. Questo procedimento è simile alla copia di un nuovo incantesimo nel suo libro, ma è più rapido, dal momento che sa già come lanciarlo. Infatti, dovrà impiegare solo l ora e spendere 10 mo per ogni livello dell'incantesimo copiato. Se il mago perde il suo libro degli incantesimi, può usare la stessa procedura per trascrivere gli incante simi che ha preparato in un nuovo libro degli incante simi. Tuttavia, per completarlo dovrà trovarne di nuovi. Ecco perché molti maghi conservano sempre una copia di sicurezza del proprio libro degli incantesimi."
+      },
+      {
+        "name": "Sottoclasse del Mago",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del mago a scelta. Dopo la descrizione di questa classe, troverai una spiega zione per ciascuna delle seguenti sottoclassi: Abiuratore, Divinatore, Invocatore e Illusionista. Una sottoclasse è una specializzazione che conferisce dei privilegi a determinati livelli da mago. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da mago attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da mago."
+      },
+      {
+        "name": "Memorizzare incantesimi",
+        "level": 5,
+        "description": "Quando il mago completa un riposo breve, può studiare il proprio libro degli incantesimi e sostituire uno degli incantesimi da mago preparati di 1° livello o superiore con un altro di 1° livello o superiore dal libro."
+      },
+      {
+        "name": "Maestria negli incantesimi",
+        "level": 18,
+        "description": "Il mago raggiunge una tale padronanza nell'uso di certi incantesimi da poterli lanciare a volontà. Dal suo libro degli incantesimi, scegli un incantesimo di 1° livello e uno di 2° livello con il tempo di lancio di un'azione. Tali incantesimi sono sempre considerati come preparati. Inoltre, il mago può lanciarli al loro livello più basso senza spendere slot incantesimo. Per lanciarli a un livello superiore, deve invece spendere uno slot incantesimo. Ogni volta che il mago completa un riposo lungo, può studiare il proprio libro e sostituire uno di quegli incante simi con un altro pertinente dello stesso livello (preso dal libro)."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) oun altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono del richiamo degli incantesimi."
+      },
+      {
+        "name": "Incantesimi personali",
+        "level": 20,
+        "description": "Il mago sceglie due incantesimi di 3° livello contenuti nel suo libro degli incantesimi come suoi incantesimi personali. Tali incantesimi sono sempre considerati come preparati. Inoltre, il mago può lanciarli una volta ciascuno al 3° livello senza spendere slot incantesimo. Quando lo fa, non può lanciarli di nuovo in questo modo finché non completa un riposo breve o lungo. Per lanciarli a un livello superiore, deve invece spendere uno slot incantesimo. II3."
       }
     ],
     "hit_points": {
@@ -461,14 +892,115 @@
     "spellcasting": null,
     "features": [
       {
-        "name": "Arti Marziali",
+        "name": "Arti marziali",
         "level": 1,
-        "description": "Puoi effettuare un colpo senz'armi come azione bonus. Il dado di danno per i colpi senz'armi e le armi da monaco è 1d6. Puoi usare Destrezza invece di Forza per i tiri per colpire e i danni."
+        "description": "Grazie alla sua perizia nelle arti marziali, un monaco padroneggia stili di combattimento che fanno uso di colpi senz'armi e delle seguenti armi da monaco: Armi da mischia semplici Armi da mischia da guerra con la proprietà leggera Un monaco ottiene i benefici seguenti fintantoché è sen z'armi o impugna soltanto armi da monaco, non indossa alcuna armatura e non impugna uno scudo: Colpo senz'armi bonus. Il monaco può effettuare un colpo senz'armi come azione bonus. Dado di Arti Marziali. Un monaco può tirare 1d6 al posto dei normali danni del suo colpo senz'armi o della sua arma da monaco. Questo dado cambia man mano che il personaggio acquisisce altri livelli da monaco, come indicato nella colonna Arti marziali nella tabella Privilegi del monaco. Attacchi destri. Un monaco può usare il modificatore di Destrezza invece del modificatore di Forza per i tiri per colpire e i tiri per i danni dei suoi colpi senz'armi e delle sue armi da monaco. Inoltre, quando utilizza le opzioni di afferrare o spingere del suo colpo senz'armi, il monaco può utilizzare il suo modificatore di Destrezza invece del modificatore di Forza per determinare la CD del tiro salvezza."
       },
       {
-        "name": "Difesa Senza Armatura",
+        "name": "Difesa senza armatura",
         "level": 1,
-        "description": "Se non indossi un'armatura e non impugni uno scudo, la tua Classe Armatura è 10 + modificatore Destrezza + modificatore Saggezza."
+        "description": "Se il personaggio non sta indossando un'armatura o impugnando uno scudo, la Classe Armatura base corrisponde a 10 più i modificatori di Destrezza e Saggezza."
+      },
+      {
+        "name": "Concentrazione da monaco",
+        "level": 2,
+        "description": "La concentrazione e l'addestramento marziale del monaco gli permettono di imbrigliare una fonte di energia stra ordinaria dentro di sé. Questa energia è rappresentata dai punti concentrazione. Il numero di punti posseduti è determinato dal livello da monaco, come indicato nella colonna Punti concentrazione nella tabella Privilegi del monaco.",
+        "table": "PRIVILEGI DEL MONACO Bonus di Livello Competenza Privilegi di classe 2 Arti marziali, difesa senza armatura 2 2 Concentrazione da monaco, metabolism movimento senza armatura 3 2 Devia attacchi, sottoclasse del monaco 4 2 Aumento dei punteggi di caratteristica, c 5 3 Attacco extra, colpo stordente 6 3 Colpi potenziati, privilegio della sottoclas 7 3 Elusione 8 3 Aumento dei punteggi di caratteristica 9 4 Movimento Acrobatico 10 4 Autorigenerazione, concentrazione supe 11 4 Privilegio della sottoclasse 12 4 Aumento dei punteggi di caratteristica 13 5 Deviare Energia 14 5 Esperto di Sopravvivenza Disciplinato 15 5 Concentrazione Perfetta 16 5 Aumento dei punteggi di caratteristica 17 6 Privilegio della sottoclasse 18 6 Difesa Superiore 19 6 Dono epico 20 6 Corpo e Mente Questi punti possono essere spesi per potenziare oalimentare alcuni privilegi del monaco. Inizialmente il monaco conosce tre di questi privilegi: Difesa paziente, Passo del vento e Raffica di colpi, descritti di seguito. Quando un monaco spende un punto concentrazione, quel punto non è più disponibile finché non completa un riposo breve o lungo, alla fine del quale il monaco recupera tutti i punti spesi. Alcune caratteristiche che utilizzano i punti concentra- zione richiedono che il bersaglio effettui un tiro salvezza. La CD del tiro salvezza è pari a 8 più il modificatore di Saggezza + il bonus di competenza del monaco. Difesa paziente. Il monaco può effettuare l'azione di Disimpegno come azione bonus. In alternativa, può spendere 1 punto concentrazione per effettuare le azioni di Disimpegno e Schivata come azione bonus. Passo del vento. Il monaco può utilizzare l'azione di Scatto come azione bonus. In alternativa, può spendere 1 punto concentrazione per effettuare le azioni di Disimpegno e Schivata come azione bonus; inoltre, la sua distanza di salto raddoppia per quel turno. Raffica di colpi. Il monaco può spendere 1 punto con centrazione per sferrare due colpi senz'armi come azione bonus. Arti Punti Movimento marziali concentrazione senza armatura 1d6 o straordinario, 1d6 2 3 m 1d6 3 3 m caduta lenta 1d6 4 3 m 1d8 5 3 m sse 1d8 6 4,5 m 1d8 7 4,5 m 1d8 8 4,5 m 1d8 9 4,5 m riore 1d8 10 6 m 1d10 11 6 m 1d10 12 6 m 1d10 13 6 m 1d10 14 7,5 m 1d10 15 7,5 m 1d10 16 7,5 m 1d12 17 7,5 m 1d12 18 9 m 1d12 19 9 m 1d12 20 9 m."
+      },
+      {
+        "name": "Metabolismo straordinario",
+        "level": 2,
+        "description": "Quando effettua un tiro per l'iniziativa, il monaco può recuperare tutti i punti concentrazione spesi. Quando lo fa, tira un dado di Arti Marziali e recupera un numero di punti ferita pari al suo livello da monaco più il risultato ottenuto. Dopo aver utilizzato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo."
+      },
+      {
+        "name": "Movimento senza armatura",
+        "level": 2,
+        "description": "La velocità del monaco aumenta di 3 metri, purché non indossi un'armatura pesante o impugni uno scudo. Questo bonus aumenta man mano che il personaggio acquisisce altri livelli da monaco, come indicato nella tabella Privilegi del monaco."
+      },
+      {
+        "name": "Devia attacchi",
+        "level": 3,
+        "description": "Quando viene colpito da un tiro per colpire che include danni contundenti, perforanti o taglienti, il monaco può usare una reazione per ridurre i danni totali dell'attacco che ha subito. La riduzione è pari a 1d10 più il suo modificatore di Destrezza e il suo livello da monaco. Se i danni vengono ridotti a 0, il monaco può spendere 1 punto concentrazione per deviare parte della forza dell'attacco. Se lo fa, deve scegliere una creatura nel suo campo visivo entro 1,5 metri da sé se l'attacco era in mischia; se l'attacco era a distanza, deve scegliere una creatura nel suo campo visivo entro 18 metri da sé che non sia dietro copertura totale. Quella creatura deve superare un tiro salvezza su Destrezza o subire danni pari a due tiri del dado di Arti Marziali più il modificatore di Destrezza del monaco. I danni sono dello stesso tipo di danni inflitti dall'attacco."
+      },
+      {
+        "name": "Sottoclasse del monaco",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del monaco a scelta. Dopo la descrizione di questa classe, troverai una spiega zione per ciascuna delle seguenti sottoclassi: Guerriero della Misericordia, Guerriero dell'Ombra, Guerriero degli Elementi e Guerriero della Mano Aperta. Una sottoclasse è una specializzazione che conferisce dei privilegi a determinati livelli da monaco. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da monaco attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da monaco."
+      },
+      {
+        "name": "Caduta lenta",
+        "level": 4,
+        "description": "Un monaco può usare la sua reazione quando cade per ridurre gli eventuali danni da caduta di un ammontare pari a cinque volte il suo livello da monaco."
+      },
+      {
+        "name": "Attacco Extra",
+        "level": 5,
+        "description": "Quando effettua l'azione di Attacco nel proprio turno, il monaco può attaccare due volte anziché una."
+      },
+      {
+        "name": "Colpo stordente",
+        "level": 5,
+        "description": "Una volta per turno, quando il monaco colpisce una creatura con un'arma da monaco o un colpo senz'armi, può spendere 1 punto concentrazione per tentare un colpo stordente. Il bersaglio deve effettuare un tiro salvezza su Costituzione. Se lo fallisce, è stordito fino all'inizio del turno successivo del monaco. Se lo supera, la velocità del bersaglio è dimezzata fino all'inizio del turno succes sivo del monaco, e il prossimo tiro per colpire effettuato contro il bersaglio prima di allora dispone di vantaggio."
+      },
+      {
+        "name": "Colpi potenziati",
+        "level": 6,
+        "description": "Ogni volta che il monaco infligge danni con un colpo senz'armi, il colpo può infliggere un tipo di danno a scelta tra Forza e il suo tipo di danno normale."
+      },
+      {
+        "name": "Elusione",
+        "level": 7,
+        "description": "Quando è soggetto a un effetto che gli consente di effettuare un tiro salvezza su Destrezza per dimezzare i danni, non subisce alcun danno se lo supera, e soltanto la metà dei danni se lo fallisce. Il monaco non beneficia di questo privilegio se è incapacitato."
+      },
+      {
+        "name": "Movimento acrobatico",
+        "level": 9,
+        "description": "Se il personaggio non sta indossando un'armatura oimpugnando uno scudo, ottiene la capacità di muoversi lungo le superfici verticali e sulle superfici liquide durante il suo turno senza cadere durante il movimento."
+      },
+      {
+        "name": "Autorigenerazione",
+        "level": 10,
+        "description": "Con la sola forza di volontà, il monaco può rimuovere le seguenti condizioni da se stesso al termine di ogni suo turno: affascinato, spaventato o avvelenato. Inoltre, la rinuncia a cibo e bevande non comporta livelli di indebolimento."
+      },
+      {
+        "name": "Concentrazione superiore",
+        "level": 10,
+        "description": "Difesa paziente, Passo del vento e Raffica di colpi otten gono i seguenti benefici. Difesa paziente. Quando il monaco spende un punto concentrazione per utilizzare Difesa paziente, ottiene un numero di punti ferita temporanei pari a due tiri del dado di Arti Marziali. Passo del vento. Quando il monaco spende un punto con centrazione per utilizzare Passo del vento, può scegliere una creatura consenziente entro 1,5 metri da sé di taglia Grande o inferiore. Il monaco muove la creatura con sé fino al termine del suo turno. Questo movimento non provoca attacchi di opportunità. Raffica di colpi. Il monaco può spendere 1 punto concentrazione per usare Raffica di colpi ed infliggere tre colpi senz'armi anziché due."
+      },
+      {
+        "name": "Deviare energia",
+        "level": 13,
+        "description": "Ora il monaco può utilizzare il suo privilegio Devia Attacchi contro gli attacchi che infliggono qualsiasi tipo di danno, non solo quelli contundenti, perforanti otaglienti."
+      },
+      {
+        "name": "Esperto di sopravvivenza disciplinato",
+        "level": 14,
+        "description": "La disciplina fisica e mentale del monaco gli conferisce competenza in tutti i tiri salvezza. Inoltre, ogni volta che effettua un tiro salvezza e fal lisce, può spendere 1 punto concentrazione per ripetere il tiro. Deve usare il nuovo risultato."
+      },
+      {
+        "name": "Concentrazione perfetta",
+        "level": 15,
+        "description": "Quando il monaco tira per l'iniziativa e non usa Metaboli smo Straordinario, può recuperare i punti concentrazione spesi fino ad averne 4, se ne ha 3 o meno."
+      },
+      {
+        "name": "Difesa superiore",
+        "level": 18,
+        "description": "All'inizio del suo turno, il monaco può spendere 3 punti concentrazione per rafforzare se stesso contro i danni per 1 minuto o finché non è incapacitato. In quell'intervallo di tempo, ottiene resistenza a tutti i danni tranne a quelli da Forza."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) oun altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono dell'attacco inarrestabile."
+      },
+      {
+        "name": "Corpo e mente",
+        "level": 20,
+        "description": "La mente e il corpo del monaco hanno raggiunto nuove vette. I punteggi di Destrezza e Saggezza aumentano di 4, fino a un massimo di 25."
       }
     ],
     "hit_points": {
@@ -480,7 +1012,18 @@
     "id": 9,
     "name": "Paladin",
     "progression_key": "paladin",
-    "fighting_styles": [74, 75, 76, 77, 78, 79, 80, 81, 82, 83],
+    "fighting_styles": [
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83
+    ],
     "description": "I paladini sono guerrieri sacri vincolati a un giuramento che combattono contro l'oscurità.",
     "hit_die": "d10",
     "primary_ability": [
@@ -523,14 +1066,91 @@
     },
     "features": [
       {
-        "name": "Imposizione delle Mani",
+        "name": "Imposizione delle mani",
         "level": 1,
-        "description": "Come azione bonus, puoi toccare una creatura e ripristinare punti ferita da una riserva pari a 5 × il tuo livello da paladino. Puoi anche consumare 5 punti della riserva per curare l'avvelenamento. La riserva si ricostituisce dopo un riposo lungo."
+        "description": "Il tocco benedetto di un paladino è in grado di guarire le ferite. Un paladino possiede una riserva di poteri curativi che si ricostituisce quando completa un riposo lungo. Questa gli consente di ripristinare un numero totale di punti ferita pari a cinque volte il proprio livello da paladino. Come azione bonus, il paladino può toccare una creatura (anche se stesso) e attingere al potere della sua riserva per ripristinare un certo numero di punti ferita in quella creatura, fino all'ammontare massimo in essa disponibile. Inoltre, può consumare 5 punti ferita della riserva per curare l'avvelenamento. In questo caso, i punti ferita impiegati non vanno a ripristinare quelli della creatura interessata."
       },
       {
-        "name": "Padronanza d'Armi",
+        "name": "Incantesimi",
         "level": 1,
-        "description": "Scegli due tipi di armi in cui hai competenza e ottieni l'accesso alle loro proprietà di padronanza. Dopo un riposo lungo, puoi cambiare i tipi di armi scelti."
+        "description": "Il paladino impara a lanciare incantesimi attraverso la preghiera e la meditazione. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le infor mazioni sottostanti spiegano come applicare tali regole agli incantesimi da paladino, elencati nella relativa lista degli incantesimi più avanti nella descrizione della classe. Slot incantesimo. La tabella Privilegi del paladino mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consumati vengono ripristinati una volta completato un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie due incantesimi da paladino di 1° livello. Sono consigliati eroismo e punizione incandescente. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da paladino, come mostrato nella colonna Incantesimi preparati della tabella Privilegi del paladino. Ogni volta che il numero cresce, il paladino deve scegliere altri incantesimi finché il numero sulla lista non combacia con quello mostrato nella tabella Privilegi del paladino. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un paladino di 5° livello, la sua lista di incantesimi preparati può includere sei incantesimi da paladino di 1° 2° livello in qualsiasi e combinazione. Se un altro privilegio gli fornisce incantesimi che sono sempre preparati, questi non contano ai fini del numero di incantesimi preparabili con questo privilegio. Tuttavia, valgono comunque come incantesimi da paladino. Cambiare gli incantesimi preparati. Quando completa un riposo lungo, il paladino può sostituire un incantesimo sulla propria lista con un altro incantesimo di cui possiede degli slot.",
+        "table": "PRIVILEGI DEL PALADINO Bonus di Livello competenza Privilegi di classe 2 Imposizione delle mani, Incantesimi, Padronanza d'armi 2 2 Stile di combattimento, Punizione del pa 3 2 Incanalare divinità, sottoclasse del paladi 4 2 Aumento dei punteggi di caratteristica 5 3 Attacco extra, Fido destriero 6 3 Aura di Protezione 7 3 Privilegio della sottoclasse 8 3 Aumento dei punteggi di caratteristica 9 4 Abiurare nemici 10 4 Aura di coraggio 11 4 Colpi radiosi 12 4 Aumento dei punteggi di caratteristica 13 5 14 5 Tocco rigenerante 15 5 Privilegio della sottoclasse 16 5 Aumento dei punteggi di caratteristica 17 6 18 6 Ampliamento dell'aura 19 6 Dono epico 20 6 Privilegio della sottoclasse Caratteristica da Incantatore. Carisma è la caratteristica da incantatore per gli incantesimi da paladino. Focus da incantatore. Il paladino può usare un simbolo sacro come focus da incantatore per i suoi incantesimi da paladino."
+      },
+      {
+        "name": "Padronanza d'armi",
+        "level": 1,
+        "description": "Il paladino è addestrato nell'uso delle armi, e per questo può avvalersi delle proprietà di padronanza per due tipi di armi a sua scelta in cui ha competenza, come le spade lunghe e i giavellotti. Ogni volta che completa un riposo lungo, può cambiare il tipo di arma utilizzato. Per esempio, è possibile passare alle proprietà di padronanza per alabarde e mazzafrusti."
+      },
+      {
+        "name": "Punizione del paladino",
+        "level": 2,
+        "description": "L'incantesimo punizione divina è sempre considerato pre parato. Inoltre, il paladino può lanciarlo senza consumare alcuno slot incantesimo, ma deve completare un riposo lungo prima di poterlo lanciare nuovamente in questo modo."
+      },
+      {
+        "name": "Stile di combattimento",
+        "level": 2,
+        "description": "Il paladino ottiene un talento Stile di Combattimento a tua scelta (vedi capitolo 5 per i talenti}. Tuttavia, invece di sceglierne uno tra quelli proposti, è possibile avvalersi dell'opzione sottostante. -Slot incantesimo per livello di incantesimoIncanalare Incantesimi divinità preparati l 2 3 4 5 2 2 ladino 3 2 ino 2 4 3 2 5 3 2 6 4 2 2 6 4 2 2 7 4 3 2 7 4 3 2 9 4 3 2 2 9 4 3 2 3 10 4 3 3 3 10 4 3 3 3 11 4 3 3 3 11 4 3 3 3 12 4 3 3 2 3 12 4 3 3 2 3 14 4 3 3 3 3 14 4 3 3 3 3 15 4 3 3 3 2 3 15 4 3 3 3 2 Guerriero Benedetto. Il paladino impara due trucchetti da chierico a scelta (consulta la sezione della classe del chierico per una lista dei suoi incantesimi). Sono consi gliati guida e fiamma sacra. I trucchetti scelti valgono come incantesimi da paladino e la caratteristica da incantatore per usarli è Carisma. Ogni volta che il personaggio ottiene un livello da paladino, puoi sostituire uno dei trucchetti con un altro trucchetto da chierico."
+      },
+      {
+        "name": "Incanalare divinità",
+        "level": 3,
+        "description": "Il paladino può incanalare l'energia divina direttamente dai Piani Esterni, usandola per alimentare gli effetti magici. Inizia con uno di questi effetti: Percezione del Divino, descritto di seguito. Gli altri privilegi del paladino gli conferiscono ulteriori effetti di Incanalare Divinità. Ogni volta che il personaggio usa Incanalare Divinità, è possibile scegliere l'effetto desiderato della classe. Il paladino può usare Incanalare Divinità due volte. Per quanto riguarda gli utilizzi consumati, ne recupera uno dopo aver completato un riposo breve ed entrambi dopo un riposo lungo. Ottiene un uso aggiuntivo una volta raggiunto il livello 11. Se un effetto di Incanalare Divinità richiede un tiro salvezza, la CD equivale alla CD del tiro salvezza sull'in cantesimo del privilegio Incantesimi di questa classe. Percezione del Divino. Come azione bonus, il paladino può amplificare i propri sensi per individuare celestiali, immondi e non morti. Per i prossimi 10 minuti o finché non è incapacitato, conosce la posizione di ogni creatura summenzionata in un raggio di 18 metri da sé e può distin guerne la tipologia. Entro lo stesso raggio, il paladino individua anche la presenza di qualsiasi luogo o oggetto sacro o sacrilego, con gli stessi effetti dell'incantesimo santificare."
+      },
+      {
+        "name": "Sottoclasse del Paladino",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del paladino a scelta. Dopo la descrizione di questa classe, troverai una spiegazione per ciascuna delle seguenti sottoclassi: Giura mento di Devozione, Giuramento di Gloria, Giuramento degli Antichi e Giuramento di Vendetta. Una sottoclasse è una specializzazione che conferisce dei privilegi a determinati livelli da paladino. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da paladino attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da paladino."
+      },
+      {
+        "name": "Attacco Extra",
+        "level": 5,
+        "description": "Quando effettua l'azione di attacco nel proprio turno, il paladino può attaccare due volte anziché una."
+      },
+      {
+        "name": "Fido destriero",
+        "level": 5,
+        "description": "Il paladino può richiedere l'aiuto di una cavalcatura ultraterrena e l'incantesimo trova cavalcatura è sempre considerato preparato. Può lanciarlo una volta senza consumare uno slot incantesimo e ne recupera l'utilizzo dopo aver completato un riposo lungo."
+      },
+      {
+        "name": "Aura di protezione",
+        "level": 6,
+        "description": "Il paladino sprigiona un'aura protettiva invisibile in una emanazione di 3 metri che ha origine da sé. L'aura diventa inattiva quando è incapacitato. L'aura conferisce al personaggio e ai suoi alleati un bonus ai tiri salvezza pari al suo modificatore di Carisma (fino a un bonus minimo di 1). Se è presente un altro paladino, le creature possono usufruire di una sola Aura di Protezione per volta: spetta alla creatura interessata scegliere quale."
+      },
+      {
+        "name": "Abiurare nemici",
+        "level": 9,
+        "description": "Come azione di Magia, il paladino può consumare uno degli usi di Incanalare Divinità per sopraffare gli avver sari. Dopo aver estratto il suo simbolo sacro o l'arma, può prendere di mira un numero di creature corrispondente al proprio modificatore di Carisma (minimo una creatura) che può vedere in un raggio di 18 metri da sé. Ogni bersa glio deve superare un tiro salvezza su Saggezza, altrimenti sarà spaventato per 1 minuto o finché non subirà dei danni. Mentre è in questa condizione, nel proprio turno può svol gere solo una delle seguenti azioni: muoversi, effettuare un'azione o un'azione bonus.",
+        "table": "GIURAMENTI INFRANTI Un paladino si sforza sempre di mantenere una con dotta impeccabile, ma anche il più virtuoso può fallire, violando il proprio giuramento. Un paladino che ha infranto il suo giuramento solitamente va in cerca di redenzione, trascorrendo un'intera notte in preghiera o facendo un digiuno. Dopo un rito di perdono, viene di nuovo considerato senza macchia. Se invece il personaggio viola il giuramento senza pentirsene, parlane con il DM. Forse dovresti scegliere una sottoclasse più adatta o persino abbandonare la classe del paladino in favore di un'altra."
+      },
+      {
+        "name": "Aura di coraggio",
+        "level": 10,
+        "description": "Il paladino e i suoi alleati sono immuni alla paura finché si trovano all'interno dell'Aura di Protezione. Se un alle ato spaventato entra nel suo raggio d'influenza, non subirà più l'effetto della paura finché sarà al suo interno."
+      },
+      {
+        "name": "Colpi radiosi",
+        "level": 11,
+        "description": "I colpi del paladino ora possiedono poteri soprannaturali. Quando colpisce un bersaglio con un tiro per colpire uti lizzando un'arma da mischia o un colpo senz'armi, questo subisce 1d8 danni radiosi aggiuntivi."
+      },
+      {
+        "name": "Tocco rigenerante",
+        "level": 14,
+        "description": "Quando il paladino usa Imposizione delle Mani su una creatura, può anche liberarla da una delle seguenti condizioni: accecato, affascinato, assordato, paralizzato, spaventato o stordito. Per farlo, è necessario attingere a 5 punti ferita della riserva curativa di Imposizione delle Mani per ognuna delle condizioni rimosse. Tuttavia, i punti consumati non ripristinano i punti ferita della creatura."
+      },
+      {
+        "name": "Ampliamento dell'aura",
+        "level": 18,
+        "description": "L'Aura di Protezione del paladino è ora un'emanazione di 9 metri."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono della vista pura."
       }
     ],
     "hit_points": {
@@ -542,7 +1162,18 @@
     "id": 10,
     "name": "Ranger",
     "progression_key": "ranger",
-    "fighting_styles": [74, 75, 76, 77, 78, 79, 80, 81, 82, 83],
+    "fighting_styles": [
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83
+    ],
     "description": "I ranger sono cacciatori ed esploratori che usano la magia della natura per proteggere i confini della civiltà.",
     "hit_die": "d10",
     "primary_ability": [
@@ -586,14 +1217,90 @@
     },
     "features": [
       {
-        "name": "Nemico Prescelto",
+        "name": "Incantesimi",
         "level": 1,
-        "description": "L'incantesimo Marchio del Cacciatore è sempre preparato. Puoi lanciarlo 2 volte senza spendere slot incantesimo. Gli utilizzi si recuperano dopo un riposo lungo."
+        "description": "Il ranger ha imparato a incanalare l'essenza della natura per usare la magia. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le informazioni sotto stanti spiegano come applicare tali regole agli incantesimi da ranger, elencati nella relativa lista degli incantesimi più avanti nella descrizione della classe. Slot incantesimo. La tabella Privilegi del ranger mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consumati vengono ripristinati una volta completato un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie due incantesimi da ranger di 1° livello. Sono consigliati cura ferite e colpo intrappolante. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da ranger, come mostrato nella colonna Incantesimi preparati della tabella Privilegi del ranger. Ogni volta che il numero cresce, il ranger deve scegliere altri incantesimi finché il numero sulla lista non combacia con quello mostrato nella tabella Privilegi del ranger. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un ranger di 5° livello, la sua lista di incantesimi preparati può includere sei incantesimi da ranger di 1° e 2° livello in qualsiasi combinazione. Se un altro privilegio gli fornisce incantesimi che sono sempre preparati, questi non contano ai fini del numero di incantesimi preparabili con questo privilegio. Tuttavia, valgono comunque come incantesimi da ranger. Cambiare gli incantesimi preparati. Quando completa un riposo lungo, il ranger può sostituire un incantesimo sulla propria lista con un altro incantesimo di cui possiede degli slot. Caratteristica da Incantatore. Saggezza è la caratteri stica da incantatore usata per gli incantesimi da ranger. Focus da incantatore. Il ranger può usare un focus drui dico per i suoi incantesimi da ranger."
       },
       {
-        "name": "Padronanza d'Armi",
+        "name": "Nemico prescelto",
         "level": 1,
-        "description": "Scegli due tipi di armi in cui hai competenza e ottieni l'accesso alle loro proprietà di padronanza. Dopo un riposo lungo, puoi cambiare i tipi di armi scelti."
+        "description": "L'incantesimo marchio del cacciatore del ranger è sempre considerato come preparato. È possibile lanciarlo due volte senza spendere alcuno slot incantesimo. I suoi uti lizzi vengono ripristinati dopo aver completato un riposo lungo. Il numero di volte in cui è possibile lanciare tale incantesimo aumenta al raggiungimento di determinati livelli da ranger, come mostrato nella colonna Nemico Prescelto della tabella Privilegi del ranger."
+      },
+      {
+        "name": "Padronanza d'armi",
+        "level": 1,
+        "description": "Il ranger è addestrato nell'uso delle armi, e per questo può avvalersi delle proprietà di padronanza per due tipi di armi a sua scelta in cui ha competenza, come gli archi lunghi e le spade corte. Ogni volta che completa un riposo lungo, può cambiare il tipo di arma utilizzato. Per esempio, è possibile passare alle proprietà di padronanza per scimitarre e spade lunghe.",
+        "table": "PRIVILEGI DEL RANGER Bonus di Livello competenza Privilegi di classe 2 Incantesimi, Nemico Prescelto, Padronanza d'Armi 2 2 Esploratore esperto, stile di combattimen 3 2 Sottoclasse del ranger 4 2 Aumento dei punteggi di caratteristica 5 3 Attacco extra 6 3 Girovago 7 3 Privilegio della sottoclasse 8 3 Aumento dei punteggi di caratteristica 9 4 Maestria 10 4 Instancabile 11 4 Privilegio della sottoclasse 12 4 Aumento dei punteggi di caratteristica 13 5 Cacciatore Implacabile 14 5 Velo della natura 15 5 Privilegio della sottoclasse 16 5 Aumento dei punteggi di caratteristica 17 6 Precisione del cacciatore 18 6 Sensi ferini 19 6 Dono epico 20 6 Sterminatore di nemici."
+      },
+      {
+        "name": "Esploratore esperto",
+        "level": 2,
+        "description": "Grazie ai suoi tanti viaggi, il ranger ottiene i seguenti benefici. Lingue. Il ranger conosce due lingue a scelta dal relativo elenco nel capitolo 2. Maestria. Il ranger può scegliere una delle competenze nelle abilità in cui non possiede maestria, così da ottenerla."
+      },
+      {
+        "name": "Stile di combattimento",
+        "level": 2,
+        "description": "Il ranger ottiene un talento Stile di Combattimento a scelta (vedi capitolo 5 per i talenti). Tuttavia, invece di sceglierne uno tra quelli proposti, è possibile avvalersi dell'opzione sottostante. Guerriero Druidico. Il ranger apprende due trucchetti da druido a scelta (vedi la sezione della classe del druido per una lista dei relativi incantesimi). Sono consigliati guida e luce splendente. I trucchetti scelti valgono come incantesimi da ranger e la caratteristica da incantatore per usarli è Saggezza. Ogni volta che il personaggio ottiene un livello da ranger, puoi sostituire uno dei trucchetti con un altro trucchetto da druido."
+      },
+      {
+        "name": "Sottoclasse del Ranger",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del ranger a scelta. Dopo la descrizione di questa classe, troverai una spie gazione per ciascuna delle seguenti sottoclassi: Signore delle Bestie, Viandante Fatato, Cacciatore delle Tenebre e Cacciatore. Una sottoclasse è una specializzazione che conferisce dei privilegi a determinati livelli da ranger. -Slot incantesimo per livello di incantesimoNemici Incantesimi prescelti preparati 2 3 4 s 2 2 2 to 2 3 2 2 4 3 2 5 3 3 6 4 2 3 6 4 2 3 7 4 3 3 7 4 3 4 9 4 3 2 4 9 4 3 2 4 10 4 3 3 4 10 4 3 3 5 11 4 3 3 5 11 4 3 3 5 12 4 3 3 2 5 12 4 3 3 2 6 14 4 3 3 3 6 14 4 3 3 3 6 15 4 3 3 3 2 6 15 4 3 3 3 2 Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da ranger attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo S) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da ranger."
+      },
+      {
+        "name": "Attacco Extra",
+        "level": 5,
+        "description": "Quando effettua l'azione di Attacco nel proprio turno, il paladino può attaccar.e due volte anziché una."
+      },
+      {
+        "name": "Girovago",
+        "level": 6,
+        "description": "La velocità del ranger aumenta di 3 metri, purché non indossi un'armatura pesante. Inoltre, ha una velocità di scalata e nuoto pari alla propria velocità."
+      },
+      {
+        "name": "Maestria",
+        "level": 9,
+        "description": "Il ranger può scegliere due delle competenze nelle abilità in cui non possiede maestria, così da ottenerla."
+      },
+      {
+        "name": "Instancabile",
+        "level": 10,
+        "description": "Le forze primordiali ora alimentano i viaggi del ranger, fornendogli i seguenti benefici. Punti ferita temporanei. Come azione di Magia, il ranger può ottenere un numero di punti ferita temporanei pari a 1d8 il suo modificatore di Saggezza (minimo di 1 punto ferita temporaneo). Il personaggio può utilizzare questa azione un numero di volte pari al valore del suo modificatore di Saggezza (minimo una volta) e recupera tutti gli utilizzi consumati quando completa un riposo lungo. Diminuisci indebolimento. Quando il ranger completa un riposo breve, il suo livello di indebolimento, se presente, diminuisce di 1."
+      },
+      {
+        "name": "Cacciatore implacabile",
+        "level": 13,
+        "description": "Pur subendo danni, il ranger non interrompe la sua con centrazione sul marchio del cacciatore."
+      },
+      {
+        "name": "Velo della natura",
+        "level": 14,
+        "description": "Il ranger invoca gli spiriti della natura per nascondersi magi camente. Come azione bonus, può conferirsi la condizione di invisibilità fino al termine del suo turno successivo. Il personaggio può utilizzare questo privilegio un numero di volte pari al valore del suo modificatore di Saggezza (minimo una volta) e recupera tutti gli utilizzi consumati quando completa un riposo lungo."
+      },
+      {
+        "name": "Precisione del cacciatore",
+        "level": 17,
+        "description": "Il ranger ottiene vantaggio ai tiri per colpire contro la creatura su cui è posto il suo marchio del cacciatore."
+      },
+      {
+        "name": "Sensi ferini",
+        "level": 18,
+        "description": "Il legame con le forze della natura conferisce al ranger vista cieca entro un raggio di 9 metri."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) oun altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono del viaggio dimensionale."
+      },
+      {
+        "name": "Sterminatore di nemici",
+        "level": 20,
+        "description": "I danni del marchio del cacciatore sono calcolati con un d10 anziché un d6."
       }
     ],
     "hit_points": {
@@ -642,9 +1349,57 @@
     },
     "features": [
       {
-        "name": "Stregoneria Innata",
+        "name": "Incantesimi",
         "level": 1,
-        "description": "Come azione bonus, puoi scatenare il tuo potere magico innato per 1 minuto. Mentre è attivo, la CD dei tuoi incantesimi da stregone aumenta di 1 e hai vantaggio ai tiri per colpire con incantesimi. Puoi usarlo 2 volte. Recuperi tutti gli utilizzi dopo un riposo lungo."
+        "description": "Attingendo alla propria magia innata, lo stregone è in grado di lanciare incantesimi. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le informazioni sottostanti spiegano come applicare tali regole agli incantesimi da stregone, elencati nella relativa lista degli incantesimi più avanti nella descrizione della classe. Trucchetti. Il personaggio conosce quattro trucchetti da stregone a scelta. Sono consigliati luce, prestidigitazione, stretta folgorante e stregoneria esplosiva. Quando lo stregone ottiene un livello, è possibile sostituire uno dei trucchetti di questo privilegio con un altro trucchetto a scelta. Dopo aver raggiunto il 4° e il 10° livello da stregone, il personaggio apprende un altro trucchetto a scelta, come mostrato nella colonna Trucchetti della tabella Privilegi dello stregone. Slot incantesimo. La tabella Privilegi dello stregone mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consumati vengono ripristinati una volta completato un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, lo stregone prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie due incantesimi da stregone di 1° livello. Sono consigliati mani brucianti e individuazione del magico. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da stregone, come mostrato nella colonna Incantesimi preparati della tabella Privilegi dello stregone. Ogni volta che il numero cresce, lo stregone deve scegliere altri incantesimi finché il numero sulla lista non combacia con quello mostrato nella tabella Privilegi dello stregone. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di uno stregone di 3° livello, la sua lista di incantesimi preparati può includere sei incantesimi da stregone di 1° e 2° livello in qualsiasi combinazione. Se un altro privilegio gli fornisce incantesimi che sono sempre preparati, questi non contano ai fini del numero di incantesimi preparabili con questo privilegio. Tuttavia, valgono comunque come incantesimi da stregone. Cambiare gli incantesimi preparati. Quando completa un riposo lungo, lo stregone può sostituire un incantesimo sulla propria lista con un altro incantesimo da stregone di cui possiede degli slot.",
+        "table": "PRIVILEGI DELLO STREGONE Bonus di Punti Livello competenza Privilegi di classe stregoneria T 2 Incantesimi, Stregoneria Innata 2 2 Fonte di magia, Metamagia 2 3 2 Sottoclasse dello stregone 3 4 2 Aumento dei punteggi 4 di caratteristica 5 3 Ripristino stregonesco 5 6 3 Privilegio della sottoclasse 6 7 3 Stregoneria incarnata 7 8 3 Aumento dei punteggi 8 di caratteristica 9 4 9 10 4 Metamagia 10 11 4 11 12 4 Aumento dei punteggi 12 di caratteristica 13 5 13 14 5 Privilegio della sottoclasse 14 15 5 15 16 5 Aumento dei punteggi 16 di caratteristica 17 6 Metamagia 17 18 6 Privilegio della sottoclasse 18 19 6 Dono epico 19 20 6 Apoteosi arcana 20 Caratteristica da Incantatore. Carisma è la caratteristica da incantatore per gli incantesimi da stregone. Focus du incantatore. Uno stregone può usare un focus arcano come focus da incantatore per i suoi incantesimi da stregone."
+      },
+      {
+        "name": "Stregoneria innata",
+        "level": 1,
+        "description": "Lo stregone è stato segnato in maniera indelebile da un evento del suo passato, che gli ha conferito un potere magico dormiente. Come azione bonus, può scatenarlo per 1 minuto e ottenere i seguenti benefici per la sua durata: La CD del tiro salvezza sull'incantesimo degli incante simi da stregone aumenta di 1. Lo stregone ha vantaggio ai tiri per colpire degli incantesimi lanciati. Il personaggio può utilizzare questo privilegio per due volte e recuperare tutti gli utilizzi spesi quando completa un riposo lungo."
+      },
+      {
+        "name": "Fonte di magia",
+        "level": 2,
+        "description": "Lo stregone può attingere alla fonte del potere magico dentro di sé. Essa è rappresentata dai punti stregoneria, -Slot incantesimo per livello di incantesimoIncantesimi Trucchetti preparati l 2 3 4 5 6 7 8 9 4 2 2 4 4 3 4 6 4 2 5 7 4 3 5 9 4 3 2 5 10 4 3 3 5 11 4 3 3 5 12 4 3 3 2 5 14 4 3 3 3 6 15 4 3 3 3 2 6 16 4 3 3 3 2 6 16 4 3 3 3 2 6 17 4 3 3 3 2 6 17 4 3 3 3 2 6 18 4 3 3 3 2 6 18 4 3 3 3 2 6 19 4 3 3 3 2 6 20 4 3 3 3 3 6 21 4 3 3 3 3 2 6 22 4 3 3 3 3 2 2 che gli consentono di creare una vasta gamma di effetti magici. Uno stregone parte con 2 punti stregoneria e ne ottiene altri ai livelli superiori, come indicato nella colonna Punti stregoneria nella tabella Privilegi dello stregone. Non può avere un numero di punti stregoneria superiore al numero indicato nella tabella per il suo livello. Il personaggio recupera tutti i punti stregoneria spesi quando completa un riposo lungo. È possibile sfruttare i punti stregoneria per alimentare le opzioni sottostanti, oltre che altri privilegi che ne fanno uso come Metamagia. Convertire gli slot incantesimo in punti stregoneria. Lo stregone può consumare uno slot incantesimo per ottenere un numero di punti stregoneria pari al livello dello slot (nessuna azione richiesta). Creare slot incantesimo. Come azione bonus, lo stregone può trasformare i punti stregoneria non spesi in uno slot incantesimo. La tabella Creazione degli slot incantesimo indica il costo di creazione di uno slot di un determinato livello, oltre che il livello da stregone minimo necessario per creare uno slot. Non è possibile creare slot incantesimo di livello superiore al 5°. Ogni slot incantesimo creato tramite questo privilegio svanisce quando lo stregone completa un riposo lungo.",
+        "table": "CREAZIONE DEGLI SLOT INCANTESIMO Livello slot Costo punti Liv. stregone incantesimo stregoneria minimo 2 2 2 3 3 3 s s 4 6 7 s 7 9."
+      },
+      {
+        "name": "Metamagia",
+        "level": 2,
+        "description": "Poiché la magia è un'abilità innata dello stregone, quest'ultimo può alterare i suoi incantesimi secondo necessità, per questo ottiene due opzioni di Metamagia dalla sezione Opzioni di Metamagia, che si trova più avanti nella descri zione della classe. Le opzioni selezionate possono essere utilizzate per modificare temporaneamente gli incantesimi lanciati. Per fare uso di un'opzione, è necessario consu mare il costo corrispondente in punti stregoneria. Lo stregone può usare soltanto un'opzione di Metamagia su un incantesimo quando lo lancia, a meno che non sia specificato diversamente. Ogni volta che il personaggio ottiene un livello da stregone, è possibile sostituire una delle opzioni di Metamagia con una che ancora non conosce. Lo stregone ottiene due ulteriori opzioni al 10° livello e altre due al 17° livello."
+      },
+      {
+        "name": "Sottoclasse dello Stregone",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse dello stregone a scelta. Dopo la descrizione di questa classe, troverai una spiegazione per ciascuna delle seguenti sottoclassi: Stregoneria Aberrante, Stregoneria Meccanica, Strego neria Draconica e Stregoneria della Magia Selvaggia. Una sottoclasse è una specializzazione che conferisce dei privilegi a determinati livelli da stregone. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da stregone attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da stregone."
+      },
+      {
+        "name": "Ripristino stregonesco",
+        "level": 5,
+        "description": "Quando lo stregone completa un riposo breve, può recuperare i punti stregoneria consumati, ma non più di un numero pari a metà del proprio livello da stregone (arrotondato per difetto). Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo."
+      },
+      {
+        "name": "Stregoneria incarnata",
+        "level": 7,
+        "description": "Se ha consumato tutti i suoi utilizzi di Stregoneria Innata, come azione bonus può spendere 2 punti stregoneria per attivarla. Inoltre, mentre il privilegio Stregoneria Innata è attivo, lo stregone può usare fino a due delle sue opzioni di Meta magia su ogni incantesimo lanciato."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono del viaggio dimensionale."
+      },
+      {
+        "name": "Apoteosi arcana",
+        "level": 20,
+        "description": "Quando il privilegio Stregoneria Innata è attivo, lo stregone può usare un'opzione di Metamagia a ogni turno senza dover consumare punti stregoneria.",
+        "table": "OPZIONI DI METAMAGIA Per il privilegio di Metamagia dello stregone sono disponi bili le seguenti opzioni, elencate in ordine alfabetico. INCANTESIMO CELATO Costo: 1 punto stregoneria Quando lo stregone lancia un incantesimo, può spendere 1 punto stregoneria per farlo senza utilizzare componenti verbali, somatiche o materiali, fatta eccezione per le componenti materiali consumate dall'incantesimo o il cui costo è specificato nella sua descrizione. INCANTESIMO DISTANTE Costo: 1 punto stregoneria Quando lo stregone lancia un incantesimo che ha una gittata pari o superiore a 1,5 metri, può spendere 1 punto stregoneria per raddoppiarla. Se invece lancia un incantesimo che ha una gittata a contatto, può spendere 1 punto stregoneria per aumentarla a 9 metri. INCANTESIMO ESTESO Costo: 1 punto stregoneria Quando lo stregone lancia un incantesimo di durata pari o superiore a 1 minuto, può spendere 1 punto stregoneria per raddoppiarla fino a un massimo di 24 ore. Se l'incantesimo interessato richiede concentrazione, il personaggio dispone di vantaggio a ogni tiro salvezza effettuato per mantenere la concentrazione. INCANTESIMO INTENSIFICATO Costo: 2 punti stregoneria Quando lo stregone lancia un incantesimo che obbliga una creatura a effettuare un tiro salvezza, può spendere 2 punti stregoneria per infliggere svantaggio a un bersa glio dell'incantesimo sui tiri salvezza contro di esso. INCANTESIMO MIRATO Costo: 1 punto stregoneria Se lo stregone effettua un tiro per colpire per un incantesimo e fallisce, può spendere 1 punto stregoneria per tirare nuovamente il d20 e deve usare il nuovo risultato. Lo stregone può utilizzare Incantesimo mirato anche se ha già utilizzato un'opzione diversa di Metamagia durante il lancio dell'incantesimo. INCANTESIMO POTENZIATO Costo: 1 punto stregoneria Quando lo stregone tira per i danni di un incantesimo, può spendere 1 punto stregoneria per ripetere il tiro di un numero massimo di dadi pari al suo modificatore di Carisma (minimo di uno), e deve usare i nuovi risultati. Lo stregone può utilizzare Incantesimo potenziato anche se ha già utilizzato un'opzione diversa di Metamagia durante il lancio dell'incantesimo. INCANTESIMO PRECISO Costo: 1 punto stregoneria Quando lo stregone lancia un incantesimo che obbliga altre creature a effettuare un tiro salvezza, può proteg gere alcune di esse dalla piena forza dell'incantesimo. Per farlo, spende 1 punto stregoneria e sceglie un numero massimo di creature pari al suo modificatore di Carisma (minimo una creatura). Le creature scelte superano automaticamente i loro tiri salvezza contro l'incantesimo e non subiscono alcun danno se normalmente subirebbero la metà dei danni in caso di tiro salvezza superato. INCANTESIMO RADDOPPIATO Costo: 1 punto stregoneria Quando lo stregone produce un incantesimo lanciabile consumando uno slot di livello superiore per colpire un bersaglio aggiuntivo, come charme su persone, può spendere 1 punto stregoneria per aumentarne il livello effettivo di 1. INCANTESIMO RAPIDO Costo: 2 punti stregoneria Quando lo stregone lancia un incantesimo che ha un tempo di lancio di 1 azione, può spendere 2 punti stregoneria per cambiarlo a 1 azione bonus per quel lancio. Non è possibile eseguire questa modifica se il personaggio ha già lanciato un incantesimo di 1° livello o superiore nel turno attuale, così come non si può lanciare un incantesimo di 1° livello o superiore in questo turno dopo aver modificato l'incantesimo come indicato sopra. INCANTESIMO TRASMUTATO Costo: 1 punto stregoneria Quando lo stregone lancia un incantesimo che infligge un tipo di danno presente nella lista seguente, può spendere 1 punto stregoneria per cambiare il tipo di danno in un altro della lista: acido, freddo, fulmine, fuoco, tuono, veleno."
       }
     ],
     "hit_points": {
@@ -696,9 +1451,51 @@
     },
     "features": [
       {
-        "name": "Suppliche Occulte",
+        "name": "Magia del patto",
         "level": 1,
-        "description": "Scopri frammenti di conoscenze proibite che ti conferiscono doti magiche persistenti. Ottieni una Supplica Occulta a scelta (es. Patto del Tomo). Ne ottieni di aggiuntive salendo di livello."
+        "description": "Attraverso una cerimonia occulta, il warlock ha stretto un patto con un'entità misteriosa al fine di ottenere dei poteri magici. Nonostante sia poco più di una voce nelle tenebre dall'identità sconosciuta, il suo dono è alquanto concreto: la capacità di lanciare incantesimi. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le infor mazioni sottostanti spiegano come applicare tali regole agli incantesimi da warlock, elencati nella relativa lista degli incantesimi più avanti nella descrizione della classe. Trucchetti. Il warlock conosce due trucchetti a scelta. Sono consigliati deflagrazione occulta e prestidigitazione. Quando il warlock ottiene un livello, è possibile sostituire uno dei trucchetti di questo privilegio con un altro trucchetto a scelta. Dopo aver raggiunto il 4 ° e il 10° livello da warlock, il personaggio apprende un altro trucchetto a scelta, come mostrato nella colonna Trucchetti della tabella Privilegi del warlock. Slot incantesimo. La tabella Privilegi del warlock mostra quanti slot incantesimo sono a disposizione del personaggio per lanciare incantesimi da warlock dal 1° al 5 ° livello. La tabella mostra anche il livello di tali slot (tutti dello stesso livello). Il warlock recupera tutti gli slot incantesimo della Magia del Patto spesi quando completa un riposo breve o lungo. Per esempio, se il warlock è di 5° livello, possiede due slot incantesimo di 3 ° livello. Per lanciare l'incantesimo di 1° livello dardo stregato, deve consumare uno di questi slot e lanciarlo come un incantesimo di 3 ° livello. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1 ° livello o superiore che può lanciare. Per iniziare, sceglie due incantesimi da warlock di 1° livello. Sono consigliati charme su persone e sortilegio. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da warlock, come mostrato nella colonna Incantesimi preparati della tabella Privilegi del warlock. Ogni volta che il numero cresce, il warlock deve scegliere altri incantesimi finché il numero sulla lista non combacia con quello mostrato nella tabella Privilegi del warlock. Ognuno di questi incantesimi deve appartenere a un livello pari o inferiore al livello dello slot relativo al livello attuale del personaggio e indicato nella sua tabella. Per esempio, quando il warlock raggiunge il 6 ° livello, ottiene un nuovo incantesimo di un livello dal 1° al 3 °. Se un altro privilegio gli fornisce incantesimi che sono sempre preparati, questi non contano ai fini del numero di incantesimi preparabili con questo privilegio. Tuttavia, valgono comunque come incantesimi da warlock. Cambiare gli incantesimi preparati. Quando il warlock ottiene un livello, può sostituire un incantesimo della lista con un altro incantesimo da warlock di livello adeguato.",
+        "table": "CAPITOLO 3 j CLASSI DEI PERSONAGGI 165 PRIVILEGI DEL WARLOCK Bonus di Livello competenza Privilegi di classe 2 Magia del patto, Suppliche occulte 2 2 Scaltrezza magica 3 2 Sottoclasse del warlock 4 2 Aumento dei punteggi di caratteristica 5 3 6 3 Privilegio della sottoclasse 7 3 8 3 Aumento dei punteggi di caratteristica 9 4 Contatta patrono 10 4 Privilegio della sottoclasse 11 4 Arcanum Mistico (incantesimo di 6° livell 12 4 Aumento dei punteggi di caratteristica 13 5 Arcanum Mistico (incantesimo di 7° livell 14 5 Privilegio della sottoclasse 15 5 Arcanum Mistico (incantesimo di 8° livell 16 5 Aumento dei punteggi di caratteristica 17 6 Arcanum Mistico (incantesimo di 9° livell 18 6 19 6 Dono epico 20 6 Maestro dell'occulto Caratteristica da Incantatore. La caratteristica da incan tatore per gli incantesimi da warlock è il Carisma. Focus da incantatore. Un warlock può usare un focus arcano come focus da incantatore per i suoi incantesimi da warlock."
+      },
+      {
+        "name": "Suppliche occulte",
+        "level": 1,
+        "description": "Il warlock ha scoperto le Suppliche Occulte, ovvero frammenti di conoscenze proibite che gli conferiscono persistenti doti magiche o altre verità nascoste, tra cui la capacità di effettuare una supplica a scelta, come il Patto del Tomo. Per ulteriori dettagli sulle suppliche, consulta la sezione Opzioni di suppliche occulte dopo la descrizione di questa classe. Prerequisiti. Se una supplica ha un prerequisito, questo deve essere soddisfatto affinché venga appresa con successo. Per esempio, se la supplica richiede un warlock di 5° livello o superiore, è possibile farne uso solo una volta raggiunto il livello indicato. Sostituire e ottenere suppliche. Quando il warlock sale di livello, è possibile sostituire una delle sue suppliche con un'altra di cui possiede i prerequisiti. Non è possibile sostituire una supplica che sia un prerequisito per un'altra supplica già in possesso del personaggio. Quando il warlock raggiunge livelli superiori, ottiene ulteriori suppliche a scelta, come indicato nella colonna Suppliche nella tabella Privilegi del warlock. Non è possibile scegliere una supplica più di una volta, salvo diversamente indicato. Suppliche Incantesimi Slot Livello occulte Trucchetti preparati incantesimo slot 1 2 2 3 2 3 2 3 2 4 2 2 3 3 5 2 2 5 3 6 2 3 5 3 7 2 3 6 3 8 2 4 6 3 9 2 4 7 3 10 2 5 7 4 10 2 5 lo) 7 4 11 3 5 8 4 11 3 5 lo) 8 4 12 3 5 8 4 12 3 5 lo) 9 4 13 3 5 9 4 13 3 5 lo) 9 4 14 4 5 10 4 14 4 5 10 4 15 4 5 10 4 15 4 5."
+      },
+      {
+        "name": "Scaltrezza magica",
+        "level": 2,
+        "description": "Il warlock può eseguire un rito esoterico per 1 minuto. Dopo che lo ha portato a termine, recupera gli slot incantesimo spesi di Magia del Patto, ma non più di un numero pari a metà del loro massimo (arrotondando per eccesso). Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo."
+      },
+      {
+        "name": "Sottoclasse del Warlock",
+        "level": 3,
+        "description": "Il personaggio ottiene una sottoclasse del warlock a scelta. Dopo la descrizione di questa classe, troverai una spie gazione per ciascuna delle seguenti sottoclassi: Patrono Signore Fatato, Patrone Celestiale, Patrono Immondo e Patrono Grande Antico. Una sottoclasse è una specia lizzazione che conferisce dei privilegi a determinati livelli da warlock. Per il resto della sua carriera, il personaggio ottiene tutti i privilegi della sottoclasse pari al suo livello da warlock attuale o a quelli inferiori."
+      },
+      {
+        "name": "Aumento dei Punteggi di Caratteristica",
+        "level": 4,
+        "description": "Il personaggio ottiene l'aumento dei punteggi di caratteristica (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. Questo privilegio si ottiene nuovamente all'8°, al 12° e al 16° livello da warlock."
+      },
+      {
+        "name": "Contatta patrono",
+        "level": 9,
+        "description": "In passato, il warlock contattava il proprio patrono attra verso degli intermediari. Invece, ora è in grado di farlo in maniera diretta e ha l'incantesimo contattare altri piani sempre preparato. Con questo privilegio, il warlock può lanciare l'incantesimo senza consumare uno slot, in modo da contattare il patrono. Inoltre, supera automaticamente il relativo tiro salvezza. Dopo aver lanciato l'incantesimo in questo modo, non può farlo di nuovo prima di aver completato un riposo lungo."
+      },
+      {
+        "name": "Arcanum Mistico (6°)",
+        "level": 11,
+        "description": "Il patrono del warlock gli rivela un segreto magico noto come arcanum. Tale arcanum è rappresentato da un incantesimo da warlock di 6° livello a scelta. Il warlock può lanciare l'arcanum una volta senza spendere alcuno slot incantesimo, ma deve completare un riposo lungo prima di poterlo lanciare nuovamente in questo modo. Come mostrato nella tabella Privilegi del warlock, il personaggio ottiene un altro incantesimo da warlock a scelta da lanciare in questo modo una volta raggiunti i livelli 13 (incantesimo di 7° livello), 15 (incantesimo di 8° livello) e 17 (incantesimo di 9° livello). Recupera tutti gli utilizzi del suo Arcanum Mistico quando completa un riposo lungo. Ogni volta che il personaggio ottiene un livello da war lock, è possibile sostituire uno degli incantesimi arcanum con un altro incantesimo da warlock dello stesso livello."
+      },
+      {
+        "name": "Dono epico",
+        "level": 19,
+        "description": "Il personaggio ottiene un Dono epico (vedi capitolo 5) o un altro talento a scelta di cui possiede i prerequisiti. È consigliato il Dono del fato."
+      },
+      {
+        "name": "Maestro dell'occulto",
+        "level": 20,
+        "description": "Quando il warlock usa il suo privilegio Scaltrezza Magica, recupera tutti gli slot incantesimo spesi di Magia del Patto.",
+        "table": "OPZIONI DI SUPPLICHE OCCULTE Le opzioni di Suppliche occulte sono elencate in ordine alfabetico. ARMATURA DELLE OMBRE Il warlock può lanciare armatura magica su se stesso senza spendere uno slot incantesimo. BALZO ULTRATERRENO Prerequisito: warlock di 2° livello o superiore Il warlock può lanciare salto su se stesso senza spendere uno slot incantesimo. CONOSCENZE DEGLI ANTICHI Prerequisito: warlock di 2° livello o superiore Un'antica entità ha conferito dei frammenti di conoscenza al warlock, consentendogli di ottenere un talento della categoria Origini a scelta (vedi capitolo 5). Ripetibile. Questa supplica è ottenibile più di una volta. A ogni utilizzo, è necessario selezionare un talento diverso della categoria Origini. DEFLAGRAZIONE AGONIZZANTE Prerequisito: warlock di 2° livello o superiore, un trucchetto da warlock che infligge danni Il warlock sceglie uno dei suoi trucchetti che infligge danni e aggiunge il proprio modificatore di Carisma al tiro per i danni. Ripetibile. Questa supplica è ottenibile più di una volta. A ogni utilizzo, è necessario selezionare un trucchetto diverso che ne soddisfi i prerequisiti. DEFLAGRAZIONE RESPINGENTE Prerequisito: warlock di 2° livello o superiore, un trucchetto da warlock che infligge danni con un tiro per colpire Il warlock sceglie uno dei suoi trucchetti conosciuti che infligge danni e richiede un tiro per colpire. Quando col pisce una creatura di taglia Grande o inferiore con quel trucchetto, può spingerla via di un massimo di 3 metri lontano da sé. Ripetibile. Questa supplica è ottenibile più di una volta. A ogni utilizzo, è necessario selezionare un trucchetto diverso che ne soddisfi i prerequisiti. DONO DEGLI ABISSI Prerequisito: warlock di 5° livello o superiore Il warlock può respirare sott'acqua e ottenere una velocità di nuoto pari alla sua velocità. Inoltre, può lanciare respirare sott'acqua senza consu mare uno slot incantesimo. Per riutilizzare tale abilità in questo modo è necessario completare un riposo lungo. DONO DEL PROTETTORE Prerequisito: warlock di 9° livello o superiore, supplica del Patto del tomo Quando il warlock fa apparire il Libro delle Ombre, al suo interno appare una nuova pagina. Con il suo permesso, una creatura può usare un'azione per scrivere il proprio nome su tale pagina, che può contenere tanti nomi quanto il modificatore di Carisma del warlock (minimo un nome). Quando una qualsiasi creatura il cui nome è sulla pagina si ritrova con 0 punti ferita, ma ancora in vita, questa passa magicamente a 1 punto ferita invece di 0. Una volta innescata la magia, nessun'altra creatura può trarne bene ficio finché il warlock non completa un riposo lungo. Come azione di Magia, il warlock può cancellare magi camente un nome dalla pagina toccandolo. INVESTITURA DEL SIGNORE DELLE CATENE Prerequisito: Warlock di 5° livello o superiore, supplica del Patto della catena Quando il warlock lancia trovafamiglio, infonde il famiglia evocato con parte del proprio potere occulto, conferendo alla creatura i seguenti benefici. Volo o nuoto. Il famiglia ottiene una velocità di volo o una velocità di nuoto (a scelta del warlock) di 12 metri. Attacco rapido. Come azione bonus, il warlock può ordinare al famiglia di effettuare l'azione di Attacco. Danni necrotici o radiosi. Quando il famiglia infligge danni contundenti, perforanti o taglienti, è possibile trasformarli in danni necrotici o radiosi. CD tiro salvezza dell'incantesimo del warlock. Se il fami glio costringe una creatura a effettuare un tiro salvezza, questo usa la CD del tiro salvezza dell'incantesimo del warlock. Resistenza. Quando il famiglio subisce danni, il warlock può usare la sua reazione per conferirgli resistenza contro quel danno. LAMA ASSETATA Prerequisito: warlock di 5° livello o superiore, supplica del Patto della lama Il warlock ottiene il privilegio Attacco Extra solo per l'arma del patto. Questo consente all'incantatore di attaccare due volte invece di una quando usa quell'arma ed effettua l'azione di Attacco nel proprio turno. LAMA DIVORATRICE Prerequisito: warlock di 12° livello o superiore, supplica Lama assetata L'attacco extra della supplica Lama assetata consente di eseguire due attacchi aggiuntivi anziché uno. LANCIA OCCULTA Prerequisito: warlock di 2° livello o superiore, un trucchetto da warlock che infligge danni Il warlock sceglie uno dei suoi trucchetti che infligge danni e ha una gittata di 3 metri o superiore. Quando l'incantesimo viene lanciato, la sua gittata aumenta di 9 metri per ogni livello da warlock. Ripetibile. Questa supplica è ottenibile più di una volta. A ogni utilizzo, è necessario selezionare un trucchetto diverso che ne soddisfi i prerequisiti. MAESTRO DI MILLE FORME Prerequisito: warlock di 5° livello o superiore Il warlock può lanciare alterare se stesso senza spendere uno slot incantesimo. MASCHERA DEI MOLTI VOLTI Prerequisito: warlock di 2° livello o superiore Il warlock può lanciare camuffare se stesso senza spendere uno slot incantesimo. MENTE OCCULTA Il warlock dispone di vantaggio ai tiri salvezza su costituzione per mantenere la concentrazione. PASSO ASCENDENTE Prerequisito: warlock di 5° livello o superiore Il warlock può lanciare levitazione su se stesso senza spendere uno slot incantesimo. PATTO DEL TOMO Mettendo insieme dei brandelli di tenebra, il warlock è in grado di evocare un libro nelle proprie mani dopo aver completato un riposo breve o lungo. Questo Libro delle Ombre (di cui puoi scegliere l'aspetto) contiene magia occulta accessibile solo al warlock e conferisce i benefici sottostanti. Se questo privilegio viene usato per evocare un altro libro o se il warlock muore, il libro sparisce. 168 CAPITOLO 3 j CLASSI DEI PERSONAGGI Trucchetti e rituali. Quando il libro appare, il warlock sceglie tre trucchetti e due incantesimi di 1° livello con il descrittore rituale. Gli incantesimi possono proenire dalla relativa lista di qualunque classe e devono essere incantesimi che il personaggio non ha già preparato. Finché il libro rimarrà con il warlock, gli incantesimi scelti sono considerati come preparati e valgono come incante simi da warlock. Focus da incantatore. Il warlock può usare il libro come focus da incantatore. PATTO DELLA CATENA Il warlock impara l'incantesimo trovafamiglio e può lanciarlo come azione di Magia senza spendere uno slot incantesimo. Quando il warlock lancia l'incantesimo, può scegliere per il suo famiglio una delle forme normali o una di quelle speciali seguenti: Imp, pseudodrago, quasit, scheletro, slaad girino, sfinge della meraviglia, spiritello o ser pente velenoso (vedi l'appendice B per la scheda delle statistiche del famiglio). Inoltre, quando effettua l'azione di Attacco, il warlock può rinunciare a uno dei suoi attacchi per consentire al famiglio di effettuare un attacco individuale con la sua reazione. PATTO DELLA LAMA Come azione bonus, il warlock può evocare un'arma del patto nella propria mano: un'arma semplice o da mischia da guerra a scelta con cui ha un legame. In alternativa, può crearne uno con un'arma magica che tocca. Non è possibile stabilire un legame con un'arma magica con cui qualcun altro è in sintonia o già legata a un altro warlock. Fino al termine del legame, il personaggio ha competenza nell'arma e può usarla come focus da incantatore. Ogni volta che attacca con l'arma con cui ha un legame, al posto di Forza o Destrezza il warlock può usare il suo modificatore di Carisma per i tiri per colpire e per i danni. Inoltre, può far sì che infligga danni necrotici, psichici, radiosi o normali (a seconda della tipologia dell'arma). Il legame termina una volta riutilizzato il privilegio come azione bonus, quando l'arma è a più di 1,5 metri da sé per più di un minuto o se il personaggio muore. Un'arma evocata sparisce all'interruzione del legame. PUNIZIONE OCCULTA Prerequisito: warlock di 5° livello o superiore, supplica del Patto della lama Una volta per turno, quando il warlock colpisce una creatura con l'arma del patto, può spendere uno slot incantesimo della Magia del Patto per infliggere 1d8 danni da forza extra al bersaglio, più 1d8 aggiuntivo per ogni livello dello slot. Inoltre, se l'avversario è di taglia Enorme o inferiore, diventa prono. SGUARDO DELLE DUE MENTI Prerequisito: warlock di 5° livello o superiore Come azione bonus, il warlock può toccare una creatura consenziente e percepire il mondo attraverso i suoi sensi fino alla fine del proprio turno successivo. Finché la cre atura si trova sullo stesso piano di esistenza del warlock, quest'ultimo può usare un'azione bonus nei turni succes sivi per mantenere il legame, estendendone la durata fino alla fine del suo turno successivo. In caso contrario, il legame si interrompe. Mentre il warlock utilizza i sensi dell'altra creatura per percepire ciò che lo circonda, può anche trarre beneficio da qualsiasi senso speciale che possiede. Inoltre, se si trova entro 18 metri da tale creatura, può lanciare incantesimi come se si trovasse nel proprio spazio o in quello della creatura. SuccttIAVITA Prerequisito: Warlock di 9° livello o superiore, supplica del Patto della lama Una volta per turno, quando il warlock colpisce una crea tura con l'arma del patto, può infliggerle 1d6 danni extra di tipo necrotico, psichico o radioso (a scelta). Inoltre, può consumare uno dei suoi Dadi Vita per tirarlo e recuperare un numero di punti ferita pari al risultato ottenuto, più il modificatore di Costituzione (minimo 1 punto ferita). SUSSURRI DALLA TOMBA Prerequisito: warlock di 7° livello o superiore Il warlock può lanciare parlare con i morti senza spendere uno slot incantesimo. TUTT1UNO CON LE OMBRE Prerequisito: warlock di 5° livello o superiore Mentre il warlock è in un'area di oscurità o luce fioca, può lanciare invisibilità su di sé senza spendere uno slot incantesimo. VIGORE IMMONDO Prerequisito: warlock di2 ° livello o superiore Il warlock può lanciare vita falsata su se stesso senza spendere uno slot incantesimo. Quando l'incantesimo viene lanciato con questo privilegio, non è necessario effettuare il tiro per i punti ferita temporanei, poiché si ottiene in automatico il numero massimo possibile. VISIONE DEI REAMI LONTANI Prerequisito: warlock di 9° livello o superiore Il warlock può lanciare occhio arcano senza spendere uno slot incantesimo. VISIONI VELATE Prerequisito: warlock di 2° livello o superiore Il warlock può lanciare immagine silenziosa senza spendere uno slot incantesimo. VISTA DEL DIAVOLO Prerequisito: warlock di 2° livello o superiore Il warlock può vedere normalmente con luce fioca e oscu rità (sia di natura magica che non magica) entro 36 metri da sé. VISTA STREGATA Prerequisito: warlock di 15° livello o superiore Il warlock ottiene vista pura con un raggio di 9 metri."
       }
     ],
     "hit_points": {

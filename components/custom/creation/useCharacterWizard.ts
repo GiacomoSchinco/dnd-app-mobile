@@ -6,8 +6,8 @@ import { getSubclassesByClassId, type SubclassDefinition } from '../../../lib/ru
 import { getClassProgression, getFeaturesAtLevel, getAsiLevels } from '../../../lib/rules/progression';
 import { hasLineages, getRaceEffects } from '../../../lib/rules/races';
 import { getBackground } from '../../../lib/rules/backgrounds';
-import { getFeat } from '../../../lib/rules/feats';
-import { getToolOptions, type ToolOption } from '../../../lib/rules/apply-feat';
+import { getFeat, getGeneralFeats, getEpicBoons, isFeatAvailable, getFeatAsiCap } from '../../../lib/rules/feats';
+import { getToolOptions, applyFeat, type ToolOption } from '../../../lib/rules/apply-feat';
 import { STANDARD_ARRAY, parseAbilityFromAbbreviation, getAbilityLabel, getAbilityModifier } from '../../../lib/rules/abilities';
 import { parseSkillFromItalian, getAllSkills, getSkillNameItalian } from '../../../lib/rules/skills';
 import { getClassSpellsAtLevel } from '../../../lib/rules/spells';
@@ -15,12 +15,12 @@ import type { FeatChoiceState, FeatChoiceType } from './FeatChoice';
 import { calculateFinalAbilities, type AbilityBoost } from '../../../lib/rules/character-builder';
 import type { AbilityAssignmentResult } from '../../../lib/rules/character-builder';
 import { useCharacterStore } from '../../../store/useCharacterStore';
-import { STEPS, ABILITY_ORDER, ASI_FEATURE_NAME } from './wizardSteps';
+import { STEPS, ABILITY_ORDER, ASI_FEATURE_NAME, FEAT_MODE_PENDING } from './wizardSteps';
 import type { StepKey, AsiMode, AsiAssignment, SkillOption } from './wizardSteps';
 import type { WizardStep } from './StepIndicator';
 import type { ClassCarouselItem } from '../ClassCarousel';
 import type { RootStackParamList } from '../../../types/navigation';
-import type { ClassName, Ability, AbilityScores, CharacterDraft, SkillName } from '../../../types';
+import type { ClassName, Ability, AbilityScores, CharacterDraft, FeatRaw, SkillName } from '../../../types';
 
 /**
  * Hook del wizard di creazione personaggio.
@@ -47,6 +47,10 @@ export interface CharacterWizard {
   canCreate: boolean;
   goNext: () => void;
   goPrev: () => void;
+  /** Verifica se un passo è valido (per l'indicatore e i salti) */
+  stepValid: (k: StepKey) => boolean;
+  /** Motivo per cui il passo corrente non è valido (per il feedback) */
+  stepInvalidReason: (k: StepKey) => string | null;
   error: string | null;
 
   // ── Nome ──
@@ -100,6 +104,27 @@ export interface CharacterWizard {
   toggleBgTool: (slug: string) => void;
   featChoice: FeatChoiceState;
 
+  // ── Talenti (step dedicato) ──
+  hasFightingStyle: boolean;
+  fightingStyleOptions: FeatRaw[];
+  fightingStyleId: number | null;
+  selectFightingStyle: (id: number | null) => void;
+  /** Scelta per livello ASI: feat id scelto oppure null = tieni l'ASI */
+  featAtAsiLevel: Record<number, number | null>;
+  setAsiLevelFeat: (lvl: number, featId: number | null) => void;
+  generalFeatOptions: FeatRaw[];
+  generalFeatIds: number[];
+  featAsiPicks: Record<number, Ability[]>;
+  toggleFeatAsi: (featId: number, ability: Ability) => void;
+  epicBoonUnlocked: boolean;
+  epicBoonOptions: FeatRaw[];
+  epicBoonId: number | null;
+  selectEpicBoon: (id: number | null) => void;
+  /** Errore di validazione dei punteggi (es. ASI oltre 20) — per lo step talenti */
+  featError: string | null;
+  /** Punteggi finali (per prerequisiti e anteprima nello step talenti) */
+  finalScores: AbilityScores | null;
+
   // ── Punteggi ──
   assigned: Partial<Record<Ability, number>>;
   editingAbility: Ability | null;
@@ -114,9 +139,10 @@ export interface CharacterWizard {
   picks: (Ability | null)[];
   togglePick: (a: Ability) => void;
   asiLevelsApplied: number[];
-  asiAssignments: AsiAssignment[];
-  setAsiMode: (i: number, m: AsiMode) => void;
-  toggleAsiAbility: (i: number, a: Ability) => void;
+  /** Assegnazioni ASI per livello (chiave = livello ASI) */
+  asiAssignments: Record<number, AsiAssignment>;
+  setAsiMode: (lv: number, m: AsiMode) => void;
+  toggleAsiAbility: (lv: number, a: Ability) => void;
   finalResult: AbilityAssignmentResult | null;
 
   // ── Punti Ferita ──
@@ -135,7 +161,7 @@ export function useCharacterWizard(): CharacterWizard {
   const createCharacterFull = useCharacterStore((st) => st.createCharacterFull);
 
   // ── Stato del wizard ──
-  const [step, setStep] = useState<StepKey>('name');
+  const [step, setStepState] = useState<StepKey>('name');
   const [name, setName] = useState('');
   const [selectedClass, setSelectedClass] = useState<ClassName>(CLASSES[0].key);
   const [raceId, setRaceId] = useState<number | null>(null);
@@ -144,7 +170,7 @@ export function useCharacterWizard(): CharacterWizard {
   const [level, setLevel] = useState(1);
   const [subclassId, setSubclassId] = useState<number | null>(null);
   const [classSkills, setClassSkills] = useState<SkillName[]>([]);
-  const [asiAssignments, setAsiAssignments] = useState<AsiAssignment[]>([]);
+  const [asiAssignments, setAsiAssignments] = useState<Record<number, AsiAssignment>>({});
   const [hpRoll, setHpRoll] = useState<number | null>(null);
   const [assigned, setAssigned] = useState<Partial<Record<Ability, number>>>({});
   const [editingAbility, setEditingAbility] = useState<Ability | null>(null);
@@ -157,6 +183,10 @@ export function useCharacterWizard(): CharacterWizard {
   const [featCantrips, setFeatCantrips] = useState<string[]>([]);
   const [featSpell, setFeatSpell] = useState<string | null>(null);
   const [raceSkills, setRaceSkills] = useState<SkillName[]>([]);
+  const [featAtAsiLevel, setFeatAtAsiLevel] = useState<Record<number, number | null>>({});
+  const [fightingStyleId, setFightingStyleId] = useState<number | null>(null);
+  const [epicBoonId, setEpicBoonId] = useState<number | null>(null);
+  const [featAsiPicks, setFeatAsiPicks] = useState<Record<number, Ability[]>>({});
 
   // ── Derivati: classe / progressione ──
   const background = backgroundId != null ? getBackground(backgroundId) : undefined;
@@ -316,21 +346,40 @@ export function useCharacterWizard(): CharacterWizard {
     setError(null);
   }, [backgroundId, plusTwoPlusOne]);
 
-  // Reset di sottoclasse, skill e PF quando cambia la classe
+  // Cambio CLASSE → reset completo di tutto ciò che dipende dalla classe
   useEffect(() => {
     setSubclassId(null);
     setClassSkills([]);
     setHpRoll(null);
+    setAsiAssignments({});
+    setFeatAtAsiLevel({});
+    setFightingStyleId(null);
+    setEpicBoonId(null);
+    setFeatAsiPicks({});
   }, [selectedClass]);
   useEffect(() => {
     if (!subclassUnlocked) setSubclassId(null);
   }, [subclassUnlocked]);
 
-  // Reset degli ASI quando cambia classe o livello
+  // Cambio LIVELLO → mantieni le scelte per i livelli ancora applicabili
+  // (es. 4→5 non azzera più ASI/talenti già scelti; 19→18 rimuove il dono epico)
   useEffect(() => {
-    setAsiAssignments(asiLevelsApplied.map(() => ({ mode: 'plus_two', slots: [null] })));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [asiLevels, level]);
+    setAsiAssignments((prev) => {
+      const next: Record<number, AsiAssignment> = {};
+      for (const lv of asiLevelsApplied) {
+        next[lv] = prev[lv] ?? { mode: 'plus_two', slots: [null] };
+      }
+      return next;
+    });
+    setFeatAtAsiLevel((prev) => {
+      const next: Record<number, number | null> = {};
+      for (const lv of asiLevelsApplied) {
+        next[lv] = prev[lv] ?? null;
+      }
+      return next;
+    });
+    setEpicBoonId((prev) => (level >= 19 ? prev : null));
+  }, [asiLevelsApplied, level]);
 
   // Reset delle skill scelte quando cambia razza/sottorazza
   useEffect(() => {
@@ -355,16 +404,28 @@ export function useCharacterWizard(): CharacterWizard {
   );
   const boostsComplete = picks.length > 0 && picks.every((p) => p != null);
 
+  // Livelli ASI NON sostituiti da un talento generale (5.5e: a ogni livello ASI
+  // si sceglie O l'ASI O un talento; i livelli con un talento NON danno l'ASI).
+  const effectiveAsiLevels = useMemo(
+    () => asiLevelsApplied.filter((l) => !featAtAsiLevel[l]),
+    [asiLevelsApplied, featAtAsiLevel],
+  );
+  const effectiveAsiAssignments = useMemo(
+    () =>
+      effectiveAsiLevels
+        .map((l) => asiAssignments[l])
+        .filter((s): s is AsiAssignment => s != null),
+    [effectiveAsiLevels, asiAssignments],
+  );
   const asiBoosts: AbilityBoost[] = useMemo(
     () =>
-      asiAssignments.flatMap((sec) =>
+      effectiveAsiAssignments.flatMap((sec) =>
         sec.slots
           .map((ab, i) => (ab ? { ability: ab, amount: sec.mode === 'plus_two' ? 2 : 1 } : null))
           .filter((b): b is AbilityBoost => b != null),
       ),
-    [asiAssignments],
+    [effectiveAsiAssignments],
   );
-  const asiComplete = asiAssignments.every((sec) => sec.slots.every((s) => s != null));
 
   // Punteggi di base (standard array distribuito, senza boost)
   const fullScores: AbilityScores | null = useMemo(() => {
@@ -388,10 +449,76 @@ export function useCharacterWizard(): CharacterWizard {
     });
   }, [fullScores, boosts, asiBoosts, background, distributionModes]);
 
+  // Punteggi finali anche con gli ASI concessi dai talenti scelti (+1 di ciascuno)
+  const finalScoresWithFeats: AbilityScores | null = useMemo(() => {
+    if (!finalResult?.success) return null;
+    const scores = { ...finalResult.scores };
+    const chosenFeats = [
+      ...(Object.values(featAtAsiLevel).filter(
+        (v): v is number => v != null && v !== FEAT_MODE_PENDING,
+      )),
+      ...(epicBoonId != null ? [epicBoonId] : []),
+    ];
+    for (const id of chosenFeats) {
+      const feat = getFeat(id);
+      if (!feat) continue;
+      const app = applyFeat(feat, { asiChoices: featAsiPicks[id] });
+      const cap = getFeatAsiCap(feat);
+      for (const b of app.asiBoosts) {
+        scores[b.ability] = Math.min((scores[b.ability] ?? 10) + b.amount, cap);
+      }
+    }
+    return scores;
+  }, [finalResult, featAtAsiLevel, epicBoonId, featAsiPicks]);
+
   // Per lo step Punti Ferita: mod COS finale e PF medi per livello dopo il 1°
   const conMod =
-    finalResult && finalResult.success ? getAbilityModifier(finalResult.scores.constitution) : 0;
+    finalResult && finalResult.success
+      ? getAbilityModifier((finalScoresWithFeats ?? finalResult.scores).constitution)
+      : 0;
   const averagePerLevel = classDef ? Math.max(classDef.hitPoints.average + conMod, 1) : 1;
+
+  // ── Derivati: talenti (step dedicato) ──
+  const isSpellcaster = classDef?.isSpellcaster ?? false;
+  const fightingStyleOptions = useMemo(
+    () => (classDef?.fightingStyles ?? []).map(getFeat).filter((f): f is FeatRaw => f != null),
+    [classDef],
+  );
+  // Stile di combattimento: Fighter al 1°, Paladino/Ranger al 2° (regola 5.5e)
+  const fightingStyleLevel = classDef?.fightingStyles
+    ? selectedClass === 'fighter'
+      ? 1
+      : 2
+    : null;
+  const hasFightingStyle =
+    fightingStyleLevel != null && level >= fightingStyleLevel && fightingStyleOptions.length > 0;
+  const featScores = finalResult?.success ? finalResult.scores : (fullScores ?? undefined);
+  const generalFeatIds = useMemo(
+    () =>
+      Object.values(featAtAsiLevel).filter(
+        (v): v is number => v != null && v !== FEAT_MODE_PENDING,
+      ),
+    [featAtAsiLevel],
+  );
+  const generalFeatOptions = useMemo(
+    () =>
+      getGeneralFeats().filter(
+        (f) =>
+          f.name_en !== 'Ability Score Improvement' &&
+          isFeatAvailable(f, { level, scores: featScores, isSpellcaster }),
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [level, featScores, isSpellcaster],
+  );
+  const epicBoonUnlocked = level >= 19;
+  const epicBoonOptions = useMemo(
+    () =>
+      epicBoonUnlocked
+        ? getEpicBoons().filter((f) => isFeatAvailable(f, { level, scores: featScores, isSpellcaster }))
+        : [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [epicBoonUnlocked, level, featScores, isSpellcaster],
+  );
 
   // ── Passi attivi e validazione ──
   const activeSteps = useMemo(
@@ -430,8 +557,95 @@ export function useCharacterWizard(): CharacterWizard {
         })();
         return backgroundId != null && bgToolChoices.length === bgToolCount && featDone;
       }
-      case 'abilities': return allAssigned && boostsComplete && asiComplete;
+      case 'abilities': return allAssigned && boostsComplete;
+      case 'feat': {
+        // Ogni livello ASI: o ha un talento generale, o l'ASI assegnato (+2/+1+1)
+        const asiOk = asiLevelsApplied.every((l) => {
+          const sel = featAtAsiLevel[l];
+          // In modalità talento serve un talento SCELTO (il pending non basta)
+          if (sel != null) return sel !== FEAT_MODE_PENDING;
+          const sec = asiAssignments[l];
+          return sec != null && sec.slots.every((s) => s != null);
+        });
+        return (!hasFightingStyle || fightingStyleId != null) && asiOk;
+      }
       case 'hp': return hpRoll != null;
+    }
+  };
+
+  /** Motivo leggibile per cui un passo non è valido (feedback in schermata) */
+  const stepInvalidReason = (k: StepKey): string | null => {
+    switch (k) {
+      case 'name': return name.trim().length > 0 ? null : 'Inserisci un nome per il personaggio.';
+      case 'class': return selectedClass != null ? null : 'Scegli una classe.';
+      case 'skills':
+        return classSkillOptions.length === 0 || classSkills.length === skillCount
+          ? null
+          : `Scegli ${skillCount} competenze di classe.`;
+      case 'level': return null;
+      case 'subclass':
+        return subclassUnlocked && subclasses.length > 0 && subclassId == null
+          ? 'Scegli la sottoclasse.'
+          : null;
+      case 'race':
+        if (raceId == null) return 'Scegli la razza.';
+        if (hasLineages(raceId) && lineageId == null) return 'Scegli la sottorazza (lineage).';
+        if (raceSkills.length !== raceSkillCount) return 'Completa le competenze della razza.';
+        return null;
+      case 'background': {
+        if (backgroundId == null) return 'Scegli il background.';
+        if (bgToolChoices.length !== bgToolCount) return 'Completa la scelta degli strumenti del background.';
+        if (featChoiceType === 'tool_proficiency' && featToolChoices.length !== featToolCount)
+          return 'Completa la scelta degli strumenti del talento.';
+        if (
+          featChoiceType === 'hybrid_proficiency' &&
+          featSkillChoices.length + featToolChoices.length !== hybridTotal
+        )
+          return `Completa la scelta del talento (${hybridTotal} tra abilità e strumenti).`;
+        if (
+          featChoiceType === 'spellcasting' &&
+          (featSpellAbility == null || featCantrips.length !== featCantripCount || featSpell == null)
+        )
+          return 'Completa la scelta incantesimi del talento.';
+        return null;
+      }
+      case 'abilities':
+        if (!allAssigned) return 'Assegna un valore a tutte le caratteristiche.';
+        if (!boostsComplete) return 'Completa i boost dal background.';
+        return null;
+      case 'feat':
+        if (hasFightingStyle && fightingStyleId == null) return 'Scegli lo stile di combattimento.';
+        if (finalResult && !finalResult.success) return finalResult.error;
+        {
+          const asiOk = asiLevelsApplied.every((l) => {
+            const sel = featAtAsiLevel[l];
+            if (sel != null) return sel !== FEAT_MODE_PENDING;
+            const sec = asiAssignments[l];
+            return sec != null && sec.slots.every((s) => s != null);
+          });
+          if (!asiOk) return "Per ogni livello ASI scegli o completa l'ASI o un talento.";
+        }
+        return null;
+      case 'hp':
+        if (hpRoll == null) return 'Tira il dado vita (o scegli il massimo).';
+        if (finalResult && !finalResult.success) return finalResult.error;
+        return null;
+    }
+  };
+
+  // Un passo è raggiungibile se tutti i precedenti sono validi
+  const isStepReachable = (k: StepKey): boolean => {
+    const idx = activeSteps.findIndex((s) => s.key === k);
+    if (idx < 0) return false;
+    return activeSteps.slice(0, idx).every((s) => stepValid(s.key));
+  };
+
+  // Navigazione: indietro sempre permesso, avanti solo se i passi intermedi sono validi
+  const setStep = (k: StepKey) => {
+    const idx = activeSteps.findIndex((s) => s.key === k);
+    if (idx <= stepIndex || isStepReachable(k)) {
+      setError(null);
+      setStepState(k);
     }
   };
 
@@ -541,17 +755,15 @@ export function useCharacterWizard(): CharacterWizard {
     setFeatSpell((prev) => (prev === name ? null : name));
     setError(null);
   };
-  const setAsiMode = (index: number, mode: AsiMode) => {
-    setAsiAssignments((prev) => {
-      const next = [...prev];
-      next[index] = { mode, slots: mode === 'plus_two' ? [null] : [null, null] };
-      return next;
-    });
+  const setAsiMode = (lv: number, mode: AsiMode) => {
+    setAsiAssignments((prev) => ({
+      ...prev,
+      [lv]: { mode, slots: mode === 'plus_two' ? [null] : [null, null] },
+    }));
   };
-  const toggleAsiAbility = (index: number, ability: Ability) => {
+  const toggleAsiAbility = (lv: number, ability: Ability) => {
     setAsiAssignments((prev) => {
-      const next = [...prev];
-      const sec = next[index];
+      const sec = prev[lv];
       if (!sec) return prev;
       const slots = [...sec.slots];
       const existing = slots.indexOf(ability);
@@ -562,8 +774,43 @@ export function useCharacterWizard(): CharacterWizard {
         if (empty < 0) return prev;
         slots[empty] = ability;
       }
-      next[index] = { ...sec, slots };
-      return next;
+      return { ...prev, [lv]: { ...sec, slots } };
+    });
+  };
+
+  // ── Handler: talenti (step dedicato) ──
+  // A ogni livello ASI si sceglie O l'ASI (null) O un talento generale (feat id;
+  // FEAT_MODE_PENDING = modalità talento attiva ma nessun talento scelto)
+  const setAsiLevelFeat = (lvl: number, featId: number | null) => {
+    const previous = featAtAsiLevel[lvl] ?? null;
+    setFeatAtAsiLevel((prev) => ({ ...prev, [lvl]: featId }));
+    // Se si esce da un talento scelto, si pulisce la scelta caratteristica collegata
+    if (
+      previous != null &&
+      previous !== FEAT_MODE_PENDING &&
+      previous !== featId
+    ) {
+      setFeatAsiPicks((p) => {
+        if (!(previous in p)) return p;
+        const copy = { ...p };
+        delete copy[previous];
+        return copy;
+      });
+    }
+  };
+  const selectFightingStyle = (id: number | null) => setFightingStyleId(id);
+  const selectEpicBoon = (id: number | null) => setEpicBoonId(id);
+  const toggleFeatAsi = (featId: number, ability: Ability) => {
+    setFeatAsiPicks((prev) => {
+      const current = prev[featId] ?? [];
+      if (current.includes(ability)) {
+        return { ...prev, [featId]: current.filter((a) => a !== ability) };
+      }
+      const feat = getFeat(featId);
+      const count =
+        ((feat?.asi_config as { choices_count?: number } | null)?.choices_count) ?? 1;
+      if (current.length >= count) return prev;
+      return { ...prev, [featId]: [...current, ability] };
     });
   };
 
@@ -587,6 +834,10 @@ export function useCharacterWizard(): CharacterWizard {
         featSpellAbility != null && featCantrips.length > 0 && featSpell != null
           ? { ability: featSpellAbility, cantrips: featCantrips, spells: [featSpell] }
           : undefined,
+      generalFeatIds: generalFeatIds.length > 0 ? generalFeatIds : undefined,
+      fightingStyleId: fightingStyleId ?? undefined,
+      epicBoonId: epicBoonId ?? undefined,
+      featAsiPicks: Object.keys(featAsiPicks).length > 0 ? featAsiPicks : undefined,
       hpRoll: hpRoll ?? undefined,
       abilities: {
         method: 'standard',
@@ -639,6 +890,13 @@ export function useCharacterWizard(): CharacterWizard {
       spellSelected: featSpell,
       selectSpell: selectFeatSpell,
     },
+    hasFightingStyle, fightingStyleOptions, fightingStyleId, selectFightingStyle,
+    featAtAsiLevel, setAsiLevelFeat,
+    generalFeatOptions, generalFeatIds,
+    featAsiPicks, toggleFeatAsi,
+    epicBoonUnlocked, epicBoonOptions, epicBoonId, selectEpicBoon,
+    featError: finalResult && !finalResult.success ? finalResult.error : null,
+    finalScores: finalScoresWithFeats,
     assigned, editingAbility, openAbilityPicker, closeAbilityPicker,
     assignToAbility, clearAbility, pool, allowedAbilities,
     showBoosts: background != null && allowedAbilities.length > 0,
@@ -649,7 +907,9 @@ export function useCharacterWizard(): CharacterWizard {
     conMod, averagePerLevel,
     canGoNext: stepValid(step),
     isLastStep: step === 'hp',
-    canCreate: stepValid('hp') && finalResult?.success === true,
+    canCreate: stepValid('hp') && stepValid('feat') && finalResult?.success === true,
+    stepValid,
+    stepInvalidReason,
     handleCreate,
   };
 }

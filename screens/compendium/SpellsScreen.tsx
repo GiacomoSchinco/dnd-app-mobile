@@ -1,5 +1,5 @@
 import { useMemo, useState, useCallback, useRef } from 'react';
-import { View, FlatList, Pressable } from 'react-native';
+import { View, Text, FlatList, SectionList, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -56,6 +56,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
 
   // ── Scroll to top ──
   const flatListRef = useRef<FlatList>(null);
+  const sectionListRef = useRef<SectionList<Spell>>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const handleScroll = useCallback((event: any) => {
@@ -63,8 +64,12 @@ export default function SpellsScreen({ standalone = false }: Props) {
   }, []);
 
   const scrollToTop = useCallback(() => {
-    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-  }, []);
+    if (isSheet) {
+      sectionListRef.current?.scrollToLocation({ sectionIndex: 0, itemIndex: 0, animated: true });
+    } else {
+      flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+    }
+  }, [isSheet]);
 
   // ── Filtri magie (hook condiviso: compendio, scheda PG, gestione magie) ──
   const {
@@ -116,6 +121,19 @@ export default function SpellsScreen({ standalone = false }: Props) {
       (a, b) => a.level - b.level || a.name.localeCompare(b.name)
     );
   }, [isSheet, activeChar?.preparedSpells, search, levelFilter]);
+
+  // ── Magie assegnate raggruppate per livello (scheda PG) ──
+  const sheetSections = useMemo(() => {
+    const groups = new Map<number, Spell[]>();
+    for (const spell of sheetSpells) {
+      const arr = groups.get(spell.level) ?? [];
+      arr.push(spell);
+      groups.set(spell.level, arr);
+    }
+    return Array.from(groups.entries())
+      .sort((a, b) => a[0] - b[0])
+      .map(([level, spells]) => ({ level, spells }));
+  }, [sheetSpells]);
 
   // ── Lancia: consuma uno slot del livello (i trucchetti non hanno slot) ──
   const handleCast = useCallback((spell: Spell) => {
@@ -186,22 +204,48 @@ export default function SpellsScreen({ standalone = false }: Props) {
             message="Tocca '+ Aggiungi' per scegliere le magie del personaggio dalla sua classe."
           />
         </View>
+      ) : isSheet ? (
+        <SectionList
+          ref={sectionListRef}
+          sections={sheetSections.map((sec) => ({ level: sec.level, data: sec.spells }))}
+          renderItem={renderSheetSpell}
+          renderSectionHeader={({ section }) => (
+            <View style={{ marginTop: t.spacing[2], marginBottom: t.spacing[1] }}>
+              <Text
+                style={{
+                  fontSize: t.typography.xs,
+                  fontWeight: '600',
+                  color: t.colors.foregroundTertiary,
+                  textTransform: 'uppercase',
+                  letterSpacing: 0.5,
+                }}
+              >
+                {section.level === 0 ? 'Trucchetti' : `Livello ${section.level}`}
+              </Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.name}
+          ListHeaderComponent={
+            <SpellSlotsBar
+              spellSlots={activeChar?.spellSlots}
+              onUseSlot={useSpellSlot}
+              onRecoverSlot={recoverSpellSlot}
+              onRestoreAll={() => restoreSpellSlots()}
+            />
+          }
+          contentContainerStyle={{ paddingBottom: bottomClearance }}
+          showsVerticalScrollIndicator={false}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          style={{ paddingHorizontal: t.spacing[4] }}
+          stickySectionHeadersEnabled={false}
+        />
       ) : (
         <FlatList
           ref={flatListRef}
-          data={isSheet ? sheetSpells : filteredSpells}
-          renderItem={isSheet ? renderSheetSpell : renderSpell}
+          data={filteredSpells}
+          renderItem={renderSpell}
           keyExtractor={(item) => item.name}
-          ListHeaderComponent={
-            isSheet ? (
-              <SpellSlotsBar
-                spellSlots={activeChar?.spellSlots}
-                onUseSlot={useSpellSlot}
-                onRecoverSlot={recoverSpellSlot}
-                onRestoreAll={() => restoreSpellSlots()}
-              />
-            ) : null
-          }
           contentContainerStyle={{ paddingBottom: bottomClearance }}
           showsVerticalScrollIndicator={false}
           onScroll={handleScroll}
@@ -240,7 +284,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
         spell={selectedSpell}
         activeChar={activeChar}
         onClose={() => setSelectedSpell(null)}
-        onCast={handleCast}
+        onCast={isSheet ? handleCast : undefined}
       />
     </View>
   );

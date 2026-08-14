@@ -13,10 +13,12 @@ type Props = {
   steps: WizardStep[];
   current: StepKey;
   onSelect: (key: StepKey) => void;
+  /** Verifica se un passo già raggiunto è valido (rosso se da completare) */
+  isValid?: (key: StepKey) => boolean;
 };
 
 /** Indicatore dei passi del wizard (chips cliccabili sui passi già raggiunti) */
-export default function StepIndicator({ steps, current, onSelect }: Props) {
+export default function StepIndicator({ steps, current, onSelect, isValid }: Props) {
   const t = useTokens();
   const currentIndex = steps.findIndex((st) => st.key === current);
 
@@ -25,11 +27,13 @@ export default function StepIndicator({ steps, current, onSelect }: Props) {
       {steps.map((st, i) => {
         const isCurrent = st.key === current;
         const reached = i <= currentIndex;
+        const incomplete = reached && !isCurrent && isValid != null && !isValid(st.key);
+        const locked = !reached;
         return (
           <Pressable
             key={st.key}
-            disabled={!reached}
-            onPress={() => { if (reached) onSelect(st.key); }}
+            disabled={locked}
+            onPress={() => { if (!locked) onSelect(st.key); }}
             style={{
               flex: 1,
               alignItems: 'center',
@@ -37,10 +41,12 @@ export default function StepIndicator({ steps, current, onSelect }: Props) {
               borderRadius: t.radius.full,
               backgroundColor: isCurrent
                 ? t.colors.accent
-                : reached
-                  ? t.colors.accentSubtle
-                  : t.colors.backgroundTertiary,
-              opacity: reached ? 1 : 0.5,
+                : incomplete
+                  ? t.colors.danger + '18'
+                  : reached
+                    ? t.colors.accentSubtle
+                    : t.colors.backgroundTertiary,
+              opacity: locked ? 0.5 : 1,
             }}
           >
             <Text
@@ -50,12 +56,14 @@ export default function StepIndicator({ steps, current, onSelect }: Props) {
                 fontWeight: t.typography.medium,
                 color: isCurrent
                   ? t.colors.accentForeground
-                  : reached
-                    ? t.colors.accent
-                    : t.colors.foregroundTertiary,
+                  : incomplete
+                    ? t.colors.danger
+                    : reached
+                      ? t.colors.accent
+                      : t.colors.foregroundTertiary,
               }}
             >
-              {st.label}
+              {incomplete ? `${st.label} •` : st.label}
             </Text>
           </Pressable>
         );

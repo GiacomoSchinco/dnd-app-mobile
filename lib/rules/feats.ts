@@ -1,6 +1,6 @@
 import featsData from '../data/feats.json';
-import { getAbilityByAbbreviation } from './abilities';
-import type { FeatCategory, FeatRaw } from '../../types';
+import { getAbilityByAbbreviation, parseAbilityFromAbbreviation } from './abilities';
+import type { Ability, FeatCategory, FeatRaw } from '../../types';
 
 /**
  * feats.ts — Gestione dei talenti (feats.json).
@@ -67,7 +67,7 @@ export function isFeatAvailableAtLevel(featId: number, level: number): boolean {
 /** Verifica se i prerequisiti di un talento sono soddisfatti */
 export function checkFeatPrerequisites(
   featId: number,
-  abilities: Record<string, number>,
+  abilities: Partial<Record<string, number>>,
   proficiencies: string[],
   characterLevel: number
 ): { valid: boolean; missing: string[] } {
@@ -98,4 +98,51 @@ export function checkFeatPrerequisites(
   }
 
   return { valid: missing.length === 0, missing };
+}
+
+/** Contesto per verificare se un talento è selezionabile nello step dedicato */
+export interface FeatAvailabilityContext {
+  /** Livello del personaggio */
+  level: number;
+  /** Punteggi FINALI (per i prerequisiti ability_score) */
+  scores?: Partial<Record<string, number>>;
+  /** Se il personaggio lancia incantesimi (prerequisito feature: spellcasting) */
+  isSpellcaster?: boolean;
+}
+
+/**
+ * Verifica se un talento è selezionabile: livello + prerequisiti valutabili
+ * (ability_score/level/weapon_proficiency/feature-spellcasting; le altre feature
+ * sono considerate soddisfatte — non valutabili qui).
+ */
+export function isFeatAvailable(feat: FeatRaw, ctx: FeatAvailabilityContext): boolean {
+  if (!isFeatAvailableAtLevel(feat.id, ctx.level)) return false;
+  for (const pre of feat.prerequisites) {
+    if (pre.type === 'feature' && pre.value === 'spellcasting' && !ctx.isSpellcaster) {
+      return false;
+    }
+  }
+  if (ctx.scores) {
+    const res = checkFeatPrerequisites(feat.id, ctx.scores, [], ctx.level);
+    if (!res.valid) return false;
+  }
+  return true;
+}
+
+/**
+ * Opzioni caratteristica consentite per gli ASI di un talento (asi_config.allowed_scores).
+ * NB: nel JSON sono abbreviazioni italiane (FOR/DES/...) → convertite in slug Ability.
+ */
+export function getFeatAsiOptions(feat: FeatRaw): Ability[] {
+  const cfg = feat.asi_config as { allowed_scores?: string[] } | null | undefined;
+  if (!cfg || !Array.isArray(cfg.allowed_scores)) return [];
+  return cfg.allowed_scores
+    .map((a) => parseAbilityFromAbbreviation(a))
+    .filter((a): a is Ability => a != null);
+}
+
+/** Cap massimo per gli ASI concessi da un talento (asi_config.max_cap, default 20) */
+export function getFeatAsiCap(feat: FeatRaw): number {
+  const cfg = feat.asi_config as { max_cap?: number } | null | undefined;
+  return typeof cfg?.max_cap === 'number' ? cfg.max_cap : 20;
 }

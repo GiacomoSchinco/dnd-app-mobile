@@ -18,6 +18,7 @@ import SkillsStep from '../../components/custom/creation/SkillsStep';
 import RaceStep from '../../components/custom/creation/RaceStep';
 import BackgroundStep from '../../components/custom/creation/BackgroundStep';
 import AbilitiesStep from '../../components/custom/creation/AbilitiesStep';
+import FeatStep from '../../components/custom/creation/FeatStep';
 import HpStep from '../../components/custom/creation/HpStep';
 import ValuePickerModal from '../../components/custom/creation/ValuePickerModal';
 import { useCharacterWizard } from '../../components/custom/creation/useCharacterWizard';
@@ -40,7 +41,7 @@ export default function CharacterCreateScreen() {
       <ScreenHeader title="Nuovo Personaggio" icon="person-add-outline" />
       <BackButton onPress={() => navigation.goBack()} />
 
-      <StepIndicator steps={w.activeSteps} current={w.step} onSelect={w.setStep} />
+      <StepIndicator steps={w.activeSteps} current={w.step} onSelect={w.setStep} isValid={w.stepValid} />
 
       <View style={s.flex}>
         <ScrollView
@@ -118,11 +119,32 @@ export default function CharacterCreateScreen() {
               plusTwoPlusOne={w.plusTwoPlusOne}
               picks={w.picks}
               onTogglePick={w.togglePick}
+              finalResult={w.finalResult}
+            />
+          )}
+
+          {w.step === 'feat' && (
+            <FeatStep
+              level={w.level}
+              hasFightingStyle={w.hasFightingStyle}
+              fightingStyleOptions={w.fightingStyleOptions}
+              fightingStyleId={w.fightingStyleId}
+              onSelectFightingStyle={w.selectFightingStyle}
               asiLevels={w.asiLevelsApplied}
               asiAssignments={w.asiAssignments}
               onAsiModeChange={w.setAsiMode}
               onAsiToggleAbility={w.toggleAsiAbility}
-              finalResult={w.finalResult}
+              featAtAsiLevel={w.featAtAsiLevel}
+              onSetAsiLevelFeat={w.setAsiLevelFeat}
+              generalFeatOptions={w.generalFeatOptions}
+              featAsiPicks={w.featAsiPicks}
+              onToggleFeatAsi={w.toggleFeatAsi}
+              epicBoonUnlocked={w.epicBoonUnlocked}
+              epicBoonOptions={w.epicBoonOptions}
+              epicBoonId={w.epicBoonId}
+              onSelectEpicBoon={w.selectEpicBoon}
+              validationError={w.featError}
+              finalScores={w.finalScores}
             />
           )}
 
@@ -143,6 +165,20 @@ export default function CharacterCreateScreen() {
           )}
         </ScrollView>
       </View>
+
+      {/* Motivo per cui non si può avanzare (niente pulsanti muti) */}
+      {(!w.canGoNext || (w.isLastStep && !w.canCreate)) && w.stepInvalidReason(w.step) != null && (
+        <Text
+          style={{
+            fontSize: t.typography.xs,
+            color: t.colors.danger,
+            paddingHorizontal: t.spacing[3],
+            paddingBottom: t.spacing[1],
+          }}
+        >
+          {w.stepInvalidReason(w.step)}
+        </Text>
+      )}
 
       {/* Barra di navigazione in fondo */}
       <View style={[s.row, s.gap(t.spacing[3]), s.py(t.spacing[3]), {

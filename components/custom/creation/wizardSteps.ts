@@ -14,6 +14,7 @@ export const STEPS = [
   { key: 'race', label: 'Razza' },
   { key: 'background', label: 'Background' },
   { key: 'abilities', label: 'Punteggi' },
+  { key: 'feat', label: 'Talenti' },
   { key: 'hp', label: 'Punti Ferita' },
 ] as const;
 
@@ -26,6 +27,12 @@ export const ABILITY_ORDER: Ability[] = [
 
 /** Nome della feature ASI in progression.json (da non mostrare come feature) */
 export const ASI_FEATURE_NAME = 'Aumento dei Punteggi di Caratteristica';
+
+/**
+ * Segnaposto in `featAtAsiLevel` per "modalità Talento ma nessun talento ancora scelto".
+ * Un livello con questo valore è in modalità talento ma NON è ancora valido.
+ */
+export const FEAT_MODE_PENDING = -1;
 
 /** Opzione di competenza in abilità (slug inglese + etichetta italiana) */
 export interface SkillOption {

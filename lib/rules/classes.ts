@@ -11,6 +11,8 @@ export interface ClassFeatureDefinition {
   name: string;
   level: number;
   description: string;
+  /** Tabella incassata separata dalla description (liste incantesimi, tabelle privilegi, …) */
+  table?: string;
 }
 
 export interface ClassDefinition {
@@ -75,7 +77,12 @@ function convertRawClass(raw: ClassRaw): ClassDefinition {
   const isSpellcaster = raw.spellcasting != null;
   const featuresByLevel: Record<number, ClassFeatureDefinition[]> = {};
   for (const f of raw.features) {
-    const def: ClassFeatureDefinition = { name: f.name, level: f.level, description: f.description };
+    const def: ClassFeatureDefinition = {
+      name: f.name,
+      level: f.level,
+      description: f.description,
+      ...(f.table ? { table: f.table } : {}),
+    };
     (featuresByLevel[f.level] ??= []).push(def);
   }
 
@@ -94,7 +101,12 @@ function convertRawClass(raw: ClassRaw): ClassDefinition {
     spellcasting: raw.spellcasting ?? undefined,
     spellcastingType: isSpellcaster ? CASTER_TYPE_MAP[name] : undefined,
     spellAbility: raw.spellcasting?.ability,
-    features: raw.features.map((f) => ({ name: f.name, level: f.level, description: f.description })),
+    features: raw.features.map((f) => ({
+      name: f.name,
+      level: f.level,
+      description: f.description,
+      ...(f.table ? { table: f.table } : {}),
+    })),
     featuresByLevel,
     hitPoints: raw.hit_points,
     fightingStyles: raw.fighting_styles,

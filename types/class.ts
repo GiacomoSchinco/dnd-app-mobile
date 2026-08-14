@@ -6,6 +6,8 @@ export interface ClassFeatureRaw {
   name: string;
   level: number;
   description: string;
+  /** Tabella incassata separata dalla description (liste incantesimi, tabelle privilegi, …) */
+  table?: string;
 }
 
 export interface ClassSpellcastingRaw {

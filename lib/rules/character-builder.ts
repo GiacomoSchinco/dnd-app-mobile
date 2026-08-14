@@ -1,7 +1,7 @@
 import { getClass, getClassById } from './classes';
 import { getRace, getRaceById, getLineageById, getRaceEffects, getRaceEffectIds, hasLineages, type RaceDefinition } from './races';
 import { getBackground, type BackgroundFeat } from './backgrounds';
-import { getFeat } from './feats';
+import { getFeat, getFeatAsiCap, getFeatAsiOptions } from './feats';
 import { applyFeat, getToolOptions, type FeatApplyResult } from './apply-feat';
 import { getSubclass, getSubclassFeaturesUpToLevel } from './subclasses';
 import { getSpellProgression, getLevelUpSpellChanges } from './spellcasting';
@@ -26,6 +26,7 @@ import type {
   CharacterChoices,
   CharacterMoney,
   EquipmentItem,
+  FeatCategory,
   FeatSpellChoice,
 } from '../../types';
 
@@ -444,6 +445,12 @@ export interface CharacterBuildPlan {
   feat?: ReturnType<typeof getFeat>;
   /** Concessioni meccaniche del talento di origine (modificatori, strumenti, risorse) */
   featApply?: FeatApplyResult;
+  /** Talenti aggiuntivi (generali/epici/stile) applicati — concessioni risolte */
+  additionalFeats?: { featId: number; name: string; category: FeatCategory; apply: FeatApplyResult }[];
+  /** ASI concessi dai talenti aggiuntivi (già applicati a `abilities`) */
+  featAsiBoosts?: AbilityBoost[];
+  /** Scelte caratteristica per gli ASI dei talenti (per riproducibilità) */
+  featAsiPicks?: Record<number, Ability[]>;
   /** Strumenti scelti per la competenza a scelta del background (CHOICE) */
   bgToolProficiencies?: string[];
   /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità", Elfo "Sensi Acuti") */
@@ -477,6 +484,14 @@ export function buildCharacter(params: {
   featSkillChoices?: SkillName[];
   /** Scelta incantesimi per il talento "Iniziato alla Magia" (spellcasting) */
   featSpellChoice?: FeatSpellChoice;
+  /** Id dei talenti generali scelti (uno per livello ASI) */
+  generalFeatIds?: number[];
+  /** Id dello stile di combattimento (Fighter/Paladin/Ranger) */
+  fightingStyleId?: number;
+  /** Id del dono epico (livello 19+) */
+  epicBoonId?: number;
+  /** Scelte caratteristica per gli ASI concessi dai talenti (chiave = feat id) */
+  featAsiPicks?: Record<number, Ability[]>;
   /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità") */
   raceSkillChoices?: SkillName[];
   /** Tiro del dado vita al 1° livello (opzionale) */
@@ -497,6 +512,7 @@ export function buildCharacter(params: {
     distributionModes: params.abilities.distributionModes ?? backgroundResult.data?.distributionModes,
   });
   if (!abilitiesResult.success) return { success: false, error: abilitiesResult.error };
+  const scores: AbilityScores = { ...abilitiesResult.scores };
 
   const featId = backgroundResult.data?.featId;
   const feat = featId ? getFeat(featId) : undefined;
@@ -512,6 +528,39 @@ export function buildCharacter(params: {
         spellChoice: params.featSpellChoice,
       })
     : undefined;
+
+  // Talenti aggiuntivi (generali / stile di combattimento / dono epico)
+  const additionalFeats: NonNullable<CharacterBuildPlan['additionalFeats']> = [];
+  const featAsiBoosts: AbilityBoost[] = [];
+  const additionalIds = [
+    ...(params.generalFeatIds ?? []),
+    ...(params.fightingStyleId != null ? [params.fightingStyleId] : []),
+    ...(params.epicBoonId != null ? [params.epicBoonId] : []),
+  ];
+  for (const id of additionalIds) {
+    const extraFeat = getFeat(id);
+    if (!extraFeat) continue;
+    // Se il talento ha UNA sola caratteristica consentita, la scelta è automatica
+    const singleAsi =
+      !params.featAsiPicks?.[id] && getFeatAsiOptions(extraFeat).length === 1
+        ? getFeatAsiOptions(extraFeat)
+        : undefined;
+    const apply = applyFeat(extraFeat, {
+      asiChoices: singleAsi ?? params.featAsiPicks?.[id],
+    });
+    additionalFeats.push({
+      featId: id,
+      name: extraFeat.name,
+      category: extraFeat.category,
+      apply,
+    });
+    // ASI concessi dal talento (asi_config) → applicati ai punteggi finali (cap = max_cap)
+    for (const b of apply.asiBoosts) {
+      const cap = getFeatAsiCap(extraFeat);
+      scores[b.ability] = Math.min((scores[b.ability] ?? 10) + b.amount, cap);
+      featAsiBoosts.push(b);
+    }
+  }
 
   // Competenza strumenti del background (type CHOICE → pool di strumenti, ne sceglie 1)
   const bgToolProficiencies: string[] = [];
@@ -541,10 +590,13 @@ export function buildCharacter(params: {
     raceResult,
     classResult,
     backgroundResult,
-    abilities: abilitiesResult.scores,
+    abilities: scores,
     featId,
     feat,
     featApply,
+    additionalFeats: additionalFeats.length > 0 ? additionalFeats : undefined,
+    featAsiBoosts: featAsiBoosts.length > 0 ? featAsiBoosts : undefined,
+    featAsiPicks: params.featAsiPicks,
     bgToolProficiencies: bgToolProficiencies.length > 0 ? bgToolProficiencies : undefined,
     raceSkills: raceSkills.length > 0 ? raceSkills : undefined,
     startingEquipment: equipment,
@@ -646,13 +698,16 @@ export function buildCharacterSheet(
   // Strumenti scelti dal background (CHOICE) e dal talento di origine
   for (const t of plan.bgToolProficiencies ?? []) if (!tools.includes(t)) tools.push(t);
   for (const t of plan.featApply?.toolProficiencies ?? []) if (!tools.includes(t)) tools.push(t);
-  // Skill: background + scelte di classe + abilità del talento (Abile) + scelte della razza
+  for (const af of plan.additionalFeats ?? [])
+    for (const t of af.apply.toolProficiencies ?? []) if (!tools.includes(t)) tools.push(t);
+  // Skill: background + scelte di classe + abilità del talento (Abile) + scelte della razza + talenti aggiuntivi
   const skills: SkillName[] = [];
   for (const s of [
     ...bgData.skills,
     ...(plan.classSkills ?? []),
     ...(plan.featApply?.skills ?? []),
     ...(plan.raceSkills ?? []),
+    ...(plan.additionalFeats ?? []).flatMap((af) => af.apply.skills ?? []),
   ] as SkillName[]) {
     if (!skills.includes(s)) skills.push(s);
   }
@@ -661,10 +716,13 @@ export function buildCharacterSheet(
   // Effetti risolti (razza + lineage)
   const effects = raceData.effects;
 
-  // Feature di classe (per livello, ASI esclusi) e della sottoclasse
-  const classFeatures: { level: number; name: string }[] = [];
+  // Feature di classe (per livello, ASI esclusi) con descrizione/tabella da classes.json e della sottoclasse
+  const classFeatures: { level: number; name: string; description?: string; table?: string }[] = [];
   for (const lvl of classData.features) {
-    for (const name of lvl.features) classFeatures.push({ level: lvl.level, name });
+    for (const name of lvl.features) {
+      const cf = classDef.featuresByLevel[lvl.level]?.find((f) => f.name === name);
+      classFeatures.push({ level: lvl.level, name, description: cf?.description, table: cf?.table });
+    }
   }
   const subclassFeatures =
     classData.subclass?.id != null ? getSubclassFeaturesUpToLevel(classData.subclass.id, level) : [];
@@ -732,6 +790,20 @@ export function buildCharacterSheet(
       };
     }
   }
+  for (const af of plan.additionalFeats ?? []) {
+    for (const grant of af.apply.resources ?? []) {
+      if (resources[grant.key]) continue;
+      const max = grant.max === 'proficiency_bonus' ? proficiencyBonus : grant.max;
+      if (typeof max === 'number') {
+        resources[grant.key] = {
+          label: grant.label,
+          max,
+          current: max,
+          resetOn: grant.resetOn,
+        };
+      }
+    }
+  }
 
   // Incantesimi
   // Magie da fonti AUTOMATICHE: talento del background (Iniziato alla Magia) +
@@ -742,6 +814,10 @@ export function buildCharacterSheet(
   };
   for (const cantrip of plan.featApply?.spellcasting?.cantrips ?? []) pushAutoSpell(cantrip);
   for (const spell of plan.featApply?.spellcasting?.spells ?? []) pushAutoSpell(spell);
+  for (const af of plan.additionalFeats ?? []) {
+    for (const cantrip of af.apply.spellcasting?.cantrips ?? []) pushAutoSpell(cantrip);
+    for (const spell of af.apply.spellcasting?.spells ?? []) pushAutoSpell(spell);
+  }
   for (const eff of effects) {
     if (eff.type !== 'spell_grant') continue;
     const granted = eff.spells;
@@ -796,6 +872,12 @@ export function buildCharacterSheet(
       : bgData.feat.requiresChoice
         ? ''
         : undefined,
+    generalFeatIds: plan.additionalFeats
+      ?.filter((f) => f.category === 'general')
+      .map((f) => f.featId),
+    fightingStyleId: plan.additionalFeats?.find((f) => f.category === 'fighting_style')?.featId,
+    epicBoonId: plan.additionalFeats?.find((f) => f.category === 'epic_boon')?.featId,
+    featAsiPicks: plan.featAsiPicks,
   };
 
   return {
@@ -832,9 +914,19 @@ export function buildCharacterSheet(
     senses: extractSenses(effects),
     defenses: extractDefenses(effects),
     proficiencies: { armor, weapons, tools, skills, savingThrows, languages: [] },
-    feats: [bgData.feat.name],
-    epicBoons: [],
-    featModifiers: plan.featApply?.modifiers ?? [],
+    feats: [
+      bgData.feat.name,
+      ...(plan.additionalFeats ?? [])
+        .filter((f) => f.category === 'general' || f.category === 'fighting_style')
+        .map((f) => f.name),
+    ],
+    epicBoons: (plan.additionalFeats ?? [])
+      .filter((f) => f.category === 'epic_boon')
+      .map((f) => f.name),
+    featModifiers: [
+      ...(plan.featApply?.modifiers ?? []),
+      ...(plan.additionalFeats ?? []).flatMap((af) => af.apply.modifiers ?? []),
+    ],
     classFeatures,
     subclassFeatures,
     effects,

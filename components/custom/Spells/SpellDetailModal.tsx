@@ -86,8 +86,8 @@ export default function SpellDetailModal({
                 </View>
               )}
 
-              {/* Action buttons — nella sezione Magie solo "Lancia" (consuma slot) */}
-              {onCast && (
+              {/* Action buttons — nella sezione Magie solo "Lancia" (consuma slot); i trucchetti non hanno tasto */}
+              {onCast && spell.level > 0 && (
                 <Button
                   variant="solid"
                   size="md"
@@ -95,7 +95,7 @@ export default function SpellDetailModal({
                   onPress={() => onCast(spell)}
                   style={{ marginTop: t.spacing[4] }}
                 >
-                  {spell.level === 0 ? 'Lancia (trucchetto)' : `Lancia (slot ${spell.level}°)`}
+                  Lancia (slot {spell.level}°)
                 </Button>
               )}
               {(onToggleFavorite || onTogglePrepared) && (

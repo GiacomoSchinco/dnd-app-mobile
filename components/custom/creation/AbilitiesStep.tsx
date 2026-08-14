@@ -9,7 +9,7 @@ import {
 } from '../../../lib/rules/abilities';
 import type { AbilityAssignmentResult } from '../../../lib/rules/character-builder';
 import { s } from '../../../utils/style-helpers';
-import { ABILITY_ORDER, type AsiAssignment, type AsiMode } from './wizardSteps';
+import { ABILITY_ORDER } from './wizardSteps';
 import StepLabel from './StepLabel';
 import Chip from './Chip';
 import type { Ability } from '../../../types';
@@ -23,11 +23,6 @@ type Props = {
   plusTwoPlusOne: boolean;
   picks: (Ability | null)[];
   onTogglePick: (ability: Ability) => void;
-  /** Livelli di ASI già ricevuti al livello scelto (es. [4]) */
-  asiLevels: number[];
-  asiAssignments: AsiAssignment[];
-  onAsiModeChange: (index: number, mode: AsiMode) => void;
-  onAsiToggleAbility: (index: number, ability: Ability) => void;
   finalResult: AbilityAssignmentResult | null;
 };
 
@@ -41,10 +36,6 @@ export default function AbilitiesStep({
   plusTwoPlusOne,
   picks,
   onTogglePick,
-  asiLevels,
-  asiAssignments,
-  onAsiModeChange,
-  onAsiToggleAbility,
   finalResult,
 }: Props) {
   const t = useTokens();
@@ -154,56 +145,14 @@ export default function AbilitiesStep({
         </View>
       )}
 
-      {/* ASI (5.5e): +2 a una caratteristica O +1 a due */}
-      {asiLevels.length > 0 && (
-        <View>
-          <StepLabel>AUMENTI DEI PUNTEGGI (ASI)</StepLabel>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginBottom: t.spacing[1] }}>
-            Ogni ASI: +2 a una caratteristica oppure +1 a due.
-          </Text>
-          {asiLevels.map((lv, idx) => {
-            const sec = asiAssignments[idx];
-            if (!sec) return null;
-            const isPlusTwo = sec.mode === 'plus_two';
-            return (
-              <View key={lv} style={{ marginTop: t.spacing[3] }}>
-                <Text style={{ fontSize: t.typography.sm, fontWeight: t.typography.semibold, color: t.colors.foreground, marginBottom: t.spacing[1] }}>
-                  ASI · Livello {lv}
-                </Text>
-                <View style={[s.row, s.gap(t.spacing[2]), { flexWrap: 'wrap', marginBottom: t.spacing[2] }]}>
-                  <Chip
-                    label="+2 a una caratteristica"
-                    selected={isPlusTwo}
-                    compact
-                    onPress={() => onAsiModeChange(idx, 'plus_two')}
-                  />
-                  <Chip
-                    label="+1 a due caratteristiche"
-                    selected={!isPlusTwo}
-                    compact
-                    onPress={() => onAsiModeChange(idx, 'two_plus_ones')}
-                  />
-                </View>
-                <View style={[s.row, s.gap(t.spacing[2]), { flexWrap: 'wrap' }]}>
-                  {ABILITY_ORDER.map((a) => {
-                    const picked = sec.slots.includes(a);
-                    const bonus = isPlusTwo ? 2 : 1;
-                    return (
-                      <Chip
-                        key={a}
-                        label={getAbilityAbbreviation(a)}
-                        selected={picked}
-                        selectedSuffix={picked ? ` +${bonus}` : undefined}
-                        onPress={() => onAsiToggleAbility(idx, a)}
-                      />
-                    );
-                  })}
-                </View>
-              </View>
-            );
-          })}
-        </View>
-      )}
+      {/* ASI (5.5e) spostati nello step Talenti: lì scegli ASI o talento per livello */}
+      <View>
+        <StepLabel>AUMENTI DEI PUNTEGGI (ASI)</StepLabel>
+        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+          Gli ASI (livelli 4/8/12/16) si assegnano nello step Talenti, dove per ogni livello scegli
+          ASI o talento generale.
+        </Text>
+      </View>
 
       {/* Anteprima punteggi finali */}
       {finalResult && finalResult.success && (

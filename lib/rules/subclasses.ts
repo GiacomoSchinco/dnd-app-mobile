@@ -10,6 +10,7 @@ export interface SubclassDefinition {
   id: number;
   classId: number;
   name: string;
+  nameEn: string;
   description: string;
   features: ClassFeatureRaw[];
 }
@@ -19,6 +20,7 @@ function convertRawSubclass(raw: SubclassRaw): SubclassDefinition {
     id: raw.id,
     classId: raw.class_id,
     name: raw.name,
+    nameEn: raw.name_en,
     description: raw.description,
     features: raw.features,
   };

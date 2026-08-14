@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import EmptyState from '../../components/custom/EmptyState';
-import { SpellCard, SpellFilters, Spell, useSpellFilters, applySpellFilters } from '../../components/custom/Spells';
+import { SpellCard, SpellFilters, SpellDetailModal, Spell, useSpellFilters, applySpellFilters } from '../../components/custom/Spells';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
 import spellsData from '../../lib/data/spells.json';
@@ -15,7 +15,8 @@ import spellsData from '../../lib/data/spells.json';
 /**
  * Schermata dedicata "Gestisci magie": assegna al PG attivo le magie della sua
  * classe (✓ preparata) e le preferite (★). Raggiungibile dalla tab Magie
- * (bottone "+ Aggiungi"). Tocco sulla card = assegna/rimuove.
+ * (bottone "+ Aggiungi"). Tap sulla card = apre il dettaglio per leggere; le
+ * azioni assegna/preferita stanno sui tasti della card e nel modale.
  */
 export default function CharacterSpellAssignScreen() {
   const t = useTokens();
@@ -35,6 +36,9 @@ export default function CharacterSpellAssignScreen() {
     showFavoritesOnly,
     setShowFavoritesOnly,
   } = useSpellFilters();
+
+  // Modale di dettaglio della magia (per leggerla prima di assegnarla)
+  const [selectedSpell, setSelectedSpell] = useState<Spell | null>(null);
 
   const prepared = activeChar?.preparedSpells ?? [];
   const favorites = activeChar?.favoriteSpells ?? [];
@@ -105,7 +109,7 @@ export default function CharacterSpellAssignScreen() {
               isPrepared={prepared.includes(item.name)}
               isFavorite={favorites.includes(item.name)}
               hasActiveCharacter
-              onPress={() => togglePreparedSpell(item.name)}
+              onPress={() => setSelectedSpell(item)}
               onToggleFavorite={() => toggleFavoriteSpell(item.name)}
               onTogglePrepared={() => togglePreparedSpell(item.name)}
             />
@@ -115,6 +119,14 @@ export default function CharacterSpellAssignScreen() {
           showsVerticalScrollIndicator={false}
         />
       )}
+
+      <SpellDetailModal
+        spell={selectedSpell}
+        activeChar={activeChar}
+        onClose={() => setSelectedSpell(null)}
+        onToggleFavorite={() => selectedSpell && toggleFavoriteSpell(selectedSpell.name)}
+        onTogglePrepared={() => selectedSpell && togglePreparedSpell(selectedSpell.name)}
+      />
     </View>
   );
 }

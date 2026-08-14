@@ -11,14 +11,15 @@ import EmptyState from '../../components/custom/EmptyState';
 import StatsGrid from '../../components/custom/StatsGrid';
 import ClassAvatar from '../../components/custom/ClassAvatar';
 import BottomModal from '../../components/custom/BottomModal';
+import SectionButton from '../../components/custom/SectionButton';
 import { Button } from '../../components/ui/button';
-import { getClassNameItalian } from '../../lib/rules/classes';
+import { getClassNameItalian, getClass } from '../../lib/rules/classes';
+import { getFeatByName } from '../../lib/rules/feats';
 import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 
 const SECTIONS = [
-  { key: 'magie', icon: '🔮', label: 'Incantesimi', desc: 'Slot, preparati e preferiti' },
   { key: 'talenti', icon: '⭐', label: 'Talenti', desc: 'Talenti e abilità speciali' },
   { key: 'note', icon: '📝', label: 'Note', desc: 'Appunti e storia del personaggio' },
 ];
@@ -32,6 +33,43 @@ function groupClassFeaturesByLevel(features: { level: number; name: string }[]) 
     else groups.push({ level: f.level, names: [f.name] });
   }
   return groups;
+}
+
+/** Mostra un talento/dono con nome + descrizione completa (regole sempre leggibili) */
+function FeatDetail({ name, icon }: { name: string; icon: string }) {
+  const t = useTokens();
+  const feat = getFeatByName(name);
+  return (
+    <View style={{ gap: t.spacing[1] }}>
+      <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
+        {icon} {name}
+      </Text>
+      {feat ? (
+        <>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 18 }}>
+            {feat.description}
+          </Text>
+          {feat.granted_modifiers.filter((m) => m.description).map((m, i) => (
+            <Text
+              key={i}
+              style={{
+                fontSize: t.typography.xs,
+                color: t.colors.foregroundSecondary,
+                lineHeight: 17,
+                marginLeft: t.spacing[2],
+              }}
+            >
+              • {m.description}
+            </Text>
+          ))}
+        </>
+      ) : (
+        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+          Descrizione non disponibile.
+        </Text>
+      )}
+    </View>
+  );
 }
 
 /** Statistica derivata dell'header — quadrato con etichetta + valore */
@@ -140,6 +178,16 @@ export default function CharacterDetailScreen() {
 
   const mainClass = activeChar.classes[0];
   const classLabel = mainClass ? getClassNameItalian(mainClass.className) : '—';
+  // Info delle feature di classe (descrizione + tabella): prima dal PG, poi classes.json
+  const classFeatureInfo = new Map<string, { description?: string; table?: string }>();
+  for (const f of activeChar.classFeatures ?? []) {
+    classFeatureInfo.set(f.name, { description: f.description, table: f.table });
+  }
+  for (const f of mainClass ? getClass(mainClass.className)?.features ?? [] : []) {
+    if (!classFeatureInfo.has(f.name)) {
+      classFeatureInfo.set(f.name, { description: f.description, table: f.table });
+    }
+  }
 
   return (
     <>
@@ -270,54 +318,18 @@ export default function CharacterDetailScreen() {
         </View>
       )}
 
-      {/* Sezioni — stesso stile dei pulsanti HomeScreen */}
+      {/* Sezioni — pulsanti condivisi (stesso stile anche in Altro) */}
       <View style={[s.fullWidth, s.gap(t.spacing[3])]}>
         {SECTIONS.map((section) => (
-          <Pressable
+          <SectionButton
             key={section.key}
+            icon={section.icon}
+            label={section.label}
+            description={section.desc}
             onPress={() => handleSection(section.key)}
-            style={({ pressed }) => ({
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: t.spacing[4],
-              backgroundColor: pressed ? t.colors.accent + '20' : t.colors.backgroundSecondary,
-              borderRadius: t.radius.lg,
-              borderWidth: 1,
-              borderColor: t.colors.border,
-            })}
-          >
-            <View style={{
-              width: 48,
-              height: 48,
-              borderRadius: t.radius.md,
-              backgroundColor: t.colors.accent + '18',
-              ...s.center,
-              marginRight: t.spacing[4],
-            }}>
-              <Text style={{ fontSize: 22 }}>{section.icon}</Text>
-            </View>
-            <View style={s.flex}>
-              <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-                {section.label}
-              </Text>
-              <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[0.5] }}>
-                {section.desc}
-              </Text>
-            </View>
-            <Text style={{ color: t.colors.foregroundTertiary, fontSize: 20 }}>›</Text>
-          </Pressable>
+          />
         ))}
       </View>
-
-      {/* Eliminazione personaggio */}
-      <Button
-        variant="danger"
-        fullWidth
-        onPress={() => setConfirmDelete(true)}
-        style={{ marginTop: t.spacing[6] }}
-      >
-        Elimina personaggio
-      </Button>
       </Screen>
 
       {selectedSection && (
@@ -328,59 +340,78 @@ export default function CharacterDetailScreen() {
 
           {selectedSection.key === 'talenti' && (
             <View style={{ marginTop: t.spacing[3], gap: t.spacing[5] }}>
-              {/* Talenti (origine dal background) */}
-              <View style={{ gap: t.spacing[2] }}>
+              {/* Talenti (origine + generali + stili) — sempre con descrizione completa */}
+              <View style={{ gap: t.spacing[3] }}>
                 <Text style={sectionTitle}>Talenti</Text>
                 {(activeChar.feats ?? []).length === 0 ? (
                   <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
                     Nessun talento.
                   </Text>
                 ) : (
-                  (activeChar.feats ?? []).map((f) => (
-                    <View key={f}>
-                      <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
-                        🎖 {f}
-                      </Text>
-                      {(activeChar.featModifiers ?? [])
-                        .filter((m) => m.description)
-                        .map((m, i) => (
-                          <Text
-                            key={i}
-                            style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[1] }}
-                          >
-                            • {m.description}
-                          </Text>
-                        ))}
-                      {/* Scelta incantesimi (Iniziato alla Magia) */}
-                      {typeof activeChar.choices?.featChoice === 'object' && (
-                        <View style={{ marginTop: t.spacing[2], gap: t.spacing[1] }}>
-                          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                            🔮 Trucchetti: {activeChar.choices.featChoice.cantrips.join(', ')}
-                          </Text>
-                          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                            Incantesimo: {activeChar.choices.featChoice.spells.join(', ')}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  ))
+                  (activeChar.feats ?? []).map((f) => <FeatDetail key={f} name={f} icon="🎖" />)
+                )}
+                {/* Scelta incantesimi (Iniziato alla Magia) */}
+                {typeof activeChar.choices?.featChoice === 'object' && (
+                  <View style={{ marginTop: t.spacing[1], gap: t.spacing[1] }}>
+                    <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+                      🔮 Trucchetti: {activeChar.choices.featChoice.cantrips.join(', ')}
+                    </Text>
+                    <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+                      Incantesimo: {activeChar.choices.featChoice.spells.join(', ')}
+                    </Text>
+                  </View>
                 )}
               </View>
+
+              {/* Doni epici — sempre con descrizione completa */}
+              {(activeChar.epicBoons ?? []).length > 0 && (
+                <View style={{ gap: t.spacing[2] }}>
+                  <Text style={sectionTitle}>Doni epici</Text>
+                  {(activeChar.epicBoons ?? []).map((b) => <FeatDetail key={b} name={b} icon="🏆" />)}
+                </View>
+              )}
 
               {/* Caratteristiche di classe */}
               {(activeChar.classFeatures ?? []).length > 0 && (
                 <View style={{ gap: t.spacing[3] }}>
                   <Text style={sectionTitle}>Caratteristiche di classe</Text>
                   {groupClassFeaturesByLevel(activeChar.classFeatures ?? []).map(({ level, names }) => (
-                    <View key={level}>
-                      <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, marginBottom: t.spacing[1] }}>
+                    <View key={level} style={{ gap: t.spacing[1.5] }}>
+                      <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, marginBottom: t.spacing[0.5] }}>
                         Livello {level}
                       </Text>
-                      {names.map((name) => (
-                        <Text key={name} style={{ fontSize: t.typography.sm, color: t.colors.foreground, marginBottom: t.spacing[0.5] }}>
-                          • {name}
-                        </Text>
-                      ))}
+                      {names.map((name) => {
+                        const info = classFeatureInfo.get(name);
+                        const desc = info?.description;
+                        const table = info?.table;
+                        return (
+                          <View key={name} style={{ gap: t.spacing[0.5] }}>
+                            <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+                              • {name}
+                            </Text>
+                            {desc ? (
+                              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 17, marginLeft: t.spacing[2] }}>
+                                {desc}
+                              </Text>
+                            ) : null}
+                            {table ? (
+                              <View
+                                style={{
+                                  marginLeft: t.spacing[2],
+                                  marginTop: t.spacing[0.5],
+                                  padding: t.spacing[2],
+                                  borderRadius: t.radius.sm,
+                                  backgroundColor: t.colors.backgroundTertiary,
+                                }}
+                              >
+                                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 16 }}>
+                                  {table}
+                                </Text>
+                              </View>
+                            ) : null}
+                          </View>
+                        );
+                      })}
                     </View>
                   ))}
                 </View>

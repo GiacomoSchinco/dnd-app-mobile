@@ -23,9 +23,10 @@
       {
         "name": "Presenza Intimidatoria",
         "level": 14,
-        "description": "Come azione bonus, il barbaro può incutere terrore con la sua presenza minacciosa e il suo potere primordiale. Quando lo fa, ogni creatura a scelta del personaggio in un'emanazione del raggio di 9 metri di cui il personaggio è il punto di origine deve effettuare un tiro salvezza su Saggezza (CD 8 + il modificatore di Forza del barbaro + il bonus di competenza). Se lo fallisce, la creatura + è spaventata per 1 minuto. Alla fine del turno di ogni creatura spaventata, la creatura ripete il tiro salvezza e, se lo supera, l'effetto svanisce. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo; può ignorare questo limite spendendo un utilizzo dell'ira (nessuna azione richiesta)."
+        "description": "Come azione bonus, il barbaro può incutere terrore con la sua presenza minacciosa e il suo potere primordiale. Quando lo fa, ogni creatura a scelta del personaggio in un'emanazione del raggio di 9 metri di cui il personaggio è il punto di origine deve effettuare un tiro salvezza su Saggezza (CD 8 + il modificatore di Forza del barbaro+ il bonus di competenza). Se lo fallisce, la creatura è spaventata per 1 minuto. Alla fine del turno di ogni creatura spaventata, la creatura ripete il tiro salvezza e, se lo supera, l'effetto svanisce. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo; può ignorare questo limite spendendo un utilizzo dell'ira (nessuna azione richiesta)."
       }
-    ]
+    ],
+    "name_en": "Path of the Berserker"
   },
   {
     "id": 2,
@@ -58,7 +59,8 @@
         "level": 14,
         "description": "Ogni volta che il barbaro entra in ira, ottiene una delle seguenti opzioni a scelta. Falco. Mentre l'ira è in atto, è dotato di una velocità di volo pari alla propria velocità, se non indossa alcuna armatura. Leone. Mentre l'ira è in atto, ogni nemico entro 1,5 metri dal personaggio dispone di svantaggio sui tiri per colpire che ha bersagli diversi dal personaggio o da un altro barbaro con questa opzione attiva. Sfondamento. Mentre l'ira è in atto, il barbaro può far sì che una creatura di taglia Grande o inferiore subisca la condizione di prono quando il barbaro la colpisce con un attacco in mischia."
       }
-    ]
+    ],
+    "name_en": "Path of the Wild Heart"
   },
   {
     "id": 3,
@@ -91,7 +93,8 @@
         "level": 14,
         "description": "Quando il barbaro entra in ira, può assumere la forma di un guerriero divino. Questa forma dura 1 minuto o finché non scende a 0 punti ferita. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo. Mentre è in questa forma, ha i benefici elencati di seguito. Resistenza. Il barbaro possiede resistenza ai danni necrotici, psichici e radiosi. Ritorno alla vita. Quando una creatura entro 9 metri dal barbaro sta per essere ridotta a 0 punti ferita, il barbaro può usare una reazione per spendere un utilizzo dell'ira e cambiare i punti ferita del bersaglio in un numero pari al suo livello da barbaro. Volo. Il barbaro è dotato di una velocità di volo pari alla sua velocità base e può fluttuare."
       }
-    ]
+    ],
+    "name_en": "Path of the Zealot"
   },
   {
     "id": 4,
@@ -107,7 +110,7 @@
       {
         "name": "Rami dell'Albero",
         "level": 6,
-        "description": "Ogni volta che una creatura entro 9 metri dal barbaro e che si trova nel suo campo visivo inizia il suo turno mentre l'ira è in atto, il barbaro può usare una reazione per evocare dei rami spettrali dell'Albero del Mondo intorno a essa. Il bersaglio deve superare un tiro salvezza su Forza (CD 8 il modificatore di Forza del barbaro il bonus + di competenza), altrimenti viene teletrasportato in uno spazio libero che il barbaro è in grado di vedere entro 1,5 metri da sé o nello spazio libero più vicino che sia visibile dal barbaro. Dopo che il bersaglio si è teletrasportato, il barbaro può ridurne la velocità a 0 fino al termine del turno attuale."
+        "description": "Ogni volta che una creatura entro 9 metri dal barbaro e che si trova nel suo campo visivo inizia il suo turno mentre l'ira è in atto, il barbaro può usare una reazione per evocare dei rami spettrali dell'Albero del Mondo intorno a essa. Il bersaglio deve superare un tiro salvezza su Forza (CD 8 + il modificatore di Forza del barbaro+ il bonus di competenza), altrimenti viene teletrasportato in uno spazio libero che il barbaro è in grado di vedere entro 1,5 metri da sé o nello spazio libero più vicino che sia visibile dal barbaro. Dopo che il bersaglio si è teletrasportato, il barbaro può ridurne la velocità a 0 fino al termine del turno attuale."
       },
       {
         "name": "Radici d'Assalto",
@@ -119,7 +122,8 @@
         "level": 14,
         "description": "Quando il barbaro entra in ira, come azione bonus mentre l'ira è in atto può teletrasportarsi in uno spazio libero entro 18 metri da sé che è in grado di vedere. Inoltre, una volta per ogni ira, può aumentare il raggio di teletrasporto di 45 metri. Quando lo fa, può anche portare fino a sei creature consenzienti situate entro 3 metri da sé. Ogni creatura viene teletrasportata in uno spazio libero a scelta del personaggio entro 3 metri dallo spazio di destinazione del barbaro."
       }
-    ]
+    ],
+    "name_en": "Path of the World Tree"
   },
   {
     "id": 5,
@@ -147,7 +151,8 @@
         "level": 14,
         "description": "Quando un bardo effettua una prova di caratteristica o un tiro per colpire e fallisce, può spendere un utilizzo di Ispirazione Bardica; se lo fa, tira un dado di Ispirazione Bardica e aggiunge il risultato ottenuto al d20, trasformando potenzialmente il fallimento in un successo. In caso di fallimento, l'Ispirazione Bardica non viene consumata."
       }
-    ]
+    ],
+    "name_en": "College of Lore"
   },
   {
     "id": 6,
@@ -175,7 +180,8 @@
         "level": 14,
         "description": "Dopo aver lanciato un incantesimo con tempo di lancio di un'azione, il bardo può effettuare un attacco con un'arma come azione bonus.."
       }
-    ]
+    ],
+    "name_en": "College of Valor"
   },
   {
     "id": 7,
@@ -203,7 +209,8 @@
         "level": 14,
         "description": "Come azione bonus, il bardo può assumere magicamente una presenza maestosa per 1 minuto o finché non è incapacitato. Per la durata dell'incantesimo, ogni volta che una creatura lo colpisce con un tiro per colpire per la prima volta in un turno, l'attaccante deve superare un tiro salvezza su Carisma contro la CD del tiro salvezza sull'incantesimo, altrimenti l'attacco fallisce e la creatura indietreggia atterrita dalla maestosità del bardo. Dopo aver assunto questa presenza maestosa, non può assumerla di nuovo prima di aver completato un riposo breve o lungo."
       }
-    ]
+    ],
+    "name_en": "College of Glamour"
   },
   {
     "id": 8,
@@ -231,7 +238,8 @@
         "level": 14,
         "description": "Quando il bardo è soggetto a un effetto che gli consente di effettuare un tiro salvezza su Destrezza per dimezzare i danni, non subisce alcun danno se lo supera, e soltanto la metà dei danni se lo fallisce. Il bardo può condividere questo beneficio con qualsiasi creatura entro 1,5 metri da sé che stia effettuando lo stesso tiro salvezza su Destrezza. Il personaggio non può utilizzare questo privilegio se è incapacitato."
       }
-    ]
+    ],
+    "name_en": "College of Dance"
   },
   {
     "id": 9,
@@ -247,7 +255,8 @@
       {
         "name": "Incantesimi del Dominio della Vita",
         "level": 3,
-        "description": "La connessione con questo dominio divino permette al chierico di avere sempre pronti alcuni incantesimi. Quando il chierico raggiunge un livello specificato nella tabella Incantesimi del Dominio della Vita, gli incantesimi lì elencati sono considerati come preparati. INCANTESIMI DEL DOMINIO DELLA VITA Livello da chierico Incantesimi preparati 3 Aiuto, benedizione, cura ferite e ristorare inferiore 5 Parola guaritrice di massa e rinascita 7 Aura di vita e interdizione alla morte 9 Ristorare superiore e cura ferite di massa."
+        "description": "La connessione con questo dominio divino permette al chierico di avere sempre pronti alcuni incantesimi. Quando il chierico raggiunge un livello specificato nella tabella Incantesimi del Dominio della Vita, gli incantesimi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI DEL DOMINIO DELLA VITA Livello da chierico Incantesimi preparati 3 Aiuto, benedizione, cura ferite e ristorare inferiore 5 Parola guaritrice di massa e rinascita 7 Aura di vita e interdizione alla morte 9 Ristorare superiore e cura ferite di massa."
       },
       {
         "name": "Preservare Vita",
@@ -264,7 +273,8 @@
         "level": 17,
         "description": "Quando il chierico sta per lanciare normalmente uno o più dadi per ripristinare i punti ferita di una creatura con un incantesimo o con Incanalare Divinità, anziché tirare quei dadi per la guarigione, usa il numero più alto possibile per ogni dado. Ad esempio, invece di ripristinare 2d6 punti ferita di una creatura con un incantesimo, un chierico ne ripristina 12."
       }
-    ]
+    ],
+    "name_en": "Life Domain"
   },
   {
     "id": 10,
@@ -285,7 +295,8 @@
       {
         "name": "Incantesimi del Dominio della Luce",
         "level": 3,
-        "description": "La connessione con questo dominio divino permette al chierico di avere sempre pronti alcuni incantesimi. Quando il chierico raggiunge un livello specificato nella tabella Incantesimi del Dominio della Luce, gli incantesimi lì elencati sono considerati come preparati. INCANTESIMI DEL DOMINIO DELLA LUCE Livello da chierico Incantesimi preparati 3 Mani brucianti, luminescenza, raggio rovente vedere invisibilità e 5 Luce diurna e palla di fuoco 7 Occhio arcano e muro di fuoco 9 Colpo infuocato e scrutare."
+        "description": "La connessione con questo dominio divino permette al chierico di avere sempre pronti alcuni incantesimi. Quando il chierico raggiunge un livello specificato nella tabella Incantesimi del Dominio della Luce, gli incantesimi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI DEL DOMINIO DELLA LUCE Livello da chierico Incantesimi preparati 3 Mani brucianti, luminescenza, raggio rovente vedere invisibilità e 5 Luce diurna e palla di fuoco 7 Occhio arcano e muro di fuoco 9 Colpo infuocato e scrutare."
       },
       {
         "name": "Bagliore di Interdizione Migliorato",
@@ -297,7 +308,8 @@
         "level": 17,
         "description": "Come azione di Magia, il chierico può emettere un'aura di luce solare che dura 1 minuto o finché non viene interrotta (nessuna azione richiesta). Il chierico proietta luce intensa in un raggio di 18 metri e luce fioca per altri 9 metri. I nemici che si trovano nella luce intensa dispongono di svantaggio ai tiri salvezza contro il Fulgore dell'Alba e contro qualsiasi incantesimo che infligga danni da fuoco o radiosi. Il personaggio può utilizzare questo privilegio un numero di volte pari al valore del suo modificatore di Saggezza (minimo una volta) e recupera tutti gli utilizzi consumati quando completa un riposo lungo."
       }
-    ]
+    ],
+    "name_en": "Light Domain"
   },
   {
     "id": 11,
@@ -313,7 +325,8 @@
       {
         "name": "Incantesimi del Dominio dell'Inganno",
         "level": 3,
-        "description": "La connessione con questo dominio divino permette al chierico di avere sempre pronti alcuni incantesimi. Quando il chierico raggiunge un livello specificato nella tabella Incantesimi del Dominio dell'Inganno, gli incante simi lì elencati sono considerati come preparati. INCANTESIMI DEL DOMINIO DELL'INGANNO Livello da chierico Incantesimi preparati 3 Camuffare se stesso, charme su persone, invisibilità passare senza tracce e 5 Trama ipnotica e anti-individuazione 7 Confusione e porta dimensionale 9 Dominare persone e modificare memoria."
+        "description": "La connessione con questo dominio divino permette al chierico di avere sempre pronti alcuni incantesimi. Quando il chierico raggiunge un livello specificato nella tabella Incantesimi del Dominio dell'Inganno, gli incante simi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI DEL DOMINIO DELL'INGANNO Livello da chierico Incantesimi preparati 3 Camuffare se stesso, charme su persone, invisibilità passare senza tracce e 5 Trama ipnotica e anti-individuazione 7 Confusione e porta dimensionale 9 Dominare persone e modificare memoria."
       },
       {
         "name": "Invocare Duplicato",
@@ -330,7 +343,8 @@
         "level": 17,
         "description": "L'illusione di Invocare Duplicato è diventata più potente nei seguenti modi. Diversivo condiviso. Quando il chierico e i suoi alleati effettuano tiri per colpire contro creature entro 1,5 metri dall'illusione, i tiri per colpire dispongono di vantaggio. Illusione curativa. Quando l'illusione termina, il chierico o una creatura a sua scelta entro 1,5 metri dall'illusione recupera un numero di punti ferita pari al livello da chierico."
       }
-    ]
+    ],
+    "name_en": "Trickery Domain"
   },
   {
     "id": 12,
@@ -341,12 +355,13 @@
       {
         "name": "Colpo Guidato",
         "level": 3,
-        "description": "Quando il chierico o una creatura entro 9 metri da sé manca il bersaglio con un tiro per colpire, il chierico può spendere un utilizzo di Incanalare Divinità e conferire a quel tiro un bonus di +10, aumentando le possibilità che il colpo vada a segno. Quando usa questo privilegio per favorire il tiro per colpire di un'altra creatura, deve usare una reazione."
+        "description": "Quando il chierico o una creatura entro 9 metri da sé manca il bersaglio con un tiro per colpire, il chierico può spendere un utilizzo di Incanalare Divinità e conferire a quel tiro un bonus di 10, aumentando le possibilità che il colpo vada a segno. Quando usa questo privilegio per favorire il tiro per colpire di un'altra creatura, deve usare una reazione."
       },
       {
         "name": "Incantesimi del Dominio della Guerra",
         "level": 3,
-        "description": "La connessione con questo dominio divino permette al chierico di avere sempre pronti alcuni incantesimi. Quando il chierico raggiunge un livello specificato nella tabella Incantesimi del Dominio della Guerra, gli incante simi lì elencati sono considerati come preparati. INCANTESIMI DEL DOMINIO DELLA GUERRA Livello da chierico Incantesimi preparati 3 Dardo tracciante, arma magica, scudo della fede e arma spirituale 5 Manto del crociato e guardiani spirituali 7 Scudo di fuoco e libertà di movimento 9 Blocca mostri e turbine implacabile."
+        "description": "La connessione con questo dominio divino permette al chierico di avere sempre pronti alcuni incantesimi. Quando il chierico raggiunge un livello specificato nella tabella Incantesimi del Dominio della Guerra, gli incante simi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI DEL DOMINIO DELLA GUERRA Livello da chierico Incantesimi preparati 3 Dardo tracciante, arma magica, scudo della fede e arma spirituale 5 Manto del crociato e guardiani spirituali 7 Scudo di fuoco e libertà di movimento 9 Blocca mostri e turbine implacabile."
       },
       {
         "name": "Sacerdote di Guerra",
@@ -363,7 +378,8 @@
         "level": 17,
         "description": "Il chierico ottiene resistenza ai danni contundenti, perforanti e taglienti."
       }
-    ]
+    ],
+    "name_en": "War Domain"
   },
   {
     "id": 13,
@@ -379,7 +395,8 @@
       {
         "name": "Incantesimi del Circolo della Terra",
         "level": 3,
-        "description": "Al termine di un riposo lungo, il druido sceglie un tipo di terra: arida, polare, temperata o tropicale. Consulta la tabella qui di seguito corrispondente al tipo di terra scelto; gli incantesimi elencati per il livello da druido attuale e per i livelli inferiori si considerano preparati. TERRA ARIDA Livello da druido Incantesimi del Circolo 3 Dardo di fuoco, mani brucianti, sfocatura 5 Palla di fuoco 7 Inaridire 9 Muro di pietra TERRA POLARE Livello da druido Incantesimi del Circolo 3 Blocca persone, nube di nebbia, raggio di gelo 5 Tempesta di nevischio 7 Tempesta di ghiaccio 9 Cono di freddo TERRA TEMPERATA Livello da druido Incantesimi del Circolo 3 Passo velato, sonno e stretta folgorante 5 Fulmine 7 Libertà di movimento 9 Traslazione arborea TERRA TROPICALE Livello da druido Incantesimi del Circolo 3 Fiotto acido, raggio di infermità, ragnatela s Nube maleodorante 7 Metamorfosi 9 Piaga degli insetti."
+        "description": "Al termine di un riposo lungo, il druido sceglie un tipo di terra: arida, polare, temperata o tropicale. Consulta la tabella qui di seguito corrispondente al tipo di terra scelto; gli incantesimi elencati per il livello da druido attuale e per i livelli inferiori si considerano preparati.",
+        "table": "TERRA ARIDA Livello da druido Incantesimi del Circolo 3 Dardo di fuoco, mani brucianti, sfocatura 5 Palla di fuoco 7 Inaridire 9 Muro di pietra TERRA POLARE Livello da druido Incantesimi del Circolo 3 Blocca persone, nube di nebbia, raggio di gelo 5 Tempesta di nevischio 7 Tempesta di ghiaccio 9 Cono di freddo TERRA TEMPERATA Livello da druido Incantesimi del Circolo 3 Passo velato, sonno e stretta folgorante 5 Fulmine 7 Libertà di movimento 9 Traslazione arborea TERRA TROPICALE Livello da druido Incantesimi del Circolo 3 Fiotto acido, raggio di infermità, ragnatela s Nube maleodorante 7 Metamorfosi 9 Piaga degli insetti."
       },
       {
         "name": "Recupero Naturale",
@@ -389,14 +406,16 @@
       {
         "name": "Interdizione della Natura",
         "level": 10,
-        "description": "È immune alla condizione avvelenato ed è dotato di resistenza a un tipo di danno associato alla terra che ha scelto per il privilegio Incantesimi del Circolo, come indicato nella tabella Interdizione della Natura. INTERDIZIONE DELLA NATURA Tipo di terra Resistenza Tipo di terra Resistenza Arida Fuoco Temperata Fulmine Polare Freddo Tropicale Veleno."
+        "description": "È immune alla condizione avvelenato ed è dotato di resistenza a un tipo di danno associato alla terra che ha scelto per il privilegio Incantesimi del Circolo, come indicato nella tabella Interdizione della Natura.",
+        "table": "INTERDIZIONE DELLA NATURA Tipo di terra Resistenza Tipo di terra Resistenza Arida Fuoco Temperata Fulmine Polare Freddo Tropicale Veleno."
       },
       {
         "name": "Rifugio della Natura",
         "level": 14,
         "description": "Come azione di Magia, il druido può spendere un utilizzo della sua Forma Selvatica per far apparire alberi e viticci spettrali in un cubo con spigolo di 4,5 metri in un punto del terreno entro 36 metri da sé. La vegetazione permane per 1 minuto, o finché il druido non è incapacitato o morto. Mentre si trovano in quell'area, il druido e i suoi alleati ottengono mezza copertura, e gli alleati ottengono la resistenza conferita da Interdizione della Natura. Come azione bonus, il druido può muovere il cubo fino a 18 metri sul terreno entro 36 metri da sé."
       }
-    ]
+    ],
+    "name_en": "Circle of the Land"
   },
   {
     "id": 14,
@@ -412,7 +431,8 @@
       {
         "name": "Incantesimi del Circolo della Luna",
         "level": 3,
-        "description": "Quando il druido raggiunge un livello specificato nella tabella Incantesimi del Circolo della Luna, gli incantesimi lì elencati sono considerati come preparati. Inoltre, può lanciare gli incantesimi di questo privilegio mentre è in Forma Selvatica. INCANTESIMI DEL CIRCOLO DELLA LUNA Livello da druido Incantesimi preparati 3 Bagliore lunare, cura ferite e luce splendente 5 Evoca animali 7 Fonte di luce lunare 9 Cura ferite di massa."
+        "description": "Quando il druido raggiunge un livello specificato nella tabella Incantesimi del Circolo della Luna, gli incantesimi lì elencati sono considerati come preparati. Inoltre, può lanciare gli incantesimi di questo privilegio mentre è in Forma Selvatica.",
+        "table": "INCANTESIMI DEL CIRCOLO DELLA LUNA Livello da druido Incantesimi preparati 3 Bagliore lunare, cura ferite e luce splendente 5 Evoca animali 7 Fonte di luce lunare 9 Cura ferite di massa."
       },
       {
         "name": "Forme del Circolo Migliorate",
@@ -429,7 +449,8 @@
         "level": 14,
         "description": "Il potere della luna avvolge il druido e gli concede i seguenti benefici. Chiardiluna condiviso. Ogni volta che il druido usa Passo Chiardiluna, può teletrasportare anche una crea tura consenziente Che si trova entro 3 metri da sé. Può teletrasportarla in uno spazio libero nel suo campo visivo entro 3 metri dal suo spazio di destinazione. Radianza lunare migliorata. Una volta per turno, il druido può infliggere 2d10 danni radiosi extra a un bersaglio che colpisce con un attacco in Forma Selvatica."
       }
-    ]
+    ],
+    "name_en": "Circle of the Moon"
   },
   {
     "id": 15,
@@ -445,7 +466,8 @@
       {
         "name": "Incantesimi del Circolo del Mare",
         "level": 3,
-        "description": "Quando il druido raggiunge un livello specificato nella tabella Incantesimi del Circolo del Mare, gli incantesimi lì elencati sono considerati come preparati. INCANTESIMI DEL CIRCOLO DEL MARE Livello da druido Incantesimi preparati 3 Nube di nebbia, folata di vento, raggio di gelo.frantumare onda tonante e 5 Fulmine e respirare sott'acqua 7 Controllare acqua e tempesta di ghiaccio 9 Evoca elementale e blocca mostri."
+        "description": "Quando il druido raggiunge un livello specificato nella tabella Incantesimi del Circolo del Mare, gli incantesimi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI DEL CIRCOLO DEL MARE Livello da druido Incantesimi preparati 3 Nube di nebbia, folata di vento, raggio di gelo.frantumare onda tonante e 5 Fulmine e respirare sott'acqua 7 Controllare acqua e tempesta di ghiaccio 9 Evoca elementale e blocca mostri."
       },
       {
         "name": "Affinità Acquatica",
@@ -462,7 +484,8 @@
         "level": 14,
         "description": "Invece di generare l'emanazione di Furia dei Mari intorno a sé, il druido può generarla intorno a una creatura con senziente entro 18 metri da sé. La creatura ottiene tutti i benefici dell'emanazione e, per essa, utilizza la CD del tiro salvezza sull'incantesimo e il modificatore di Saggezza del druido. Inoltre, il druido può generare l'emanazione intorno a se stesso e alla creatura spendendo due utilizzi di Forma Selvatica anziché uno per generarla."
       }
-    ]
+    ],
+    "name_en": "Circle of the Sea"
   },
   {
     "id": 16,
@@ -473,7 +496,8 @@
       {
         "name": "Carta Celeste",
         "level": 3,
-        "description": "Il druido, nell'ambito dei suoi studi sulla volta del cielo, ha creato una carta celeste. È un oggetto Minuscolo e può assolvere la funzione di focus da incantatore per gli incantesimi da druido; il giocatore determina l'aspetto della carta celeste tirando i dadi sulla tabella \"Carta Celeste\", oppure può sceglierne uno. Mentre il druido impugna la mappa, gli incantesimi dardo tracciante e guida si considerano preparati; inoltre, può lanciare dardo tracciante senza spendere uno slot incantesimo. Il personaggio può lanciarlo in questo modo un numero di volte pari al valore del suo modificatore di Saggezza (minimo una volta) e recupera tutti gli utilizzi consumati quando completa un riposo lungo. Se il druido perde la carta celeste, può compiere un rituale di 1 ora per crearne un'altra con la magia. Il rituale può essere eseguito durante un riposo breve o lungo e la carta precedente viene distrutta. CARTA CELESTE 1d6 Aspetto della Carta Una pergamena con le descrizioni delle costellazioni 2 Una tavoletta di pietra con dei piccoli fori incisi 3 Una pelle di orsogufo lavorata con simboli stellari 4 Una raccolta di carte celesti rilegate in ebano 5 Un cristallo inciso con forme di costellazioni 6 Un disco di vetro inciso con costellazioni."
+        "description": "Il druido, nell'ambito dei suoi studi sulla volta del cielo, ha creato una carta celeste. È un oggetto Minuscolo e può assolvere la funzione di focus da incantatore per gli incantesimi da druido; il giocatore determina l'aspetto della carta celeste tirando i dadi sulla tabella \"Carta Celeste\", oppure può sceglierne uno. Mentre il druido impugna la mappa, gli incantesimi dardo tracciante e guida si considerano preparati; inoltre, può lanciare dardo tracciante senza spendere uno slot incantesimo. Il personaggio può lanciarlo in questo modo un numero di volte pari al valore del suo modificatore di Saggezza (minimo una volta) e recupera tutti gli utilizzi consumati quando completa un riposo lungo. Se il druido perde la carta celeste, può compiere un rituale di 1 ora per crearne un'altra con la magia. Il rituale può essere eseguito durante un riposo breve o lungo e la carta precedente viene distrutta.",
+        "table": "CARTA CELESTE 1d6 Aspetto della Carta Una pergamena con le descrizioni delle costellazioni 2 Una tavoletta di pietra con dei piccoli fori incisi 3 Una pelle di orsogufo lavorata con simboli stellari 4 Una raccolta di carte celesti rilegate in ebano 5 Un cristallo inciso con forme di costellazioni 6 Un disco di vetro inciso con costellazioni."
       },
       {
         "name": "Forma Siderale",
@@ -495,7 +519,8 @@
         "level": 14,
         "description": "Quando il druido attiva Forma Siderale, diventa parzial mente incorporeo ottenendo resistenza ai danni contundenti, perforanti e taglienti."
       }
-    ]
+    ],
+    "name_en": "Circle of Stars"
   },
   {
     "id": 17,
@@ -533,7 +558,8 @@
         "level": 18,
         "description": "Il guerriero giunge all'apice della sua resilienza in batta glia, ottenendo i seguenti benefici. Incoraggiamento eroico. All'inizio di ogni suo turno, il guerriero recupera punti ferita pari a 5 più il suo modificatore di Costituzione se è sanguinante e possiede almeno 1 punto ferita. Sfuggire alla morte. Dispone di vantaggio ai tiri salvezza contro morte. Inoltre, quando ottiene 18-20 a un tiro salvezza contro morte, possiede il beneficio di ottenere un 20."
       }
-    ]
+    ],
+    "name_en": "Champion"
   },
   {
     "id": 18,
@@ -549,7 +575,7 @@
       {
         "name": "Superiorità in Combattimento",
         "level": 3,
-        "description": "Il guerriero ha affinato le tecniche di combattimento grazie all'esperienza sul campo di battaglia. Apprende manovre alimentate da dadi speciali chiamati dadi di superiorità. Manovre. Il guerriero apprende tre manovre a scelta, descritte nella sezione \"Opzioni di manovra\" più avanti nella descrizione di questa sottoclasse. Molte manovre potenziano un attacco in qualche modo. Il guerriero può usare soltanto una manovra per attacco. Il guerriero apprende due manovre aggiuntive a scelta al 7°, 10° e 15° livello. Ogni volta che apprende nuove manovre, può anche sostituire una manovra che conosce con una manovra diversa. Dadi di superiorità. Il guerriero possiede quattro dadi di superiorità, rappresentati da d8. Quando usa un dado di superiorità, lo spende. Recupera tutti i dadi di superiorità quando completa un riposo breve o lungo. Ottiene un altro dado di superiorità al 7° livello (cinque dadi in totale) e un altro ancora al 15° livello (sei dadi in totale). Tiri salvezza. Se una manovra richiede un tiro salvezza, la CD è pari a 8 più il modificatore di Forza o Destrezza (a scelta) e il bonus di competenza del guerriero."
+        "description": "Il guerriero ha affinato le tecniche di combattimento grazie all'esperienza sul campo di battaglia. Apprende manovre alimentate da dadi speciali chiamati dadi di superiorità. Manovre. Il guerriero apprende tre manovre a scelta, descritte nella sezione \"Opzioni di manovra\" più avanti nella descrizione di questa sottoclasse. Molte manovre potenziano un attacco in qualche modo. Il guerriero può usare soltanto una manovra per attacco. Il guerriero apprende due manovre aggiuntive a scelta al 7°, 10° e 15° livello. Ogni volta che apprende nuove manovre, può anche sostituire una manovra che conosce con una manovra diversa. Dadi di superiorità. Il guerriero possiede quattro dadi di superiorità, rappresentati da d8. Quando usa un dado di superiorità, lo spende. Recupera tutti i dadi di superiorità quando completa un riposo breve o lungo. Ottiene un altro dado di superiorità al 7° livello (cinque dadi in totale) e un altro ancora al 15° livello (sei dadi in totale). Tiri salvezza. Se una manovra richiede un tiro salvezza, la CD è pari a 8 più il modificatore di Forza o Destrezza (a scelta) + il bonus di competenza del guerriero."
       },
       {
         "name": "Conosci il Tuo Nemico",
@@ -569,9 +595,11 @@
       {
         "name": "Superiorità in Combattimento Suprema",
         "level": 18,
-        "description": "Il dado di superiorità diventa un d12. OPZIONI DI MANOVRA Le manovre sono presentate in ordine alfabetico. Attacco adescante. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per tentare di indurre il bersaglio ad attac carlo. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Il bersaglio deve superare un tiro salvezza su Saggezza o subire svantaggio ai tiri per colpire contro bersagli diversi dal personaggio fino alla fine del turno successivo. Attacco con affondo. Come azione bonus, il guerriero può spendere un dado di superiorità ed effettuare l'azione di Scatto. Durante questo turno, se il personaggio percorre almeno 1,5 metri in linea retta subito prima di colpire con un attacco in mischia come parte dell'azione di Attacco, può aggiungere il dado di superiorità al tiro per i danni dell'attacco. Attacco con.finta. Come azione bonus, il guerriero può spendere un dado di superiorità per eseguire una finta, scegliendo una creatura entro 1,5 metri da sé come ber saglio. Il guerriero dispone di vantaggio al suo prossimo tiro per colpire contro quella creatura in questo turno. Se l'attacco va a segno, il guerriero aggiunge il dado di superiorità al tiro per i danni dell'attacco. Attacco con manovra. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per spostare uno dei suoi compagni in una posizione più vantaggiosa. Il guerriero aggiunge il dado di superiorità al tiro per i danni dell'attacco e sceglie una creatura consenziente che sia in grado di vederlo o di sentirlo. Quella creatura può usare la sua reazione per muoversi fino alla metà della sua velocità senza provocare attacchi di opportunità da parte del bersaglio dell'attacco del guerriero. Attacco con spazzata. Quando il guerriero colpisce una creatura con un tiro per colpire in mischia con un'arma o con un colpo senz'armi, può spendere un dado di supe riorità per tentare di infliggere danni a un'altra creatura. Sceglie un'altra creatura entro 1,5 metri dal bersaglio originale ed entro la propria portata. Se il tiro per colpire originale colpirebbe anche la seconda creatura, quest'ul tima subisce danni pari al risultato del tiro ottenuto con il dado di superiorità. I danni sono dello stesso tipo dell'attacco originale. Attacco con spinta. Quando il guerriero colpisce una creatura con un tiro per colpire utilizzando un'arma o un colpo senz'armi, può spendere un dado di superiorità per tentare di spingere via il bersaglio. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Se il bersaglio è di taglia Grande o inferiore, deve effettuare un tiro salvezza su Forza. Se lo fallisce, il guerriero spinge il bersaglio via da sé fino a un massimo di 4,5 metri. Attacco disarmante. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per tentare di disarmare il bersaglio. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Il ber saglio deve superare un tiro salvezza su Forza o lasciar cadere un oggetto che impugna a scelta del guerriero, facendolo atterrare nel suo spazio. Attacco minaccioso. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per tentare di spaventare il bersaglio. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Il bersaglio deve superare un tiro salvezza su Saggezza, altrimenti è spaventato fino al termine del turno succes sivo del guerriero. Attacco preciso. Quando il guerriero fallisce un tiro per colpire, può spendere un dado di superiorità, tirarlo e aggiungerlo al tiro per colpire, aumentando le possibilità che il colpo vada a segno. Attacco sbilanciante. Quando il guerriero colpisce una creatura con un tiro per colpire con un'arma o con un colpo senz'armi, può spendere un dado di superiorità e aggiungere il dado al tiro per i danni dell'attacco. Se il bersaglio è una creatura di taglia Grande o inferiore, deve superare un tiro salvezza su Forza, altrimenti cade a terra prono. Colpo del comandante. Quando il guerriero effettua l'azione di Attacco nel suo turno, può rinunciare a uno dei suoi attacchi per ordinare a un compagno di colpire. Quando lo fa, deve scegliere una creatura consenziente che può vederlo o sentirlo e spendere un dado di superio rità. Quella creatura può usare immediatamente la sua reazione per effettuare un attacco con un'arma o un colpo senz'armi, aggiungendo il dado di superiorità al tiro per i danni dell'attacco se il colpo va a segno. Colpo distraente. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per distrarre il bersaglio. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Il successivo tiro per colpire contro il bersaglio di un altro attaccante dispone di vantaggio se l'attacco viene effettuato prima dell'inizio del turno successivo del guerriero. Imboscata. Quando il guerriero effettua una prova di Destrezza (Furtività) o tira per l'iniziativa, può spendere un dado di superiorità e aggiungere il suo valore al risultato di questi tiri, purché non sia incapacitato. Incoraggiamento. Come azione bonus, il guerriero può spendere un dado di superiorità per incitare uno dei suoi compagni. Sceglie un alleato entro 9 metri da sé che può vederlo o sentirlo. Quella creatura ottiene un ammontare di punti ferita temporanei pari al risultato del tiro del dado di superiorità più metà del livello da guerriero del personaggio (arrotondato per difetto). Parata. Quando un'altra creatura infligge danni al guerriero con un attacco in mischia, il guerriero può usare la sua reazione e spendere un dado di superiorità per ridurre i danni del numero ottenuto con il tiro del suo dado di superiorità più il suo modificatore di Forza o Destrezza (a scelta). Presenza imponente. Quando il guerriero effettua una prova di Carisma (Intimidire, Intrattenere o Persuasione), può spendere un dado di superiorità e aggiungerlo al tiro. Replica. Quando una creatura manca il guerriero con un tiro per colpire in mischia, il guerriero può usare la sua reazione e spendere un dado di superiorità per effettuare un tiro per colpire in mischia con un'arma o con un colpo senz'armi contro la creatura. Se il colpo va a segno, il guerriero aggiunge il dado di superiorità al tiro per i danni dell'attacco. Scambio. Nel suo turno, quando il guerriero si trova entro 1,5 metri da una creatura, può spendere un dado di superiorità per scambiare la sua posizione con quella della creatura, a condizione che questa sia consenziente e che il guerriero spenda almeno 1,5 metri di movimento e non sia incapacitato. Questo movimento non provoca attacchi di opportunità. Il guerriero lancia il dado di superiorità. Fino all'inizio del proprio turno successivo, il guerriero o l'altra creatura (a scelta del guerriero) ottiene un bonus alla CA pari al numero ottenuto. Scarto elusivo. Come azione bonus, il guerriero può spendere un dado di superiorità ed effettuare l'azione di Disimpegno. Inoltre, tira il dado e aggiunge il risultato alla sua CA fino all'inizio del turno successivo. Valutazione tattica. Quando il guerriero effettua una prova di Intelligenza (Storia o Indagare) o una prova di Saggezza (Intuizione), può spendere un dado di superiorità aggiungendolo al risultato della prova di caratteristica. V. rf' ,'-----."
+        "description": "Il dado di superiorità diventa un d12.",
+        "table": "OPZIONI DI MANOVRA Le manovre sono presentate in ordine alfabetico. Attacco adescante. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per tentare di indurre il bersaglio ad attac carlo. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Il bersaglio deve superare un tiro salvezza su Saggezza o subire svantaggio ai tiri per colpire contro bersagli diversi dal personaggio fino alla fine del turno successivo. Attacco con affondo. Come azione bonus, il guerriero può spendere un dado di superiorità ed effettuare l'azione di Scatto. Durante questo turno, se il personaggio percorre almeno 1,5 metri in linea retta subito prima di colpire con un attacco in mischia come parte dell'azione di Attacco, può aggiungere il dado di superiorità al tiro per i danni dell'attacco. Attacco con.finta. Come azione bonus, il guerriero può spendere un dado di superiorità per eseguire una finta, scegliendo una creatura entro 1,5 metri da sé come ber saglio. Il guerriero dispone di vantaggio al suo prossimo tiro per colpire contro quella creatura in questo turno. Se l'attacco va a segno, il guerriero aggiunge il dado di superiorità al tiro per i danni dell'attacco. Attacco con manovra. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per spostare uno dei suoi compagni in una posizione più vantaggiosa. Il guerriero aggiunge il dado di superiorità al tiro per i danni dell'attacco e sceglie una creatura consenziente che sia in grado di vederlo o di sentirlo. Quella creatura può usare la sua reazione per muoversi fino alla metà della sua velocità senza provocare attacchi di opportunità da parte del bersaglio dell'attacco del guerriero. Attacco con spazzata. Quando il guerriero colpisce una creatura con un tiro per colpire in mischia con un'arma o con un colpo senz'armi, può spendere un dado di supe riorità per tentare di infliggere danni a un'altra creatura. Sceglie un'altra creatura entro 1,5 metri dal bersaglio originale ed entro la propria portata. Se il tiro per colpire originale colpirebbe anche la seconda creatura, quest'ul tima subisce danni pari al risultato del tiro ottenuto con il dado di superiorità. I danni sono dello stesso tipo dell'attacco originale. Attacco con spinta. Quando il guerriero colpisce una creatura con un tiro per colpire utilizzando un'arma o un colpo senz'armi, può spendere un dado di superiorità per tentare di spingere via il bersaglio. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Se il bersaglio è di taglia Grande o inferiore, deve effettuare un tiro salvezza su Forza. Se lo fallisce, il guerriero spinge il bersaglio via da sé fino a un massimo di 4,5 metri. Attacco disarmante. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per tentare di disarmare il bersaglio. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Il ber saglio deve superare un tiro salvezza su Forza o lasciar cadere un oggetto che impugna a scelta del guerriero, facendolo atterrare nel suo spazio. Attacco minaccioso. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per tentare di spaventare il bersaglio. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Il bersaglio deve superare un tiro salvezza su Saggezza, altrimenti è spaventato fino al termine del turno succes sivo del guerriero. Attacco preciso. Quando il guerriero fallisce un tiro per colpire, può spendere un dado di superiorità, tirarlo e aggiungerlo al tiro per colpire, aumentando le possibilità che il colpo vada a segno. Attacco sbilanciante. Quando il guerriero colpisce una creatura con un tiro per colpire con un'arma o con un colpo senz'armi, può spendere un dado di superiorità e aggiungere il dado al tiro per i danni dell'attacco. Se il bersaglio è una creatura di taglia Grande o inferiore, deve superare un tiro salvezza su Forza, altrimenti cade a terra prono. Colpo del comandante. Quando il guerriero effettua l'azione di Attacco nel suo turno, può rinunciare a uno dei suoi attacchi per ordinare a un compagno di colpire. Quando lo fa, deve scegliere una creatura consenziente che può vederlo o sentirlo e spendere un dado di superio rità. Quella creatura può usare immediatamente la sua reazione per effettuare un attacco con un'arma o un colpo senz'armi, aggiungendo il dado di superiorità al tiro per i danni dell'attacco se il colpo va a segno. Colpo distraente. Quando il guerriero colpisce una creatura con un tiro per colpire, può spendere un dado di superiorità per distrarre il bersaglio. Aggiunge il dado di superiorità al tiro per i danni dell'attacco. Il successivo tiro per colpire contro il bersaglio di un altro attaccante dispone di vantaggio se l'attacco viene effettuato prima dell'inizio del turno successivo del guerriero. Imboscata. Quando il guerriero effettua una prova di Destrezza (Furtività) o tira per l'iniziativa, può spendere un dado di superiorità e aggiungere il suo valore al risultato di questi tiri, purché non sia incapacitato. Incoraggiamento. Come azione bonus, il guerriero può spendere un dado di superiorità per incitare uno dei suoi compagni. Sceglie un alleato entro 9 metri da sé che può vederlo o sentirlo. Quella creatura ottiene un ammontare di punti ferita temporanei pari al risultato del tiro del dado di superiorità più metà del livello da guerriero del personaggio (arrotondato per difetto). Parata. Quando un'altra creatura infligge danni al guerriero con un attacco in mischia, il guerriero può usare la sua reazione e spendere un dado di superiorità per ridurre i danni del numero ottenuto con il tiro del suo dado di superiorità più il suo modificatore di Forza o Destrezza (a scelta). Presenza imponente. Quando il guerriero effettua una prova di Carisma (Intimidire, Intrattenere o Persuasione), può spendere un dado di superiorità e aggiungerlo al tiro. Replica. Quando una creatura manca il guerriero con un tiro per colpire in mischia, il guerriero può usare la sua reazione e spendere un dado di superiorità per effettuare un tiro per colpire in mischia con un'arma o con un colpo senz'armi contro la creatura. Se il colpo va a segno, il guerriero aggiunge il dado di superiorità al tiro per i danni dell'attacco. Scambio. Nel suo turno, quando il guerriero si trova entro 1,5 metri da una creatura, può spendere un dado di superiorità per scambiare la sua posizione con quella della creatura, a condizione che questa sia consenziente e che il guerriero spenda almeno 1,5 metri di movimento e non sia incapacitato. Questo movimento non provoca attacchi di opportunità. Il guerriero lancia il dado di superiorità. Fino all'inizio del proprio turno successivo, il guerriero o l'altra creatura (a scelta del guerriero) ottiene un bonus alla CA pari al numero ottenuto. Scarto elusivo. Come azione bonus, il guerriero può spendere un dado di superiorità ed effettuare l'azione di Disimpegno. Inoltre, tira il dado e aggiunge il risultato alla sua CA fino all'inizio del turno successivo. Valutazione tattica. Quando il guerriero effettua una prova di Intelligenza (Storia o Indagare) o una prova di Saggezza (Intuizione), può spendere un dado di superiorità aggiungendolo al risultato della prova di caratteristica. V. rf' ,'-----."
       }
-    ]
+    ],
+    "name_en": "Battle Master"
   },
   {
     "id": 19,
@@ -587,7 +615,8 @@
       {
         "name": "Incantesimi",
         "level": 3,
-        "description": "Il guerriero impara a lanciare incantesimi. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le informazioni sottostanti descrivono come applicare tali regole alla sottoclasse del Cavaliere Mistico. Trucchetti. Il guerriero conosce due trucchetti a scelta dalla lista degli incantesimi da mago (consultabile nella sezione dedicata a questa classe). Sono consigliati raggio di gelo e stretta folgorante. Ogni volta che il personaggio ottiene un livello da guerriero, può sostituire uno di questi trucchetti con un altro trucchetto a scelta dalla lista degli incantesimi da mago. Quando il guerriero raggiunge il 10° livello, può impa rare un altro trucchetto da mago a scelta. Slot incantesimo. La tabella Incantesimi del Cavaliere Mistico mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consumati vengono ripristinati una volta completato un riposo lungo. INCANTESIMI DEL CAVALIERE MISTICO -Slot incantesimo per livello di incantesimoLivello Incantesimi da guerriero preparati 2 3 4 3 3 2 4 4 3 5 4 3 6 4 3 7 5 4 2 8 6 4 2 9 6 4 2 10 7 4 3 11 8 4 3 12 8 4 3 13 9 4 3 2 14 10 4 3 2 15 10 4 3 2 16 11 4 3 3 17 11 4 3 3 18 11 4 3 3 19 12 4 3 3 20 13 4 3 3 Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie tre incantesimi di 1° livello dalla lista degli incantesimi da mago. Sono consigliati mani brucianti, salto e scudo. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da guerriero, come mostrato nella colonna Incantesimi preparati della tabella Incantesimi del Cavaliere Mistico. Ogni volta che il numero cresce, il mago deve scegliere altri incantesimi dalla lista degli incantesimi da mago finché il numero di incantesimi sulla sua lista non combacia con quello mostrato nella tabella. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un guerriero di 7° livello, la sua lista di incantesimi preparati può includere cinque incantesimi da mago di 1° e 2° livello in qualsiasi combinazione. Cambiare gli incantesimi preparati. Quando completa un riposo lungo, il guerriero può sostituire un incantesimo sulla propria lista con un altro incantesimo da mago di cui possiede degli slot. Caratteristica da incantatore. Intelligenza è la caratteri stica da incantatore per gli incantesimi da mago. Focus da incantatore. Un ladro può usare un focus arcano come focus da incantatore per i suoi incantesimi da mago."
+        "description": "Il guerriero impara a lanciare incantesimi. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le informazioni sottostanti descrivono come applicare tali regole alla sottoclasse del Cavaliere Mistico. Trucchetti. Il guerriero conosce due trucchetti a scelta dalla lista degli incantesimi da mago (consultabile nella sezione dedicata a questa classe). Sono consigliati raggio di gelo e stretta folgorante. Ogni volta che il personaggio ottiene un livello da guerriero, può sostituire uno di questi trucchetti con un altro trucchetto a scelta dalla lista degli incantesimi da mago. Quando il guerriero raggiunge il 10° livello, può impa rare un altro trucchetto da mago a scelta. Slot incantesimo. La tabella Incantesimi del Cavaliere Mistico mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Tutti gli slot incantesimo consumati vengono ripristinati una volta completato un riposo lungo.",
+        "table": "INCANTESIMI DEL CAVALIERE MISTICO -Slot incantesimo per livello di incantesimoLivello Incantesimi da guerriero preparati 2 3 4 3 3 2 4 4 3 5 4 3 6 4 3 7 5 4 2 8 6 4 2 9 6 4 2 10 7 4 3 11 8 4 3 12 8 4 3 13 9 4 3 2 14 10 4 3 2 15 10 4 3 2 16 11 4 3 3 17 11 4 3 3 18 11 4 3 3 19 12 4 3 3 20 13 4 3 3 Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie tre incantesimi di 1° livello dalla lista degli incantesimi da mago. Sono consigliati mani brucianti, salto e scudo. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da guerriero, come mostrato nella colonna Incantesimi preparati della tabella Incantesimi del Cavaliere Mistico. Ogni volta che il numero cresce, il mago deve scegliere altri incantesimi dalla lista degli incantesimi da mago finché il numero di incantesimi sulla sua lista non combacia con quello mostrato nella tabella. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un guerriero di 7° livello, la sua lista di incantesimi preparati può includere cinque incantesimi da mago di 1° e 2° livello in qualsiasi combinazione. Cambiare gli incantesimi preparati. Quando completa un riposo lungo, il guerriero può sostituire un incantesimo sulla propria lista con un altro incantesimo da mago di cui possiede degli slot. Caratteristica da incantatore. Intelligenza è la caratteri stica da incantatore per gli incantesimi da mago. Focus da incantatore. Un ladro può usare un focus arcano come focus da incantatore per i suoi incantesimi da mago."
       },
       {
         "name": "Magia da Guerra",
@@ -609,7 +638,8 @@
         "level": 18,
         "description": "Quando effettua l'azione di Attacco nel suo turno, il guerriero può sostituire due degli attacchi con il lancio di uno dei suoi incantesimi da mago di 1° e 2° livello che abbia il tempo di lancio di un'azione."
       }
-    ]
+    ],
+    "name_en": "Eldritch Knight"
   },
   {
     "id": 20,
@@ -620,12 +650,13 @@
       {
         "name": "Potere Psionico",
         "level": 3,
-        "description": "Il personaggio attinge a una fonte di energia psionica den tro di sé. È rappresentata dal suo dado di Energia Psionica, che alimenta i poteri forniti da questa sottoclasse. La tabella Dadi di energia del Guerriero Psionico mostra la tipologia e il numero di dadi che il personaggio possiede quando raggiunge determinati livelli da guerriero. DADI DI ENERGIA DEL GUERRIERO PSIONICO Livello da Guerriero Tipo di dado Numero 3 D6 4 5 D8 6 9 D8 8 11 D10 8 13 D10 10 17 D12 12 Qualunque privilegio di questa sottoclasse che utilizza un dado di Energia Psionica può usare solo i dadi di questa sottoclasse. Per alcuni poteri bisogna spendere il dado di Energia Psionica, come specificato nella descrizione di quel potere e il personaggio non può usare uno di questi poteri se ha già consumato tutti i dadi. Il guerriero recupera un dado di Energia Psionica speso dopo aver completato un riposo breve, mentre li recupera tutti dopo aver completato un riposo lungo. Campo protettivo. Ogni volta che il guerriero o un'altra creatura nel raggio di 9 metri nel suo campo visivo subisce dei danni, il guerriero può usare la sua reazione per creare uno scudo temporaneo di forza telecinetica spendendo un dado di Energia Psionica e riducendo la quantità di danni subiti del numero ottenuto più il suo modificatore di Intelligenza (riduzione minima di 1). Colpo psionico. Il personaggio può infondere forza psionica alle sue armi. Una volta per ogni suo turno, subito dopo aver colpito un bersaglio entro 9 metri con un attacco e avergli inflitto dei danni con un'arma, il guerriero può spendere un dado di Energia Psionica per infliggere danni da forza a quel bersaglio aggiungendo al risultato ottenuto il suo modificatore di Intelligenza. Movimento telecinetico. Il personaggio ora è in grado di spostare un oggetto o una creatura con la mente. Come azione di Magia, sceglie un bersaglio entro 9 metri da sé e nel suo campo visivo; il bersaglio deve essere un oggetto non equipaggiato di taglia Grande o inferiore o una creatura consenziente diversa da se stesso. Il guerriero teletrasporta il bersaglio di un massimo di 9 metri in uno spazio libero nel suo campo visivo. In alternativa, se il bersaglio è un oggetto Minuscolo, può teletrasportarlo da o verso la sua mano. Dopo aver effettuato questa azione, il guerriero non può utilizzarla di nuovo prima di aver completato un riposo breve o lungo; può ignorare questo limite spendendo un dado di Energia Psionica (nessuna azione richiesta)."
+        "description": "Il personaggio attinge a una fonte di energia psionica den tro di sé. È rappresentata dal suo dado di Energia Psionica, che alimenta i poteri forniti da questa sottoclasse. La tabella Dadi di energia del Guerriero Psionico mostra la tipologia e il numero di dadi che il personaggio possiede quando raggiunge determinati livelli da guerriero.",
+        "table": "DADI DI ENERGIA DEL GUERRIERO PSIONICO Livello da Guerriero Tipo di dado Numero 3 D6 4 5 D8 6 9 D8 8 11 D10 8 13 D10 10 17 D12 12 Qualunque privilegio di questa sottoclasse che utilizza un dado di Energia Psionica può usare solo i dadi di questa sottoclasse. Per alcuni poteri bisogna spendere il dado di Energia Psionica, come specificato nella descrizione di quel potere e il personaggio non può usare uno di questi poteri se ha già consumato tutti i dadi. Il guerriero recupera un dado di Energia Psionica speso dopo aver completato un riposo breve, mentre li recupera tutti dopo aver completato un riposo lungo. Campo protettivo. Ogni volta che il guerriero o un'altra creatura nel raggio di 9 metri nel suo campo visivo subisce dei danni, il guerriero può usare la sua reazione per creare uno scudo temporaneo di forza telecinetica spendendo un dado di Energia Psionica e riducendo la quantità di danni subiti del numero ottenuto più il suo modificatore di Intelligenza (riduzione minima di 1). Colpo psionico. Il personaggio può infondere forza psionica alle sue armi. Una volta per ogni suo turno, subito dopo aver colpito un bersaglio entro 9 metri con un attacco e avergli inflitto dei danni con un'arma, il guerriero può spendere un dado di Energia Psionica per infliggere danni da forza a quel bersaglio aggiungendo al risultato ottenuto il suo modificatore di Intelligenza. Movimento telecinetico. Il personaggio ora è in grado di spostare un oggetto o una creatura con la mente. Come azione di Magia, sceglie un bersaglio entro 9 metri da sé e nel suo campo visivo; il bersaglio deve essere un oggetto non equipaggiato di taglia Grande o inferiore o una creatura consenziente diversa da se stesso. Il guerriero teletrasporta il bersaglio di un massimo di 9 metri in uno spazio libero nel suo campo visivo. In alternativa, se il bersaglio è un oggetto Minuscolo, può teletrasportarlo da o verso la sua mano. Dopo aver effettuato questa azione, il guerriero non può utilizzarla di nuovo prima di aver completato un riposo breve o lungo; può ignorare questo limite spendendo un dado di Energia Psionica (nessuna azione richiesta)."
       },
       {
         "name": "Adepto Telecinetico",
         "level": 7,
-        "description": "Il guerriero ha appreso nuovi modi di utilizzare le sue capacità telecinetiche come descritto di seguito. Balzo psionico. Come azione bonus, il guerriero ottiene una velocità di volo pari al doppio della sua velocità base fino al termine del turno attuale. Dopo aver effettuato questa azione bonus, non può utilizzarla di nuovo prima di aver completato un riposo breve o lungo; può ignorare questo limite spendendo un dado di Energia Psionica (nessuna azione richiesta). Spinta telecinetica. Quando il guerriero infligge dei danni a un bersaglio utilizzando Colpo Psionico, può costringere questo bersaglio a effettuare un tiro salvezza su Forza con CD pari a 8 più il suo modificatore di Intelligenza e il suo bonus di competenza. Se lo fallisce, il guerriero può far cadere a terra prono il bersaglio o teletrasportarlo fino a 3 metri orizzontalmente."
+        "description": "Il guerriero ha appreso nuovi modi di utilizzare le sue capacità telecinetiche come descritto di seguito. Balzo psionico. Come azione bonus, il guerriero ottiene una velocità di volo pari al doppio della sua velocità base fino al termine del turno attuale. Dopo aver effettuato questa azione bonus, non può utilizzarla di nuovo prima di aver completato un riposo breve o lungo; può ignorare questo limite spendendo un dado di Energia Psionica (nessuna azione richiesta). Spinta telecinetica. Quando il guerriero infligge dei danni a un bersaglio utilizzando Colpo Psionico, può costringere questo bersaglio a effettuare un tiro salvezza su Forza con CD 8 + il suo modificatore di Intelligenza + il suo bonus di competenza. Se lo fallisce, il guerriero può far cadere a terra prono il bersaglio o teletrasportarlo fino a 3 metri orizzontalmente."
       },
       {
         "name": "Scudo Mentale",
@@ -642,7 +673,8 @@
         "level": 18,
         "description": "L'incantesimo telecinesi è sempre considerato preparato. Con questo privilegio, il personaggio può lanciarlo senza spendere uno slot incantesimo o componenti, e la caratteristica da incantatore è Intelligenza. In ciascuno dei turni in cui mantiene la concentrazione sull'incantesimo, incluso il turno in cui lo lancia, il guerriero può effettuare un attacco con un'arma come azione bonus. Dopo aver usato questo privilegio per lanciare l'incantesimo, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo; può ignorare questo limite spendendo un dado di Energia Psionica (nessuna azione richiesta)."
       }
-    ]
+    ],
+    "name_en": "Psi Warrior"
   },
   {
     "id": 21,
@@ -673,9 +705,10 @@
       {
         "name": "Colpo di Morte",
         "level": 17,
-        "description": "Quando il ladro colpisce con il suo Attacco Furtivo al primo round di un combattimento, il bersaglio deve superare un tiro salvezza su Costituzione (CD 8 + + il modificatore di Destrezza + + il bonus di competenza del ladro), altrimenti subirà il doppio dei danni."
+        "description": "Quando il ladro colpisce con il suo Attacco Furtivo al primo round di un combattimento, il bersaglio deve superare un tiro salvezza su Costituzione (CD 8 + il modificatore di Destrezza + il bonus di competenza del ladro), altrimenti subirà il doppio dei danni."
       }
-    ]
+    ],
+    "name_en": "Assassin"
   },
   {
     "id": 22,
@@ -701,14 +734,15 @@
       {
         "name": "Usare Oggetto Magico",
         "level": 13,
-        "description": "Il ladro ha imparato a trarre il massimo dall'utilizzo degli oggetti magici, ottenendo i seguenti benefici. Cariche. Quando il ladro usa la proprietà di un oggetto magico che ne consuma delle cariche, tira 1d6. Se il risultato è 6, la proprietà viene utilizzata senza consumare cariche. Pergamene. Il ladro può utilizzare qualunque pergamena magica sfruttando Intelligenza come caratteristica da incantatore. Se l'incantesimo è un trucchetto o un incantesimo di 1° livello, può lanciarlo senza effettuare alcuna prova. Invece, se la pergamena contiene un incantesimo di livello superiore, deve prima superare una prova di Intelligenza (Arcano) (CD 10 più il livello dell'incantesimo). Se la prova viene superata, lancerà l'incantesimo. In caso,di fallimento, la pergamena si disintegra. Sintonia. Il ladro può entrare in sintonia con un massimo di quattro oggetti magici contemporaneamente."
+        "description": "Il ladro ha imparato a trarre il massimo dall'utilizzo degli oggetti magici, ottenendo i seguenti benefici. Cariche. Quando il ladro usa la proprietà di un oggetto magico che ne consuma delle cariche, tira 1d6. Se il risultato è 6, la proprietà viene utilizzata senza consumare cariche. Pergamene. Il ladro può utilizzare qualunque pergamena magica sfruttando Intelligenza come caratteristica da incantatore. Se l'incantesimo è un trucchetto o un incantesimo di 1° livello, può lanciarlo senza effettuare alcuna prova. Invece, se la pergamena contiene un incantesimo di livello superiore, deve prima superare una prova di Intelligenza (Arcano) (CD 10 + il livello dell'incantesimo). Se la prova viene superata, lancerà l'incantesimo. In caso,di fallimento, la pergamena si disintegra. Sintonia. Il ladro può entrare in sintonia con un massimo di quattro oggetti magici contemporaneamente."
       },
       {
         "name": "Riflessi da Furfante",
         "level": 17,
         "description": "Il ladro è diventato abile nel tendere imboscate e sfuggire rapidamente alle situazioni di pericolo. Per questo, può effettuare due turni durante il primo round di ogni combattimento. Effettua il suo primo turno alla sua normale iniziativa e il secondo turno alla sua iniziativa meno 10."
       }
-    ]
+    ],
+    "name_en": "Thief"
   },
   {
     "id": 23,
@@ -724,7 +758,8 @@
       {
         "name": "Incantesimi",
         "level": 3,
-        "description": "Il ladro impara a lanciare incantesimi. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le informazioni sottostanti descrivono come applicare tali regole alla sottoclasse del Mistificatore Arcano. Trucchetti. Il ladro conosce tre trucchetti: mano magica e altri due trucchetti a scelta tratti dalla lista degli incantesimi da mago (consultabile dalla sezione dedicata a questa classe). Sono consigliati scheggia della mente e illusione minore. Ogni volta che il ladro ottiene un livello può sostituire uno dei suoi trucchetti, eccetto mano magica, con un altro trucchetto da mago a scelta. Quando raggiunge il livello 10, può imparare un altro trucchetto da mago a scelta. Slot incantesimo. La tabella Incantesimi del Mistifica tore Arcano mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Il personaggio recupera tutti gli slot incantesimo consumati quando completa un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie tre incantesimi da mago di 1° livello. Sono consigliati charme su persone, camuffare se stesso e nube di nebbia. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da ladro, come mostrato nella colonna Incantesimi preparati della tabella Incantesimi del Mistificatore Arcano. Ogni volta che il numero cresce, il ladro deve scegliere altri incantesimi da mago finché il numero nella lista non combacia con quello mostrato nella tabella Incantesimi del Mistificatore Arcano. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un ladro di 7° livello, la sua lista di incantesimi preparati può includere cinque incantesimi da mago di 1° e 2° livello in qualsiasi combinazione. Cambiare gli incantesimi preparati. Quando completa un riposo lungo, il ladro può sostituire un incantesimo sulla propria lista con un altro incantesimo da mago di cui possiede degli slot. Caratteristica da Incantatore. Intelligenza è la caratteri stica da incantatore per gli incantesimi da mago del ladro. Focus da incantatore. Un ladro può usare un focus arcano come focus da incantatore per i suoi incantesimi da mago. INCANTESIMI DEL MISTIFICATORE ARCANO -Slot incantesimo per livello di incantesimoLivello Incantesimi da ladro preparati 2 3 4 3 3 2 4 4 3 5 4 3 6 4 3 7 5 4 2 8 6 4 2 9 6 4 2 10 7 4 3 11 8 4 3 12 8 4 3 13 9 4 3 2 14 10 4 3 2 15 10 4 3 2 16 11 4 3 3 17 11 4 3 3 18 11 4 3 3 19 12 4 3 3 20 13 4 3 3."
+        "description": "Il ladro impara a lanciare incantesimi. Consulta il capitolo 7 per le regole relative al lancio degli incantesimi. Le informazioni sottostanti descrivono come applicare tali regole alla sottoclasse del Mistificatore Arcano. Trucchetti. Il ladro conosce tre trucchetti: mano magica e altri due trucchetti a scelta tratti dalla lista degli incantesimi da mago (consultabile dalla sezione dedicata a questa classe). Sono consigliati scheggia della mente e illusione minore. Ogni volta che il ladro ottiene un livello può sostituire uno dei suoi trucchetti, eccetto mano magica, con un altro trucchetto da mago a scelta. Quando raggiunge il livello 10, può imparare un altro trucchetto da mago a scelta. Slot incantesimo. La tabella Incantesimi del Mistifica tore Arcano mostra gli slot incantesimo disponibili per i propri incantesimi di 1° livello o superiore. Il personaggio recupera tutti gli slot incantesimo consumati quando completa un riposo lungo. Incantesimi preparati di 1° livello o superiore. Con questo privilegio, il personaggio prepara una lista di incantesimi di 1° livello o superiore che può lanciare. Per iniziare, sceglie tre incantesimi da mago di 1° livello. Sono consigliati charme su persone, camuffare se stesso e nube di nebbia. Il numero di incantesimi nella lista aumenta man mano che il personaggio ottiene livelli da ladro, come mostrato nella colonna Incantesimi preparati della tabella Incantesimi del Mistificatore Arcano. Ogni volta che il numero cresce, il ladro deve scegliere altri incantesimi da mago finché il numero nella lista non combacia con quello mostrato nella tabella Incantesimi del Mistificatore Arcano. Gli incantesimi scelti devono essere di un livello di cui possiede degli slot incantesimo. Per esempio, nel caso di un ladro di 7° livello, la sua lista di incantesimi preparati può includere cinque incantesimi da mago di 1° e 2° livello in qualsiasi combinazione. Cambiare gli incantesimi preparati. Quando completa un riposo lungo, il ladro può sostituire un incantesimo sulla propria lista con un altro incantesimo da mago di cui possiede degli slot. Caratteristica da Incantatore. Intelligenza è la caratteri stica da incantatore per gli incantesimi da mago del ladro. Focus da incantatore. Un ladro può usare un focus arcano come focus da incantatore per i suoi incantesimi da mago.",
+        "table": "INCANTESIMI DEL MISTIFICATORE ARCANO -Slot incantesimo per livello di incantesimoLivello Incantesimi da ladro preparati 2 3 4 3 3 2 4 4 3 5 4 3 6 4 3 7 5 4 2 8 6 4 2 9 6 4 2 10 7 4 3 11 8 4 3 12 8 4 3 13 9 4 3 2 14 10 4 3 2 15 10 4 3 2 16 11 4 3 3 17 11 4 3 3 18 11 4 3 3 19 12 4 3 3 20 13 4 3 3."
       },
       {
         "name": "Imboscata Magica",
@@ -741,7 +776,8 @@
         "level": 17,
         "description": "Il ladro ottiene la capacità di rubare magicamente le conoscenze necessarie per lanciare un incantesimo prodotto da un altro incantatore. Subito dopo che una creatura lancia un incantesimo contro il ladro o che lo include nella sua area di effetto, il ladro può usare una reazione per costringere la creatura a effettuare un tiro salvezza su Intelligenza. La CD equivale alla CD del tiro salvezza sull'incantesimo del ladro. In caso di fallimento, il ladro annulla gli effetti dell'incantesimo su di sé e ne ruba le conoscenze se questo è almeno di 1° livello o di un livello utilizzabile dal personaggio (non deve per forza essere un incantesimo da mago). Per le prossime 8 ore, l'incantesimo è considerato come preparato. La creatura vittima del furto, invece, non può più utilizzarlo finché non sono passate le 8 ore. Dopo aver rubato un incantesimo in questo modo, il ladro non può più utilizzare il privilegio finché non completa un riposo lungo."
       }
-    ]
+    ],
+    "name_en": "Arcane Trickster"
   },
   {
     "id": 24,
@@ -757,7 +793,8 @@
       {
         "name": "Potere Psionico",
         "level": 3,
-        "description": "Il personaggio attinge a una fonte di energia psionica dentro di sé. È rappresentata dal suo dado di Energia Psionica, che alimenta determinati poteri forniti da questa sottoclasse. Il dado di energia della Lama Spirituale mostra il numero di dadi a disposizione quando raggiunge determinati livelli da ladro. La tabella mostra la tipologia di dado. DADO DI ENERGIA DELLA LAMA SPIRITUALE Livello da ladro Tipo di dado Numero 3 D6 4 s D8 6 9 D8 8 11 D10 8 13 D10 10 17 D12 12 Qualunque privilegio di questa sottoclasse che utilizza un dado di Energia Psionica può usare solo i dadi di questa sottoclasse. Per alcuni poteri bisogna spendere un dado di Energia Psionica, come specificato nella descrizione di quel potere e il personaggio non può usare uno di questi poteri se ha già consumato tutti i dadi. Il ladro recupera un dado di Energia Psionica speso dopo aver completato un riposo breve, mentre li recupera tutti dopo aver completato un riposo lungo. Abilità psicorinforzata. Se il ladro fallisce una prova di caratteristica usando un'abilità o uno strumento in cui ha competenza, può tirare un dado di Energia Psionica e aggiungere il risultato alla prova, con la possibilità di trasformare un fallimento in un successo. Il dado è considerato come consumato se il tiro viene superato. Sussurri psichici. Il personaggio può stabilire una comunicazione telepatica tra sé e gli altri. Come azione di Magia, può scegliere una o più creature nel suo campo visivo, fino a un massimo pari al suo bonus di competenza, e poi tirare un dado di Energia Psionica. Per un numero di ore pari al risultato ottenuto, le creature scelte possono parlare telepaticamente con il personaggio e viceversa; per inviare o ricevere un messaggio non è richiesta alcuna azione, ma il personaggio e la creatura devono essere a non più di 1,5 chilometri di distanza. Le creature possono interrompere il collegamento telepatico in qualsiasi momento (nessuna azione richiesta). Questo potere non spende il dado di Energia Psionica la prima volta che viene usato dopo un riposo lungo, ma ogni uso successivo consumerà il dado."
+        "description": "Il personaggio attinge a una fonte di energia psionica dentro di sé. È rappresentata dal suo dado di Energia Psionica, che alimenta determinati poteri forniti da questa sottoclasse. Il dado di energia della Lama Spirituale mostra il numero di dadi a disposizione quando raggiunge determinati livelli da ladro. La tabella mostra la tipologia di dado.",
+        "table": "DADO DI ENERGIA DELLA LAMA SPIRITUALE Livello da ladro Tipo di dado Numero 3 D6 4 s D8 6 9 D8 8 11 D10 8 13 D10 10 17 D12 12 Qualunque privilegio di questa sottoclasse che utilizza un dado di Energia Psionica può usare solo i dadi di questa sottoclasse. Per alcuni poteri bisogna spendere un dado di Energia Psionica, come specificato nella descrizione di quel potere e il personaggio non può usare uno di questi poteri se ha già consumato tutti i dadi. Il ladro recupera un dado di Energia Psionica speso dopo aver completato un riposo breve, mentre li recupera tutti dopo aver completato un riposo lungo. Abilità psicorinforzata. Se il ladro fallisce una prova di caratteristica usando un'abilità o uno strumento in cui ha competenza, può tirare un dado di Energia Psionica e aggiungere il risultato alla prova, con la possibilità di trasformare un fallimento in un successo. Il dado è considerato come consumato se il tiro viene superato. Sussurri psichici. Il personaggio può stabilire una comunicazione telepatica tra sé e gli altri. Come azione di Magia, può scegliere una o più creature nel suo campo visivo, fino a un massimo pari al suo bonus di competenza, e poi tirare un dado di Energia Psionica. Per un numero di ore pari al risultato ottenuto, le creature scelte possono parlare telepaticamente con il personaggio e viceversa; per inviare o ricevere un messaggio non è richiesta alcuna azione, ma il personaggio e la creatura devono essere a non più di 1,5 chilometri di distanza. Le creature possono interrompere il collegamento telepatico in qualsiasi momento (nessuna azione richiesta). Questo potere non spende il dado di Energia Psionica la prima volta che viene usato dopo un riposo lungo, ma ogni uso successivo consumerà il dado."
       },
       {
         "name": "Lame dell'Anima",
@@ -772,9 +809,10 @@
       {
         "name": "Squarciare la Mente",
         "level": 17,
-        "description": "Il personaggio può usare le proprie Lame Psichiche per attaccare la mente di una creatura. Quando usa le Lame Psichiche per effettuare un Attacco Furtivo contro una creatura, può costringere il suo bersaglio a effettuare un tiro salvezza su Saggezza (CD pari a 8 più il suo modificatore di Destrezza più il suo bonus di competenza). In caso di fallimento, il bersaglio è stordito per 1 minuto e ripeterà il tiro salvezza alla fine di ogni suo turno. Se lo supera, l'effetto svanisce. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo; può ignorare questo limite spendendo tre dadi di Energia Psionica (nessuna azione richiesta)."
+        "description": "Il personaggio può usare le proprie Lame Psichiche per attaccare la mente di una creatura. Quando usa le Lame Psichiche per effettuare un Attacco Furtivo contro una creatura, può costringere il suo bersaglio a effettuare un tiro salvezza su Saggezza (CD 8 + il suo modificatore di Destrezza + il suo bonus di competenza). In caso di fallimento, il bersaglio è stordito per 1 minuto e ripeterà il tiro salvezza alla fine di ogni suo turno. Se lo supera, l'effetto svanisce. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo; può ignorare questo limite spendendo tre dadi di Energia Psionica (nessuna azione richiesta)."
       }
-    ]
+    ],
+    "name_en": "Soulknife"
   },
   {
     "id": 25,
@@ -807,7 +845,8 @@
         "level": 14,
         "description": "Il mago dispone di vantaggio ai tiri salvezza contro gli incantesimi e possiede resistenza ai danni inferti dagli incantesimi."
       }
-    ]
+    ],
+    "name_en": "Abjurer"
   },
   {
     "id": 26,
@@ -840,7 +879,8 @@
         "level": 14,
         "description": "Le visioni che appaiono in sonno al mago si fanno più intense e dipingono nella sua mente un'immagine più pre cisa del futuro. Per il privilegio Portento ora puoi tirare tre d20 anziché due."
       }
-    ]
+    ],
+    "name_en": "Diviner"
   },
   {
     "id": 27,
@@ -873,7 +913,8 @@
         "level": 14,
         "description": "Il mago può aumentare il potere dei suoi incantesimi. Quando lancia un incantesimo con uno slot di livello da 1 a 5 che infligge danni, con quell'incantesimo può infliggere il massimo dei danni nel turno in cui lo lancia. La prima volta che lo fa, il mago non subisce alcun effetto avverso. Se però utilizza questo privilegio di nuovo prima di avere completato un riposo lungo, subisce 2d12 danni necrotici per ogni livello dell'incantesimo in questione, subito dopo averlo lanciato. Questi danni ignorano le varie forme di resistenza e immunità. Ogni volta che utilizza di nuovo questo privilegio prima di aver completato un riposo lungo, i danni necrotici per livello dell'incantesimo aumentano di 1d12."
       }
-    ]
+    ],
+    "name_en": "Evoker"
   },
   {
     "id": 28,
@@ -906,7 +947,8 @@
         "level": 14,
         "description": "Il mago ha imparato a padroneggiare la magia dell'ombra per conferire alle proprie illusioni una parvenza di realtà. Quando lancia un incantesimo di Illusione con uno slot, può scegliere un oggetto non magico inanimato che è parte dell'illusione e renderlo reale. Può farlo come azione bonus nel proprio turno finché l'incantesimo è attivo. L'oggetto è reale per 1 minuto, durante il quale non può infliggere danni o condizioni. Per esempio, il mago può creare l'illusione di un ponte sopra un fossato e renderlo reale per consentirne l'attraversamento."
       }
-    ]
+    ],
+    "name_en": "Illusionist"
   },
   {
     "id": 29,
@@ -934,7 +976,8 @@
         "level": 17,
         "description": "Il monaco ottiene la capacità di scatenare vibrazioni letali nel corpo di un altro. Quando il monaco colpisce una creatura con un colpo senz'armi, può spendere 4 punti concentrazione per dare il via a queste vibrazioni impercettibili, che durano un numero di giorni pari al suo livello da monaco. Le vibrazioni sono innocue, a meno che il monaco non effettui un'azione per interromperle. In alternativa, quando effettua l'azione di Attacco nel proprio turno, può rinunciare a uno degli attacchi per porre fine alle vibrazioni. Per farlo, il monaco e il bersaglio devono trovarsi sullo stesso piano di esistenza. Quando il monaco pone fine alle vibrazioni, il bersaglio deve effettuare un tiro salvezza su Costituzione; subisce 10d12 danni da forza in caso di fallimento, o la metà dei danni in caso di successo. Il monaco può tenere soltanto una creatura alla volta sotto l'effetto di questo privilegio. Le vibrazioni possono essere interrotte senza provocare danni (nessuna azione richiesta)."
       }
-    ]
+    ],
+    "name_en": "Warrior of the Open Hand"
   },
   {
     "id": 30,
@@ -967,7 +1010,8 @@
         "level": 17,
         "description": "Mentre la Sintonizzazione Elementale è attiva, il monaco ottiene anche i seguenti benefici. Colpi potenziati. Una volta per ogni suo turno e quando mette a segno un colpo senz'armi, il monaco può infliggere danni extra a un bersaglio pari a un tiro del dado di Arti Marziali. Il danno extra è dello stesso tipo dei danni inflitti dal colpo. Passo distruttivo. Quando il monaco utilizza Passo del vento, la sua velocità aumenta di 6 metri fino al termine del turno. Per tutta la durata, una creatura a scelta del monaco subisce un numero di danni pari a un tiro del dado di Arti Marziali quando il monaco entra in uno spazio entro 1,5 metri da essa. Il tipo di danno è a scelta tra acido, freddo, fulmine, fuoco o tuono. Una creatura può subire questi danni solo una volta per turno. Resistenza ai danni. Il personaggio ottiene resistenza a uno dei seguenti tipi di danno a tua scelta: acido, freddo, fulmine, fuoco o tuono. All'inizio di ogni turno del monaco, la scelta può essere cambiata."
       }
-    ]
+    ],
+    "name_en": "Warrior of the Elements"
   },
   {
     "id": 31,
@@ -995,7 +1039,8 @@
         "level": 17,
         "description": "Come azione di Magia, quando si trova interamente in condizioni di luce fioca o oscurità, il monaco può spendere 3 punti concentrazione per farsi avvolgere dalle ombre per 1 minuto o finché non è incapacitato o non termina il turno in condizione di luce intensa. Mentre è avvolto dalle ombre, il monaco ottiene i seguenti benefici. Invisibilità. Il monaco è invisibile. Parzialmente incorporeo. Il monaco può muoversi attraverso gli spazi occupati come se fossero terreno difficile. Se termina il suo turno in uno di questi spazi, viene spostato nell'ultimo spazio libero che ha occupato. Raffica di ombre. Il monaco può utilizzare Raffica di colpi senza spendere punti concentrazione."
       }
-    ]
+    ],
+    "name_en": "Warrior of Shadow"
   },
   {
     "id": 32,
@@ -1033,7 +1078,8 @@
         "level": 17,
         "description": "La padronanza dell'energia vitale del monaco gli consente di dispensare l'atto misericordioso supremo. Come azione di Magia, può toccare il cadavere di una creatura morta nelle ultime 24 ore e spendere 5 punti concentrazione. La creatura torna in vita recuperando un numero di punti ferita pari a 4d10 più il modificatore di Saggezza del monaco. Se la creatura morta aveva subito una delle seguenti condizioni, torna in vita senza di esse: accecato, assordato, avvelenato, paralizzato o stordito. Dopo aver utilizzato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo."
       }
-    ]
+    ],
+    "name_en": "Warrior of Mercy"
   },
   {
     "id": 33,
@@ -1044,12 +1090,13 @@
       {
         "name": "Arma Consacrata",
         "level": 3,
-        "description": "Quando il paladino effettua l'azione di Attacco, può consumare uno degli usi di Incanalare Divinità per infondere energia positiva nell'arma da mischia che impugna. Per 10 minuti o fino al prossimo utilizzo del privilegio, il paladino aggiunge il suo modificatore di Carisma ai tiri per colpire eseguiti con quell'arma (fino a un bonus minimo di +1) e, ogni volta che colpisce, può infliggere danni normali o radiosi. Inoltre, l'arma emette luce intensa in un raggio di 6 metri e luce fioca per ulteriori 6 metri. Questo effetto può essere interrotto in anticipo (nessuna azione richiesta). L'effetto termina se il paladino non ha più con sé l'arma interessata."
+        "description": "Quando il paladino effettua l'azione di Attacco, può consumare uno degli usi di Incanalare Divinità per infondere energia positiva nell'arma da mischia che impugna. Per 10 minuti o fino al prossimo utilizzo del privilegio, il paladino aggiunge il suo modificatore di Carisma ai tiri per colpire eseguiti con quell'arma (fino a un bonus minimo di 1) e, ogni volta che colpisce, può infliggere danni normali o radiosi. Inoltre, l'arma emette luce intensa in un raggio di 6 metri e luce fioca per ulteriori 6 metri. Questo effetto può essere interrotto in anticipo (nessuna azione richiesta). L'effetto termina se il paladino non ha più con sé l'arma interessata."
       },
       {
         "name": "Incantesimi del Giuramento di Devozione",
         "level": 3,
-        "description": "La magia del giuramento del paladino gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Giuramento di Devozione, gli incantesimi lì elencati saranno sempre considerati come preparati. INCANTESIMI DEL GIURAMENTO DI DEVOZIONE Livello da paladino Incantesimi 3 Protezione dal bene e dal male, scudo della fede 5 Aiuto, zona di verità 9 Faro di speranza, dissolvi magie 13 Libertà di movimento, guardiano della fede 17 Comunione, colpo infuocato."
+        "description": "La magia del giuramento del paladino gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Giuramento di Devozione, gli incantesimi lì elencati saranno sempre considerati come preparati.",
+        "table": "INCANTESIMI DEL GIURAMENTO DI DEVOZIONE Livello da paladino Incantesimi 3 Protezione dal bene e dal male, scudo della fede 5 Aiuto, zona di verità 9 Faro di speranza, dissolvi magie 13 Libertà di movimento, guardiano della fede 17 Comunione, colpo infuocato."
       },
       {
         "name": "Aura di Devozione",
@@ -1064,9 +1111,10 @@
       {
         "name": "Nube Sacra",
         "level": 20,
-        "description": "Come azione bonus, il paladino può infondere la sua Aura di Protezione con del potere sacro, conferendo i benefici sottostanti per 10 minuti o finché non vengono interrotti (nessuna azione richiesta). Dopo aver utilizzato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo. Tuttavia, è pos sibile ripristinarne l'uso consumando uno slot incantesimo di 5° livello (nessuna azione richiesta). Danni radiosi. Se un nemico comincia il suo turno all'interno dell'aura, subisce danni radiosi pari al modificatore di Carisma più il bonus di competenza del paladino. Luce del sole. L'aura rifulge di luce intensa, ovvero la luce solare. Sentinella sacra. Se costretto a effettuare dei tiri salvezza da un immondo o un non morto, il paladino dispone di vantaggio."
+        "description": "Come azione bonus, il paladino può infondere la sua Aura di Protezione con del potere sacro, conferendo i benefici sottostanti per 10 minuti o finché non vengono interrotti (nessuna azione richiesta). Dopo aver utilizzato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo. Tuttavia, è pos sibile ripristinarne l'uso consumando uno slot incantesimo di 5° livello (nessuna azione richiesta). Danni radiosi. Se un nemico comincia il suo turno all'interno dell'aura, subisce danni radiosi pari al modificatore di Carisma + il bonus di competenza del paladino. Luce del sole. L'aura rifulge di luce intensa, ovvero la luce solare. Sentinella sacra. Se costretto a effettuare dei tiri salvezza da un immondo o un non morto, il paladino dispone di vantaggio."
       }
-    ]
+    ],
+    "name_en": "Oath of Devotion"
   },
   {
     "id": 34,
@@ -1082,12 +1130,13 @@
       {
         "name": "Incantesimi del Giuramento di Gloria",
         "level": 3,
-        "description": "La magia del giuramento del paladino gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Giuramento di Gloria, gli incantesimi lì elencati saranno sempre considerati come preparati. INCANTESIMI DEL GIURAMENTO DI GLORIA Livello da paladino Incantesimi 3 Dardo tracciante, eroismo 5 Caratteristica potenziata, arma magica 9 Velocità, protezione dall'energia 13 Compulsione, libertà di movimento 17 Conoscenza delle leggende, presenza regale di Yolande."
+        "description": "La magia del giuramento del paladino gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Giuramento di Gloria, gli incantesimi lì elencati saranno sempre considerati come preparati.",
+        "table": "INCANTESIMI DEL GIURAMENTO DI GLORIA Livello da paladino Incantesimi 3 Dardo tracciante, eroismo 5 Caratteristica potenziata, arma magica 9 Velocità, protezione dall'energia 13 Compulsione, libertà di movimento 17 Conoscenza delle leggende, presenza regale di Yolande."
       },
       {
         "name": "Punizione Ispiratrice",
         "level": 3,
-        "description": "Subito dopo aver lanciato punizione divina, il paladino può consumare un uso di Incanalare Divinità e distribuire punti ferita temporanei a creature a sua scelta entro 9 metri da sé (incluso se stesso). Il numero totale di punti ferita temporanei, da dividere a sua discrezione tra le creature scelte, è pari a 2d8 il livello da paladino del + personaggio."
+        "description": "Subito dopo aver lanciato punizione divina, il paladino può consumare un uso di Incanalare Divinità e distribuire punti ferita temporanei a creature a sua scelta entro 9 metri da sé (incluso se stesso). Il numero totale di punti ferita temporanei, da dividere a sua discrezione tra le creature scelte, è pari a 2d8 il livello da paladino del personaggio."
       },
       {
         "name": "Aura di Alacrità",
@@ -1104,7 +1153,8 @@
         "level": 20,
         "description": "Il paladino trae forza dalle leggende, vere o esagerate che siano, che avvolgono le sue imprese. Come azione bonus, ottiene i benefici elencati di seguito per 10 minuti. Dopo aver utilizzato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo. Tuttavia, è possibile ripristinarne l'uso consumando uno slot incantesimo di 5° livello (nessuna azione richiesta). Carismatico. Il paladino è benedetto da una bellezza ultraterrena che gli conferisce vantaggio in tutte le prove di Carisma. Colpo infallibile. Una volta per turno, quando effettua un attacco con un'arma e manca il bersaglio, il paladino può fare in modo che quell'attacco vada comunque a segno. Ripete il tiro salvezza. Se fallisce un tiro salvezza, il paladino può usare la sua reazione per ripetere il tiro e deve utilizzare il nuovo risultato ottenuto."
       }
-    ]
+    ],
+    "name_en": "Oath of Glory"
   },
   {
     "id": 35,
@@ -1115,7 +1165,8 @@
       {
         "name": "Incantesimi del Giuramento di Vendetta",
         "level": 3,
-        "description": "La magia del giuramento del paladino gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Giuramento di Vendetta, gli incantesimi lì elencati saranno sempre considerati come preparati. INCANTESIMI DEL GIURAMENTO DI VENDETTA Livello da paladino Incantesimi 3 Anatema, marchio del cacciatore 5 Blocca persone, passo velato 9 Velocità, protezione dall'energia 13 Esilio, porta dimensionale 17 Blocca mostri, scrutare."
+        "description": "La magia del giuramento del paladino gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Giuramento di Vendetta, gli incantesimi lì elencati saranno sempre considerati come preparati.",
+        "table": "INCANTESIMI DEL GIURAMENTO DI VENDETTA Livello da paladino Incantesimi 3 Anatema, marchio del cacciatore 5 Blocca persone, passo velato 9 Velocità, protezione dall'energia 13 Esilio, porta dimensionale 17 Blocca mostri, scrutare."
       },
       {
         "name": "Voto di Inimicizia",
@@ -1137,7 +1188,8 @@
         "level": 20,
         "description": "Come azione bonus, il paladino ottiene i benefici elencati di seguito per 10 minuti o finché non li interrompe (nessuna azione richiesta). Dopo aver utilizzato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo. Tuttavia, è possibile ripristinarne l'uso consumando uno slot incantesimo di 5° livello (nessuna azione richiesta). Aura di terrore. Ogni volta che un nemico comincia il proprio turno all'interno dell'Aura di Protezione, deve superare un tiro salvezza su Saggezza, altrimenti sarà spaventato per 1 minuto o finché non subirà dei danni. I tiri per colpire contro la creatura spaventata ottengono vantaggio. Volo. Il paladino ottiene delle ali eteree sulla schiena, che gli conferiscono una velocità di volo di 18 metri e la capacità di fluttuare."
       }
-    ]
+    ],
+    "name_en": "Oath of Vengeance"
   },
   {
     "id": 36,
@@ -1153,7 +1205,8 @@
       {
         "name": "Incantesimi del Giuramento degli Antichi",
         "level": 3,
-        "description": "La magia del giuramento del paladino gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Giuramento degli Antichi, gli incantesimi lì elencati saranno sempre considerati come preparati. INCANTESIMI DEL GIURAMENTO DEGLI ANTICHI Livello da paladino Incantesimi 3 Colpo intrappolante, parlare con gli animali 5 Passo velato, bagliore lunare 9 Crescita vegetale, protezione dall'energia 13 Tempesta di ghiaccio, pelle di pietra 17 Comunione con la natura, traslazione arborea."
+        "description": "La magia del giuramento del paladino gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Giuramento degli Antichi, gli incantesimi lì elencati saranno sempre considerati come preparati.",
+        "table": "INCANTESIMI DEL GIURAMENTO DEGLI ANTICHI Livello da paladino Incantesimi 3 Colpo intrappolante, parlare con gli animali 5 Passo velato, bagliore lunare 9 Crescita vegetale, protezione dall'energia 13 Tempesta di ghiaccio, pelle di pietra 17 Comunione con la natura, traslazione arborea."
       },
       {
         "name": "Aura Guardiana",
@@ -1170,7 +1223,8 @@
         "level": 20,
         "description": "Come azione bonus, il paladino può infondere la sua Aura di protezione con del potere primordiale, ottenendo i benefici sottostanti per 1 minuto o finché non vengono interrotti (nessuna azione richiesta). Dopo aver utilizzato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo. Tuttavia, è pos sibile ripristinarne l'uso consumando uno slot incantesimo di 5° livello (nessuna azione richiesta). Incantesimi rapidi. Quando il paladino lancia un incantesimo che ha un tempo di lancio di un'azione, può invece lanciarlo come azione bonus. Rigenerazione. All'inizio di ogni turno, il paladino recupera 10 punti ferita. Volontà compromessa. I nemici nell'aura hanno svantaggio ai tiri salvezza contro gli incantesimi e le opzioni di Incanalare Divinità del paladino."
       }
-    ]
+    ],
+    "name_en": "Oath of the Ancients"
   },
   {
     "id": 37,
@@ -1203,7 +1257,8 @@
         "level": 15,
         "description": "Quando il ranger subisce danni, può utilizzare una rea zione per ottenere resistenza a quel danno e ad altri dello stesso tipo fino al termine del turno in corso."
       }
-    ]
+    ],
+    "name_en": "Hunter"
   },
   {
     "id": 38,
@@ -1214,7 +1269,8 @@
       {
         "name": "Compagno Primordiale",
         "level": 3,
-        "description": "Il ranger evoca magicamente una bestia primordiale che trae forza dal suo legame con la natura. Scegli la sua scheda delle statistiche: Bestia della Terra, Bestia del Mare o Bestia del Cielo. Il personaggio determina di che tipo di animale si tratta, scegliendone uno consono alla scheda delle statistiche. A prescindere dalla bestia scelta, questa avrà su di sé dei segni primordiali che testimoniano le sue origini soprannaturali. Inoltre, è amichevole nei confronti del ranger e dei suoi compagni e obbedisce ai suoi comandi. Svanisce se il personaggio muore. La bestia in combattimento. In combattimento, la bestia agisce durante il turno del ranger. Può muoversi e usare le sue reazioni indipendentemente dal personaggio, e l'unica azione che può compiere è la Schivata, a meno che il ran ger non usi un'azione bonus per ordinargli di effettuarne una descritta nella scheda delle statistiche o di altro tipo. Quando effettua l'azione di Attacco, il ranger può anche decidere di sacrificare uno dei suoi attacchi per ordinare alla bestia di effettuare l'azione di Colpo. Se il personaggio è incapacitato, la bestia agisce di sua volontà e non si limita all'azione di Schivata. Ripristinare o sostituire la bestia. Se la bestia è morta nell'ultima ora, come azione di Magia il ranger può toc carla e consumare uno slot incantesimo. La bestia torna in vita dopo 1 minuto con tutti i suoi punti ferita ripristinati. Ogni volta che il ranger completa un riposo lungo, può evocare una bestia primordiale differente che comparirà in uno spazio libero entro 1,5 metri da sé, e sceglierne la scheda delle statistiche e l'aspetto. Se il personaggio pos siede già una bestia garantita da questo privilegio, sparirà una volta apparsa quella nuova.. BESTIA DEL CIELO Bestia piccola, neutrale CA 13 più il modificatore di Saggezza del ranger PF 4 +quattro volte il livello da ranger del personaggio (la bestia ha un numero di Dadi Vita [d6] pari al livello da ranger del personaggio) Velocità 6 metri, volo 18 metri MOD SALV MOD SALV FoR 6 -2 -2 DEs 16 +3 +3 Cos 13 +1 === INT 8 -1 -1 SAC 14 +2 +2 CAR 11 Sensi Percezione passiva 12, scurovisione 18 m Lingue comprende le lingue parlate dal personaggio GS Nessuno (PE 0; BC pari al bonus di competenza del personaggio) TRATTI Sfuggente. La bestia non provoca attacchi di opportu nità quando esce volando dalla portata di un nemico. Legame primordiale. Il personaggio somma il suo bonus di competenza a qualsiasi prova di caratteristica o tiro salvezza effettuato dalla bestia. AZIONI Colpo della bestia. Tiro per colpire in mischia: il bonus equivale al modificatore di attacco dell'incantesimo del ranger, portata di 1,5 metri Colpo: 1d4 + 3 più il modificatore di Saggezza del ranger, danni taglienti. BESTIA DEL MARE Bestia media, neutrale CA 13 più il modificatore di Saggezza del ranger PF 5 +cinque volte il livello da ranger del personaggio (la bestia ha un numero di Dadi Vita [d8] pari al livello da ranger del personaggio) Velocità 1,5 metri, nuoto 18 metri MOD SALV MOD SALV MOD SALV FOR 14 +2 +2 DEs 14 +2 +2 Cos 15 +2 +2 INT 8 -1 -1 SAC 14 +2 +2 CAR 11 +0 +0 Sensi Percezione passiva 12, scurovisione 27 m Lingue comprende le lingue parlate dal personaggio GS Nessuno (PE 0; BC pari al bonus di competenza del personaggio) TRATTI Anfibio. La bestia può respirare in aria e in acqua. Legame primordiale. Il personaggio somma il suo bonus di competenza a qualsiasi prova di caratteristica o tiro salvezza effettuato dalla bestia. AZIONI Colpo della bestia. Tiro per colpire in mischia: il bonus equi vale al modificatore di attacco dell'incantesimo del ranger, portata di 1,5 metri Colpo: 1d6 + 2 più il modificatore di Saggezza del ranger, danni contundenti o perforanti (a scelta al momento dell'evocazione della bestia); il bersa glio viene afferrato (la CD per fuggire corrisponde alla CD del tiro salvezza sull'incantesimo del ranger). BESTIA DELLA TERRA Bestia media, neutrale CA 13 più il modificatore di Saggezza del ranger PF 5 +cinque volte il livello da ranger del personaggio (la bestia ha un numero di Dadi Vita [d8] pari al livello da ranger del personaggio) Velocità 12 metri, scalata 12 metri MOD SALV MOD SALV MOD SALV FOR 14 +2 +2 DES 14 +2 +2 Cos 15 +2 +2 J INT 8 -1 -1 SAC 14 +2 +2 CAR 11 +0 +0 I Sensi Percezione passiva 12, scurovisione 18 m Lingue comprende le lingue parlate dal personaggio GS Nessuno (PE 0; BC pari al bonus di competenza del personaggio) TRATTI Legame primordiale. Il personaggio somma il suo bonus di competenza a qualsiasi prova di caratteristica o tiro salvezza effettuato dalla bestia. AZIONI Colpo della bestia. Tiro per colpire in mischia: il bonus equi vale al modificatore di attacco dell'incantesimo del ranger, portata di 1,5 metri Colpo: 1d8 + 2 più il modificatore di Sag gezza del ranger, danni contundenti, perforanti o taglienti (a scelta al momento dell'evocazione della bestia). Se la bestia ha effettuato un movimento di almeno 6 metri in linea retta verso il bersaglio prima di colpirlo, quest'ultimo subisce 1d6 di danni extra dello stesso tipo e cade a terra prono se è una creatura di taglia Grande o inferiore."
+        "description": "Il ranger evoca magicamente una bestia primordiale che trae forza dal suo legame con la natura. Scegli la sua scheda delle statistiche: Bestia della Terra, Bestia del Mare o Bestia del Cielo. Il personaggio determina di che tipo di animale si tratta, scegliendone uno consono alla scheda delle statistiche. A prescindere dalla bestia scelta, questa avrà su di sé dei segni primordiali che testimoniano le sue origini soprannaturali. Inoltre, è amichevole nei confronti del ranger e dei suoi compagni e obbedisce ai suoi comandi. Svanisce se il personaggio muore. La bestia in combattimento. In combattimento, la bestia agisce durante il turno del ranger. Può muoversi e usare le sue reazioni indipendentemente dal personaggio, e l'unica azione che può compiere è la Schivata, a meno che il ran ger non usi un'azione bonus per ordinargli di effettuarne una descritta nella scheda delle statistiche o di altro tipo. Quando effettua l'azione di Attacco, il ranger può anche decidere di sacrificare uno dei suoi attacchi per ordinare alla bestia di effettuare l'azione di Colpo. Se il personaggio è incapacitato, la bestia agisce di sua volontà e non si limita all'azione di Schivata. Ripristinare o sostituire la bestia. Se la bestia è morta nell'ultima ora, come azione di Magia il ranger può toc carla e consumare uno slot incantesimo. La bestia torna in vita dopo 1 minuto con tutti i suoi punti ferita ripristinati. Ogni volta che il ranger completa un riposo lungo, può evocare una bestia primordiale differente che comparirà in uno spazio libero entro 1,5 metri da sé, e sceglierne la scheda delle statistiche e l'aspetto. Se il personaggio pos siede già una bestia garantita da questo privilegio, sparirà una volta apparsa quella nuova..",
+        "table": "BESTIA DEL CIELO Bestia piccola, neutrale CA 13 più il modificatore di Saggezza del ranger PF 4 quattro volte il livello da ranger del personaggio (la bestia ha un numero di Dadi Vita [d6] pari al livello da ranger del personaggio) Velocità 6 metri, volo 18 metri MOD SALV MOD SALV FoR 6 -2 -2 DEs 16 3 3 Cos 13 l === INT 8 -1 -1 SAC 14 2 2 CAR 11 Sensi Percezione passiva 12, scurovisione 18 m Lingue comprende le lingue parlate dal personaggio GS Nessuno (PE 0; BC pari al bonus di competenza del personaggio) TRATTI Sfuggente. La bestia non provoca attacchi di opportu nità quando esce volando dalla portata di un nemico. Legame primordiale. Il personaggio somma+ il suo bonus di competenza a qualsiasi prova di caratteristica o tiro salvezza effettuato dalla bestia. AZIONI Colpo della bestia. Tiro per colpire in mischia: il bonus equivale al modificatore di attacco dell'incantesimo del ranger, portata di 1,5 metri Colpo: 1d4 3 più il modificatore di Saggezza del ranger, danni taglienti. BESTIA DEL MARE Bestia media, neutrale CA 13 più il modificatore di Saggezza del ranger PF 5 cinque volte il livello da ranger del personaggio (la bestia ha un numero di Dadi Vita [d8] pari al livello da ranger del personaggio) Velocità 1,5 metri, nuoto 18 metri MOD SALV MOD SALV MOD SALV FOR 14 2 2 DEs 14 2 2 Cos 15 2 2 INT 8 -1 -1 SAC 14 2 2 CAR 11 0 0 Sensi Percezione passiva 12, scurovisione 27 m Lingue comprende le lingue parlate dal personaggio GS Nessuno (PE 0; BC pari al bonus di competenza del personaggio) TRATTI Anfibio. La bestia può respirare in aria e in acqua. Legame primordiale. Il personaggio somma+ il suo bonus di competenza a qualsiasi prova di caratteristica o tiro salvezza effettuato dalla bestia. AZIONI Colpo della bestia. Tiro per colpire in mischia: il bonus equi vale al modificatore di attacco dell'incantesimo del ranger, portata di 1,5 metri Colpo: 1d6 2 più il modificatore di Saggezza del ranger, danni contundenti o perforanti (a scelta al momento dell'evocazione della bestia); il bersa glio viene afferrato (la CD per fuggire corrisponde alla CD del tiro salvezza sull'incantesimo del ranger). BESTIA DELLA TERRA Bestia media, neutrale CA 13 più il modificatore di Saggezza del ranger PF 5 cinque volte il livello da ranger del personaggio (la bestia ha un numero di Dadi Vita [d8] pari al livello da ranger del personaggio) Velocità 12 metri, scalata 12 metri MOD SALV MOD SALV MOD SALV FOR 14 2 2 DES 14 2 2 Cos 15 2 2 J INT 8 -1 -1 SAC 14 2 2 CAR 11 0 0 I Sensi Percezione passiva 12, scurovisione 18 m Lingue comprende le lingue parlate dal personaggio GS Nessuno (PE 0; BC pari al bonus di competenza del personaggio) TRATTI Legame primordiale. Il personaggio somma+ il suo bonus di competenza a qualsiasi prova di caratteristica o tiro salvezza effettuato dalla bestia. AZIONI Colpo della bestia. Tiro per colpire in mischia: il bonus equi vale al modificatore di attacco dell'incantesimo del ranger, portata di 1,5 metri Colpo: 1d8 2 più il modificatore di Sag gezza del ranger, danni contundenti, perforanti o taglienti (a scelta al momento dell'evocazione della bestia). Se la bestia ha effettuato un movimento di almeno 6 metri in linea retta verso il bersaglio prima di colpirlo, quest'ultimo subisce 1d6 di danni extra dello stesso tipo e cade a terra prono se è una creatura di taglia Grande o inferiore."
       },
       {
         "name": "Addestramento Eccezionale",
@@ -1231,7 +1287,8 @@
         "level": 15,
         "description": "Quando il ranger lancia un incantesimo prendendo di mira se stesso, può condividerne l'effetto con la Bestia primordiale se si trova entro 9 metri da sé."
       }
-    ]
+    ],
+    "name_en": "Beast Master"
   },
   {
     "id": 39,
@@ -1247,7 +1304,8 @@
       {
         "name": "Incantesimi del Cacciatore delle Tenebre",
         "level": 3,
-        "description": "Quando il ranger raggiunge un livello specificato nella tabella Incantesimi del Cacciatore delle Tenebre, gli incantesimi lì elencati sono considerati come preparati. INCANTESIMI DEL CACCIATORE DELLE TENEBRE Livello da ranger Incantesimi 3 Camuffare se stesso 5 Trucco della corda 9 Paura 13 Invisibilità superiore 17 Sembrare."
+        "description": "Quando il ranger raggiunge un livello specificato nella tabella Incantesimi del Cacciatore delle Tenebre, gli incantesimi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI DEL CACCIATORE DELLE TENEBRE Livello da ranger Incantesimi 3 Camuffare se stesso 5 Trucco della corda 9 Paura 13 Invisibilità superiore 17 Sembrare."
       },
       {
         "name": "Vista dell'Ombra",
@@ -1269,7 +1327,8 @@
         "level": 15,
         "description": "Quando una creatura effettua un tiro per colpire contro il ranger, questi può utilizzare una reazione per conferire svantaggio all'avversario. Che l'attacco vada a segno o meno, il personaggio può poi teletrasportarsi fino a 9 metri in uno spazio libero che è in grado di vedere."
       }
-    ]
+    ],
+    "name_en": "Gloom Stalker"
   },
   {
     "id": 40,
@@ -1285,12 +1344,13 @@
       {
         "name": "Fascino Ultraterreno",
         "level": 3,
-        "description": "Ogni volta che effettua una prova di Carisma, il ranger ottiene un bonus alla prova pari al suo modificatore di Saggezza (minimo di +1). Inoltre, ottiene competenza in una delle seguenti abilità a scelta: Inganno, Intrattenere o Persuasione."
+        "description": "Ogni volta che effettua una prova di Carisma, il ranger ottiene un bonus alla prova pari al suo modificatore di Saggezza (minimo di 1). Inoltre, ottiene competenza in una delle seguenti abilità a scelta: Inganno, Intrattenere o Persuasione."
       },
       {
         "name": "Incantesimi del Viandante Fatato",
         "level": 3,
-        "description": "Quando il ranger raggiunge un livello specificato nella tabella Incantesimi del Viandante Fatato, gli incantesimi lì elencati sono considerati come preparati. INCANTESIMI DEL VIANDANTE FATATO Livello da ranger Incantesimo 3 Charme su persone 5 Passo velato 9 Richiama folletto 13 Porta dimensionale 17 Fuorviare Il ranger possiede una benedizione fatata. Puoi scegliere quale dalla tabella \"Doni della Selva Fatata\" o determinarla casualmente. DONI DELLA SELVA FATATA 1d6 Dono Mentre il ranger compie un riposo breve o lungo, delle farfalle illusorie gli svolazzano intorno. 2 Al sorgere dell'alba, fra i capelli del ranger sboc ciano dei fiori. 3 Il ranger emana un leggero profumo di cannella, lavanda, noce moscata o di qualche altra erba ospezia dall'odore gradevole. 1d6 Dono 4 Quando nessuno la guarda direttamente, l'ombra del ranger inizia a danzare. 5 Sulla testa del personaggio spuntano delle corna o dei palchi di corna. 6 La pelle e i capelli del ranger cambiano colore ogni volta che sorge l'alba."
+        "description": "Quando il ranger raggiunge un livello specificato nella tabella Incantesimi del Viandante Fatato, gli incantesimi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI DEL VIANDANTE FATATO Livello da ranger Incantesimo 3 Charme su persone 5 Passo velato 9 Richiama folletto 13 Porta dimensionale 17 Fuorviare Il ranger possiede una benedizione fatata. Puoi scegliere quale dalla tabella \"Doni della Selva Fatata\" o determinarla casualmente. DONI DELLA SELVA FATATA 1d6 Dono Mentre il ranger compie un riposo breve o lungo, delle farfalle illusorie gli svolazzano intorno. 2 Al sorgere dell'alba, fra i capelli del ranger sboc ciano dei fiori. 3 Il ranger emana un leggero profumo di cannella, lavanda, noce moscata o di qualche altra erba ospezia dall'odore gradevole. 1d6 Dono 4 Quando nessuno la guarda direttamente, l'ombra del ranger inizia a danzare. 5 Sulla testa del personaggio spuntano delle corna o dei palchi di corna. 6 La pelle e i capelli del ranger cambiano colore ogni volta che sorge l'alba."
       },
       {
         "name": "Scambio Seducente",
@@ -1307,7 +1367,8 @@
         "level": 15,
         "description": "Il ranger può lanciare passo velato senza consumare uno slot incantesimo. Può lanciarlo un numero di volte pari al valore del suo modificatore di Saggezza (minimo di una volta) e recuperare tutti gli utilizzi consumati quando completa un riposo lungo. Inoltre, ogni volta che il ranger lancia passo velato, può portare con sé una creatura consenziente nel raggio di 1,5 metri da sé e che sia nel suo campo visivo. La creatura viene teletrasportata in uno spazio libero a scelta del personaggio entro 1,5 metri dallo spazio di destinazione del ranger."
       }
-    ]
+    ],
+    "name_en": "Fey Wanderer"
   },
   {
     "id": 41,
@@ -1318,7 +1379,8 @@
       {
         "name": "Incantesimi Draconici",
         "level": 3,
-        "description": "Quando lo stregone raggiunge un livello specificato nella tabella Incantesimi draconici, gli incantesimi lì elencati sono considerati come preparati. INCANTESIMI DRACONICI Livello da stregone Incantesimi 3 Alterare se stesso, globo cromatico, comando, ffi so o del drago 5 Paura, volare 7 Occhio arcano, charme sui mostri 9 Conoscenza delle leggende, evoca drago."
+        "description": "Quando lo stregone raggiunge un livello specificato nella tabella Incantesimi draconici, gli incantesimi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI DRACONICI Livello da stregone Incantesimi 3 Alterare se stesso, globo cromatico, comando, ffi so o del drago 5 Paura, volare 7 Occhio arcano, charme sui mostri 9 Conoscenza delle leggende, evoca drago."
       },
       {
         "name": "Resilienza Draconica",
@@ -1340,7 +1402,8 @@
         "level": 18,
         "description": "Lo stregone può lanciare Richiama Drago senza usare una componente materiale. Inoltre, può anche lanciarlo una volta senza consumare uno slot incantesimo e recupera l'abilità di lanciarlo in questo modo dopo aver completato un riposo lungo. Ogni volta che lo stregone lancia l'incantesimo, può modificarlo in modo che non richieda concentrazione. Così facendo, per quel lancio la durata dell'incantesimo diventa di 1 minuto."
       }
-    ]
+    ],
+    "name_en": "Draconic Sorcery"
   },
   {
     "id": 42,
@@ -1371,9 +1434,11 @@
       {
         "name": "Impulsi Domati",
         "level": 18,
-        "description": "Subito dopo che lo stregone lancia un incantesimo con uno slot, può creare un effetto a scelta dalla tabella Impulsi di magia selvaggia invece di effettuare il relativo tiro. È possibile scegliere un effetto qualunque, fatta eccezione per quello nella riga finale. Inoltre, se è previsto un tiro di dado, bisogna effettuarlo. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo. IMPULSI DI MAGIA SELVAGGIA 1d100 Effetto 01-04 Tira su questa tabella all'inizio di ciascun turno per il prossimo minuto. Se nei tiri successivi ottieni questo stesso risultato, ignoralo. In uno spazio libero entro 18 metri dallo stregone appare una creatura amichevole nei suoi confronti controllata dal DM. Scompare dopo 1 minuto. Tira 1d4 per determinare il tipo di creatura: con 1 appare un duodrone modron; con 2 appare un flumph; con 3 appare un monodrone modron; con 4 appare un unicorno. È possibile consultare il Manuale dei Mostri per visualizzare la scheda delle statistiche della creatura. 09-12 Per il prossimo minuto, lo stregone ripristina 5 dei suoi punti ferita a ogni turno. 13-16 Per il prossimo minuto, le creature hanno svantaggio ai tiri salvezza contro il prossimo incantesimo lanciato dallo stregone che richiede un tiro salvezza. 17-20 Lo stregone subisce un effetto della durata di 1 minuto, salvo diversamente indicato. Tira 1d8 per determinare l'effetto: con 1 lo stregone è accompagnato da una tenue musica eterea udibile solo da sé e dalle creature entro 1,5 metri da lui; con 2 la sua taglia aumenta di una categoria; con 3 gli cresce una folta barba di piume che svanisce solo dopo uno starnuto, scagliandole via dal proprio viso e facendole scomparire; con 4 urla invece di parlare normalmente; con 5 appaiono delle farfalle illusorie che svolazzano in aria entro 3 metri da sé; con 6 gli appare un occhio sulla fronte, conferendogli vantaggio alle prove di Saggezza (Percezione); con 7 fuoriescono delle bolle rosa dalla sua bocca ogni volta che parla; con 8 la sua pelle diventa di un'intensa tonalità di blu per 24 ore o finché l'effetto non è rimosso da un incantesimo rimuovi maledizione. Per il minuto successivo, tutti gli incantesimi con tempo di lancio di un'azione ottengono il tempo di lancio di un'azione bonus. 25-28 Lo stregone viene trasportato sul Piano Astrale fino al termine del suo turno successivo, per poi fare ritorno nello spazio che occupava in prece denza o nello spazio libero più vicino, se quello spazio è ora occupato. 1d100 Effetto 29-32 Se nel minuto successivo lo stregone lancia un incantesimo che infligge danni, non è necessario tirare i dadi di danno, poiché sarà preso in considerazione il massimo risultato possibile per ciascun dado. 33-36 Per il minuto successivo, lo stregone ha resistenza a tutti i danni. 37-40 Lo stregone diventa una pianta in vaso fino all'inizio del turno successivo. Mentre è in forma di pianta, è incapacitato e vulnerabile a tutti i tipi di danno. Per riacquistare la sua forma originale, deve scendere a 0 punti ferita, così da far rom pere il vaso. 41-44 Per il minuto successivo, lo stregone può teletrasportarsi fino a 6 metri come azione bonus in ogni suo turno. 45-48 Lo stregone e altre tre creature a scelta entro 9 metri da sé sono invisibili per l minuto. L'invisibilità termina sulla singola creatura imme diatamente dopo che effettua un tiro per colpire, infligge danni o lancia un incantesimo. 1d100 Effetto 49-52 Appare uno scudo spettrale che fluttua accanto allo stregone per il minuto successivo, conferen dogli un bonus di +2 alla CA e immunità a dardo incantato. 53-56 Lo stregone può effettuare un'azione extra durante questo turno. 57-60 Lo stregone può lanciare un incantesimo casuale. Se l'incantesimo dovesse normalmente richiedere concentrazione, in questo caso non conta. Inoltre, l'incantesimo ha la sua durata normale. Tira 1d10 per determinare l'incantesimo: con 1 lancia confusione; con 2 lancia palla di fuoco; con 3 lancia nube di nebbia; con 4 lancia volare (su una creatura casuale entro 18 metri dallo stregone); con 5 lancia unto; con 6 lancia levitazione (su di sé); con 7 lancia dardo incantato (come incantesimo di 5° livello); con 8 lancia immagine speculare; con 9 lancia metamorfosi (su di sé) e, in caso di fallimento del tiro salvezza, lo stregone diventa una capra (vedi appendice B); con 10 lancia vedere invisibilità.. 1d100 Effetto 61-64 Per il minuto successivo, se lo stregone tocca qualsiasi oggetto non magico infiammabile che non è indossato o trasportato da un'altra crea tura, questo prende fuoco subendo 1d4 danni da fuoco. 65-68 Se lo stregone muore entro l'ora successiva, viene riportato subito in vita come per effetto dell'incantesimo reincarnazione. 69-72 Lo stregone è spaventato fino al termine del suo turno successivo. La fonte della paura è a discre zione del DM. 73-76 Lo stregone si teletrasporta di un massimo di 18 metri in uno spazio libero che è in grado di vedere. 77-80 Una creatura casuale entro 18 metri dallo stregone è avvelenata per 1d4 ore. 81-84 Per il minuto successivo, lo stregone emana luce intensa in un raggio di 9 metri. Qualsiasi creatura che termini il suo turno entro 1,5 metri dal personaggio è accecata fino al termine del proprio turno successivo. 85-88 Lo stregone infligge 1d10 danni necrotici a un massimo di tre creature a scelta che è in grado di vedere. Dopodiché, ripristina una quantità di punti ferita pari ai danni necrotici inflitti. 89-92 Lo stregone infligge 4d10 danni da fulmine a un massimo di tre creature a scelta che è in grado di vedere. 93-96 Lo stregone e tutte le creature entro 9 metri da sé diventano vulnerabili ai danni perforanti per il minuto successivo. 97-00 Tira 1d6: con 1 il personaggio recupera 2d10 punti ferita; con 2 un alleato a scelta entro 90 metri dallo stregone recupera 2d10 punti ferita; con 3 lo stregone recupera lo slot incantesimo speso di livello più basso; con 4 un alleato a scelta recupera lo slot incantesimo speso di livello più basso; con 5 lo stregone recupera tutti i punti stregoneria spesi; con 6 si attivano simultanea mente tutti gli effetti della riga 17-20."
+        "description": "Subito dopo che lo stregone lancia un incantesimo con uno slot, può creare un effetto a scelta dalla tabella Impulsi di magia selvaggia invece di effettuare il relativo tiro. È possibile scegliere un effetto qualunque, fatta eccezione per quello nella riga finale. Inoltre, se è previsto un tiro di dado, bisogna effettuarlo. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo.",
+        "table": "IMPULSI DI MAGIA SELVAGGIA 1d100 Effetto 01-04 Tira su questa tabella all'inizio di ciascun turno per il prossimo minuto. Se nei tiri successivi ottieni questo stesso risultato, ignoralo. In uno spazio libero entro 18 metri dallo stregone appare una creatura amichevole nei suoi confronti controllata dal DM. Scompare dopo 1 minuto. Tira 1d4 per determinare il tipo di creatura: con 1 appare un duodrone modron; con 2 appare un flumph; con 3 appare un monodrone modron; con 4 appare un unicorno. È possibile consultare il Manuale dei Mostri per visualizzare la scheda delle statistiche della creatura. 09-12 Per il prossimo minuto, lo stregone ripristina 5 dei suoi punti ferita a ogni turno. 13-16 Per il prossimo minuto, le creature hanno svantaggio ai tiri salvezza contro il prossimo incantesimo lanciato dallo stregone che richiede un tiro salvezza. 17-20 Lo stregone subisce un effetto della durata di 1 minuto, salvo diversamente indicato. Tira 1d8 per determinare l'effetto: con 1 lo stregone è accompagnato da una tenue musica eterea udibile solo da sé e dalle creature entro 1,5 metri da lui; con 2 la sua taglia aumenta di una categoria; con 3 gli cresce una folta barba di piume che svanisce solo dopo uno starnuto, scagliandole via dal proprio viso e facendole scomparire; con 4 urla invece di parlare normalmente; con 5 appaiono delle farfalle illusorie che svolazzano in aria entro 3 metri da sé; con 6 gli appare un occhio sulla fronte, conferendogli vantaggio alle prove di Saggezza (Percezione); con 7 fuoriescono delle bolle rosa dalla sua bocca ogni volta che parla; con 8 la sua pelle diventa di un'intensa tonalità di blu per 24 ore o finché l'effetto non è rimosso da un incantesimo rimuovi maledizione. Per il minuto successivo, tutti gli incantesimi con tempo di lancio di un'azione ottengono il tempo di lancio di un'azione bonus. 25-28 Lo stregone viene trasportato sul Piano Astrale fino al termine del suo turno successivo, per poi fare ritorno nello spazio che occupava in prece denza o nello spazio libero più vicino, se quello spazio è ora occupato. 1d100 Effetto 29-32 Se nel minuto successivo lo stregone lancia un incantesimo che infligge danni, non è necessario tirare i dadi di danno, poiché sarà preso in considerazione il massimo risultato possibile per ciascun dado. 33-36 Per il minuto successivo, lo stregone ha resistenza a tutti i danni. 37-40 Lo stregone diventa una pianta in vaso fino all'inizio del turno successivo. Mentre è in forma di pianta, è incapacitato e vulnerabile a tutti i tipi di danno. Per riacquistare la sua forma originale, deve scendere a 0 punti ferita, così da far rom pere il vaso. 41-44 Per il minuto successivo, lo stregone può teletrasportarsi fino a 6 metri come azione bonus in ogni suo turno. 45-48 Lo stregone e altre tre creature a scelta entro 9 metri da sé sono invisibili per l minuto. L'invisibilità termina sulla singola creatura imme diatamente dopo che effettua un tiro per colpire, infligge danni o lancia un incantesimo. 1d100 Effetto 49-52 Appare uno scudo spettrale che fluttua accanto allo stregone per il minuto successivo, conferen dogli un bonus di 2 alla CA e immunità a dardo incantato. 53-56 Lo stregone può effettuare un'azione extra durante questo turno. 57-60 Lo stregone può lanciare un incantesimo casuale. Se l'incantesimo dovesse normalmente richiedere concentrazione, in questo caso non conta. Inoltre, l'incantesimo ha la sua durata normale. Tira 1d10 per determinare l'incantesimo: con 1 lancia confusione; con 2 lancia palla di fuoco; con 3 lancia nube di nebbia; con 4 lancia volare (su una creatura casuale entro 18 metri dallo stregone); con 5 lancia unto; con 6 lancia levitazione (su di sé); con 7 lancia dardo incantato (come incantesimo di 5° livello); con 8 lancia immagine speculare; con 9 lancia metamorfosi (su di sé) e, in caso di fallimento del tiro salvezza, lo stregone diventa una capra (vedi appendice B); con 10 lancia vedere invisibilità.. 1d100 Effetto 61-64 Per il minuto successivo, se lo stregone tocca qualsiasi oggetto non magico infiammabile che non è indossato o trasportato da un'altra crea tura, questo prende fuoco subendo 1d4 danni da fuoco. 65-68 Se lo stregone muore entro l'ora successiva, viene riportato subito in vita come per effetto dell'incantesimo reincarnazione. 69-72 Lo stregone è spaventato fino al termine del suo turno successivo. La fonte della paura è a discre zione del DM. 73-76 Lo stregone si teletrasporta di un massimo di 18 metri in uno spazio libero che è in grado di vedere. 77-80 Una creatura casuale entro 18 metri dallo stregone è avvelenata per 1d4 ore. 81-84 Per il minuto successivo, lo stregone emana luce intensa in un raggio di 9 metri. Qualsiasi creatura che termini il suo turno entro 1,5 metri dal personaggio è accecata fino al termine del proprio turno successivo. 85-88 Lo stregone infligge 1d10 danni necrotici a un massimo di tre creature a scelta che è in grado di vedere. Dopodiché, ripristina una quantità di punti ferita pari ai danni necrotici inflitti. 89-92 Lo stregone infligge 4d10 danni da fulmine a un massimo di tre creature a scelta che è in grado di vedere. 93-96 Lo stregone e tutte le creature entro 9 metri da sé diventano vulnerabili ai danni perforanti per il minuto successivo. 97-00 Tira 1d6: con 1 il personaggio recupera 2d10 punti ferita; con 2 un alleato a scelta entro 90 metri dallo stregone recupera 2d10 punti ferita; con 3 lo stregone recupera lo slot incantesimo speso di livello più basso; con 4 un alleato a scelta recupera lo slot incantesimo speso di livello più basso; con 5 lo stregone recupera tutti i punti stregoneria spesi; con 6 si attivano simultanea mente tutti gli effetti della riga 17-20."
       }
-    ]
+    ],
+    "name_en": "Wild Magic Sorcery"
   },
   {
     "id": 43,
@@ -1384,7 +1449,8 @@
       {
         "name": "Incantesimi Meccanici",
         "level": 3,
-        "description": "Quando lo stregone raggiunge un livello specificato nella tabella Incantesimi meccanici, gli incantesimi lì elencati sono considerati come preparati. INCANTESIMI MECCAN ICI Livello da stregone Incantesimi 3 Aiuto, allarme, ristorare inferiore, protezione dal bene e dal male 5 Dissolvi magie, protezione da/l'energia 7 Libertà di movimento, evoca costrutto 9 Ristorare superiore, muro di forza La tabella Manifestazioni dell'ordine fornisce una serie di possibili modi, da scegliere o determinare casualmente, in cui il legame con l'ordine si manifesta quando lo stregone lancia i suoi incantesimi. MANIFESTAZIONI DELL'ORDINE 1d6 Manifestazione Ingranaggi spettrali si librano alle sue spalle. 2 Le lancette di un orologio si muovono nei suoi occhi. 3 La sua pelle luccica come ottone. 4 Il suo corpo si ricopre di figure geometriche e formule matematiche. 5 Il suo focus da incantatore assume temporaneamente la forma di un meccanismo ad orologeria minuscolo. 6 Lo stregone e i bersagli della sua magia sentono il ronzio di ingranaggi e il ticchettio di orologi."
+        "description": "Quando lo stregone raggiunge un livello specificato nella tabella Incantesimi meccanici, gli incantesimi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI MECCAN ICI Livello da stregone Incantesimi 3 Aiuto, allarme, ristorare inferiore, protezione dal bene e dal male 5 Dissolvi magie, protezione da/l'energia 7 Libertà di movimento, evoca costrutto 9 Ristorare superiore, muro di forza La tabella Manifestazioni dell'ordine fornisce una serie di possibili modi, da scegliere o determinare casualmente, in cui il legame con l'ordine si manifesta quando lo stregone lancia i suoi incantesimi. MANIFESTAZIONI DELL'ORDINE 1d6 Manifestazione Ingranaggi spettrali si librano alle sue spalle. 2 Le lancette di un orologio si muovono nei suoi occhi. 3 La sua pelle luccica come ottone. 4 Il suo corpo si ricopre di figure geometriche e formule matematiche. 5 Il suo focus da incantatore assume temporaneamente la forma di un meccanismo ad orologeria minuscolo. 6 Lo stregone e i bersagli della sua magia sentono il ronzio di ingranaggi e il ticchettio di orologi."
       },
       {
         "name": "Ripristino dell'Equilibrio",
@@ -1406,7 +1472,8 @@
         "level": 18,
         "description": "Lo stregone evoca momentaneamente spiriti dell'ordine per rimuovere ogni forma di disordine attorno a sé. Come azione di Magia, può evocare gli spiriti in un cubo con spigolo di 9 metri originato dallo stregone. Gli spiriti hanno l'aspetto di modron o altri costrutti a scelta dello stregone. Sono intangibili e invulnerabili, e generano i seguenti effetti all'interno del cubo prima di svanire. Dopo aver usato questa azione, il personaggio non può riutilizzarla prima di aver completato un riposo lungo; può ignorare questo limite spendendo 7 punti stregoneria (nessuna azione richiesta). Guarigione. Gli spiriti ripristinano fino a 100 punti ferita, divisi a scelta dello stregone tra qualsiasi creatura all'interno del cubo. Riparazione. Ogni oggetto danneggiato che si trova interamente nel cubo viene riparato istantaneamente. Dissoluzione. Qualsiasi incantesimo di 6° livello o inferiore attivo su creature e oggetti a scelta dello stregone all'interno del cubo termina immediatamente."
       }
-    ]
+    ],
+    "name_en": "Clockwork Sorcery"
   },
   {
     "id": 44,
@@ -1422,7 +1489,8 @@
       {
         "name": "Incantesimi Psionici",
         "level": 3,
-        "description": "Quando lo stregone raggiunge un livello specificato nella tabella Incantesimi psionici, gli incantesimi lì elencati sono considerati come preparati. INCANTESIMI PSIONICI Livello da stregone Incantesimi 3 Braccia di Hadar, calmare emozioni, individuazione dei pensieri, sussurri dissonanti, scheggia della mente 5 Fame di Hadar, inviare 7 Tentacoli neri di Evard, evoca aberrazione 9 Legame telepatico di Rary, telecinesi."
+        "description": "Quando lo stregone raggiunge un livello specificato nella tabella Incantesimi psionici, gli incantesimi lì elencati sono considerati come preparati.",
+        "table": "INCANTESIMI PSIONICI Livello da stregone Incantesimi 3 Braccia di Hadar, calmare emozioni, individuazione dei pensieri, sussurri dissonanti, scheggia della mente 5 Fame di Hadar, inviare 7 Tentacoli neri di Evard, evoca aberrazione 9 Legame telepatico di Rary, telecinesi."
       },
       {
         "name": "Difese Psichiche",
@@ -1444,7 +1512,8 @@
         "level": 18,
         "description": "Lo stregone può scatenare un'anomalia che altera lo spazio. Come azione di Magia, può teletrasportarsi in qualsiasi spazio libero che è in grado di vedere entro 36 metri da sé. Non appena svanisce, tutte le creature entro 9 metri dallo spazio che ha abbandonato devono effettuare un tiro salvezza su Forza contro la sua CD del tiro salvezza sull'incantesimo. Ogni creatura che fallisce il tiro subisce 3d10 danni da forza e viene spinta verso lo spazio abbandonato dallo stregone, terminando in uno spazio libero quanto più adiacente possibile a quello. In caso di successo, le creature interessate subiscono soltanto la metà di quei danni. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo; può ignorare questo limite spendendo 5 punti stregoneria (nessuna azione richiesta)."
       }
-    ]
+    ],
+    "name_en": "Aberrant Sorcery"
   },
   {
     "id": 45,
@@ -1460,7 +1529,8 @@
       {
         "name": "Incantesimi Immondi",
         "level": 3,
-        "description": "La magia del patrono consente al warlock di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi immondi, gli incantesimi lì elencati saranno sempre considerati come preparati. INCANTESIMI IMMONDI Livello da warlock Incantesimi 3 Mani brucianti, comando, raggio rovente, suggestione 5 Palla di fuoco, nube maleodorante 7 Scudo di fuoco, muro di fuoco 9 Costrizione, piaga degli insetti."
+        "description": "La magia del patrono consente al warlock di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi immondi, gli incantesimi lì elencati saranno sempre considerati come preparati.",
+        "table": "INCANTESIMI IMMONDI Livello da warlock Incantesimi 3 Mani brucianti, comando, raggio rovente, suggestione 5 Palla di fuoco, nube maleodorante 7 Scudo di fuoco, muro di fuoco 9 Costrizione, piaga degli insetti."
       },
       {
         "name": "Fortuna dell'Oscuro",
@@ -1477,7 +1547,8 @@
         "level": 14,
         "description": "Una volta per turno, quando il warlock colpisce una creatura con un tiro per colpire, può tentare di trasferire istantaneamente il bersaglio nei Piani Inferiori. Quest'ultimo deve superare un tiro salvezza su Carisma contro la CD del tiro salvezza sull'incantesimo del personaggio, altrimenti scomparirà e piomberà in un luogo raccapricciante. Se il bersaglio non è un immondo, subisce 8d10 danni psichici ed è incapacitato fino al termine del turno successivo, quando tornerà nello spazio precedentemente occupato o in quello libero più vicino. Dopo aver usato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo; può ignorare questo limite spendendo uno slot incantesimo della Magia del patto (nessuna azione richiesta)."
       }
-    ]
+    ],
+    "name_en": "Fiend Patron"
   },
   {
     "id": 46,
@@ -1488,7 +1559,8 @@
       {
         "name": "Incantesimi del Signore Fatato",
         "level": 3,
-        "description": "La magia del patrono gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del signore fatato, gli incantesimi lì elencati saranno sempre considerati come preparati. INCANTESIMI DEL SIGNORE FATATO Livello da warlock Incantesimi 3 Calmare emozioni, luminescenza, passo velato, allucinazione di forza, sonno 5 Intermittenza, crescita vegetale 7 Dominare bestie, invisibilità superiore 9 Dominare persone, sembrare."
+        "description": "La magia del patrono gli consente di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del signore fatato, gli incantesimi lì elencati saranno sempre considerati come preparati.",
+        "table": "INCANTESIMI DEL SIGNORE FATATO Livello da warlock Incantesimi 3 Calmare emozioni, luminescenza, passo velato, allucinazione di forza, sonno 5 Intermittenza, crescita vegetale 7 Dominare bestie, invisibilità superiore 9 Dominare persone, sembrare."
       },
       {
         "name": "Movimenti del Folletto",
@@ -1510,7 +1582,8 @@
         "level": 14,
         "description": "Il patrono conferisce al warlock il potere di combinare la propria magia con il teletrasporto. Subito dopo aver lanciato un incantesimo di ammaliamento o illusione utilizzando un'azione o uno slot incantesimo, il warlock può lanciare passo velato come parte di quella stessa azione senza spendere uno slot incantesimo."
       }
-    ]
+    ],
+    "name_en": "Archfey Patron"
   },
   {
     "id": 47,
@@ -1521,7 +1594,8 @@
       {
         "name": "Incantesimi del Grande Antico",
         "level": 3,
-        "description": "La magia del patrono consente al warlock di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Grande Antico, gli incantesimi lì elencati saranno sempre considerati come preparati. INCANTESIMI DEL GRANDE ANTICO Livello da warlock Incantesimi 3 Individuazione dei pensieri, sussurri dissonanti, allucinazione di forza, risata incontenibile di Tasha 5 Chiaroveggenza.fame di Hadar 7 Confusione, evoca aberrazione 9 Modificare memoria, telecinesi."
+        "description": "La magia del patrono consente al warlock di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi del Grande Antico, gli incantesimi lì elencati saranno sempre considerati come preparati.",
+        "table": "INCANTESIMI DEL GRANDE ANTICO Livello da warlock Incantesimi 3 Individuazione dei pensieri, sussurri dissonanti, allucinazione di forza, risata incontenibile di Tasha 5 Chiaroveggenza.fame di Hadar 7 Confusione, evoca aberrazione 9 Modificare memoria, telecinesi."
       },
       {
         "name": "Incantesimi Psichici",
@@ -1553,7 +1627,8 @@
         "level": 14,
         "description": "Quando il warlock lancia evoca aberrazione, può farlo senza che abbia bisogno di concentrazione. In tal caso, la durata dell'incantesimo per quel lancio diventa di 1 minuto e, una volta evocata, l'aberrazione ha un numero di punti ferita temporanei pari al livello da warlock del personaggio più il suo modificatore di Carisma. Inoltre, la prima volta a ogni turno che l'aberrazione colpisce una creatura sotto l'effetto del sortilegio del warlock, l'aberrazione le infligge danni psichici extra pari al danno bonus di quell'incantesimo."
       }
-    ]
+    ],
+    "name_en": "Great Old One Patron"
   },
   {
     "id": 48,
@@ -1564,7 +1639,8 @@
       {
         "name": "Incantesimi Celestiali",
         "level": 3,
-        "description": "La magia del patrono consente al warlock di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi celestiali, gli incantesimi lì elencati saranno sempre considerati come preparati. INCANTESIMI CELESTIALI Livello da warlock Incantesimi 3 Aiuto, cura ferite, dardo tracciante, ristorare inferiore, luce, fiamma sacra 5 Luce diurna, rinascita 7 Guardiano della fede, muro di fuoco 9 Ristorare superiore, richiama celestiale."
+        "description": "La magia del patrono consente al warlock di avere sempre pronti determinati incantesimi. Una volta raggiunto un livello specificato nella tabella Incantesimi celestiali, gli incantesimi lì elencati saranno sempre considerati come preparati.",
+        "table": "INCANTESIMI CELESTIALI Livello da warlock Incantesimi 3 Aiuto, cura ferite, dardo tracciante, ristorare inferiore, luce, fiamma sacra 5 Luce diurna, rinascita 7 Guardiano della fede, muro di fuoco 9 Ristorare superiore, richiama celestiale."
       },
       {
         "name": "Luce Curatrice",
@@ -1586,6 +1662,7 @@
         "level": 14,
         "description": "Quando il warlock o un suo alleato entro 18 metri da sé sta per effettuare un tiro salvezza contro morte, è possibile scatenare dell'energia radiosa per salvarlo. I punti ferita della creatura verranno poi ripristinati a un valore pari alla metà dei suoi punti ferita massimi e, se prona, terminerà tale condizione. Ogni creatura a scelta del warlock entro 9 metri da quella creatura subisce danni radiosi pari a 2d8 più il modificatore di Carisma dell'incantatore, diventando accecata fino al termine del turno in corso. Dopo aver utilizzato questo privilegio, il personaggio non può riutilizzarlo prima di aver completato un riposo lungo."
       }
-    ]
+    ],
+    "name_en": "Celestial Patron"
   }
 ]
