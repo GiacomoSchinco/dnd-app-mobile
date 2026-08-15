@@ -9,7 +9,7 @@ import DiceOverlay from './components/custom/DiceOverlay';
 import { ROUTES } from './lib/routes';
 
 // Scegli il tema che preferisci:
-import theme from './components/ui/themes/default'; // ☀️ Default Apple (chiaro)
+import theme from './components/ui/themes/dark_fantasy'; 
 //import theme from './components/ui/themes/obsidian'; // 🌑 Obsidian (dark viola)
 // import theme from './components/ui/themes/neon';     // 💚 Neon (verde glow)
 // import theme from './components/ui/themes/stone';    // 🪨 Stone (marrone caldo)

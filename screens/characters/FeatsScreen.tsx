@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import TabHeader from '../../components/custom/TabHeader';
 import EmptyState from '../../components/custom/EmptyState';
+import SectionTitle from '../../components/custom/SectionTitle';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import { getFeatByName } from '../../lib/rules/feats';
 import { getClassNameItalian, getClass } from '../../lib/rules/classes';
@@ -18,25 +19,6 @@ function groupClassFeaturesByLevel(features: { level: number; name: string }[]) 
     else groups.push({ level: f.level, names: [f.name] });
   }
   return groups;
-}
-
-/** Sezione con titolo minuscolo (stile coerente col resto dell'app) */
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  const t = useTokens();
-  return (
-    <Text
-      style={{
-        fontSize: t.typography.xs,
-        fontWeight: '600',
-        color: t.colors.foregroundTertiary,
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
-        marginBottom: t.spacing[2],
-      }}
-    >
-      {children}
-    </Text>
-  );
 }
 
 /** Card con il testo (regole sempre leggibili) */

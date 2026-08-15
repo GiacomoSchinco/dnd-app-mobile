@@ -157,7 +157,22 @@ npx tsc --noEmit                 # type-check: deve uscire con exit 0, ZERO erro
 npx expo export --platform web   # build bundle web (verifica import/compilazione)
 npx expo start --clear           # riavvio Metro pulendo cache (dopo babel/metro/moduli nativi)
 cd android; .\gradlew.bat assembleRelease   # APK release locale (debug keystore, sideload)
+node scripts/generate-icons.mjs  # rigenera TUTTE le icone da assets/logo.png
 ```
+
+### ⚠️ Build locale: la cartella `android/` è PREBUILT
+
+`app.json` è la fonte per **EAS cloud / prebuild**, ma la **build locale**
+(`gradlew assembleRelease`) usa i file nativi dentro `android/`. Cambiare
+`app.json` **NON** aggiorna questi file da solo:
+
+- **Nome app** (sotto l'icona nel launcher) → da `android/app/src/main/res/values/strings.xml`
+  (`app_name`). Fix: editare `strings.xml` + ricompilare (o `npx expo prebuild`).
+- **Icone** → da `android/app/src/main/res/mipmap-*/ic_launcher*.webp`. Rigenerarle
+  con `node scripts/generate-icons.mjs` (script che parte da `assets/logo.png` e genera
+  anche `icon.png` iOS, `adaptive-icon.png`, `splash-icon.png`, `favicon.png`).
+- Prima di `npx expo prebuild`: fare backup/commit di `android/` (rischio di perdere
+  modifiche native manuali, es. `colors.xml`, `AndroidManifest.xml`).
 
 ## 🩺 Stato attuale (2026-08-13)
 

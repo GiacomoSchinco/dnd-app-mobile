@@ -1,6 +1,7 @@
 import { Text, View } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import FilterChip from '../FilterChip';
+import SectionTitle from '../SectionTitle';
 import { s } from '../../../utils/style-helpers';
 import type { Ability, SkillName } from '../../../types';
 import type { ToolOption } from '../../../lib/rules/apply-feat';
@@ -51,15 +52,6 @@ export interface FeatChoiceState {
   selectSpell: (name: string) => void;
 }
 
-function SectionTitle({ text, count }: { text: string; count: string }) {
-  const t = useTokens();
-  return (
-    <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground, marginBottom: t.spacing[2] }}>
-      {text} <Text style={{ color: t.colors.foregroundTertiary }}>{count}</Text>
-    </Text>
-  );
-}
-
 function Chips({ options, isActive, onToggle }: {
   options: { key: string; label: string }[];
   isActive: (key: string) => boolean;
@@ -96,6 +88,7 @@ function FeatChoice({ choice }: { choice: FeatChoiceState }) {
       {choice.type === 'tool_proficiency' && (
         <>
           <SectionTitle
+            large
             text={`Strumenti di ${choice.name ?? 'origine'}`}
             count={`(${choice.toolSelected.length}/${choice.toolCount})`}
           />
@@ -110,6 +103,7 @@ function FeatChoice({ choice }: { choice: FeatChoiceState }) {
       {choice.type === 'hybrid_proficiency' && (
         <>
           <SectionTitle
+            large
             text={`Competenze di ${choice.name ?? 'origine'}`}
             count={`(${choice.skillSelected.length + choice.toolSelected.length}/${choice.total})`}
           />
@@ -132,7 +126,7 @@ function FeatChoice({ choice }: { choice: FeatChoiceState }) {
 
       {choice.type === 'spellcasting' && (
         <>
-          <SectionTitle text={`${choice.name ?? 'Iniziato alla Magia'} — caratteristica`} count="" />
+          <SectionTitle large text={`${choice.name ?? 'Iniziato alla Magia'} — caratteristica`} count="" />
           <Chips
             options={choice.abilityOptions}
             isActive={(k) => choice.abilitySelected === k}
@@ -140,7 +134,7 @@ function FeatChoice({ choice }: { choice: FeatChoiceState }) {
           />
 
           <View style={{ height: t.spacing[3] }} />
-          <SectionTitle text="Trucchetti" count={`(${choice.cantripSelected.length}/${choice.cantripCount})`} />
+          <SectionTitle large text="Trucchetti" count={`(${choice.cantripSelected.length}/${choice.cantripCount})`} />
           <Chips
             options={choice.cantripOptions}
             isActive={(k) => choice.cantripSelected.includes(k)}
@@ -148,7 +142,7 @@ function FeatChoice({ choice }: { choice: FeatChoiceState }) {
           />
 
           <View style={{ height: t.spacing[3] }} />
-          <SectionTitle text="Incantesimo di 1° livello" count={choice.spellSelected ? '(1/1)' : '(0/1)'} />
+          <SectionTitle large text="Incantesimo di 1° livello" count={choice.spellSelected ? '(1/1)' : '(0/1)'} />
           <Chips
             options={choice.spellOptions}
             isActive={(k) => choice.spellSelected === k}

@@ -5,6 +5,8 @@ import { useTokens } from '../../components/ui/prism-provider';
 import TabHeader from '../../components/custom/TabHeader';
 import EmptyState from '../../components/custom/EmptyState';
 import BottomModal from '../../components/custom/BottomModal';
+import SectionTitle from '../../components/custom/SectionTitle';
+import ListCard from '../../components/custom/ListCard';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import { getAllSkills, type SkillDefinition } from '../../lib/rules/skills';
 import { getAllAbilities, getAbilityModifier, formatModifier } from '../../lib/rules/abilities';
@@ -57,13 +59,8 @@ export default function SkillsScreen() {
           if (group.length === 0) return null;
           return (
             <View key={ab.name} style={{ marginBottom: t.spacing[4] }}>
-              <View style={[s.row, { justifyContent: 'space-between', marginBottom: t.spacing[1] }]}>
-                <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                  {ab.nameIt}
-                </Text>
-                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>{ab.abbreviation}</Text>
-              </View>
-              <View style={{ borderRadius: t.radius.lg, borderWidth: 1, borderColor: t.colors.border, backgroundColor: t.colors.backgroundSecondary, overflow: 'hidden' }}>
+              <SectionTitle text={ab.nameIt} right={ab.abbreviation} marginBottom={t.spacing[1]} />
+              <ListCard>
                 {group.map((skill, idx) => {
                   const prof = profSkills.includes(skill.name);
                   const exp = expSkills.includes(skill.name);
@@ -101,7 +98,7 @@ export default function SkillsScreen() {
                     </Pressable>
                   );
                 })}
-              </View>
+              </ListCard>
             </View>
           );
         })}

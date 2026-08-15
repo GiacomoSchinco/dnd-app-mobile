@@ -5,6 +5,7 @@ import { getAbilityAbbreviation } from '../../../lib/rules/abilities';
 import { s } from '../../../utils/style-helpers';
 import StepLabel from './StepLabel';
 import Chip from './Chip';
+import SectionTitle from '../SectionTitle';
 import { ABILITY_ORDER, FEAT_MODE_PENDING, type AsiAssignment, type AsiMode } from './wizardSteps';
 import type { Ability, AbilityScores, FeatRaw } from '../../../types';
 
@@ -35,20 +36,6 @@ type Props = {
   validationError?: string | null;
   finalScores: AbilityScores | null;
 };
-
-function SectionTitle({ text, note }: { text: string; note?: string }) {
-  const t = useTokens();
-  return (
-    <View style={{ marginBottom: t.spacing[2] }}>
-      <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>{text}</Text>
-      {note ? (
-        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[0.5] }}>
-          {note}
-        </Text>
-      ) : null}
-    </View>
-  );
-}
 
 function FeatRow({
   feat,
@@ -167,6 +154,7 @@ export default function FeatStep({
       {hasFightingStyle && (
         <View>
           <SectionTitle
+            large
             text="STILE DI COMBATTIMENTO"
             note="Scegli uno stile per il tuo combattente."
           />
@@ -187,6 +175,7 @@ export default function FeatStep({
       {asiLevels.length > 0 && (
         <View>
           <SectionTitle
+            large
             text="ASI O TALENTO GENERALE"
             note="Per ogni livello scegli una delle due opzioni."
           />
@@ -306,6 +295,7 @@ export default function FeatStep({
       {epicBoonUnlocked && (
         <View>
           <SectionTitle
+            large
             text="DONO EPICO"
             note="Al livello 19 ottieni un dono epico."
           />

@@ -8,6 +8,8 @@ import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import BackButton from '../../components/custom/BackButton';
 import EmptyState from '../../components/custom/EmptyState';
+import SectionTitle from '../../components/custom/SectionTitle';
+import ListCard from '../../components/custom/ListCard';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
@@ -86,9 +88,7 @@ export default function NotesScreen() {
 
         {/* ── Aggiungi appunto ── */}
         <View style={{ marginBottom: t.spacing[5] }}>
-          <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: t.spacing[2] }}>
-            Nuovo appunto
-          </Text>
+          <SectionTitle text="Nuovo appunto" />
           <Input
             size="lg"
             value={draft}
@@ -104,16 +104,10 @@ export default function NotesScreen() {
         </View>
 
         {/* ── Todo-list ── */}
-        <View style={[s.row, { justifyContent: 'space-between', marginBottom: t.spacing[2] }]}>
-          <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-            Appunti ({notes.length})
-          </Text>
-          {notes.length > 0 && (
-            <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
-              {doneCount}/{notes.length} completati
-            </Text>
-          )}
-        </View>
+        <SectionTitle
+          text={`Appunti (${notes.length})`}
+          right={notes.length > 0 ? `${doneCount}/${notes.length} completati` : undefined}
+        />
 
         {notes.length === 0 ? (
           <View style={{ paddingVertical: t.spacing[8], alignItems: 'center', gap: t.spacing[2] }}>
@@ -124,15 +118,7 @@ export default function NotesScreen() {
             </Text>
           </View>
         ) : (
-          <View
-            style={{
-              borderRadius: t.radius.lg,
-              borderWidth: 1,
-              borderColor: t.colors.border,
-              backgroundColor: t.colors.backgroundSecondary,
-              overflow: 'hidden',
-            }}
-          >
+          <ListCard>
             {notes.map((note, idx) => (
               <View
                 key={note.id}
@@ -193,7 +179,7 @@ export default function NotesScreen() {
                 </Pressable>
               </View>
             ))}
-          </View>
+          </ListCard>
         )}
       </ScrollView>
     </View>

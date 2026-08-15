@@ -7,29 +7,12 @@ import TabHeader from '../../components/custom/TabHeader';
 import EmptyState from '../../components/custom/EmptyState';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import ListItem from '../../components/custom/ListItem';
+import SectionTitle from '../../components/custom/SectionTitle';
+import StepperButton from '../../components/custom/StepperButton';
+import ListCard from '../../components/custom/ListCard';
 import { ALTRO_ROUTES } from '../more/altro-routes';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
-
-/** Bottone quadrato ± per i conteggi (denaro) */
-function StepperButton({ onPress, children }: { onPress: () => void; children: string }) {
-  const t = useTokens();
-  return (
-    <Pressable
-      onPress={onPress}
-      hitSlop={8}
-      style={({ pressed }) => ({
-        width: 34,
-        height: 34,
-        borderRadius: t.radius.sm,
-        backgroundColor: pressed ? t.colors.accent : t.colors.accent + '18',
-        ...s.center,
-      })}
-    >
-      <Text style={{ fontSize: t.typography.base, fontWeight: '700', color: t.colors.accent }}>{children}</Text>
-    </Pressable>
-  );
-}
 
 /** Riga con etichetta, stepper ± e valore */
 function MoneyRow({
@@ -115,34 +98,21 @@ export default function EquipmentScreen() {
             marginBottom: t.spacing[5],
           }}
         >
-          <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: t.spacing[1] }}>
-            Denaro
-          </Text>
+          <SectionTitle text="Denaro" marginBottom={t.spacing[1]} />
           <MoneyRow label="🪙 Oro (mo)" value={money.mo ?? 0} onChange={(d) => changeMoney('mo', d)} />
           <MoneyRow label="🪙 Argento (ma)" value={money.ma ?? 0} onChange={(d) => changeMoney('ma', d)} />
           <MoneyRow label="🪙 Rame (mr)" value={money.mr ?? 0} onChange={(d) => changeMoney('mr', d)} />
         </View>
 
         {/* ── Oggetti ── */}
-        <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: t.spacing[2] }}>
-          Oggetti ({equipment.length})
-        </Text>
+        <SectionTitle text={`Oggetti (${equipment.length})`} />
 
         {equipment.length === 0 ? (
           <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, marginBottom: t.spacing[5] }}>
             Nessun oggetto — l'equipaggiamento iniziale viene assegnato in creazione.
           </Text>
         ) : (
-          <View
-            style={{
-              borderRadius: t.radius.lg,
-              borderWidth: 1,
-              borderColor: t.colors.border,
-              backgroundColor: t.colors.backgroundSecondary,
-              overflow: 'hidden',
-              marginBottom: t.spacing[5],
-            }}
-          >
+          <ListCard marginBottom={t.spacing[5]}>
             {equipment.map((it, idx) => (
               <Pressable
                 key={it.itemId}
@@ -171,7 +141,7 @@ export default function EquipmentScreen() {
                 </Text>
               </Pressable>
             ))}
-          </View>
+          </ListCard>
         )}
 
         {/* ── Link al Compendio (equipaggiamento iniziale) ── */}

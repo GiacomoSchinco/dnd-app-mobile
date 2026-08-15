@@ -11,6 +11,8 @@ import StatsGrid from '../../components/custom/StatsGrid';
 import ClassAvatar from '../../components/custom/ClassAvatar';
 import BottomModal from '../../components/custom/BottomModal';
 import SectionButton from '../../components/custom/SectionButton';
+import SectionTitle from '../../components/custom/SectionTitle';
+import StepperButton from '../../components/custom/StepperButton';
 import { Button } from '../../components/ui/button';
 import { getClassNameItalian } from '../../lib/rules/classes';
 import { ROUTES } from '../../lib/routes';
@@ -47,25 +49,6 @@ function StatItem({ label, value }: { label: string; value: string }) {
   );
 }
 
-/** Bottone quadrato ± per i punti ferita (attuali/temporanei) */
-function StepperButton({ onPress, children }: { onPress: () => void; children: string }) {
-  const t = useTokens();
-  return (
-    <Pressable
-      onPress={onPress}
-      hitSlop={8}
-      style={({ pressed }) => ({
-        width: 34,
-        height: 34,
-        borderRadius: t.radius.sm,
-        backgroundColor: pressed ? t.colors.accent : t.colors.accent + '18',
-        ...s.center,
-      })}
-    >
-      <Text style={{ fontSize: t.typography.base, fontWeight: '700', color: t.colors.accent }}>{children}</Text>
-    </Pressable>
-  );
-}
 
 export default function CharacterDetailScreen() {
   const t = useTokens();
@@ -214,9 +197,7 @@ export default function CharacterDetailScreen() {
 
       {/* Caratteristiche — griglia 3×2 con icone, rombo e bonus */}
       <View style={[s.fullWidth, s.mb(t.spacing[4])]}>
-        <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: t.spacing[2] }}>
-          Caratteristiche
-        </Text>
+        <SectionTitle text="Caratteristiche" />
         <StatsGrid scores={activeChar.abilities} />
       </View>
 
