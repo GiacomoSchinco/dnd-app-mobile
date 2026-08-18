@@ -27,7 +27,7 @@ function Sheet(props) {
         <Pressable style={styles.backdrop} onPress={onClose} />
         <View style={[sheetStyles.sheet, { backgroundColor: t.colors.card, borderTopLeftRadius: t.radius.xl, borderTopRightRadius: t.radius.xl }, style]}>
           <View style={sheetStyles.handle} />
-          {title && <View style={sheetStyles.header}><Text style={{ color: t.colors.foreground, fontSize: 18, fontWeight: '600' }}>{title}</Text><Pressable onPress={onClose}><Text>Done</Text></Pressable></View>}
+          {title && <View style={sheetStyles.header}><Text style={{ color: t.colors.foreground, fontSize: 18, fontWeight: '600' }}>{title}</Text><Pressable onPress={onClose}><Text style={{ color: t.colors.accent, fontSize: 16, fontWeight: '600' }}>Done</Text></Pressable></View>}
           <View>{children}</View>
         </View>
       </KeyboardAvoidingView>

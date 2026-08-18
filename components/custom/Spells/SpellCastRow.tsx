@@ -13,10 +13,12 @@ type Props = {
   onCast: (spell: Spell) => void;
   /** Apre il dettaglio della magia */
   onInfo: (spell: Spell) => void;
+  /** Se false (PG senza slot incantesimo) nasconde il tasto "Lancia" */
+  canCast?: boolean;
 };
 
 /** Riga di una magia assegnata al PG: testo → dettaglio, chip "Lancia" → consuma lo slot */
-export default function SpellCastRow({ spell, t, onCast, onInfo }: Props) {
+export default function SpellCastRow({ spell, t, onCast, onInfo, canCast = true }: Props) {
   const color = SCHOOL_MAP[spell.school]?.color || '#888';
   return (
     <Pressable
@@ -48,7 +50,7 @@ export default function SpellCastRow({ spell, t, onCast, onInfo }: Props) {
       </View>
       {spell.level === 0 ? (
         <Badge variant="subtle" size="sm" color={t.colors.accent}>∞</Badge>
-      ) : (
+      ) : canCast ? (
         <TouchableOpacity
           onPress={() => onCast(spell)}
           style={{
@@ -60,7 +62,7 @@ export default function SpellCastRow({ spell, t, onCast, onInfo }: Props) {
         >
           <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.accentForeground }}>Lancia</Text>
         </TouchableOpacity>
-      )}
+      ) : null}
     </Pressable>
   );
 }

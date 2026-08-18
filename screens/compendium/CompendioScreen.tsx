@@ -34,7 +34,7 @@ const SECTIONS: CompendioSection[] = [
   { key: 'background', label: 'Background', icon: 'd8', description: 'Origini e storie dei personaggi' },
   { key: 'talenti', label: 'Talenti', icon: 'd6', description: 'Talenti e abilità speciali' },
   { key: 'oggetti', label: 'Oggetti', icon: 'd4', description: 'Armi, armature e oggetti' },
-  { key: 'magie', label: 'Incantesimi', icon: 'divination', description: 'Lista completa degli incantesimi' },
+  { key: 'magie', label: 'Magie', icon: 'divination', description: 'Lista completa degli incantesimi' },
   { key: 'equipaggiamento', label: 'Equipaggiamento', icon: 'gear', description: 'Equipaggiamento da avventuriero' },
 ];
 

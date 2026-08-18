@@ -68,7 +68,7 @@ export default function SpellCard({
                 onPress={onToggleFavorite}
                 style={[s.box(32, 16), { backgroundColor: isFavorite ? FAVORITE_COLOR : t.colors.backgroundSecondary }]}
               >
-                <Text style={{ fontSize: 16 }}>{isFavorite ? '★' : '☆'}</Text>
+                <Text style={{ fontSize: 16, color: isFavorite ? t.colors.accentForeground : FAVORITE_COLOR }}>{isFavorite ? '★' : '☆'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={onTogglePrepared}

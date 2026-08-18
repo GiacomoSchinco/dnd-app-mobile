@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { TabToRootNav } from '../../types/navigation';
@@ -10,6 +11,9 @@ import ListItem from '../../components/custom/ListItem';
 import SectionTitle from '../../components/custom/SectionTitle';
 import StepperButton from '../../components/custom/StepperButton';
 import ListCard from '../../components/custom/ListCard';
+import { ItemDetailModal } from '../../components/custom/Items';
+import { getItem } from '../../lib/rules/items';
+import type { ItemDefinition } from '../../types';
 import { ALTRO_ROUTES } from '../more/altro-routes';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
@@ -44,6 +48,7 @@ export default function EquipmentScreen() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<TabToRootNav>();
   const { activeChar, updateCharacter } = useActiveCharacter();
+  const [selectedItem, setSelectedItem] = useState<ItemDefinition | null>(null);
 
   if (!activeChar) {
     return (
@@ -78,7 +83,7 @@ export default function EquipmentScreen() {
       <TabHeader title="Equipaggiamento" icon="bag-handle-outline">
         <CharacterBar activeChar={activeChar} spellInformation={false} />
         <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[1] }}>
-          Tocca un oggetto per equipaggiarlo/smetterlo
+          👆 Tocca un oggetto per il dettaglio · ✓ per equipaggiarlo
         </Text>
       </TabHeader>
 
@@ -114,19 +119,26 @@ export default function EquipmentScreen() {
         ) : (
           <ListCard marginBottom={t.spacing[5]}>
             {equipment.map((it, idx) => (
-              <Pressable
+              <View
                 key={it.itemId}
-                onPress={() => toggleEquipped(it.itemId)}
-                style={({ pressed }) => [
+                style={[
                   s.row,
                   { justifyContent: 'space-between', paddingHorizontal: t.spacing[3], paddingVertical: t.spacing[2.5] },
                   idx > 0 && { borderTopWidth: 1, borderTopColor: t.colors.border },
-                  pressed && { backgroundColor: t.colors.backgroundTertiary },
                 ]}
               >
-                <View style={s.row}>
+                {/* Tap → dettaglio oggetto (descrizione, danno, ecc.) */}
+                <Pressable
+                  onPress={() => setSelectedItem(getItem(it.itemId) ?? null)}
+                  style={({ pressed }) => [
+                    s.flex,
+                    s.row,
+                    { alignItems: 'center' },
+                    pressed && { opacity: 0.7 },
+                  ]}
+                >
                   <Text style={{ fontSize: t.typography.md, marginRight: t.spacing[2] }}>{it.equipped ? '⚔️' : '🎒'}</Text>
-                  <View>
+                  <View style={s.flex}>
                     <Text style={{ fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
                       {it.name}
                     </Text>
@@ -135,11 +147,28 @@ export default function EquipmentScreen() {
                       {it.equipped ? 'Equipaggiato' : 'Non equipaggiato'}
                     </Text>
                   </View>
-                </View>
-                <Text style={{ fontSize: 20, color: it.equipped ? t.colors.accent : t.colors.foregroundTertiary }}>
-                  {it.equipped ? '✓' : '○'}
-                </Text>
-              </Pressable>
+                </Pressable>
+
+                {/* Equipaggia / smetto */}
+                <Pressable
+                  onPress={() => toggleEquipped(it.itemId)}
+                  hitSlop={8}
+                  style={({ pressed }) => ({
+                    width: 30,
+                    height: 30,
+                    borderRadius: 15,
+                    borderWidth: 2,
+                    borderColor: it.equipped ? t.colors.accent : t.colors.border,
+                    backgroundColor: it.equipped ? t.colors.accent : 'transparent',
+                    ...s.center,
+                    opacity: pressed ? 0.6 : 1,
+                  })}
+                >
+                  {it.equipped && (
+                    <Text style={{ color: t.colors.accentForeground, fontSize: t.typography.sm, fontWeight: '700' }}>✓</Text>
+                  )}
+                </Pressable>
+              </View>
             ))}
           </ListCard>
         )}
@@ -153,6 +182,9 @@ export default function EquipmentScreen() {
           onPress={() => navigation.navigate(ALTRO_ROUTES.EQUIPAGGIAMENTO)}
         />
       </ScrollView>
+
+      {/* Dettaglio oggetto (come per le magie) */}
+      <ItemDetailModal item={selectedItem} onClose={() => setSelectedItem(null)} />
     </View>
   );
 }

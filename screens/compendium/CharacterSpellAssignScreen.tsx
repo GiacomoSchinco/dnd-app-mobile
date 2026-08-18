@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -42,7 +42,13 @@ export default function CharacterSpellAssignScreen() {
 
   const prepared = activeChar?.preparedSpells ?? [];
   const favorites = activeChar?.favoriteSpells ?? [];
-  const lockedClass = activeChar?.classes?.[0]?.className ?? null;
+  const initialClass = activeChar?.classes?.[0]?.className ?? null;
+
+  // Pre-seleziona la classe del PG al primo montaggio (il filtro resta modificabile)
+  useEffect(() => {
+    if (initialClass) setClassFilter(initialClass);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filteredSpells = useMemo(
     () =>
@@ -50,13 +56,12 @@ export default function CharacterSpellAssignScreen() {
         search,
         levelFilter,
         classFilter,
-        lockedClass,
         showPreparedOnly,
         showFavoritesOnly,
         prepared,
         favorites,
       }),
-    [search, levelFilter, classFilter, lockedClass, showPreparedOnly, showFavoritesOnly, prepared, favorites]
+    [search, levelFilter, classFilter, showPreparedOnly, showFavoritesOnly, prepared, favorites]
   );
 
   if (!activeChar) {
@@ -86,7 +91,6 @@ export default function CharacterSpellAssignScreen() {
         onLevelFilterChange={setLevelFilter}
         classFilter={classFilter}
         onClassFilterChange={setClassFilter}
-        lockedClass={lockedClass}
         showPreparedOnly={showPreparedOnly}
         onPreparedOnlyChange={setShowPreparedOnly}
         showFavoritesOnly={showFavoritesOnly}

@@ -141,6 +141,12 @@ export default function SpellsScreen({ standalone = false }: Props) {
     useSpellSlot(spell.level);
   }, [useSpellSlot]);
 
+  // ── Se il PG non ha slot incantesimo, niente tasto "Lancia" ──
+  const hasSpellSlots = useMemo(() => {
+    const slots = activeChar?.spellSlots ?? {};
+    return Object.values(slots).some((s) => (s?.max ?? 0) > 0);
+  }, [activeChar?.spellSlots]);
+
   // ── Render compendio ──
   const renderSpell = useCallback(({ item }: { item: Spell }) => {
     return (
@@ -158,8 +164,8 @@ export default function SpellsScreen({ standalone = false }: Props) {
 
   // ── Render foglio PG ──
   const renderSheetSpell = useCallback(({ item }: { item: Spell }) => (
-    <SpellCastRow spell={item} t={t} onCast={handleCast} onInfo={setSelectedSpell} />
-  ), [t, handleCast]);
+    <SpellCastRow spell={item} t={t} canCast={hasSpellSlots} onCast={handleCast} onInfo={setSelectedSpell} />
+  ), [t, hasSpellSlots, handleCast]);
 
   // ── Main render ──
   return (
@@ -284,7 +290,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
         spell={selectedSpell}
         activeChar={activeChar}
         onClose={() => setSelectedSpell(null)}
-        onCast={isSheet ? handleCast : undefined}
+        onCast={isSheet && hasSpellSlots ? handleCast : undefined}
       />
     </View>
   );

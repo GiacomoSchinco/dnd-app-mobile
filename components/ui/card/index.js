@@ -16,7 +16,7 @@ export function Card(props) {
   return <View {...rest} style={[cardStyle, vs.shadow, style]}>{children}</View>
 }
 Card.Header = function(props) { return <View style={{ marginBottom: 12 }}>{props.children}</View> }
-Card.Title = function(props) { const t = useTokens(); return <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.semibold }}>{props.children}</Text> }
+Card.Title = function(props) { const t = useTokens(); return <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.semibold, color: t.colors.foreground }}>{props.children}</Text> }
 Card.Body = function(props) { return <View style={{ flex: 1 }}>{props.children}</View> }
 Card.Footer = function(props) { return <View style={{ marginTop: 16, flexDirection: 'row', gap: 8 }}>{props.children}</View> }
 export default Card

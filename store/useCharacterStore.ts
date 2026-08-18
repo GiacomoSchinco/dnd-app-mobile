@@ -7,6 +7,7 @@ import { getAbilityModifier } from '../lib/rules/abilities';
 import { getProficiencyBonus, getAllFeaturesUpToLevel } from '../lib/rules/progression';
 import { getSubclassFeaturesUpToLevel } from '../lib/rules/subclasses';
 import { getRaceEffects } from '../lib/rules/races';
+import { getClassPreset, getBackgroundPreset } from '../lib/rules/equipment-preset';
 import { fileSystemStorage } from './file-system-storage';
 
 let counter = 0;
@@ -82,6 +83,36 @@ function backfillDerivedStats(c: Character): Character {
     }
   }
 
+  // Equipaggiamento di CLASSE mancante (i vecchi PG avevano solo quello del background).
+  // Aggiunge SOLO gli item mancanti → idempotente (niente duplicati/raddoppi a ogni avvio).
+  const classPreset = classDef ? getClassPreset(classDef.id) : undefined;
+  const classItems = classPreset?.items ?? [];
+  const existingItemIds = new Set((c.equipment ?? []).map((it) => it.itemId));
+  const missingClassItems = classItems.filter((it) => !existingItemIds.has(it.itemId));
+  const equipment =
+    missingClassItems.length > 0
+      ? [
+          ...(c.equipment ?? []),
+          ...missingClassItems.map((it) => ({
+            itemId: it.itemId,
+            name: it.name,
+            quantity: it.quantity,
+            equipped: false,
+          })),
+        ]
+      : c.equipment;
+
+  // Per i PG "vecchi" (a cui mancava l'equipaggiamento di classe) aggiungi anche
+  // l'oro del background mancante, una tantum (stesso trigger → idempotente).
+  const money =
+    missingClassItems.length > 0
+      ? {
+          mo: (c.money?.mo ?? 0) + (c.backgroundId != null ? getBackgroundPreset(c.backgroundId)?.startingGold ?? 0 : 0),
+          ma: c.money?.ma ?? 0,
+          mr: c.money?.mr ?? 0,
+        }
+      : c.money;
+
   return {
     ...c,
     level,
@@ -100,6 +131,10 @@ function backfillDerivedStats(c: Character): Character {
     subclassFeatures,
     // Unisce le magie automatiche a quelle già assegnate (senza rimuoverne di manuali)
     preparedSpells: [...new Set([...autoSpells, ...(c.preparedSpells ?? [])])],
+    // Equipaggiamento di classe unito a quello già presente
+    equipment,
+    // Oro del background aggiunto ai PG vecchi (una tantum)
+    money,
   };
 }
 

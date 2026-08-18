@@ -19,9 +19,9 @@ Avatar.Group = function(props) {
   const t = useTokens()
   const arr = React.Children.toArray(children)
   return (
-    <View style={{ flexDirection: 'row', style }}>
+    <View style={[{ flexDirection: 'row' }, style]}>
       {arr.slice(0, max).map((child, i) => <View key={i} style={{ marginLeft: i > 0 ? -10 : 0 }}>{React.cloneElement(child, { size: child.props.size || 'md' })}</View>)}
-      {arr.length > max && <View style={{ marginLeft: -10, width: 40, height: 40, borderRadius: 20, backgroundColor: t.colors.backgroundSecondary, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 14 }}>+{arr.length - max}</Text></View>}
+      {arr.length > max && <View style={{ marginLeft: -10, width: 40, height: 40, borderRadius: 20, backgroundColor: t.colors.backgroundSecondary, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 14, color: t.colors.foreground }}>+{arr.length - max}</Text></View>}
     </View>
   )
 }

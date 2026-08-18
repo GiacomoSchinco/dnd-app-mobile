@@ -48,6 +48,9 @@ export default function SkillsScreen() {
         <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[1] }}>
           ✓ competenza · ⭐ maestria (expertise) — qui decidi cosa fare fuori dal combattimento
         </Text>
+        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, marginTop: t.spacing[0.5] }}>
+          👆 Tocca una competenza per vedere la sua descrizione
+        </Text>
       </TabHeader>
 
       <ScrollView

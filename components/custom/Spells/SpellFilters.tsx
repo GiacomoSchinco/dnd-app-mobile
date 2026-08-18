@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
-import Modal from '../../ui/modal';
 import FilterChip from '../FilterChip';
 import { s } from '../../../utils/style-helpers';
 import type { ClassName } from '../../../types';
@@ -94,9 +93,9 @@ export default function SpellFilters({
       <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>
         {!isClassLocked && (
           <FilterChip
-            label={`🎯 ${selectedClassName ?? 'Tutte le classi'}`}
+            label={classFilter ? `Classe: ${selectedClassName ?? '—'}` : 'Tutte le classi'}
             active={!!classFilter}
-            onPress={() => setClassModalVisible(true)}
+            onPress={() => setClassModalVisible(!classModalVisible)}
           />
         )}
 
@@ -118,53 +117,40 @@ export default function SpellFilters({
         )}
       </View>
 
-      {/* Results count */}
-      <Text style={{
-        fontSize: t.typography.xs,
-        color: t.colors.foregroundTertiary,
-        marginBottom: t.spacing[2],
-      }}>
-        {filteredCount} incantesimi trovati
-      </Text>
-
-      {/* Class picker bottom sheet */}
-      <Modal.Sheet
-        visible={classModalVisible}
-        onClose={() => setClassModalVisible(false)}
-        title="Filtra per classe"
-      >
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <TouchableOpacity
-            onPress={() => {
-              onClassFilterChange(null);
-              setClassModalVisible(false);
-            }}
+      {/* Class picker inline — niente modale nativo (evita la striscia bianca della barra) */}
+      {classModalVisible && !isClassLocked && (
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: t.colors.border,
+            borderRadius: t.radius.lg,
+            backgroundColor: t.colors.backgroundSecondary,
+            padding: t.spacing[3],
+            gap: t.spacing[2.5],
+            marginBottom: t.spacing[3],
+          }}
+        >
+          <Text
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingHorizontal: t.spacing[3],
-              paddingVertical: t.spacing[2.5],
-              borderRadius: t.radius.lg,
-              marginBottom: t.spacing[3],
-              backgroundColor: !classFilter ? t.colors.accent : t.colors.backgroundSecondary,
-              borderWidth: 1,
-              borderColor: !classFilter ? 'transparent' : t.colors.border,
+              fontSize: t.typography.xs,
+              fontWeight: '600',
+              color: t.colors.foregroundTertiary,
+              textTransform: 'uppercase',
+              letterSpacing: 0.5,
             }}
           >
-            <Text style={{
-              fontSize: t.typography.md,
-              fontWeight: '600',
-              color: !classFilter ? t.colors.accentForeground : t.colors.foreground,
-            }}>
-              Tutte le classi
-            </Text>
-            {!classFilter && (
-              <Text style={{ fontSize: t.typography.md, color: t.colors.accentForeground }}>✓</Text>
-            )}
-          </TouchableOpacity>
+            Filtra per classe
+          </Text>
 
           <View style={[s.rowWrap, s.gap(t.spacing[2])]}>
+            <FilterChip
+              label="Tutte le classi"
+              active={!classFilter}
+              onPress={() => {
+                onClassFilterChange(null);
+                setClassModalVisible(false);
+              }}
+            />
             {CLASS_KEYS.map((c) => {
               const active = classFilter?.toLowerCase() === c;
               return (
@@ -181,8 +167,18 @@ export default function SpellFilters({
               );
             })}
           </View>
-        </ScrollView>
-      </Modal.Sheet>
+        </View>
+      )}
+
+      {/* Results count */}
+      <Text style={{
+        fontSize: t.typography.xs,
+        color: t.colors.foregroundTertiary,
+        marginBottom: t.spacing[2],
+      }}>
+        {filteredCount} incantesimi trovati
+      </Text>
+
     </View>
   );
 }

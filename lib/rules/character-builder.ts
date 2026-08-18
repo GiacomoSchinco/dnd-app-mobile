@@ -6,7 +6,7 @@ import { applyFeat, getToolOptions, type FeatApplyResult } from './apply-feat';
 import { getSubclass, getSubclassFeaturesUpToLevel } from './subclasses';
 import { getSpellProgression, getLevelUpSpellChanges } from './spellcasting';
 import { getClassProgression, getFeaturesAtLevel, getAsiLevels, getResourceValue, getProficiencyBonus, getClassResources, getResourceMax, getResourceDie } from './progression';
-import { getStartingEquipment, getClassPreset } from './equipment-preset';
+import { getStartingEquipment, getClassPreset, getEquipmentPreset } from './equipment-preset';
 import { getAbilityModifier } from './abilities';
 import type {
   Ability,
@@ -516,9 +516,19 @@ export function buildCharacter(params: {
 
   const featId = backgroundResult.data?.featId;
   const feat = featId ? getFeat(featId) : undefined;
-  const equipment = backgroundResult.data
+
+  // Equipaggiamento iniziale = CLASSE + BACKGROUND (dedup per itemId, somma quantità)
+  const classPreset = getClassPreset(classResult.data?.classDef?.id ?? -1);
+  const bgEquipment = backgroundResult.data
     ? getStartingEquipment(backgroundResult.data.equipmentPresetId)
-    : undefined;
+    : [];
+  const equipmentMap = new Map<number, { name: string; itemId: number; quantity: number }>();
+  for (const it of [...(classPreset?.items ?? []), ...bgEquipment]) {
+    const existing = equipmentMap.get(it.itemId);
+    if (existing) existing.quantity += it.quantity;
+    else equipmentMap.set(it.itemId, { ...it });
+  }
+  const equipment = equipmentMap.size > 0 ? Array.from(equipmentMap.values()) : undefined;
 
   // Talento di origine → concessioni meccaniche (modificatori, competenze, incantesimi, risorse)
   const featApply = feat
@@ -848,7 +858,9 @@ export function buildCharacterSheet(
     equipped: false,
   }));
   const money: CharacterMoney = {
-    mo: getClassPreset(classDef.id)?.startingGold ?? 0,
+    mo:
+      (getClassPreset(classDef.id)?.startingGold ?? 0) +
+      (getEquipmentPreset(plan.backgroundResult?.data?.equipmentPresetId ?? -1)?.startingGold ?? 0),
     ma: 0,
     mr: 0,
   };
