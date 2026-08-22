@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getAllClasses, getClass } from '../../../lib/rules/classes';
@@ -8,10 +8,11 @@ import { hasLineages, getRaceEffects } from '../../../lib/rules/races';
 import { getBackground } from '../../../lib/rules/backgrounds';
 import { getFeat, getGeneralFeats, getEpicBoons, isFeatAvailable, getFeatAsiCap } from '../../../lib/rules/feats';
 import { getToolOptions, applyFeat, type ToolOption } from '../../../lib/rules/apply-feat';
-import { STANDARD_ARRAY, parseAbilityFromAbbreviation, getAbilityLabel, getAbilityModifier } from '../../../lib/rules/abilities';
+import { STANDARD_ARRAY, POINT_BUY_COST, POINT_BUY_TOTAL, POINT_BUY_MIN, POINT_BUY_MAX, getPointBuyValues, parseAbilityFromAbbreviation, getAbilityLabel, getAbilityModifier, suggestScoreAssignment } from '../../../lib/rules/abilities';
 import { parseSkillFromItalian, getAllSkills, getSkillNameItalian } from '../../../lib/rules/skills';
 import { getClassSpellsAtLevel } from '../../../lib/rules/spells';
 import type { FeatChoiceState, FeatChoiceType } from './FeatChoice';
+import type { ScoreOption } from './ValuePickerModal';
 import { calculateFinalAbilities, type AbilityBoost } from '../../../lib/rules/character-builder';
 import type { AbilityAssignmentResult } from '../../../lib/rules/character-builder';
 import { useCharacterStore } from '../../../store/useCharacterStore';
@@ -132,7 +133,14 @@ export interface CharacterWizard {
   closeAbilityPicker: () => void;
   assignToAbility: (a: Ability, v: number) => void;
   clearAbility: (a: Ability) => void;
-  pool: number[];
+  /** Aggiunge/rimuove un punto a un'abilità (stepper −/+, solo punto acquisto) */
+  adjustAbility: (a: Ability, delta: 1 | -1) => void;
+  /** Distribuzione automatica consigliata in base alla classe (abil. principali) */
+  suggestScores: () => void;
+  abilityMethod: 'standard' | 'point_buy';
+  setAbilityMethod: (m: 'standard' | 'point_buy') => void;
+  pickerOptions: ScoreOption[];
+  pointsLeft: number;
   allowedAbilities: Ability[];
   showBoosts: boolean;
   plusTwoPlusOne: boolean;
@@ -174,6 +182,7 @@ export function useCharacterWizard(): CharacterWizard {
   const [hpRoll, setHpRoll] = useState<number | null>(null);
   const [assigned, setAssigned] = useState<Partial<Record<Ability, number>>>({});
   const [editingAbility, setEditingAbility] = useState<Ability | null>(null);
+  const [abilityMethod, setAbilityMethodState] = useState<'standard' | 'point_buy'>('standard');
   const [picks, setPicks] = useState<(Ability | null)[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [bgToolChoices, setBgToolChoices] = useState<string[]>([]);
@@ -393,6 +402,34 @@ export function useCharacterWizard(): CharacterWizard {
   );
   const allAssigned = ABILITY_ORDER.every((a) => assigned[a] != null);
 
+  // Punto acquisto (27 punti): punti spesi/rimanenti
+  const pointsSpent = useMemo(
+    () =>
+      ABILITY_ORDER.reduce((sum, a) => {
+        const v = assigned[a];
+        return v != null ? sum + POINT_BUY_COST[v] : sum;
+      }, 0),
+    [assigned],
+  );
+  const pointsLeft = POINT_BUY_TOTAL - pointsSpent;
+
+  // Opzioni del picker valori: standard array (valori rimanenti) o punto acquisto
+  // (valori 8–15 con costo, acquistabili se il budget lo consente — il valore già
+  // assegnato all'abilità in modifica viene "rimborsato" così puoi cambiarlo).
+  const pickerOptions: ScoreOption[] = useMemo(() => {
+    if (abilityMethod === 'standard') {
+      return pool.map((v) => ({ value: v, cost: 0, disabled: false }));
+    }
+    const current = editingAbility != null ? assigned[editingAbility] : undefined;
+    const refund = current != null ? POINT_BUY_COST[current] : 0;
+    const budget = pointsLeft + refund;
+    return getPointBuyValues().map((v) => ({
+      value: v,
+      cost: POINT_BUY_COST[v],
+      disabled: POINT_BUY_COST[v] > budget,
+    }));
+  }, [abilityMethod, pool, editingAbility, assigned, pointsLeft]);
+
   const boosts: AbilityBoost[] = useMemo(
     () =>
       picks
@@ -440,7 +477,7 @@ export function useCharacterWizard(): CharacterWizard {
   const finalResult: AbilityAssignmentResult | null = useMemo(() => {
     if (!fullScores) return null;
     return calculateFinalAbilities({
-      method: 'standard',
+      method: abilityMethod,
       scores: fullScores,
       boosts,
       asiBoosts,
@@ -557,7 +594,7 @@ export function useCharacterWizard(): CharacterWizard {
         })();
         return backgroundId != null && bgToolChoices.length === bgToolCount && featDone;
       }
-      case 'abilities': return allAssigned && boostsComplete;
+      case 'abilities': return allAssigned && boostsComplete && (abilityMethod !== 'point_buy' || pointsLeft >= 0);
       case 'feat': {
         // Ogni livello ASI: o ha un talento generale, o l'ASI assegnato (+2/+1+1)
         const asiOk = asiLevelsApplied.every((l) => {
@@ -611,6 +648,7 @@ export function useCharacterWizard(): CharacterWizard {
       }
       case 'abilities':
         if (!allAssigned) return 'Assegna un valore a tutte le caratteristiche.';
+        if (abilityMethod === 'point_buy' && pointsLeft < 0) return 'Hai speso più di 27 punti.';
         if (!boostsComplete) return 'Completa i boost dal background.';
         return null;
       case 'feat':
@@ -679,6 +717,60 @@ export function useCharacterWizard(): CharacterWizard {
       delete next[ab];
       return next;
     });
+  };
+  // Stepper −/+ per il punto acquisto: ogni +1 ha un costo (il delta tra i costi
+  // della tabella) e non può superare il budget; il −1 restituisce punti (min 8).
+  const adjustAbility = (ability: Ability, delta: 1 | -1) => {
+    setAssigned((prev) => {
+      const current = prev[ability] ?? POINT_BUY_MIN;
+      const next = current + delta;
+      if (next < POINT_BUY_MIN || next > POINT_BUY_MAX) return prev;
+      if (delta > 0) {
+        const costDelta = POINT_BUY_COST[next] - POINT_BUY_COST[current];
+        const spent = ABILITY_ORDER.reduce((sum, a) => {
+          const v = prev[a];
+          return v != null ? sum + POINT_BUY_COST[v] : sum;
+        }, 0);
+        if (spent + costDelta > POINT_BUY_TOTAL) return prev;
+      }
+      return { ...prev, [ability]: next };
+    });
+    setError(null);
+  };
+  // Distribuzione automatica consigliata: lo standard array distribuito dando
+  // priorità alle abilità principali della classe (poi COS, poi le restanti).
+  // Vale per entrambi i metodi (lo standard array costa esattamente 27 punti).
+  const suggestScores = () => {
+    setAssigned(suggestScoreAssignment(classDef?.primaryAbilities ?? []));
+    setEditingAbility(null);
+    setError(null);
+  };
+
+  // All'ingresso nello step Punteggi, se non è stato ancora assegnato nulla,
+  // applica automaticamente la distribuzione consigliata (niente partenza vuota).
+  const prevStepRef = useRef<StepKey>('name');
+  useEffect(() => {
+    if (
+      step === 'abilities' &&
+      prevStepRef.current !== 'abilities' &&
+      Object.keys(assigned).length === 0
+    ) {
+      suggestScores();
+    }
+    prevStepRef.current = step;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
+
+  // Cambio metodo punteggi: azzera le assegnazioni (valori standard array e punti
+  // acquisto non sono compatibili tra loro), chiude il picker e ripropone la
+  // distribuzione consigliata.
+  const changeAbilityMethod = (m: 'standard' | 'point_buy') => {
+    if (m === abilityMethod) return;
+    setAssigned({});
+    setEditingAbility(null);
+    setAbilityMethodState(m);
+    setError(null);
+    setAssigned(suggestScoreAssignment(classDef?.primaryAbilities ?? []));
   };
   const togglePick = (ab: Ability) => {
     setPicks((prev) => {
@@ -840,7 +932,7 @@ export function useCharacterWizard(): CharacterWizard {
       featAsiPicks: Object.keys(featAsiPicks).length > 0 ? featAsiPicks : undefined,
       hpRoll: hpRoll ?? undefined,
       abilities: {
-        method: 'standard',
+        method: abilityMethod,
         scores: fullScores,
         boosts,
         asiBoosts,
@@ -898,7 +990,9 @@ export function useCharacterWizard(): CharacterWizard {
     featError: finalResult && !finalResult.success ? finalResult.error : null,
     finalScores: finalScoresWithFeats,
     assigned, editingAbility, openAbilityPicker, closeAbilityPicker,
-    assignToAbility, clearAbility, pool, allowedAbilities,
+    assignToAbility, clearAbility, adjustAbility, suggestScores,
+    abilityMethod, setAbilityMethod: changeAbilityMethod,
+    pickerOptions, pointsLeft, allowedAbilities,
     showBoosts: background != null && allowedAbilities.length > 0,
     plusTwoPlusOne, picks, togglePick,
     asiLevelsApplied, asiAssignments, setAsiMode, toggleAsiAbility, finalResult,

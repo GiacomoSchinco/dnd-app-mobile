@@ -10,6 +10,7 @@ export function useSpellFilters() {
   const [search, setSearch] = useState('');
   const [levelFilter, setLevelFilter] = useState<number | null>(null);
   const [classFilter, setClassFilter] = useState<string | null>(null);
+  const [schoolFilter, setSchoolFilter] = useState<string | null>(null);
   const [showPreparedOnly, setShowPreparedOnly] = useState(false);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
@@ -20,6 +21,8 @@ export function useSpellFilters() {
     setLevelFilter,
     classFilter,
     setClassFilter,
+    schoolFilter,
+    setSchoolFilter,
     showPreparedOnly,
     setShowPreparedOnly,
     showFavoritesOnly,
@@ -31,6 +34,8 @@ type ApplyOptions = {
   search: string;
   levelFilter: number | null;
   classFilter?: string | null;
+  /** Scuola di magia (es. 'evocation') */
+  schoolFilter?: string | null;
   /** Classe "bloccata" del PG attivo (ha precedenza sul filtro manuale) */
   lockedClass?: string | null;
   showPreparedOnly?: boolean;
@@ -39,7 +44,7 @@ type ApplyOptions = {
   favorites?: string[];
 };
 
-/** Applica i filtri a una lista di incantesimi (ricerca, livello, classe, preparate, preferite) */
+/** Applica i filtri a una lista di incantesimi (ricerca, livello, classe, scuola, preparate, preferite) */
 export function applySpellFilters(list: Spell[], opts: ApplyOptions): Spell[] {
   let result = list;
 
@@ -49,6 +54,9 @@ export function applySpellFilters(list: Spell[], opts: ApplyOptions): Spell[] {
   }
   if (opts.levelFilter !== null) {
     result = result.filter((s) => s.level === opts.levelFilter);
+  }
+  if (opts.schoolFilter) {
+    result = result.filter((s) => s.school === opts.schoolFilter);
   }
   // Classe "bloccata" del PG (ha precedenza) oppure filtro manuale
   const classFilter = opts.lockedClass ?? opts.classFilter;

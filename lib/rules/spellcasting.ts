@@ -1,5 +1,5 @@
 import spellcastingData from '../data/spellcasting.json';
-import type { SpellcastingDataRaw, SpellProgression } from '../../types';
+import type { SpellcastingDataRaw, SpellProgression, SpellSlot } from '../../types';
 
 /**
  * spellcasting.ts — Gestione di slot e incantesimi per classe (spellcasting.json).
@@ -93,6 +93,30 @@ export function getSpellProgression(className: string, level: number): SpellProg
 }
 
 // ── Level up ───────────────────────────────────────────────────
+
+/** Slot incantesimi a un dato livello, normalizzati in `Record<livello, SpellSlot>`.
+ *  Include la Pact Magic del Warlock (gli slot stanno in `pactMagic`) e il
+ *  Mistico Arcano (6°–9°, 1 slot per livello dal 11°). */
+export function getSpellSlots(
+  className: string,
+  level: number
+): Record<number, SpellSlot> {
+  const progression = getSpellProgression(className, level);
+  const slots: Record<number, SpellSlot> = {};
+  for (const [lvl, max] of Object.entries(progression.spellSlots)) {
+    slots[Number(lvl)] = { max, current: max };
+  }
+  if (progression.pactMagic) {
+    slots[progression.pactMagic.level] = {
+      max: progression.pactMagic.slots,
+      current: progression.pactMagic.slots,
+    };
+    for (const arcanumLevel of progression.pactMagic.mysticArcanum ?? []) {
+      slots[arcanumLevel] = { max: 1, current: 1 };
+    }
+  }
+  return slots;
+}
 
 /** Cambiamenti di incantesimi quando si sale di livello */
 export function getLevelUpSpellChanges(

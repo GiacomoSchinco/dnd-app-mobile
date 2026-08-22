@@ -4,7 +4,7 @@ import { getBackground, type BackgroundFeat } from './backgrounds';
 import { getFeat, getFeatAsiCap, getFeatAsiOptions } from './feats';
 import { applyFeat, getToolOptions, type FeatApplyResult } from './apply-feat';
 import { getSubclass, getSubclassFeaturesUpToLevel } from './subclasses';
-import { getSpellProgression, getLevelUpSpellChanges } from './spellcasting';
+import { getSpellProgression, getLevelUpSpellChanges, getSpellSlots } from './spellcasting';
 import { getClassProgression, getFeaturesAtLevel, getAsiLevels, getResourceValue, getProficiencyBonus, getClassResources, getResourceMax, getResourceDie } from './progression';
 import { getStartingEquipment, getClassPreset, getEquipmentPreset } from './equipment-preset';
 import { getAbilityModifier } from './abilities';
@@ -17,7 +17,6 @@ import type {
   ClassName,
   ArmorType,
   WeaponType,
-  SpellSlot,
   Character,
   CharacterResource,
   CharacterSenses,
@@ -737,14 +736,8 @@ export function buildCharacterSheet(
   const subclassFeatures =
     classData.subclass?.id != null ? getSubclassFeaturesUpToLevel(classData.subclass.id, level) : [];
 
-  // Slot incantesimi (max = disponibili)
-  const spellSlots: Record<number, SpellSlot> = {};
-  const progSlots = classData.spellProgression?.spellSlots;
-  if (progSlots) {
-    for (const [lvl, max] of Object.entries(progSlots)) {
-      spellSlots[Number(lvl)] = { max, current: max };
-    }
-  }
+  // Slot incantesimi (max = disponibili), incl. Pact Magic del Warlock
+  const spellSlots = getSpellSlots(classDef.name, level);
 
   // Risorse (Ira, Ki, …) da progression.json + effetti con risorsa
   const resources: Record<string, CharacterResource> = {};

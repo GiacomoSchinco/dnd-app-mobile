@@ -1,8 +1,13 @@
 import { Pressable, Text, View } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Card } from '../../ui/card';
+import { Button } from '../../ui/button';
+import StepperButton from '../StepperButton';
 import {
   STANDARD_ARRAY,
+  POINT_BUY_TOTAL,
+  POINT_BUY_COST,
+  POINT_BUY_MIN,
   getAbilityLabel,
   getAbilityAbbreviation,
   getAbilityModifier,
@@ -18,6 +23,13 @@ type Props = {
   assigned: Partial<Record<Ability, number>>;
   onEditAbility: (ability: Ability) => void;
   onClear: (ability: Ability) => void;
+  abilityMethod: 'standard' | 'point_buy';
+  onMethodChange: (m: 'standard' | 'point_buy') => void;
+  /** Distribuzione automatica consigliata in base alla classe */
+  onSuggest: () => void;
+  /** Stepper −/+ per il punto acquisto (delta +1/−1) */
+  onAdjust: (ability: Ability, delta: 1 | -1) => void;
+  pointsLeft: number;
   showBoosts: boolean;
   allowedAbilities: Ability[];
   plusTwoPlusOne: boolean;
@@ -26,11 +38,16 @@ type Props = {
   finalResult: AbilityAssignmentResult | null;
 };
 
-/** Step 6 — Punteggi di caratteristica (standard array + boost background + ASI) */
+/** Step 6 — Punteggi di caratteristica (standard array / punto acquisto + boost background + ASI) */
 export default function AbilitiesStep({
   assigned,
   onEditAbility,
   onClear,
+  abilityMethod,
+  onMethodChange,
+  onSuggest,
+  onAdjust,
+  pointsLeft,
   showBoosts,
   allowedAbilities,
   plusTwoPlusOne,
@@ -43,8 +60,34 @@ export default function AbilitiesStep({
   return (
     <View style={[s.gap(t.spacing[4])]}>
       <StepLabel>PUNTEGGI DI CARATTERISTICA</StepLabel>
+
+      {/* Metodo di generazione punteggi */}
+      <View style={[s.row, s.gap(t.spacing[2]), { flexWrap: 'wrap' }]}>
+        <Chip
+          label={`Standard Array (${STANDARD_ARRAY.join(', ')})`}
+          selected={abilityMethod === 'standard'}
+          onPress={() => onMethodChange('standard')}
+        />
+        <Chip
+          label="Punto Acquisto (27)"
+          selected={abilityMethod === 'point_buy'}
+          onPress={() => onMethodChange('point_buy')}
+        />
+      </View>
+
+      {/* Suggerimento automatico in base alla classe */}
+      <View style={[s.row, s.gap(t.spacing[2]), { alignItems: 'center' }]}>
+        <Text style={[s.flex, { fontSize: t.typography.sm, color: t.colors.foregroundSecondary }]}>
+          Distribuzione automatica consigliata in base alla classe (massimo
+          sull'abilità principale).
+        </Text>
+        <Button variant="outline" size="sm" onPress={onSuggest}>✨ Suggerisci</Button>
+      </View>
+
       <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginBottom: t.spacing[1] }}>
-        Distribuisci lo standard array ({STANDARD_ARRAY.join(', ')}): tocca un'abilità per assegnarle un valore, oppure la × per liberarlo.
+        {abilityMethod === 'point_buy'
+          ? `Hai ${POINT_BUY_TOTAL} punti da spendere: usa i tasti −/+ per alzare o abbassare i punteggi (min 8, max 15), oppure tocca un'abilità per un valore preciso. Punti rimanenti: ${pointsLeft}.`
+          : `Distribuisci lo standard array (${STANDARD_ARRAY.join(', ')}): tocca un'abilità per assegnarle un valore, oppure la × per liberarlo.`}
       </Text>
 
       {/* Abilità (tocca una riga per aprire la scelta del valore) */}
@@ -53,7 +96,13 @@ export default function AbilitiesStep({
         <View style={[s.gap(t.spacing[2])]}>
           {ABILITY_ORDER.map((a) => {
             const value = assigned[a];
+            const isPointBuy = abilityMethod === 'point_buy';
+            // Nel punto acquisto ogni abilità ha sempre un valore (min 8) e si
+            // regola coi tasti −/+; nello standard array resta vuota finché non
+            // assegnata.
+            const displayValue = value != null ? value : POINT_BUY_MIN;
             const filled = value != null;
+            const rowFilled = isPointBuy || filled;
             return (
               <View
                 key={a}
@@ -64,8 +113,8 @@ export default function AbilitiesStep({
                   paddingHorizontal: t.spacing[3],
                   borderRadius: t.radius.md,
                   borderWidth: 1,
-                  borderColor: filled ? t.colors.accent : t.colors.border,
-                  backgroundColor: filled ? t.colors.accent + '10' : t.colors.card,
+                  borderColor: rowFilled ? t.colors.accent : t.colors.border,
+                  backgroundColor: rowFilled ? t.colors.accent + '10' : t.colors.card,
                 }}
               >
                 <Pressable
@@ -77,12 +126,12 @@ export default function AbilitiesStep({
                       width: 38,
                       height: 38,
                       borderRadius: t.radius.sm,
-                      backgroundColor: filled ? t.colors.accent : t.colors.accentSubtle,
+                      backgroundColor: rowFilled ? t.colors.accent : t.colors.accentSubtle,
                       ...s.center,
                       marginRight: t.spacing[3],
                     }}
                   >
-                    <Text style={{ fontSize: t.typography.base, fontWeight: '800', color: filled ? t.colors.accentForeground : t.colors.accent }}>
+                    <Text style={{ fontSize: t.typography.base, fontWeight: '800', color: rowFilled ? t.colors.accentForeground : t.colors.accent }}>
                       {getAbilityAbbreviation(a)}
                     </Text>
                   </View>
@@ -91,11 +140,24 @@ export default function AbilitiesStep({
                       {getAbilityLabel(a)}
                     </Text>
                     <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
-                      {filled ? 'Assegnato' : 'Tocca per assegnare'}
+                      {isPointBuy
+                        ? value != null ? 'Assegnato' : '8 (0 pt)'
+                        : filled ? 'Assegnato' : 'Tocca per assegnare'}
                     </Text>
                   </View>
                 </Pressable>
-                {filled ? (
+                {isPointBuy ? (
+                  <View style={[s.row, s.gap(t.spacing[2]), { alignItems: 'center' }]}>
+                    <StepperButton onPress={() => onAdjust(a, -1)}>−</StepperButton>
+                    <View style={{ alignItems: 'center', minWidth: 36 }}>
+                      <Text style={{ fontSize: t.typography.lg, fontWeight: '800', color: t.colors.accent }}>{displayValue}</Text>
+                      <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+                        {POINT_BUY_COST[displayValue]} pt
+                      </Text>
+                    </View>
+                    <StepperButton onPress={() => onAdjust(a, 1)}>+</StepperButton>
+                  </View>
+                ) : filled ? (
                   <View style={[s.row, s.gap(t.spacing[2]), { alignItems: 'center' }]}>
                     <View style={{ alignItems: 'center' }}>
                       <Text style={{ fontSize: t.typography.lg, fontWeight: '800', color: t.colors.accent }}>{value}</Text>

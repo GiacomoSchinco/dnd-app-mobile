@@ -5,7 +5,7 @@ import { Input } from '../../ui/input';
 import FilterChip from '../FilterChip';
 import { s } from '../../../utils/style-helpers';
 import type { ClassName } from '../../../types';
-import { CLASS_LABELS, SCHOOL_COLORS, FAVORITE_COLOR, getSchoolColor, getLevelCounts } from './types';
+import { CLASS_LABELS, SCHOOL_LABELS, SCHOOL_COLORS, FAVORITE_COLOR, getSchoolColor, getLevelCounts } from './types';
 
 const SCHOOL_KEYS = Object.keys(SCHOOL_COLORS);
 const LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -18,6 +18,8 @@ type Props = {
   onLevelFilterChange: (level: number | null) => void;
   classFilter: string | null;
   onClassFilterChange: (className: string | null) => void;
+  schoolFilter: string | null;
+  onSchoolFilterChange: (school: string | null) => void;
   showPreparedOnly: boolean;
   onPreparedOnlyChange: (v: boolean) => void;
   showFavoritesOnly: boolean;
@@ -35,6 +37,8 @@ export default function SpellFilters({
   onLevelFilterChange,
   classFilter,
   onClassFilterChange,
+  schoolFilter,
+  onSchoolFilterChange,
   showPreparedOnly,
   onPreparedOnlyChange,
   showFavoritesOnly,
@@ -46,6 +50,7 @@ export default function SpellFilters({
   const t = useTokens();
   const levelCounts = useMemo(() => getLevelCounts(), []);
   const [classModalVisible, setClassModalVisible] = useState(false);
+  const [schoolModalVisible, setSchoolModalVisible] = useState(false);
 
   // Se il PG attivo ha una classe il filtro è forzato su di essa → il tasto sparisce
   const isClassLocked = !!lockedClass;
@@ -89,8 +94,15 @@ export default function SpellFilters({
         </View>
       </View>
 
-      {/* Class & toggle filters — il filtro classe sparisce se la lista è legata al PG */}
+      {/* Class, school & toggle filters — il filtro classe sparisce se la lista è legata al PG */}
       <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>
+        <FilterChip
+          label={schoolFilter ? `Scuola: ${SCHOOL_LABELS[schoolFilter] ?? schoolFilter}` : 'Tutte le scuole'}
+          active={!!schoolFilter}
+          activeBg={schoolFilter ? getSchoolColor(schoolFilter) : undefined}
+          activeFg="#FFFFFF"
+          onPress={() => setSchoolModalVisible(!schoolModalVisible)}
+        />
         {!isClassLocked && (
           <FilterChip
             label={classFilter ? `Classe: ${selectedClassName ?? '—'}` : 'Tutte le classi'}
@@ -163,6 +175,61 @@ export default function SpellFilters({
                     setClassModalVisible(false);
                   }}
                   label={CLASS_LABELS[c]}
+                />
+              );
+            })}
+          </View>
+        </View>
+      )}
+
+      {/* School picker inline (stesso pattern del filtro classe) */}
+      {schoolModalVisible && (
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: t.colors.border,
+            borderRadius: t.radius.lg,
+            backgroundColor: t.colors.backgroundSecondary,
+            padding: t.spacing[3],
+            gap: t.spacing[2.5],
+            marginBottom: t.spacing[3],
+          }}
+        >
+          <Text
+            style={{
+              fontSize: t.typography.xs,
+              fontWeight: '600',
+              color: t.colors.foregroundTertiary,
+              textTransform: 'uppercase',
+              letterSpacing: 0.5,
+            }}
+          >
+            Filtra per scuola di magia
+          </Text>
+
+          <View style={[s.rowWrap, s.gap(t.spacing[2])]}>
+            <FilterChip
+              label="Tutte le scuole"
+              active={!schoolFilter}
+              onPress={() => {
+                onSchoolFilterChange(null);
+                setSchoolModalVisible(false);
+              }}
+            />
+            {SCHOOL_KEYS.map((school) => {
+              const active = schoolFilter === school;
+              return (
+                <FilterChip
+                  key={school}
+                  size="sm"
+                  active={active}
+                  onPress={() => {
+                    onSchoolFilterChange(active ? null : school);
+                    setSchoolModalVisible(false);
+                  }}
+                  activeBg={getSchoolColor(school)}
+                  activeFg="#FFFFFF"
+                  label={SCHOOL_LABELS[school] ?? school}
                 />
               );
             })}

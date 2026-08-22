@@ -8,6 +8,7 @@ import { getProficiencyBonus, getAllFeaturesUpToLevel } from '../lib/rules/progr
 import { getSubclassFeaturesUpToLevel } from '../lib/rules/subclasses';
 import { getRaceEffects } from '../lib/rules/races';
 import { getClassPreset, getBackgroundPreset } from '../lib/rules/equipment-preset';
+import { getSpellSlots } from '../lib/rules/spellcasting';
 import { fileSystemStorage } from './file-system-storage';
 
 let counter = 0;
@@ -113,6 +114,11 @@ function backfillDerivedStats(c: Character): Character {
         }
       : c.money;
 
+  // Slot incantesimi (incl. Pact Magic del Warlock) — riempiti SOLO se assenti/vuoti,
+  // così gli slot già consumati non vengono sovrascritti (idempotente).
+  const hasSpellSlots = Object.values(c.spellSlots ?? {}).some((s) => (s?.max ?? 0) > 0);
+  const spellSlots = hasSpellSlots ? c.spellSlots : getSpellSlots(cls.className, level);
+
   return {
     ...c,
     level,
@@ -127,6 +133,7 @@ function backfillDerivedStats(c: Character): Character {
     proficiencyBonus: c.proficiencyBonus ?? getProficiencyBonus(level),
     armorClass: c.armorClass ?? 10 + dexMod,
     initiative: c.initiative ?? dexMod,
+    spellSlots,
     classFeatures,
     subclassFeatures,
     // Unisce le magie automatiche a quelle già assegnate (senza rimuoverne di manuali)
@@ -250,6 +257,21 @@ export const useCharacterStore = create<CharacterState>()(
                   }
                 : c,
             ),
+          };
+        }),
+
+      setSpellBadge: (spellName, badge) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) => {
+              if (c.id !== id) return c;
+              const current = { ...(c.spellBadges ?? {}) };
+              if (badge) current[spellName] = badge;
+              else delete current[spellName];
+              return { ...c, spellBadges: current };
+            }),
           };
         }),
 

@@ -114,6 +114,11 @@ export default function CharacterCreateScreen() {
               assigned={w.assigned}
               onEditAbility={w.openAbilityPicker}
               onClear={w.clearAbility}
+              abilityMethod={w.abilityMethod}
+              onMethodChange={w.setAbilityMethod}
+              onSuggest={w.suggestScores}
+              onAdjust={w.adjustAbility}
+              pointsLeft={w.pointsLeft}
               showBoosts={w.showBoosts}
               allowedAbilities={w.allowedAbilities}
               plusTwoPlusOne={w.plusTwoPlusOne}
@@ -209,7 +214,9 @@ export default function CharacterCreateScreen() {
       {/* Modale scelta valore per un'abilità */}
       <ValuePickerModal
         ability={w.editingAbility}
-        pool={w.pool}
+        options={w.pickerOptions}
+        method={w.abilityMethod}
+        pointsLeft={w.pointsLeft}
         onSelect={(value) => { if (w.editingAbility) w.assignToAbility(w.editingAbility, value); }}
         onClose={w.closeAbilityPicker}
       />

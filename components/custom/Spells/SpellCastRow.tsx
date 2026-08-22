@@ -5,6 +5,7 @@ import DndIcon, { type IconName } from '../DndIcon';
 import { s } from '../../../utils/style-helpers';
 import type { Spell } from '../../../types';
 import { SCHOOL_LABELS, SCHOOL_MAP } from './types';
+import type { SpellSourceBadge } from './spellSourceBadges';
 
 type Props = {
   spell: Spell;
@@ -15,10 +16,12 @@ type Props = {
   onInfo: (spell: Spell) => void;
   /** Se false (PG senza slot incantesimo) nasconde il tasto "Lancia" */
   canCast?: boolean;
+  /** Badge col regola particolare della magia (gratis 1/gg da bg/talento/razza) */
+  badge?: SpellSourceBadge | null;
 };
 
 /** Riga di una magia assegnata al PG: testo → dettaglio, chip "Lancia" → consuma lo slot */
-export default function SpellCastRow({ spell, t, onCast, onInfo, canCast = true }: Props) {
+export default function SpellCastRow({ spell, t, onCast, onInfo, canCast = true, badge }: Props) {
   const color = SCHOOL_MAP[spell.school]?.color || '#888';
   return (
     <Pressable
@@ -43,9 +46,12 @@ export default function SpellCastRow({ spell, t, onCast, onInfo, canCast = true 
         <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground }}>
           {spell.name}
         </Text>
-        <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>
+        <View style={[s.rowWrap, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>
           <Badge variant="subtle" size="sm">{spell.level === 0 ? 'Trucchetto' : `${spell.level}°`}</Badge>
           <Badge variant="subtle" size="sm" color={color}>{SCHOOL_LABELS[spell.school] || spell.school}</Badge>
+          {badge && (
+            <Badge variant="subtle" size="sm" color={badge.color}>{badge.label}</Badge>
+          )}
         </View>
       </View>
       {spell.level === 0 ? (

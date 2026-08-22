@@ -6,17 +6,28 @@ import { s } from '../../../utils/style-helpers';
 import BottomModal from '../BottomModal';
 import type { Ability } from '../../../types';
 
+/** Una scelta possibile nel picker valori (standard array o punto acquisto) */
+export type ScoreOption = {
+  value: number;
+  cost: number;
+  disabled: boolean;
+};
+
 type Props = {
   /** Abilità in modifica (null = modale chiuso) */
   ability: Ability | null;
-  /** Valori ancora disponibili (pool) */
-  pool: number[];
+  /** Opzioni disponibili (valore + costo + se acquistabile) */
+  options: ScoreOption[];
+  /** Metodo di generazione punteggi */
+  method: 'standard' | 'point_buy';
+  /** Punti rimanenti (solo punto acquisto) */
+  pointsLeft: number;
   onSelect: (value: number) => void;
   onClose: () => void;
 };
 
-/** Modale per scegliere quale valore (dal pool) assegnare a un'abilità */
-export default function ValuePickerModal({ ability, pool, onSelect, onClose }: Props) {
+/** Modale per scegliere quale valore assegnare a un'abilità (standard array o punto acquisto) */
+export default function ValuePickerModal({ ability, options, method, pointsLeft, onSelect, onClose }: Props) {
   const t = useTokens();
 
   return (
@@ -26,27 +37,38 @@ export default function ValuePickerModal({ ability, pool, onSelect, onClose }: P
           {ability ? getAbilityLabel(ability) : ''}
         </Text>
         <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[1], marginBottom: t.spacing[3] }}>
-          Scegli un valore da assegnare.
+          {method === 'point_buy'
+            ? `Scegli un valore (costo in punti). Punti rimanenti: ${pointsLeft}.`
+            : 'Scegli un valore da assegnare.'}
         </Text>
         <View style={[s.row, s.gap(t.spacing[2]), { flexWrap: 'wrap' }]}>
-          {pool.map((v) => (
+          {options.map((o) => (
             <Pressable
-              key={v}
-              onPress={() => onSelect(v)}
+              key={o.value}
+              disabled={o.disabled}
+              onPress={() => onSelect(o.value)}
               style={{
                 width: 72,
                 paddingVertical: t.spacing[2],
                 borderRadius: t.radius.md,
                 borderWidth: 2,
                 borderColor: t.colors.border,
-                backgroundColor: t.colors.input,
+                backgroundColor: o.disabled ? t.colors.backgroundTertiary : t.colors.input,
+                opacity: o.disabled ? 0.5 : 1,
                 ...s.center,
               }}
             >
-              <Text style={{ fontSize: t.typography.lg, fontWeight: '800', color: t.colors.foreground }}>{v}</Text>
-              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
-                {getAbilityModifier(v) >= 0 ? '+' : ''}{getAbilityModifier(v)}
+              <Text style={{ fontSize: t.typography.lg, fontWeight: '800', color: o.disabled ? t.colors.foregroundTertiary : t.colors.foreground }}>
+                {o.value}
               </Text>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+                {getAbilityModifier(o.value) >= 0 ? '+' : ''}{getAbilityModifier(o.value)}
+              </Text>
+              {method === 'point_buy' && (
+                <Text style={{ fontSize: t.typography.xs, color: o.disabled ? t.colors.foregroundTertiary : t.colors.accent }}>
+                  {o.cost} pt
+                </Text>
+              )}
             </Pressable>
           ))}
         </View>

@@ -5,6 +5,7 @@ import { useTokens } from '../../ui/prism-provider';
 import { s } from '../../../utils/style-helpers';
 import type { Spell, ClassName } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP, FAVORITE_COLOR } from './types';
+import type { SpellSourceBadge } from './spellSourceBadges';
 import DndIcon, { type IconName } from '../DndIcon';
 
 type Props = {
@@ -15,6 +16,8 @@ type Props = {
   onPress: () => void;
   onToggleFavorite: () => void;
   onTogglePrepared: () => void;
+  /** Badge col regola particolare della magia (gratis 1/gg da bg/talento/razza) */
+  badge?: SpellSourceBadge | null;
 };
 
 export default function SpellCard({
@@ -25,6 +28,7 @@ export default function SpellCard({
   onPress,
   onToggleFavorite,
   onTogglePrepared,
+  badge,
 }: Props) {
   const t = useTokens();
 
@@ -54,6 +58,9 @@ export default function SpellCard({
               <Badge variant="subtle" size="sm" color={SCHOOL_MAP[spell.school]?.color || '#888'}>
                 {spell.level === 0 ? 'Trucchetto' : `${spell.level}°`}
               </Badge>
+              {badge && (
+                <Badge variant="subtle" size="sm" color={badge.color}>{badge.label}</Badge>
+              )}
             </View>
             <View style={[s.rowWrap, s.gap(t.spacing[1]), s.mt(t.spacing[0.5])]}>
               <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary }}>

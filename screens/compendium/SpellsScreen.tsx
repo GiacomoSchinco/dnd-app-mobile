@@ -24,6 +24,7 @@ import {
   Spell,
   useSpellFilters,
   applySpellFilters,
+  getSpellSourceBadges,
 } from '../../components/custom/Spells';
 
 type Props = {
@@ -42,6 +43,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
     activeChar: boundChar,
     togglePreparedSpell,
     toggleFavoriteSpell,
+    setSpellBadge,
     useSpellSlot,
     recoverSpellSlot,
     restoreSpellSlots,
@@ -51,6 +53,11 @@ export default function SpellsScreen({ standalone = false }: Props) {
   const hasActiveCharacter = !!activeChar;
   // "Scheda magie del PG": solo con PG attivo e NON standalone → lista delle SUE magie
   const isSheet = hasActiveCharacter && !standalone;
+
+  // Badge delle magie con regole particolari (gratis 1/gg da bg/talento/razza)
+  const spellBadges = useMemo(() => getSpellSourceBadges(activeChar), [activeChar]);
+  // Badge MANUALI scelti dall'utente: hanno la precedenza su quelli automatici
+  const manualBadges = activeChar?.spellBadges ?? {};
 
   const bottomClearance = standalone ? insets.bottom + t.spacing[6] : insets.bottom + 80;
 
@@ -79,6 +86,8 @@ export default function SpellsScreen({ standalone = false }: Props) {
     setLevelFilter,
     classFilter,
     setClassFilter,
+    schoolFilter,
+    setSchoolFilter,
     showPreparedOnly,
     setShowPreparedOnly,
     showFavoritesOnly,
@@ -101,13 +110,14 @@ export default function SpellsScreen({ standalone = false }: Props) {
         search,
         levelFilter,
         classFilter,
+        schoolFilter,
         lockedClass,
         showPreparedOnly,
         showFavoritesOnly,
         prepared,
         favorites,
       }),
-    [search, levelFilter, classFilter, lockedClass, showPreparedOnly, showFavoritesOnly, prepared, favorites]
+    [search, levelFilter, classFilter, schoolFilter, lockedClass, showPreparedOnly, showFavoritesOnly, prepared, favorites]
   );
 
   // ── Magie ASSEGNATE al PG (le sue preparate), risolte dall'elenco ──
@@ -155,17 +165,25 @@ export default function SpellsScreen({ standalone = false }: Props) {
         isPrepared={prepared.includes(item.name)}
         isFavorite={favorites.includes(item.name)}
         hasActiveCharacter={hasActiveCharacter}
+        badge={manualBadges[item.name] ?? spellBadges.get(item.name) ?? null}
         onPress={() => setSelectedSpell(item)}
         onToggleFavorite={() => toggleFavoriteSpell(item.name)}
         onTogglePrepared={() => togglePreparedSpell(item.name)}
       />
     );
-  }, [prepared, favorites, hasActiveCharacter, toggleFavoriteSpell, togglePreparedSpell]);
+  }, [prepared, favorites, hasActiveCharacter, toggleFavoriteSpell, togglePreparedSpell, spellBadges, manualBadges]);
 
   // ── Render foglio PG ──
   const renderSheetSpell = useCallback(({ item }: { item: Spell }) => (
-    <SpellCastRow spell={item} t={t} canCast={hasSpellSlots} onCast={handleCast} onInfo={setSelectedSpell} />
-  ), [t, hasSpellSlots, handleCast]);
+    <SpellCastRow
+      spell={item}
+      t={t}
+      canCast={hasSpellSlots}
+      onCast={handleCast}
+      onInfo={setSelectedSpell}
+      badge={manualBadges[item.name] ?? spellBadges.get(item.name) ?? null}
+    />
+  ), [t, hasSpellSlots, handleCast, spellBadges, manualBadges]);
 
   // ── Main render ──
   return (
@@ -191,6 +209,8 @@ export default function SpellsScreen({ standalone = false }: Props) {
             onLevelFilterChange={setLevelFilter}
             classFilter={classFilter}
             onClassFilterChange={setClassFilter}
+            schoolFilter={schoolFilter}
+            onSchoolFilterChange={setSchoolFilter}
             lockedClass={lockedClass}
             showPreparedOnly={showPreparedOnly}
             onPreparedOnlyChange={setShowPreparedOnly}
@@ -243,7 +263,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
           showsVerticalScrollIndicator={false}
           onScroll={handleScroll}
           scrollEventThrottle={16}
-          style={{ paddingHorizontal: t.spacing[4] }}
+          style={{ paddingHorizontal: t.spacing[3] }}
           stickySectionHeadersEnabled={false}
         />
       ) : (
@@ -291,6 +311,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
         activeChar={activeChar}
         onClose={() => setSelectedSpell(null)}
         onCast={isSheet && hasSpellSlots ? handleCast : undefined}
+        onSetBadge={activeChar ? (b) => { if (selectedSpell) setSpellBadge(selectedSpell.name, b); } : undefined}
       />
     </View>
   );

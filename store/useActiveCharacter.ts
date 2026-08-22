@@ -7,6 +7,7 @@ export function useActiveCharacter(): ActiveCharacterActions {
   const setActiveCharacterId = useCharacterStore((s) => s.setActiveCharacterId);
   const togglePreparedSpell = useCharacterStore((s) => s.togglePreparedSpell);
   const toggleFavoriteSpell = useCharacterStore((s) => s.toggleFavoriteSpell);
+  const setSpellBadge = useCharacterStore((s) => s.setSpellBadge);
   const useSpellSlot = useCharacterStore((s) => s.useSpellSlot);
   const recoverSpellSlot = useCharacterStore((s) => s.recoverSpellSlot);
   const restoreSpellSlots = useCharacterStore((s) => s.restoreSpellSlots);
@@ -24,6 +25,7 @@ export function useActiveCharacter(): ActiveCharacterActions {
     setActiveCharacterId,
     togglePreparedSpell,
     toggleFavoriteSpell,
+    setSpellBadge,
     useSpellSlot,
     recoverSpellSlot,
     restoreSpellSlots,

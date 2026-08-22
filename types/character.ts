@@ -174,6 +174,12 @@ export interface FeatSpellChoice {
   spells: string[];
 }
 
+/** Badge manuale scelto dall'utente per una magia (colore + etichetta) */
+export interface ManualSpellBadge {
+  color: string;
+  label: string;
+}
+
 export interface CharacterChoices {
   /** Boost abilità applicati dal background */
   abilityBoosts?: { ability: Ability; amount: 1 | 2 }[];
@@ -258,6 +264,8 @@ export interface Character {
   spellSlots: Record<number, SpellSlot>;
   preparedSpells: string[];
   favoriteSpells: string[];
+  /** Badge manuali sulle magie (nome incantesimo → colore + etichetta) */
+  spellBadges?: Record<string, ManualSpellBadge>;
 
   // Risorse di classe (Ira, Ki, …)
   resources?: Record<string, CharacterResource>;
@@ -342,6 +350,7 @@ export interface CharacterState {
 
   togglePreparedSpell: (spellSlug: string) => void;
   toggleFavoriteSpell: (spellSlug: string) => void;
+  setSpellBadge: (spellName: string, badge: ManualSpellBadge | null) => void;
   useSpellSlot: (level: number) => void;
   recoverSpellSlot: (level: number) => void;
   restoreSpellSlots: (level?: number) => void;
@@ -355,6 +364,7 @@ export interface ActiveCharacterActions {
   setActiveCharacterId: (id: string | null) => void;
   togglePreparedSpell: (slug: string) => void;
   toggleFavoriteSpell: (slug: string) => void;
+  setSpellBadge: (spellName: string, badge: ManualSpellBadge | null) => void;
   useSpellSlot: (level: number) => void;
   recoverSpellSlot: (level: number) => void;
   restoreSpellSlots: (level?: number) => void;

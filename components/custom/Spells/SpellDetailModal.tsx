@@ -1,10 +1,12 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { useMemo } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
 import { s } from '../../../utils/style-helpers';
-import type { Spell, ClassName, Character } from '../../../types';
+import type { Spell, ClassName, Character, ManualSpellBadge } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
+import { MANUAL_BADGES, resolveSpellBadge } from './spellSourceBadges';
 import DndIcon, { type IconName } from '../DndIcon';
 import BottomModal from '../BottomModal';
 import DetailChip from '../DetailChip';
@@ -17,6 +19,8 @@ type Props = {
   onCast?: (spell: Spell) => void;
   onToggleFavorite?: () => void;
   onTogglePrepared?: () => void;
+  /** Se fornito mostra il selettore di badge colorato (imposta/rimuove il badge manuale) */
+  onSetBadge?: (badge: ManualSpellBadge | null) => void;
 };
 
 export default function SpellDetailModal({
@@ -26,8 +30,16 @@ export default function SpellDetailModal({
   onCast,
   onToggleFavorite,
   onTogglePrepared,
+  onSetBadge,
 }: Props) {
   const t = useTokens();
+
+  // Badge manuale scelto dall'utente (ha precedenza) + badge automatico risolto
+  const manualBadge = activeChar?.spellBadges?.[spell?.name ?? ''] ?? null;
+  const badge = useMemo(
+    () => (activeChar && spell ? resolveSpellBadge(activeChar, spell.name) : null),
+    [activeChar, spell?.name],
+  );
 
   return (
     <BottomModal visible={!!spell} onClose={onClose}>
@@ -54,6 +66,9 @@ export default function SpellDetailModal({
                     <Badge variant="subtle">
                       {spell.level === 0 ? 'Trucchetto' : `${spell.level}° livello`}
                     </Badge>
+                    {badge && (
+                      <Badge variant="subtle" color={badge.color}>{badge.label}</Badge>
+                    )}
                   </View>
                 </View>
               </View>
@@ -75,6 +90,30 @@ export default function SpellDetailModal({
                 {spell.description}
               </Text>
 
+              {/* Regola particolare automatica: gratis 1/gg senza slot (da bg/talento/razza) */}
+              {badge && badge.source && badge.source !== 'manual' && (
+                <View
+                  style={[s.mt(t.spacing[3]), {
+                    backgroundColor: badge.color + '1A',
+                    borderRadius: t.radius.md,
+                    padding: t.spacing[3],
+                    borderWidth: 1,
+                    borderColor: badge.color + '55',
+                  }]}
+                >
+                  <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: badge.color, marginBottom: t.spacing[1] }}>
+                    {badge.label}
+                  </Text>
+                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
+                    {badge.source === 'background'
+                      ? 'Da talento di origine del background: puoi lanciarla una volta per riposo lungo senza consumare slot.'
+                      : badge.source === 'feat'
+                        ? 'Da un talento scelto: puoi lanciarla una volta per riposo lungo senza consumare slot.'
+                        : 'Da razza/lineage: puoi lanciarla una volta per riposo lungo senza consumare slot.'}
+                  </Text>
+                </View>
+              )}
+
               {spell.upgrade && spell.upgrade.trim().toLowerCase() !== 'nessuno' && (
                 <View style={[s.mt(t.spacing[3]), { backgroundColor: t.colors.backgroundSecondary, borderRadius: t.radius.md, padding: t.spacing[3] }]}>
                   <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.accent, marginBottom: t.spacing[1] }}>
@@ -82,6 +121,45 @@ export default function SpellDetailModal({
                   </Text>
                   <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
                     {spell.upgrade}
+                  </Text>
+                </View>
+              )}
+
+              {/* Selettore badge colore (in fondo, prima di "Lancia") */}
+              {onSetBadge && (
+                <View style={[s.mt(t.spacing[4])]}>
+                  <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: t.spacing[2] }}>
+                    Badge colore
+                  </Text>
+                  <View style={[s.row, { alignItems: 'center', gap: t.spacing[2] }]}>
+                    <TouchableOpacity
+                      onPress={() => onSetBadge(null)}
+                      style={[s.box(40, 20), { backgroundColor: t.colors.backgroundTertiary, ...s.center, borderWidth: 2, borderColor: manualBadge ? t.colors.border : t.colors.accent }]}
+                    >
+                      <Text style={{ color: t.colors.foregroundTertiary, fontSize: t.typography.md }}>✕</Text>
+                    </TouchableOpacity>
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      style={{ flex: 1 }}
+                      contentContainerStyle={{ gap: t.spacing[2] }}
+                    >
+                      {MANUAL_BADGES.map((b) => {
+                        const active = manualBadge?.color === b.color;
+                        return (
+                          <TouchableOpacity
+                            key={b.key}
+                            onPress={() => onSetBadge(active ? null : { color: b.color, label: b.label })}
+                            style={[s.box(40, 20), { backgroundColor: b.color, ...s.center, borderWidth: 2, borderColor: active ? t.colors.accent : t.colors.border }]}
+                          >
+                            {active && <Text style={{ color: '#FFFFFF', fontWeight: '800', fontSize: t.typography.md }}>✓</Text>}
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </ScrollView>
+                  </View>
+                  <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[1] }}>
+                    {manualBadge ? `Badge: ${manualBadge.label}` : 'Nessun badge: tocca un colore per aggiungerlo.'}
                   </Text>
                 </View>
               )}
