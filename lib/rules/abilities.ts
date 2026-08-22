@@ -1,5 +1,5 @@
 import abilitiesData from '../data/abilities.json';
-import type { Ability, AbilityAbbreviation, AbilityRaw } from '../../types';
+import type { Ability, AbilityAbbreviation, AbilityModifier, AbilityModifierTarget, AbilityRaw, AbilityScores } from '../../types';
 
 /**
  * abilities.ts — Gestione delle caratteristiche (abilities.json).
@@ -82,6 +82,60 @@ export function getAbilityModifier(score: number): number {
 /** Formatta il modificatore con segno (es. +3, -1) */
 export function formatModifier(modifier: number): string {
   return modifier >= 0 ? `+${modifier}` : `${modifier}`;
+}
+
+/** Abilità coinvolte da un target di modificatore ([] = tutte, per 'all') */
+function getModifierTargetAbilities(target: AbilityModifierTarget): Ability[] {
+  if (target === 'all') return [];
+  return Array.isArray(target) ? target : [target];
+}
+
+/**
+ * Punteggio effettivo di un'abilità = punteggio base + somma dei modificatori
+ * manuali (correzioni utente). Valgono i modificatori con target 'all' o che
+ * includono l'abilità.
+ */
+export function getEffectiveAbilityScore(
+  abilities: AbilityScores,
+  ability: Ability,
+  modifiers: AbilityModifier[] = [],
+): number {
+  const base = abilities[ability] ?? 10;
+  return (
+    base +
+    modifiers
+      .filter((m) => {
+        const targets = getModifierTargetAbilities(m.ability);
+        return targets.length === 0 || targets.includes(ability);
+      })
+      .reduce((sum, m) => sum + m.value, 0)
+  );
+}
+
+/** Punteggi effettivi per tutte le 6 abilità (base + modificatori manuali) */
+export function getEffectiveAbilityScores(
+  abilities: AbilityScores,
+  modifiers: AbilityModifier[] = [],
+): AbilityScores {
+  return Object.fromEntries(
+    ABILITIES_LIST.map((a) => [a, getEffectiveAbilityScore(abilities, a, modifiers)]),
+  ) as AbilityScores;
+}
+
+/** Somma dei valori dei modificatori che toccano l'abilità data */
+export function getAbilityModifierTotal(modifiers: AbilityModifier[], ability: Ability): number {
+  return modifiers
+    .filter((m) => {
+      const targets = getModifierTargetAbilities(m.ability);
+      return targets.length === 0 || targets.includes(ability);
+    })
+    .reduce((sum, m) => sum + m.value, 0);
+}
+
+/** Etichetta del destinatario di un modificatore ('all' → 'Tutte', array → sigle) */
+export function getModifierTargetLabel(target: AbilityModifierTarget): string {
+  const targets = getModifierTargetAbilities(target);
+  return targets.length === 0 ? 'Tutte le abilità' : targets.map((a) => getAbilityAbbreviation(a)).join(' · ');
 }
 
 /** Punteggio base standard (array per metodo di acquisto punti) */

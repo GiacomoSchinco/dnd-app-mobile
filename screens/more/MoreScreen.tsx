@@ -10,6 +10,7 @@ import ScreenHeader from '../../components/custom/ScreenHeader';
 import ConfirmDeleteCharacterModal from '../../components/custom/ConfirmDeleteCharacterModal';
 import SectionButton from '../../components/custom/SectionButton';
 import { ROUTES } from '../../lib/routes';
+import { ALTRO_ROUTES } from './altro-routes';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 
 /**
@@ -40,6 +41,12 @@ export default function MoreScreen() {
         </Text>
 
         <View style={[s.fullWidth, s.gap(t.spacing[3])]}>
+          <SectionButton
+            icon="✏️"
+            label="Modifica personaggio"
+            description={activeChar ? `Nome, statistiche e modificatori di ${activeChar.name}` : 'Nessun personaggio attivo'}
+            onPress={() => navigation.navigate(ALTRO_ROUTES.MODIFICA_PG)}
+          />
           <SectionButton
             icon="🗑️"
             label="Elimina personaggio"

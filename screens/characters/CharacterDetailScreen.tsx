@@ -17,6 +17,7 @@ import SectionTitle from '../../components/custom/SectionTitle';
 import StatTile from '../../components/custom/StatTile';
 import StepperRow from '../../components/custom/StepperRow';
 import { getClassNameItalian } from '../../lib/rules/classes';
+import { getEffectiveAbilityScores } from '../../lib/rules/abilities';
 import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
@@ -151,7 +152,7 @@ export default function CharacterDetailScreen() {
       {/* Caratteristiche — griglia 3×2 con icone, rombo e bonus */}
       <View style={[s.fullWidth, s.mb(t.spacing[4])]}>
         <SectionTitle text="Caratteristiche" />
-        <StatsGrid scores={activeChar.abilities} />
+        <StatsGrid scores={getEffectiveAbilityScores(activeChar.abilities, activeChar.abilityModifiers ?? [])} />
       </View>
 
       {/* Risorse (Punti Fortuna, Ira, Ki…) */}

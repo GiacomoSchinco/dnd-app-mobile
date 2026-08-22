@@ -1,5 +1,5 @@
 import skillsData from '../data/skills.json';
-import type { Ability, SkillName, SkillRaw } from '../../types';
+import type { Ability, SkillModifier, SkillModifierTarget, SkillName, SkillRaw } from '../../types';
 
 /**
  * skills.ts — Gestione delle abilità di gioco (skills.json).
@@ -71,4 +71,30 @@ export function getSkillsGroupedByAbility(): Record<Ability, SkillDefinition[]> 
 /** Verifica se una skill esiste */
 export function isValidSkill(name: string): name is SkillName {
   return SKILLS_DATA.some((s) => s.name === name);
+}
+
+// ── Modificatori manuali alle skill (correzioni utente) ────────
+
+/** Skill coinvolte da un target di modificatore ([] = tutte, per 'all') */
+function getSkillModifierTargetSkills(target: SkillModifierTarget): SkillName[] {
+  if (target === 'all') return [];
+  return Array.isArray(target) ? target : [target];
+}
+
+/** Somma dei valori dei modificatori manuali che toccano la skill data */
+export function getSkillModifierTotal(modifiers: SkillModifier[], skill: SkillName): number {
+  return modifiers
+    .filter((m) => {
+      const targets = getSkillModifierTargetSkills(m.skill);
+      return targets.length === 0 || targets.includes(skill);
+    })
+    .reduce((sum, m) => sum + m.value, 0);
+}
+
+/** Etichetta del destinatario di un modificatore di skill ('all' → 'Tutte le skill') */
+export function getSkillModifierTargetLabel(target: SkillModifierTarget): string {
+  const targets = getSkillModifierTargetSkills(target);
+  return targets.length === 0
+    ? 'Tutte le skill'
+    : targets.map((s) => getSkillNameItalian(s)).join(' · ');
 }

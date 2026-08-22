@@ -44,7 +44,7 @@
    ├── home/        → HomeScreen (lista PG + pulsanti rapidi)
    ├── characters/  → CharacterCreateScreen (wizard) · CharacterDetailScreen (Scheda PG) · SkillsScreen (tab Abilità)
    ├── compendium/  → CompendioScreen · Classi · Razze · Background · Talenti · Equipaggiamento · Oggetti · Magie (standalone)
-   └── more/        → AltroStack · MoreScreen (Altro=vuoto 🧭) · SettingsScreen (Impostazioni, su RootStack) · altro-routes
+   └── more/        → AltroStack · MoreScreen (Altro: menu ✏️ Modifica PG + 🗑️ Elimina) · CharacterEditorScreen (correzione nome/statistiche/modificatori abilità) · SettingsScreen (su RootStack) · altro-routes
 
 📁 lib/
    ├── data/        → JSON (fonte unica: classi, razze, magie, oggetti, ecc.)
@@ -105,6 +105,7 @@
 | `ChipPickerPanel` | Pannello inline per picker di chip (bordo + label uppercase + rowWrap di FilterChip) | Filtri classe/scuola delle magie |
 | `StatTile` | Quadrato statistico (etichetta + valore, aspectRatio 1) | Header Scheda PG (CA/PB/Velocità/Iniz) |
 | `DetailModalHeader` | Header modali di dettaglio: box icona 56×56 + titolo + ✕ + badge (props `icon`/`iconBg`/`title`/`badges`/`onClose`) | Dettaglio Incantesimo, dettaglio Oggetto |
+| `AddModifierModal` | Modale "Aggiungi modificatore" (chip target una/più/tutte + etichetta + stepper valore) | Editor personaggio (abilità e skill) |
 
 **Wizard creazione**: la schermata (`CharacterCreateScreen`) è un renderer sottile →
 tutta la logica vive in `useCharacterWizard` (hook) e ogni passo è un componente

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
@@ -8,8 +8,8 @@ import SectionBlock from '../../components/custom/SectionBlock';
 import BottomModal from '../../components/custom/BottomModal';
 import ListCard from '../../components/custom/ListCard';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
-import { getAllSkills, type SkillDefinition } from '../../lib/rules/skills';
-import { getAllAbilities, getAbilityModifier, formatModifier } from '../../lib/rules/abilities';
+import { getAllSkills, getSkillModifierTotal, type SkillDefinition } from '../../lib/rules/skills';
+import { getAllAbilities, getAbilityModifier, formatModifier, getEffectiveAbilityScores } from '../../lib/rules/abilities';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
 
@@ -34,6 +34,13 @@ export default function SkillsScreen() {
   const pb = activeChar.proficiencyBonus ?? 0;
   const profSkills = activeChar.proficiencies?.skills ?? [];
   const expSkills = activeChar.proficiencies?.expertise ?? [];
+  // Punteggi effettivi = base + modificatori manuali (correzioni utente)
+  const effectiveScores = useMemo(
+    () => getEffectiveAbilityScores(activeChar.abilities, activeChar.abilityModifiers ?? []),
+    [activeChar.abilities, activeChar.abilityModifiers],
+  );
+  // Modificatori manuali alle skill (correzioni utente)
+  const skillModifiers = activeChar.skillModifiers ?? [];
 
   return (
     <View style={[s.flex, { backgroundColor: t.colors.background }]}>
@@ -66,8 +73,9 @@ export default function SkillsScreen() {
                 {group.map((skill, idx) => {
                   const prof = profSkills.includes(skill.name);
                   const exp = expSkills.includes(skill.name);
-                  const abMod = getAbilityModifier(activeChar.abilities[skill.ability] ?? 10);
-                  const total = abMod + (exp ? pb * 2 : prof ? pb : 0);
+                  const abMod = getAbilityModifier(effectiveScores[skill.ability]);
+                  const skillModTotal = getSkillModifierTotal(skillModifiers, skill.name);
+                  const total = abMod + (exp ? pb * 2 : prof ? pb : 0) + skillModTotal;
                   return (
                     <Pressable
                       key={skill.name}
@@ -88,9 +96,11 @@ export default function SkillsScreen() {
                         </Text>
                       </View>
                       <View style={[s.row, s.gap(t.spacing[1.5])]}>
-                        {(prof || exp) && (
+                        {(prof || exp || skillModTotal !== 0) && (
                           <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
-                            {formatModifier(abMod)} + {exp ? pb * 2 : pb}
+                            {formatModifier(abMod)}
+                            {prof && <> + {exp ? pb * 2 : pb}</>}
+                            {skillModTotal !== 0 && <> + {formatModifier(skillModTotal)}</>}
                           </Text>
                         )}
                         <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: prof || exp ? t.colors.accent : t.colors.foreground, minWidth: 32, textAlign: 'right' }}>
@@ -111,10 +121,11 @@ export default function SkillsScreen() {
           <SkillDetailCard
             skill={selectedSkill}
             ability={ABILITIES.find((a) => a.name === selectedSkill.ability)}
-            abMod={getAbilityModifier(activeChar.abilities[selectedSkill.ability] ?? 10)}
+            abMod={getAbilityModifier(effectiveScores[selectedSkill.ability])}
             prof={profSkills.includes(selectedSkill.name)}
             exp={expSkills.includes(selectedSkill.name)}
             pb={pb}
+            skillModTotal={getSkillModifierTotal(skillModifiers, selectedSkill.name)}
           />
         )}
       </BottomModal>
@@ -130,6 +141,7 @@ function SkillDetailCard({
   prof,
   exp,
   pb,
+  skillModTotal,
 }: {
   skill: SkillDefinition;
   ability: (typeof ABILITIES)[number] | undefined;
@@ -137,9 +149,10 @@ function SkillDetailCard({
   prof: boolean;
   exp: boolean;
   pb: number;
+  skillModTotal: number;
 }) {
   const t = useTokens();
-  const total = abMod + (exp ? pb * 2 : prof ? pb : 0);
+  const total = abMod + (exp ? pb * 2 : prof ? pb : 0) + skillModTotal;
   const statusLabel = exp ? 'Maestria' : prof ? 'Competenza' : 'Non competente';
   const statusEmoji = exp ? '⭐' : prof ? '✓' : '';
 
@@ -194,6 +207,7 @@ function SkillDetailCard({
           {ability?.nameIt ?? ''} {formatModifier(abMod)}
           {prof && <> + Competenza {formatModifier(pb)}</>}
           {exp && <> + Competenza ×2 {formatModifier(pb * 2)}</>}
+          {skillModTotal !== 0 && <> + Modificatori {formatModifier(skillModTotal)}</>}
           {' = '}
           <Text style={{ fontWeight: '700', color: t.colors.accent }}>{formatModifier(total)}</Text>
         </Text>

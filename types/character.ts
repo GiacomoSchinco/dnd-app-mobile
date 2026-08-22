@@ -229,6 +229,10 @@ export interface Character {
 
   // Abilità (punteggi finali, boost inclusi)
   abilities: AbilityScores;
+  /** Modificatori MANUALI alle abilità (correzioni utente per errori nei dati) */
+  abilityModifiers?: AbilityModifier[];
+  /** Modificatori MANUALI alle skill (correzioni utente per errori nei dati) */
+  skillModifiers?: SkillModifier[];
 
   // Statistiche derivate (calcolate in buildCharacterSheet)
   hitPoints?: HitPoints;
@@ -290,6 +294,44 @@ export interface NoteItem {
   id: string;
   text: string;
   done: boolean;
+}
+
+// ── Modificatori abilità (correzione manuale) ──────────────────
+
+/** Destinatario di un modificatore: una o più abilità, oppure TUTTE ('all') */
+export type AbilityModifierTarget = Ability | Ability[] | 'all';
+
+/** Modificatore manuale a un'abilità: aggiunto dall'utente per correggere i dati */
+export interface AbilityModifier {
+  id: string;
+  /** Etichetta libera (es. 'Correzione DM', 'Pozione di forza') */
+  label: string;
+  /**
+   * Abilità a cui si applica (una o più), oppure 'all' per TUTTE (es. '+1 a tutto').
+   * Esempi: 'strength' = solo FOR; ['strength','charisma'] = FOR+CAR; 'all' = tutte.
+   */
+  ability: AbilityModifierTarget;
+  /** Valore del modificatore (anche negativo) */
+  value: number;
+}
+
+// ── Modificatori skill (correzione manuale) ────────────────────
+
+/** Destinatario di un modificatore di skill: una o più skill, oppure TUTTE ('all') */
+export type SkillModifierTarget = SkillName | SkillName[] | 'all';
+
+/** Modificatore manuale a una skill: aggiunto dall'utente per correggere i dati */
+export interface SkillModifier {
+  id: string;
+  /** Etichetta libera (es. 'Talento', 'Correzione DM') */
+  label: string;
+  /**
+   * Skill a cui si applica (una o più), oppure 'all' per TUTTE.
+   * Esempi: 'perception' = solo Percezione; ['perception','insight'] = due; 'all' = tutte.
+   */
+  skill: SkillModifierTarget;
+  /** Valore del modificatore (anche negativo) */
+  value: number;
 }
 
 // ── Bozza di creazione (input del wizard) ──────────────────────

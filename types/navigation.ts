@@ -26,9 +26,10 @@ export type RootStackParamList = {
   Items: undefined;
 };
 
-/** Stack interno della tab Altro (AltroStack) — ora contiene solo il menu */
+/** Stack interno della tab Altro (AltroStack) — menu + editor del PG attivo */
 export type AltroStackParamList = {
   MoreMenu: undefined;
+  ModificaPersonaggio: undefined;
 };
 
 /** Tab navigator (Main) */
