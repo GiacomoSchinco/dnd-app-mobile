@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { TabToRootNav } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Badge } from '../../components/ui/badge';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
-import EmptyState from '../../components/custom/EmptyState';
+import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
 import StatsGrid from '../../components/custom/StatsGrid';
 import ClassAvatar from '../../components/custom/ClassAvatar';
-import BottomModal from '../../components/custom/BottomModal';
+import CardBox from '../../components/custom/CardBox';
+import ConfirmDeleteCharacterModal from '../../components/custom/ConfirmDeleteCharacterModal';
+import LabelValueRow from '../../components/custom/LabelValueRow';
 import SectionButton from '../../components/custom/SectionButton';
 import SectionTitle from '../../components/custom/SectionTitle';
-import StepperButton from '../../components/custom/StepperButton';
-import { Button } from '../../components/ui/button';
+import StatTile from '../../components/custom/StatTile';
+import StepperRow from '../../components/custom/StepperRow';
 import { getClassNameItalian } from '../../lib/rules/classes';
 import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
@@ -23,32 +25,6 @@ const SECTIONS = [
   { key: 'talenti', icon: '⭐', label: 'Talenti', desc: 'Talenti e abilità speciali' },
   { key: 'note', icon: '📝', label: 'Note', desc: 'Appunti e storia del personaggio' },
 ];
-
-/** Statistica derivata dell'header — quadrato con etichetta + valore */
-function StatItem({ label, value }: { label: string; value: string }) {
-  const t = useTokens();
-  return (
-    <View
-      style={{
-        flex: 1,
-        aspectRatio: 1,
-        backgroundColor: t.colors.card,
-        borderRadius: t.radius.md,
-        borderWidth: 1,
-        borderColor: t.colors.border,
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: t.spacing[1],
-      }}
-    >
-      <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>{label}</Text>
-      <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-        {value}
-      </Text>
-    </View>
-  );
-}
-
 
 export default function CharacterDetailScreen() {
   const t = useTokens();
@@ -88,13 +64,7 @@ export default function CharacterDetailScreen() {
   };
 
   if (!activeChar) {
-    return (
-      <EmptyState
-        emoji="🔮"
-        title="Nessun personaggio selezionato"
-        message="Apri un personaggio dalla Home per gestire la sua scheda."
-      />
-    );
+    return <MissingActiveCharacter message="Apri un personaggio dalla Home per gestire la sua scheda." />;
   }
 
   const mainClass = activeChar.classes[0];
@@ -111,13 +81,7 @@ export default function CharacterDetailScreen() {
         />
 
       {/* Card nome e classe — stile HomeScreen */}
-      <View style={[s.fullWidth, s.mb(t.spacing[5]), {
-        backgroundColor: t.colors.backgroundSecondary,
-        borderRadius: t.radius.lg,
-        borderWidth: 1,
-        borderColor: t.colors.border,
-        padding: t.spacing[5],
-      }]}>
+      <CardBox padding={t.spacing[5]} radius={t.radius.lg} marginBottom={t.spacing[5]} style={s.fullWidth}>
         <View style={s.row}>
           <ClassAvatar className={mainClass?.className} size={56} style={{ marginRight: t.spacing[4] }} />
           <View style={s.flex}>
@@ -138,26 +102,19 @@ export default function CharacterDetailScreen() {
         {/* Statistiche derivate — 4 quadrati in fila */}
         {(activeChar.armorClass != null || activeChar.proficiencyBonus != null || activeChar.speed != null || activeChar.initiative != null) && (
           <View style={[s.mt(t.spacing[4]), s.row, { gap: t.spacing[2] }]}>
-            <StatItem label="CA" value={activeChar.armorClass != null ? String(activeChar.armorClass) : '—'} />
-            <StatItem label="PB" value={activeChar.proficiencyBonus != null ? `+${activeChar.proficiencyBonus}` : '—'} />
-            <StatItem label="Velocità" value={activeChar.speed != null ? `${activeChar.speed} m` : '—'} />
-            <StatItem
+            <StatTile label="CA" value={activeChar.armorClass != null ? String(activeChar.armorClass) : '—'} />
+            <StatTile label="PB" value={activeChar.proficiencyBonus != null ? `+${activeChar.proficiencyBonus}` : '—'} />
+            <StatTile label="Velocità" value={activeChar.speed != null ? `${activeChar.speed} m` : '—'} />
+            <StatTile
               label="Iniz."
               value={activeChar.initiative != null ? `${activeChar.initiative >= 0 ? '+' : ''}${activeChar.initiative}` : '—'}
             />
           </View>
         )}
-      </View>
+      </CardBox>
 
       {/* Punti Ferita — gestione diretta (danno / cura / temporanei) */}
-      <View style={[s.fullWidth, s.mb(t.spacing[4]), {
-        backgroundColor: t.colors.backgroundSecondary,
-        borderRadius: t.radius.md,
-        borderWidth: 1,
-        borderColor: t.colors.border,
-        padding: t.spacing[4],
-        gap: t.spacing[3],
-      }]}>
+      <CardBox marginBottom={t.spacing[4]} gap={t.spacing[3]} style={s.fullWidth}>
         <View style={[s.row, { justifyContent: 'space-between' }]}>
           <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
             Punti Ferita
@@ -171,29 +128,25 @@ export default function CharacterDetailScreen() {
         </View>
 
         {/* Attuali — danno / cura */}
-        <View style={[s.row, { justifyContent: 'space-between' }]}>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Attuali</Text>
-          <View style={[s.row, s.gap(t.spacing[3])]}>
-            <StepperButton onPress={() => changeHp(-1)}>−</StepperButton>
-            <Text style={{ minWidth: 56, textAlign: 'center', fontSize: t.typography.lg, fontWeight: '700', color: t.colors.foreground }}>
-              {activeChar.hitPoints?.current ?? 0}/{activeChar.hitPoints?.max ?? 0}
-            </Text>
-            <StepperButton onPress={() => changeHp(1)}>+</StepperButton>
-          </View>
-        </View>
+        <StepperRow
+          label="Attuali"
+          value={`${activeChar.hitPoints?.current ?? 0}/${activeChar.hitPoints?.max ?? 0}`}
+          onDecrement={() => changeHp(-1)}
+          onIncrement={() => changeHp(1)}
+          minWidth={56}
+          valueSize={t.typography.lg}
+          valueWeight="700"
+        />
 
         {/* Temporanei */}
-        <View style={[s.row, { justifyContent: 'space-between' }]}>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Temporanei</Text>
-          <View style={[s.row, s.gap(t.spacing[3])]}>
-            <StepperButton onPress={() => changeTempHp(-1)}>−</StepperButton>
-            <Text style={{ minWidth: 56, textAlign: 'center', fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
-              {activeChar.hitPoints?.temporary ?? 0}
-            </Text>
-            <StepperButton onPress={() => changeTempHp(1)}>+</StepperButton>
-          </View>
-        </View>
-      </View>
+        <StepperRow
+          label="Temporanei"
+          value={`${activeChar.hitPoints?.temporary ?? 0}`}
+          onDecrement={() => changeTempHp(-1)}
+          onIncrement={() => changeTempHp(1)}
+          minWidth={56}
+        />
+      </CardBox>
 
       {/* Caratteristiche — griglia 3×2 con icone, rombo e bonus */}
       <View style={[s.fullWidth, s.mb(t.spacing[4])]}>
@@ -203,28 +156,14 @@ export default function CharacterDetailScreen() {
 
       {/* Risorse (Punti Fortuna, Ira, Ki…) */}
       {activeChar.resources && Object.keys(activeChar.resources).length > 0 && (
-        <View style={[s.fullWidth, s.mb(t.spacing[4]), {
-          backgroundColor: t.colors.backgroundSecondary,
-          borderRadius: t.radius.md,
-          borderWidth: 1,
-          borderColor: t.colors.border,
-          padding: t.spacing[4],
-          gap: t.spacing[2],
-        }]}>
+        <CardBox marginBottom={t.spacing[4]} gap={t.spacing[2]} style={s.fullWidth}>
           <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
             Risorse
           </Text>
           {Object.entries(activeChar.resources).map(([key, res]) => (
-            <View key={key} style={[s.row, { justifyContent: 'space-between' }]}>
-              <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
-                {res.label}
-              </Text>
-              <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                {res.current}/{res.max}
-              </Text>
-            </View>
+            <LabelValueRow key={key} label={res.label} value={`${res.current}/${res.max}`} />
           ))}
-        </View>
+        </CardBox>
       )}
 
       {/* Sezioni — pulsanti condivisi (stesso stile anche in Altro) */}
@@ -242,18 +181,12 @@ export default function CharacterDetailScreen() {
       </Screen>
 
       {/* Conferma eliminazione */}
-      <BottomModal visible={confirmDelete} onClose={() => setConfirmDelete(false)}>
-        <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>
-          Eliminare &quot;{activeChar.name}&quot;?
-        </Text>
-        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[2], marginBottom: t.spacing[4] }}>
-          Questa azione è irreversibile: il personaggio e tutti i suoi dati verranno rimossi.
-        </Text>
-        <View style={[s.row, s.gap(t.spacing[3])]}>
-          <Button variant="outline" onPress={() => setConfirmDelete(false)} style={{ flex: 1 }}>Annulla</Button>
-          <Button variant="danger" onPress={handleDelete} style={{ flex: 1 }}>Elimina</Button>
-        </View>
-      </BottomModal>
+      <ConfirmDeleteCharacterModal
+        visible={confirmDelete}
+        characterName={activeChar.name}
+        onClose={() => setConfirmDelete(false)}
+        onConfirm={handleDelete}
+      />
     </>
   );
 }

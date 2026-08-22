@@ -1,6 +1,7 @@
 import { View, Text, Pressable } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { s } from '../../../utils/style-helpers';
+import CardBox from '../CardBox';
 import type { SpellSlot } from '../../../types';
 
 type Props = {
@@ -30,17 +31,7 @@ export default function SpellSlotsBar({ spellSlots, onUseSlot, onRecoverSlot, on
   if (levels.length === 0) return null;
 
   return (
-    <View
-      style={{
-        marginBottom: t.spacing[3],
-        backgroundColor: t.colors.backgroundSecondary,
-        borderRadius: t.radius.lg,
-        borderWidth: 1,
-        borderColor: t.colors.border,
-        padding: t.spacing[3],
-        gap: t.spacing[2],
-      }}
-    >
+    <CardBox radius={t.radius.lg} padding={t.spacing[3]} gap={t.spacing[2]} marginBottom={t.spacing[3]}>
       <View style={[s.row, { justifyContent: 'space-between' }]}>
         <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
           Slot incantesimi
@@ -86,6 +77,6 @@ export default function SpellSlotsBar({ spellSlots, onUseSlot, onRecoverSlot, on
           </View>
         </View>
       ))}
-    </View>
+    </CardBox>
   );
 }

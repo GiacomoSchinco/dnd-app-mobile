@@ -1,10 +1,11 @@
 import { useMemo, useState, useCallback, useRef } from 'react';
-import { View, FlatList, Pressable } from 'react-native';
-import { SvgXml } from 'react-native-svg';
+import { View, FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import BackButton from '../../components/custom/BackButton';
+import ScrollToTopFab from '../../components/custom/ScrollToTopFab';
+import { useScrollToTop } from '../../components/custom/useScrollToTop';
 import { s } from '../../utils/style-helpers';
 import itemsData from '../../lib/data/items.json';
 import type { ItemDefinition } from '../../types';
@@ -20,12 +21,7 @@ export default function ItemsScreen({ onBack }: { onBack?: () => void }) {
 
   // ── Scroll to top ──
   const flatListRef = useRef<FlatList>(null);
-  const [showScrollTop, setShowScrollTop] = useState(false);
-
-  const handleScroll = useCallback((event: any) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    setShowScrollTop(offsetY > 300);
-  }, []);
+  const { showScrollTop, handleScroll } = useScrollToTop();
 
   const scrollToTop = useCallback(() => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
@@ -105,30 +101,11 @@ export default function ItemsScreen({ onBack }: { onBack?: () => void }) {
       />
 
       {/* Pulsante "Torna su" flottante */}
-      {showScrollTop && !selectedItem && (
-        <Pressable
-          onPress={scrollToTop}
-          style={{
-            position: 'absolute',
-            bottom: insets.bottom + 80,
-            right: 20,
-            ...s.box(50, 25),
-            backgroundColor: t.colors.accent,
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 6,
-            zIndex: 999,
-          }}
-        >
-          <SvgXml
-            xml={`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="${t.colors.accentForeground}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`}
-            width={24}
-            height={24}
-          />
-        </Pressable>
-      )}
+      <ScrollToTopFab
+        visible={showScrollTop && !selectedItem}
+        onPress={scrollToTop}
+        bottom={insets.bottom + 80}
+      />
 
       <ItemDetailModal
         item={selectedItem}

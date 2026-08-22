@@ -7,9 +7,8 @@ import { useTokens } from '../../components/ui/prism-provider';
 import { s } from '../../utils/style-helpers';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
-import BottomModal from '../../components/custom/BottomModal';
+import ConfirmDeleteCharacterModal from '../../components/custom/ConfirmDeleteCharacterModal';
 import SectionButton from '../../components/custom/SectionButton';
-import { Button } from '../../components/ui/button';
 import { ROUTES } from '../../lib/routes';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 
@@ -52,18 +51,12 @@ export default function MoreScreen() {
       </Screen>
 
       {/* Conferma eliminazione — FUORI dallo Screen (ScrollView), come nella Scheda PG */}
-      <BottomModal visible={confirmDelete} onClose={() => setConfirmDelete(false)}>
-        <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>
-          Eliminare &quot;{activeChar?.name}&quot;?
-        </Text>
-        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[2], marginBottom: t.spacing[4] }}>
-          Questa azione è irreversibile: il personaggio e tutti i suoi dati verranno rimossi.
-        </Text>
-        <View style={[s.row, s.gap(t.spacing[3])]}>
-          <Button variant="outline" onPress={() => setConfirmDelete(false)} style={{ flex: 1 }}>Annulla</Button>
-          <Button variant="danger" onPress={handleDelete} style={{ flex: 1 }}>Elimina</Button>
-        </View>
-      </BottomModal>
+      <ConfirmDeleteCharacterModal
+        visible={confirmDelete}
+        characterName={activeChar?.name ?? ''}
+        onClose={() => setConfirmDelete(false)}
+        onConfirm={handleDelete}
+      />
     </>
   );
 }

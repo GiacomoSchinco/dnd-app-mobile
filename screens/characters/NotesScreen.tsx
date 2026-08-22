@@ -7,8 +7,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import BackButton from '../../components/custom/BackButton';
-import EmptyState from '../../components/custom/EmptyState';
-import SectionTitle from '../../components/custom/SectionTitle';
+import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
+import SectionBlock from '../../components/custom/SectionBlock';
+import CircleCheck from '../../components/custom/CircleCheck';
 import ListCard from '../../components/custom/ListCard';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import { Input } from '../../components/ui/input';
@@ -30,13 +31,7 @@ export default function NotesScreen() {
   const [draft, setDraft] = useState('');
 
   if (!activeChar) {
-    return (
-      <EmptyState
-        emoji="📝"
-        title="Nessun personaggio selezionato"
-        message="Apri un personaggio dalla Home per prendere appunti."
-      />
-    );
+    return <MissingActiveCharacter emoji="📝" message="Apri un personaggio dalla Home per prendere appunti." />;
   }
 
   const notes = activeChar.notesList ?? [];
@@ -87,8 +82,7 @@ export default function NotesScreen() {
         <CharacterBar activeChar={activeChar} spellInformation={false} />
 
         {/* ── Aggiungi appunto ── */}
-        <View style={{ marginBottom: t.spacing[5] }}>
-          <SectionTitle text="Nuovo appunto" />
+        <SectionBlock title="Nuovo appunto" marginBottom={t.spacing[5]}>
           <Input
             size="lg"
             value={draft}
@@ -101,13 +95,13 @@ export default function NotesScreen() {
           <Button variant="solid" size="md" fullWidth style={{ marginTop: t.spacing[3] }} onPress={addNote}>
             ➕ Aggiungi
           </Button>
-        </View>
+        </SectionBlock>
 
         {/* ── Todo-list ── */}
-        <SectionTitle
-          text={`Appunti (${notes.length})`}
+        <SectionBlock
+          title={`Appunti (${notes.length})`}
           right={notes.length > 0 ? `${doneCount}/${notes.length} completati` : undefined}
-        />
+        >
 
         {notes.length === 0 ? (
           <View style={{ paddingVertical: t.spacing[8], alignItems: 'center', gap: t.spacing[2] }}>
@@ -129,22 +123,7 @@ export default function NotesScreen() {
                 ]}
               >
                 {/* Toggle completato */}
-                <Pressable
-                  onPress={() => toggleNote(note.id)}
-                  hitSlop={8}
-                  style={({ pressed }) => ({
-                    width: 26,
-                    height: 26,
-                    borderRadius: 13,
-                    borderWidth: 2,
-                    borderColor: note.done ? t.colors.accent : t.colors.border,
-                    backgroundColor: note.done ? t.colors.accent : 'transparent',
-                    ...s.center,
-                    opacity: pressed ? 0.6 : 1,
-                  })}
-                >
-                  {note.done && <Text style={{ color: t.colors.accentForeground, fontSize: t.typography.sm, fontWeight: '700' }}>✓</Text>}
-                </Pressable>
+                <CircleCheck checked={note.done} onPress={() => toggleNote(note.id)} />
 
                 {/* Testo */}
                 <Pressable onPress={() => toggleNote(note.id)} style={s.flex}>
@@ -181,6 +160,7 @@ export default function NotesScreen() {
             ))}
           </ListCard>
         )}
+        </SectionBlock>
       </ScrollView>
     </View>
   );

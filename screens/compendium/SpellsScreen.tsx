@@ -1,10 +1,11 @@
 import { useMemo, useState, useCallback, useRef } from 'react';
-import { View, Text, FlatList, SectionList, Pressable } from 'react-native';
-import { SvgXml } from 'react-native-svg';
+import { View, Text, FlatList, SectionList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import TabHeader from '../../components/custom/TabHeader';
+import ScrollToTopFab from '../../components/custom/ScrollToTopFab';
+import { useScrollToTop } from '../../components/custom/useScrollToTop';
 import EmptyState from '../../components/custom/EmptyState';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
@@ -64,11 +65,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
   // ── Scroll to top ──
   const flatListRef = useRef<FlatList>(null);
   const sectionListRef = useRef<SectionList<Spell>>(null);
-  const [showScrollTop, setShowScrollTop] = useState(false);
-
-  const handleScroll = useCallback((event: any) => {
-    setShowScrollTop(event.nativeEvent.contentOffset.y > 300);
-  }, []);
+  const { showScrollTop, handleScroll } = useScrollToTop();
 
   const scrollToTop = useCallback(() => {
     if (isSheet) {
@@ -281,30 +278,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
       )}
 
       {/* Pulsante "Torna su" flottante — nascosto se un modale è aperto */}
-      {showScrollTop && !selectedSpell && (
-        <Pressable
-          onPress={scrollToTop}
-          style={{
-            position: 'absolute',
-            bottom: bottomClearance,
-            right: 20,
-            ...s.box(50, 25),
-            backgroundColor: t.colors.accent,
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 6,
-            zIndex: 999,
-          }}
-        >
-          <SvgXml
-            xml={`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="${t.colors.accentForeground}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`}
-            width={24}
-            height={24}
-          />
-        </Pressable>
-      )}
+      <ScrollToTopFab visible={showScrollTop && !selectedSpell} onPress={scrollToTop} bottom={bottomClearance} />
 
       <SpellDetailModal
         spell={selectedSpell}

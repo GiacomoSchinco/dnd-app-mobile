@@ -2,8 +2,9 @@ import { View, Text, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import TabHeader from '../../components/custom/TabHeader';
-import EmptyState from '../../components/custom/EmptyState';
-import SectionTitle from '../../components/custom/SectionTitle';
+import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
+import SectionBlock from '../../components/custom/SectionBlock';
+import CardBox from '../../components/custom/CardBox';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import { getFeatByName } from '../../lib/rules/feats';
 import { getClassNameItalian, getClass } from '../../lib/rules/classes';
@@ -25,16 +26,7 @@ function groupClassFeaturesByLevel(features: { level: number; name: string }[]) 
 function InfoCard({ icon, title, subtitle, children }: { icon?: string; title: string; subtitle?: string; children?: React.ReactNode }) {
   const t = useTokens();
   return (
-    <View
-      style={{
-        backgroundColor: t.colors.backgroundSecondary,
-        borderRadius: t.radius.md,
-        borderWidth: 1,
-        borderColor: t.colors.border,
-        padding: t.spacing[3],
-        gap: t.spacing[1.5],
-      }}
-    >
+    <CardBox padding={t.spacing[3]} gap={t.spacing[1.5]}>
       <View style={[s.row, s.gap(t.spacing[2]), { alignItems: 'flex-start' }]}>
         {icon ? <Text style={{ fontSize: t.typography.md }}>{icon}</Text> : null}
         <View style={s.flex}>
@@ -49,7 +41,7 @@ function InfoCard({ icon, title, subtitle, children }: { icon?: string; title: s
         </View>
       </View>
       {children}
-    </View>
+    </CardBox>
   );
 }
 
@@ -85,13 +77,7 @@ export default function FeatsScreen() {
   const { activeChar } = useActiveCharacter();
 
   if (!activeChar) {
-    return (
-      <EmptyState
-        emoji="🎖️"
-        title="Nessun personaggio selezionato"
-        message="Apri un personaggio dalla Home per vedere talenti e caratteristiche."
-      />
-    );
+    return <MissingActiveCharacter emoji="🎖️" message="Apri un personaggio dalla Home per vedere talenti e caratteristiche." />;
   }
 
   const mainClass = activeChar.classes[0];
@@ -129,8 +115,7 @@ export default function FeatsScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* ── Talenti ── */}
-        <View style={{ marginBottom: t.spacing[5] }}>
-          <SectionTitle>Talenti · {classLabel}</SectionTitle>
+        <SectionBlock title={`Talenti · ${classLabel}`} marginBottom={t.spacing[5]}>
           {!hasFeats && !featChoice ? (
             <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
               Nessun talento acquisito.
@@ -152,24 +137,22 @@ export default function FeatsScreen() {
               )}
             </View>
           )}
-        </View>
+        </SectionBlock>
 
         {/* ── Doni epici ── */}
         {hasEpicBoons && (
-          <View style={{ marginBottom: t.spacing[5] }}>
-            <SectionTitle>Doni epici</SectionTitle>
+          <SectionBlock title="Doni epici" marginBottom={t.spacing[5]}>
             <View style={{ gap: t.spacing[2.5] }}>
               {(activeChar.epicBoons ?? []).map((b) => (
                 <FeatCard key={b} name={b} icon="🏆" />
               ))}
             </View>
-          </View>
+          </SectionBlock>
         )}
 
         {/* ── Caratteristiche di classe ── */}
         {hasClassFeatures && (
-          <View style={{ marginBottom: t.spacing[5] }}>
-            <SectionTitle>Caratteristiche di classe</SectionTitle>
+          <SectionBlock title="Caratteristiche di classe" marginBottom={t.spacing[5]}>
             <View style={{ gap: t.spacing[3] }}>
               {groupClassFeaturesByLevel(activeChar.classFeatures ?? []).map(({ level, names }) => (
                 <View key={level}>
@@ -215,13 +198,12 @@ export default function FeatsScreen() {
                 </View>
               ))}
             </View>
-          </View>
+          </SectionBlock>
         )}
 
         {/* ── Sottoclasse ── */}
         {hasSubclassFeatures && (
-          <View style={{ marginBottom: t.spacing[4] }}>
-            <SectionTitle>Sottoclasse · {mainClass?.subclass ?? ''}</SectionTitle>
+          <SectionBlock title={`Sottoclasse · ${mainClass?.subclass ?? ''}`} marginBottom={t.spacing[4]}>
             <View style={{ gap: t.spacing[2.5] }}>
               {(activeChar.subclassFeatures ?? []).map((f) => (
                 <InfoCard key={f.name} title={f.name} icon="🛡️">
@@ -231,7 +213,7 @@ export default function FeatsScreen() {
                 </InfoCard>
               ))}
             </View>
-          </View>
+          </SectionBlock>
         )}
       </ScrollView>
     </View>

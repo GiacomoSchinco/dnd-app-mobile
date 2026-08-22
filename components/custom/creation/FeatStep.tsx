@@ -6,6 +6,7 @@ import { s } from '../../../utils/style-helpers';
 import StepLabel from './StepLabel';
 import Chip from './Chip';
 import SectionTitle from '../SectionTitle';
+import CardBox from '../CardBox';
 import { ABILITY_ORDER, FEAT_MODE_PENDING, type AsiAssignment, type AsiMode } from './wizardSteps';
 import type { Ability, AbilityScores, FeatRaw } from '../../../types';
 
@@ -329,16 +330,7 @@ export default function FeatStep({
 
       {/* Riepilogo */}
       {finalScores != null && (
-        <View
-          style={{
-            backgroundColor: t.colors.backgroundSecondary,
-            borderRadius: t.radius.md,
-            borderWidth: 1,
-            borderColor: t.colors.border,
-            padding: t.spacing[3],
-            gap: t.spacing[1],
-          }}
-        >
+        <CardBox padding={t.spacing[3]} gap={t.spacing[1]}>
           <Text style={{ fontSize: t.typography.xs, fontWeight: '600', color: t.colors.foregroundTertiary }}>
             RIEPILOGO
           </Text>
@@ -355,7 +347,7 @@ export default function FeatStep({
               Dono epico: {epicBoonOptions.find((f) => f.id === epicBoonId)?.name ?? '—'}
             </Text>
           )}
-        </View>
+        </CardBox>
       )}
     </View>
   );

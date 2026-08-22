@@ -6,7 +6,7 @@ import type { RootStackParamList } from '../../types/navigation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
-import EmptyState from '../../components/custom/EmptyState';
+import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
 import { SpellCard, SpellFilters, SpellDetailModal, Spell, useSpellFilters, applySpellFilters, getSpellSourceBadges } from '../../components/custom/Spells';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
@@ -73,13 +73,7 @@ export default function CharacterSpellAssignScreen() {
   );
 
   if (!activeChar) {
-    return (
-      <EmptyState
-        emoji="🔮"
-        title="Nessun personaggio selezionato"
-        message="Apri un personaggio dalla Home per gestire le sue magie."
-      />
-    );
+    return <MissingActiveCharacter message="Apri un personaggio dalla Home per gestire le sue magie." />;
   }
 
   return (

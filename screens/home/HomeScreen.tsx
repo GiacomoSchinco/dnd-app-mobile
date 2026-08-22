@@ -1,14 +1,14 @@
-import { View, Text, Pressable, FlatList, Image, type StyleProp, type ViewStyle } from 'react-native';
+import { View, Text, FlatList, Image, type StyleProp, type ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { TabToRootNav } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
-import { Card } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import { Button } from '../../components/ui/button';
 import { ROUTES } from '../../lib/routes';
 import { getClassNameItalian } from '../../lib/rules/classes';
 import Screen from '../../components/custom/Screen';
 import ClassAvatar from '../../components/custom/ClassAvatar';
+import ListItem from '../../components/custom/ListItem';
 import HomeQuickActions from '../../components/custom/HomeQuickActions';
 import { s } from '../../utils/style-helpers';
 import { useCharacterStore } from '../../store/useCharacterStore';
@@ -46,29 +46,23 @@ function CharacterCard({ character, onPress }: { character: Character; onPress: 
   const classLabel = mainClass ? getClassNameItalian(mainClass.className) : '—';
 
   return (
-    <Pressable onPress={onPress}>
-      <Card variant="elevated" style={{ marginBottom: t.spacing[3] }}>
-        <View style={s.row}>
-          <ClassAvatar className={mainClass?.className} size={52} style={{ marginRight: t.spacing[3] }} />
-          <View style={s.flex}>
-            <Text style={{ fontSize: t.typography.md, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-              {character.name}
-            </Text>
-            <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>
-              <Badge variant="solid" size="sm" color={t.colors.accent}>
-                {classLabel} {character.level}°
-              </Badge>
-              {character.race && (
-                <Badge variant="subtle" size="sm">
-                  {character.race}
-                </Badge>
-              )}
-            </View>
-          </View>
-          <Text style={{ color: t.colors.foregroundTertiary, fontSize: 20 }}>›</Text>
-        </View>
-      </Card>
-    </Pressable>
+    <ListItem
+      variant="card"
+      iconBoxed={false}
+      icon={<ClassAvatar className={mainClass?.className} size={52} />}
+      title={character.name}
+      onPress={onPress}
+      badges={
+        <>
+          <Badge variant="solid" size="sm" color={t.colors.accent}>
+            {classLabel} {character.level}°
+          </Badge>
+          {character.race && (
+            <Badge variant="subtle" size="sm">{character.race}</Badge>
+          )}
+        </>
+      }
+    />
   );
 }
 

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Badge } from '../../ui/badge';
 import { s } from '../../../utils/style-helpers';
@@ -8,6 +8,7 @@ import type { ItemDefinition } from '../../../types';
 import { TYPE_LABELS, RARITY_LABELS, TYPE_COLORS, getTypeColor, getCategoryLabel, getTypeLabel } from './types';
 import BottomModal from '../BottomModal';
 import DetailChip from '../DetailChip';
+import DetailModalHeader from '../DetailModalHeader';
 
 type Props = {
   item: ItemDefinition | null;
@@ -43,29 +44,22 @@ export default function ItemDetailModal({ item, onClose }: Props) {
       {item && (
         <>
           {/* Header */}
-          <View style={[s.row, s.gap(t.spacing[3]), s.mb(t.spacing[3])]}>
-            <View style={[s.box(56, t.radius.xl), { backgroundColor: (TYPE_COLORS[item.type] || '#888') + '20' }]}>
-              <DndIcon name={item.type as any} size={30} color={TYPE_COLORS[item.type] || '#888'} />
-            </View>
-            <View style={s.flex}>
-              <View style={[s.row, { justifyContent: 'space-between', alignItems: 'flex-start' }]}>
-                <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground, flex: 1, marginRight: t.spacing[2] }}>
-                  {item.name}
-                </Text>
-                <TouchableOpacity onPress={onClose} style={s.p(t.spacing[1])}>
-                  <Text style={{ fontSize: 20, color: t.colors.foregroundTertiary }}>✕</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={[s.rowWrap, s.gap(t.spacing[1.5]), s.mt(t.spacing[1])]}>
+          <DetailModalHeader
+            icon={<DndIcon name={item.type as any} size={30} color={TYPE_COLORS[item.type] || '#888'} />}
+            iconBg={(TYPE_COLORS[item.type] || '#888') + '20'}
+            title={item.name}
+            onClose={onClose}
+            badges={
+              <>
                 <Badge variant="solid" color={TYPE_COLORS[item.type] || '#888'}>
                   {getTypeLabel(item.type)}
                 </Badge>
                 <Badge variant="subtle">
                   {RARITY_LABELS[item.rarity] || item.rarity}
                 </Badge>
-              </View>
-            </View>
-          </View>
+              </>
+            }
+          />
 
           {/* Chips */}
           <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>

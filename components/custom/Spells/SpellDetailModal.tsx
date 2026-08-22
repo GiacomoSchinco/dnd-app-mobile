@@ -10,6 +10,7 @@ import { MANUAL_BADGES, resolveSpellBadge } from './spellSourceBadges';
 import DndIcon, { type IconName } from '../DndIcon';
 import BottomModal from '../BottomModal';
 import DetailChip from '../DetailChip';
+import DetailModalHeader from '../DetailModalHeader';
 
 type Props = {
   spell: Spell | null;
@@ -46,32 +47,25 @@ export default function SpellDetailModal({
       {spell && (
       <>
       {/* Header */}
-      <View style={[s.row, s.gap(t.spacing[3]), s.mb(t.spacing[3])]}>
-                <View style={[s.box(56, t.radius.xl), { backgroundColor: (SCHOOL_MAP[spell.school]?.color || '#888') + '20' }]}>
-                  <DndIcon name={spell.school as IconName} size={30} color={SCHOOL_MAP[spell.school]?.color || '#fff'} />
-                </View>
-                <View style={s.flex}>
-                  <View style={[s.row, { justifyContent: 'space-between', alignItems: 'flex-start' }]}>
-                    <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground, flex: 1, marginRight: t.spacing[2] }}>
-                      {spell.name}
-                    </Text>
-                    <TouchableOpacity onPress={onClose} style={s.p(t.spacing[1])}>
-                      <Text style={{ fontSize: 20, color: t.colors.foregroundTertiary }}>✕</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={[s.rowWrap, s.gap(t.spacing[1.5]), s.mt(t.spacing[1])]}>
-                    <Badge variant="solid" color={SCHOOL_MAP[spell.school]?.color || '#888'}>
-                      {SCHOOL_LABELS[spell.school] || spell.school}
-                    </Badge>
-                    <Badge variant="subtle">
-                      {spell.level === 0 ? 'Trucchetto' : `${spell.level}° livello`}
-                    </Badge>
-                    {badge && (
-                      <Badge variant="subtle" color={badge.color}>{badge.label}</Badge>
-                    )}
-                  </View>
-                </View>
-              </View>
+      <DetailModalHeader
+        icon={<DndIcon name={spell.school as IconName} size={30} color={SCHOOL_MAP[spell.school]?.color || '#fff'} />}
+        iconBg={(SCHOOL_MAP[spell.school]?.color || '#888') + '20'}
+        title={spell.name}
+        onClose={onClose}
+        badges={
+          <>
+            <Badge variant="solid" color={SCHOOL_MAP[spell.school]?.color || '#888'}>
+              {SCHOOL_LABELS[spell.school] || spell.school}
+            </Badge>
+            <Badge variant="subtle">
+              {spell.level === 0 ? 'Trucchetto' : `${spell.level}° livello`}
+            </Badge>
+            {badge && (
+              <Badge variant="subtle" color={badge.color}>{badge.label}</Badge>
+            )}
+          </>
+        }
+      />
 
               {/* Detail Grid */}
               <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>

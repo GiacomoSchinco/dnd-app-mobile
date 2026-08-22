@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
 import FilterChip from '../FilterChip';
+import ChipPickerPanel from '../ChipPickerPanel';
 import { s } from '../../../utils/style-helpers';
 import type { ClassName } from '../../../types';
 import { CLASS_LABELS, SCHOOL_LABELS, SCHOOL_COLORS, FAVORITE_COLOR, getSchoolColor, getLevelCounts } from './types';
@@ -131,110 +132,62 @@ export default function SpellFilters({
 
       {/* Class picker inline — niente modale nativo (evita la striscia bianca della barra) */}
       {classModalVisible && !isClassLocked && (
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: t.colors.border,
-            borderRadius: t.radius.lg,
-            backgroundColor: t.colors.backgroundSecondary,
-            padding: t.spacing[3],
-            gap: t.spacing[2.5],
-            marginBottom: t.spacing[3],
-          }}
-        >
-          <Text
-            style={{
-              fontSize: t.typography.xs,
-              fontWeight: '600',
-              color: t.colors.foregroundTertiary,
-              textTransform: 'uppercase',
-              letterSpacing: 0.5,
+        <ChipPickerPanel title="Filtra per classe">
+          <FilterChip
+            label="Tutte le classi"
+            active={!classFilter}
+            onPress={() => {
+              onClassFilterChange(null);
+              setClassModalVisible(false);
             }}
-          >
-            Filtra per classe
-          </Text>
-
-          <View style={[s.rowWrap, s.gap(t.spacing[2])]}>
-            <FilterChip
-              label="Tutte le classi"
-              active={!classFilter}
-              onPress={() => {
-                onClassFilterChange(null);
-                setClassModalVisible(false);
-              }}
-            />
-            {CLASS_KEYS.map((c) => {
-              const active = classFilter?.toLowerCase() === c;
-              return (
-                <FilterChip
-                  key={c}
-                  size="sm"
-                  active={active}
-                  onPress={() => {
-                    onClassFilterChange(active ? null : c);
-                    setClassModalVisible(false);
-                  }}
-                  label={CLASS_LABELS[c]}
-                />
-              );
-            })}
-          </View>
-        </View>
+          />
+          {CLASS_KEYS.map((c) => {
+            const active = classFilter?.toLowerCase() === c;
+            return (
+              <FilterChip
+                key={c}
+                size="sm"
+                active={active}
+                onPress={() => {
+                  onClassFilterChange(active ? null : c);
+                  setClassModalVisible(false);
+                }}
+                label={CLASS_LABELS[c]}
+              />
+            );
+          })}
+        </ChipPickerPanel>
       )}
 
       {/* School picker inline (stesso pattern del filtro classe) */}
       {schoolModalVisible && (
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: t.colors.border,
-            borderRadius: t.radius.lg,
-            backgroundColor: t.colors.backgroundSecondary,
-            padding: t.spacing[3],
-            gap: t.spacing[2.5],
-            marginBottom: t.spacing[3],
-          }}
-        >
-          <Text
-            style={{
-              fontSize: t.typography.xs,
-              fontWeight: '600',
-              color: t.colors.foregroundTertiary,
-              textTransform: 'uppercase',
-              letterSpacing: 0.5,
+        <ChipPickerPanel title="Filtra per scuola di magia">
+          <FilterChip
+            label="Tutte le scuole"
+            active={!schoolFilter}
+            onPress={() => {
+              onSchoolFilterChange(null);
+              setSchoolModalVisible(false);
             }}
-          >
-            Filtra per scuola di magia
-          </Text>
-
-          <View style={[s.rowWrap, s.gap(t.spacing[2])]}>
-            <FilterChip
-              label="Tutte le scuole"
-              active={!schoolFilter}
-              onPress={() => {
-                onSchoolFilterChange(null);
-                setSchoolModalVisible(false);
-              }}
-            />
-            {SCHOOL_KEYS.map((school) => {
-              const active = schoolFilter === school;
-              return (
-                <FilterChip
-                  key={school}
-                  size="sm"
-                  active={active}
-                  onPress={() => {
-                    onSchoolFilterChange(active ? null : school);
-                    setSchoolModalVisible(false);
-                  }}
-                  activeBg={getSchoolColor(school)}
-                  activeFg="#FFFFFF"
-                  label={SCHOOL_LABELS[school] ?? school}
-                />
-              );
-            })}
-          </View>
-        </View>
+          />
+          {SCHOOL_KEYS.map((school) => {
+            const active = schoolFilter === school;
+            return (
+              <FilterChip
+                key={school}
+                size="sm"
+                active={active}
+                onPress={() => {
+                  onSchoolFilterChange(active ? null : school);
+                  setSchoolModalVisible(false);
+                }}
+                activeBg={getSchoolColor(school)}
+                activeFg="#FFFFFF"
+                label={SCHOOL_LABELS[school] ?? school}
+              />
+            );
+          })}
+        </ChipPickerPanel>
       )}
 
       {/* Results count */}

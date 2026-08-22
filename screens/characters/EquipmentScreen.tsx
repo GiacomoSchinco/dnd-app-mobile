@@ -5,11 +5,13 @@ import type { TabToRootNav } from '../../types/navigation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import TabHeader from '../../components/custom/TabHeader';
-import EmptyState from '../../components/custom/EmptyState';
+import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import ListItem from '../../components/custom/ListItem';
 import SectionTitle from '../../components/custom/SectionTitle';
-import StepperButton from '../../components/custom/StepperButton';
+import CardBox from '../../components/custom/CardBox';
+import CircleCheck from '../../components/custom/CircleCheck';
+import StepperRow from '../../components/custom/StepperRow';
 import ListCard from '../../components/custom/ListCard';
 import { ItemDetailModal } from '../../components/custom/Items';
 import { getItem } from '../../lib/rules/items';
@@ -17,31 +19,6 @@ import type { ItemDefinition } from '../../types';
 import { ALTRO_ROUTES } from '../more/altro-routes';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
-
-/** Riga con etichetta, stepper ± e valore */
-function MoneyRow({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: number;
-  onChange: (delta: number) => void;
-}) {
-  const t = useTokens();
-  return (
-    <View style={[s.row, { justifyContent: 'space-between' }]}>
-      <Text style={{ fontSize: t.typography.base, color: t.colors.foreground }}>{label}</Text>
-      <View style={[s.row, s.gap(t.spacing[3])]}>
-        <StepperButton onPress={() => onChange(-1)}>−</StepperButton>
-        <Text style={{ minWidth: 40, textAlign: 'center', fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
-          {value}
-        </Text>
-        <StepperButton onPress={() => onChange(1)}>+</StepperButton>
-      </View>
-    </View>
-  );
-}
 
 export default function EquipmentScreen() {
   const t = useTokens();
@@ -51,13 +28,7 @@ export default function EquipmentScreen() {
   const [selectedItem, setSelectedItem] = useState<ItemDefinition | null>(null);
 
   if (!activeChar) {
-    return (
-      <EmptyState
-        emoji="🎒"
-        title="Nessun personaggio selezionato"
-        message="Apri un personaggio dalla Home per vedere il suo equipaggiamento."
-      />
-    );
+    return <MissingActiveCharacter emoji="🎒" message="Apri un personaggio dalla Home per vedere il suo equipaggiamento." />;
   }
 
   const money = activeChar.money ?? { mo: 0, ma: 0, mr: 0 };
@@ -92,22 +63,33 @@ export default function EquipmentScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* ── Denaro ── */}
-        <View
-          style={{
-            backgroundColor: t.colors.backgroundSecondary,
-            borderRadius: t.radius.md,
-            borderWidth: 1,
-            borderColor: t.colors.border,
-            padding: t.spacing[4],
-            gap: t.spacing[2],
-            marginBottom: t.spacing[5],
-          }}
-        >
+        <CardBox gap={t.spacing[2]} marginBottom={t.spacing[5]}>
           <SectionTitle text="Denaro" marginBottom={t.spacing[1]} />
-          <MoneyRow label="🪙 Oro (mo)" value={money.mo ?? 0} onChange={(d) => changeMoney('mo', d)} />
-          <MoneyRow label="🪙 Argento (ma)" value={money.ma ?? 0} onChange={(d) => changeMoney('ma', d)} />
-          <MoneyRow label="🪙 Rame (mr)" value={money.mr ?? 0} onChange={(d) => changeMoney('mr', d)} />
-        </View>
+          <StepperRow
+            label="🪙 Oro (mo)"
+            value={money.mo ?? 0}
+            onDecrement={() => changeMoney('mo', -1)}
+            onIncrement={() => changeMoney('mo', 1)}
+            labelSize={t.typography.base}
+            labelColor={t.colors.foreground}
+          />
+          <StepperRow
+            label="🪙 Argento (ma)"
+            value={money.ma ?? 0}
+            onDecrement={() => changeMoney('ma', -1)}
+            onIncrement={() => changeMoney('ma', 1)}
+            labelSize={t.typography.base}
+            labelColor={t.colors.foreground}
+          />
+          <StepperRow
+            label="🪙 Rame (mr)"
+            value={money.mr ?? 0}
+            onDecrement={() => changeMoney('mr', -1)}
+            onIncrement={() => changeMoney('mr', 1)}
+            labelSize={t.typography.base}
+            labelColor={t.colors.foreground}
+          />
+        </CardBox>
 
         {/* ── Oggetti ── */}
         <SectionTitle text={`Oggetti (${equipment.length})`} />
@@ -150,24 +132,7 @@ export default function EquipmentScreen() {
                 </Pressable>
 
                 {/* Equipaggia / smetto */}
-                <Pressable
-                  onPress={() => toggleEquipped(it.itemId)}
-                  hitSlop={8}
-                  style={({ pressed }) => ({
-                    width: 30,
-                    height: 30,
-                    borderRadius: 15,
-                    borderWidth: 2,
-                    borderColor: it.equipped ? t.colors.accent : t.colors.border,
-                    backgroundColor: it.equipped ? t.colors.accent : 'transparent',
-                    ...s.center,
-                    opacity: pressed ? 0.6 : 1,
-                  })}
-                >
-                  {it.equipped && (
-                    <Text style={{ color: t.colors.accentForeground, fontSize: t.typography.sm, fontWeight: '700' }}>✓</Text>
-                  )}
-                </Pressable>
+                <CircleCheck checked={it.equipped} onPress={() => toggleEquipped(it.itemId)} size={30} />
               </View>
             ))}
           </ListCard>

@@ -11,7 +11,7 @@ type Props = {
   icon?: ReactNode;
   /** Colore di sfondo della box icona (card: accent+18; menu boxed: accent+20) */
   iconBg?: string;
-  /** Solo variante menu: racchiudi l'icona in una box colorata */
+  /** Se false la icona è renderizzata nuda (senza box colorata) con margine destro — card e menu */
   iconBoxed?: boolean;
   /** Variante card: badge/sottotitoli sotto il titolo */
   badges?: ReactNode;
@@ -81,16 +81,19 @@ export default function ListItem({
     <Pressable onPress={onPress}>
       <Card variant="elevated" style={{ marginBottom: t.spacing[3] }}>
         <View style={s.row}>
-          {icon !== undefined && (
-            <View
-              style={[
-                s.box(52, 26),
-                { backgroundColor: iconBg || t.colors.accent + '18', marginRight: t.spacing[3], overflow: 'hidden' },
-              ]}
-            >
-              {icon}
-            </View>
-          )}
+          {icon !== undefined &&
+            (iconBoxed ? (
+              <View
+                style={[
+                  s.box(52, 26),
+                  { backgroundColor: iconBg || t.colors.accent + '18', marginRight: t.spacing[3], overflow: 'hidden' },
+                ]}
+              >
+                {icon}
+              </View>
+            ) : (
+              <View style={{ marginRight: t.spacing[3] }}>{icon}</View>
+            ))}
           <View style={s.flex}>
             <Text style={{ fontSize: t.typography.md, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
               {title}

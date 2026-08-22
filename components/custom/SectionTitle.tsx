@@ -16,11 +16,15 @@ type Props = {
   note?: string;
   /** Margine inferiore (default t.spacing[2]) */
   marginBottom?: number;
+  /** Margine superiore (default nessuno) */
+  marginTop?: number;
   /** Variante grande (font sm + colore foreground) invece dell'uppercase piccolo */
   large?: boolean;
+  /** Variante accent (uppercase sm/700 colore accent) — usata dai dettagli del Compendio */
+  variant?: 'default' | 'accent';
 };
 
-/** Titolo di sezione condiviso: uppercase piccolo di default, variante `large` per i blocchi dei wizard. */
+/** Titolo di sezione condiviso: uppercase piccolo di default, variante `large` per i blocchi dei wizard, `accent` per i dettagli del Compendio. */
 export default function SectionTitle({
   text,
   children,
@@ -28,18 +32,28 @@ export default function SectionTitle({
   right,
   note,
   marginBottom,
+  marginTop,
   large,
+  variant = 'default',
 }: Props) {
   const t = useTokens();
   const titleStyle = large
     ? { fontSize: t.typography.sm, fontWeight: '600' as const, color: t.colors.foreground }
-    : {
-        fontSize: t.typography.xs,
-        fontWeight: '600' as const,
-        color: t.colors.foregroundTertiary,
-        textTransform: 'uppercase' as const,
-        letterSpacing: 0.5,
-      };
+    : variant === 'accent'
+      ? {
+          fontSize: t.typography.sm,
+          fontWeight: '700' as const,
+          color: t.colors.accent,
+          textTransform: 'uppercase' as const,
+          letterSpacing: 0.5,
+        }
+      : {
+          fontSize: t.typography.xs,
+          fontWeight: '600' as const,
+          color: t.colors.foregroundTertiary,
+          textTransform: 'uppercase' as const,
+          letterSpacing: 0.5,
+        };
 
   const title = (
     <Text style={[titleStyle, right != null ? s.flex : null]}>
@@ -49,7 +63,7 @@ export default function SectionTitle({
   );
 
   return (
-    <View style={{ marginBottom: marginBottom ?? t.spacing[2] }}>
+    <View style={{ marginTop, marginBottom: marginBottom ?? t.spacing[2] }}>
       {right != null ? (
         <View style={[s.row, { justifyContent: 'space-between', alignItems: 'center' }]}>
           {title}

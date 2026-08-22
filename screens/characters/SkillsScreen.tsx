@@ -3,9 +3,9 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import TabHeader from '../../components/custom/TabHeader';
-import EmptyState from '../../components/custom/EmptyState';
+import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
+import SectionBlock from '../../components/custom/SectionBlock';
 import BottomModal from '../../components/custom/BottomModal';
-import SectionTitle from '../../components/custom/SectionTitle';
 import ListCard from '../../components/custom/ListCard';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import { getAllSkills, type SkillDefinition } from '../../lib/rules/skills';
@@ -28,13 +28,7 @@ export default function SkillsScreen() {
   const [selectedSkill, setSelectedSkill] = useState<SkillDefinition | null>(null);
 
   if (!activeChar) {
-    return (
-      <EmptyState
-        emoji="🎯"
-        title="Nessun personaggio selezionato"
-        message="Apri un personaggio dalla Home per vedere le sue abilità."
-      />
-    );
+    return <MissingActiveCharacter emoji="🎯" message="Apri un personaggio dalla Home per vedere le sue abilità." />;
   }
 
   const pb = activeChar.proficiencyBonus ?? 0;
@@ -61,8 +55,13 @@ export default function SkillsScreen() {
           const group = getAllSkills().filter((sk) => sk.ability === ab.name);
           if (group.length === 0) return null;
           return (
-            <View key={ab.name} style={{ marginBottom: t.spacing[4] }}>
-              <SectionTitle text={ab.nameIt} right={ab.abbreviation} marginBottom={t.spacing[1]} />
+            <SectionBlock
+              key={ab.name}
+              title={ab.nameIt}
+              right={ab.abbreviation}
+              titleMarginBottom={t.spacing[1]}
+              marginBottom={t.spacing[4]}
+            >
               <ListCard>
                 {group.map((skill, idx) => {
                   const prof = profSkills.includes(skill.name);
@@ -102,7 +101,7 @@ export default function SkillsScreen() {
                   );
                 })}
               </ListCard>
-            </View>
+            </SectionBlock>
           );
         })}
       </ScrollView>

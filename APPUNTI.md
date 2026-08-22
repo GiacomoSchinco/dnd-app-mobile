@@ -78,7 +78,7 @@
 | `TabHeader` | Header fisso tab con safe-area (notch) + ScreenHeader + contenuto sotto | Tab con lista scrollabile sotto (Abilità, Magie) |
 | `EmptyState` | Stato vuoto centrato (emoji + titolo + messaggio) | "Nessun personaggio", liste vuote |
 | `StatsGrid` | Griglia 6 statistiche 3×2: icona DndIcon di sfondo + rombo con abbreviazione + punteggio + bonus (+3…). Props: `scores` (valori mancanti → 10) | Scheda PG → sezione Caratteristiche |
-| `ListItem` | Riga `[icona][titolo/badge/desc][›]` — variant `card`/`menu` | Liste Compendio, menu |
+| `ListItem` | Riga `[icona][titolo/badge/desc][›]` — variant `card`/`menu`, `iconBoxed={false}` per icona nuda (es. `ClassAvatar`) | Liste Compendio, menu, card personaggio Home |
 | `FilterChip` | Chip filtro selezionabile (size `xs`/`sm`, activeBg/Fg) | Filtri (SpellFilters, ItemFilters) |
 | `Chip` (in `creation/`) | Pill selezionabile wizard (`selected`, `compact`, `selectedSuffix`) | Step wizard: skill, boost, ASI, sottorazze, modalità |
 | `DetailChip` | Chip etichetta→valore | Dettagli nei modali (Item/Spell) |
@@ -94,6 +94,17 @@
 | `StepperControl` | Stepper ± circolare (theme-safe) | Quantità/modificatore dadi |
 | `CharacterBar` | Barra PG attivo (nome + classe + livello) | Tab legate al PG (Magie, Abilità) |
 | `useActiveCharacter()` | Hook store: centralizza le sottoscrizioni al PG attivo | Ogni schermata che legge il PG attivo |
+| `MissingActiveCharacter` | Stato "Nessun personaggio selezionato" (titolo fisso, emoji/messaggio variabili) | Early-return di ogni schermata legata al PG |
+| `ConfirmDeleteCharacterModal` | Modale conferma elimina personaggio (Annulla/Elimina) | Scheda PG, tab Altro |
+| `ScrollToTopFab` + `useScrollToTop()` | FAB "Torna su" flottante + stato `showScrollTop`/`handleScroll` | Liste lunghe (Oggetti, Magie) |
+| `LabelValueRow` | Riga `[etichetta → valore]` (space-between, dividerTop, colori custom) | Riepiloghi, risorse, dettagli |
+| `StepperRow` | Riga `[etichetta] [− valore +]` con `StepperButton` | PF (Attuali/Temporanei), denaro (mo/ma/mr) |
+| `CardBox` | Card contenitore `backgroundSecondary` + bordo + raggio (padding/gap/marginBottom/radius) | Qualsiasi box con bordo (Scheda PG, slot, riepiloghi) |
+| `SectionBlock` | `View(marginBottom) + SectionTitle + contenuto` | Sezioni "titolo + lista" (Talenti, Abilità, Note, Equipaggiamento) |
+| `CircleCheck` | Checkbox circolare (cerchio bordo 2, riempito se attivo, ✓ dentro) | Equipaggia oggetti, completa note |
+| `ChipPickerPanel` | Pannello inline per picker di chip (bordo + label uppercase + rowWrap di FilterChip) | Filtri classe/scuola delle magie |
+| `StatTile` | Quadrato statistico (etichetta + valore, aspectRatio 1) | Header Scheda PG (CA/PB/Velocità/Iniz) |
+| `DetailModalHeader` | Header modali di dettaglio: box icona 56×56 + titolo + ✕ + badge (props `icon`/`iconBg`/`title`/`badges`/`onClose`) | Dettaglio Incantesimo, dettaglio Oggetto |
 
 **Wizard creazione**: la schermata (`CharacterCreateScreen`) è un renderer sottile →
 tutta la logica vive in `useCharacterWizard` (hook) e ogni passo è un componente

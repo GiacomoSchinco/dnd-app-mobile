@@ -4,6 +4,8 @@ import { Button } from '../../ui/button';
 import { rollDie, DICE_COLORS } from '../../../utils/dice';
 import { s } from '../../../utils/style-helpers';
 import StepLabel from './StepLabel';
+import CardBox from '../CardBox';
+import LabelValueRow from '../LabelValueRow';
 import type { DiceType } from '../../../types';
 
 type Props = {
@@ -48,35 +50,23 @@ export default function HpStep({
       </Text>
 
       {/* Riepilogo */}
-      <View style={{
-        backgroundColor: t.colors.backgroundSecondary,
-        borderRadius: t.radius.md,
-        borderWidth: 1,
-        borderColor: t.colors.border,
-        padding: t.spacing[4],
-        gap: t.spacing[2],
-      }}>
-        <View style={[s.row, { justifyContent: 'space-between' }]}>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Dado vita</Text>
-          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>{die}</Text>
-        </View>
-        <View style={[s.row, { justifyContent: 'space-between' }]}>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>Modificatore COS</Text>
-          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-            {conMod >= 0 ? `+${conMod}` : conMod}
-          </Text>
-        </View>
-        <View style={[s.row, { justifyContent: 'space-between' }, {
-          borderTopWidth: 1,
-          borderTopColor: t.colors.border,
-          paddingTop: t.spacing[2],
-        }]}>
-          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>PF totali</Text>
-          <Text style={{ fontSize: t.typography.lg, fontWeight: '800', color: t.colors.accent }}>
-            {totalHp != null ? totalHp : '—'}
-          </Text>
-        </View>
-      </View>
+      <CardBox gap={t.spacing[2]}>
+        <LabelValueRow label="Dado vita" value={die} />
+        <LabelValueRow
+          label="Modificatore COS"
+          value={conMod >= 0 ? `+${conMod}` : conMod}
+        />
+        <LabelValueRow
+          label="PF totali"
+          value={totalHp != null ? totalHp : '—'}
+          valueColor={t.colors.accent}
+          valueSize={t.typography.lg}
+          valueWeight="800"
+          labelColor={t.colors.foreground}
+          labelWeight="600"
+          dividerTop
+        />
+      </CardBox>
 
       {/* Lancio */}
       <View style={[s.row, s.gap(t.spacing[3])]}>

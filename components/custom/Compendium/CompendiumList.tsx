@@ -7,6 +7,7 @@ import { Input } from '../../ui/input';
 import ScreenHeader from '../ScreenHeader';
 import BackButton from '../BackButton';
 import BottomModal from '../BottomModal';
+import SectionTitle from '../SectionTitle';
 import DndIcon, { type IconName } from '../DndIcon';
 import { s } from '../../../utils/style-helpers';
 
@@ -101,23 +102,13 @@ export default function CompendiumList<T>({
   );
 }
 
-/** Titolo di sezione usato nei dettagli del Compendio */
+/** Titolo di sezione usato nei dettagli del Compendio (delega a SectionTitle variant accent) */
 export function CompendiumSectionTitle({ children }: { children: ReactNode }) {
   const t = useTokens();
   return (
-    <Text
-      style={{
-        fontSize: t.typography.sm,
-        fontWeight: '700',
-        color: t.colors.accent,
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
-        marginTop: t.spacing[4],
-        marginBottom: t.spacing[2],
-      }}
-    >
+    <SectionTitle variant="accent" marginTop={t.spacing[4]} marginBottom={t.spacing[2]}>
       {children}
-    </Text>
+    </SectionTitle>
   );
 }
 
