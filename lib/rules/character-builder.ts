@@ -3,11 +3,12 @@ import { getRace, getRaceById, getLineageById, getRaceEffects, getRaceEffectIds,
 import { getBackground, type BackgroundFeat } from './backgrounds';
 import { getFeat, getFeatAsiCap, getFeatAsiOptions } from './feats';
 import { applyFeat, getToolOptions, type FeatApplyResult } from './apply-feat';
-import { getSubclass, getSubclassFeaturesUpToLevel } from './subclasses';
+import { getSubclass, getSubclassFeaturesUpToLevel, getSubclassesByClassId } from './subclasses';
 import { getSpellProgression, getLevelUpSpellChanges, getSpellSlots } from './spellcasting';
 import { getClassProgression, getFeaturesAtLevel, getAsiLevels, getResourceValue, getProficiencyBonus, getClassResources, getResourceMax, getResourceDie } from './progression';
 import { getStartingEquipment, getClassPreset, getEquipmentPreset } from './equipment-preset';
 import { getAbilityModifier } from './abilities';
+import { calculateMulticlassSpellSlots } from './multiclass';
 import type {
   Ability,
   AbilityAbbreviation,
@@ -18,6 +19,7 @@ import type {
   ArmorType,
   WeaponType,
   Character,
+  CharacterClass,
   CharacterResource,
   CharacterSenses,
   CharacterDefenses,
@@ -27,6 +29,8 @@ import type {
   EquipmentItem,
   FeatCategory,
   FeatSpellChoice,
+  ClassFeatureRaw,
+  SpellSlot,
 } from '../../types';
 
 /**
@@ -437,7 +441,10 @@ export { getStartingEquipment } from './equipment-preset';
 
 export interface CharacterBuildPlan {
   raceResult: RaceChoiceResult;
+  /** Classe primaria (la PRIMA del multiclasse) */
   classResult: ClassApplyResult;
+  /** TUTTE le classi (la prima = primaria). Per il single-class coincide con [classResult] */
+  classResults: ClassApplyResult[];
   backgroundResult: BackgroundApplyResult;
   abilities: AbilityScores;
   featId?: number;
@@ -471,6 +478,8 @@ export interface CharacterBuildPlan {
 export function buildCharacter(params: {
   race: RaceChoice;
   classChoice: ClassChoice;
+  /** Classi per il MULTICLASSE (la prima = primaria). Se assente usa `classChoice` */
+  classes?: ClassChoice[];
   background: BackgroundChoice;
   abilities: AbilityAssignment;
   /** Skill di classe scelte dal giocatore (competenze) */
@@ -499,8 +508,16 @@ export function buildCharacter(params: {
   const raceResult = applyRace(params.race);
   if (!raceResult.success) return { success: false, error: raceResult.error! };
 
-  const classResult = applyClass(params.classChoice);
-  if (!classResult.success) return { success: false, error: classResult.error! };
+  // Multiclasse: applica TUTTE le classi (la PRIMA = classe primaria)
+  const classChoices =
+    params.classes && params.classes.length > 0 ? params.classes : [params.classChoice];
+  const classResults: ClassApplyResult[] = [];
+  for (const cc of classChoices) {
+    const cr = applyClass(cc);
+    if (!cr.success) return { success: false, error: cr.error! };
+    classResults.push(cr);
+  }
+  const classResult = classResults[0];
 
   const backgroundResult = applyBackground(params.background);
   if (!backgroundResult.success) return { success: false, error: backgroundResult.error! };
@@ -598,6 +615,7 @@ export function buildCharacter(params: {
   return {
     raceResult,
     classResult,
+    classResults,
     backgroundResult,
     abilities: scores,
     featId,
@@ -614,6 +632,290 @@ export function buildCharacter(params: {
     classSkills: params.classSkills,
     asiBoosts: params.abilities.asiBoosts,
     hpRoll: params.hpRoll,
+  };
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  MOTORE MULTI-CLASSE
+//  Statistiche DERIVATE calcolate dall'insieme delle classi
+//  (level, PB, PF, feature, slot, risorse, competenze). Usato sia
+//  dalla creazione (wizard) sia dal level-up, così entrambe le
+//  feature condividono la stessa fonte di verità.
+// ═══════════════════════════════════════════════════════════════
+
+/** Riepilogo applicato di una singola classe (esito di `applyClass`) */
+export type ClassSummary = NonNullable<ClassApplyResult['data']>;
+
+/** Applica più classi e ne produce i riepiloghi (la PRIMA = classe primaria) */
+export function buildClassSummaries(
+  classes: Array<{ className?: string; classId?: number; level: number; subclassId?: number }>
+): { success: true; summaries: ClassSummary[] } | { success: false; error: string } {
+  const summaries: ClassSummary[] = [];
+  for (const c of classes) {
+    const result = applyClass(c);
+    if (!result.success || !result.data) {
+      return { success: false, error: result.error ?? 'Classe non valida' };
+    }
+    summaries.push(result.data);
+  }
+  return { success: true, summaries };
+}
+
+/** Statistiche DERIVATE dalle sole classi (non tocca razza/background/talenti) */
+export interface ClassDerived {
+  /** Livello totale (somma dei livelli di tutte le classi) */
+  level: number;
+  proficiencyBonus: number;
+  /** PF massimi: 1ª classe lv1 = dado MAX (o tiro), poi media+CON per ogni livello extra */
+  maxHp: number;
+  /** Dado vita della classe primaria (es. 'd12') */
+  hitDie: string;
+  classFeatures: { level: number; name: string; description?: string; table?: string }[];
+  subclassFeatures: ClassFeatureRaw[];
+  /** Slot incantesimi (caster level combinato + Pact Magic del Warlock) */
+  spellSlots: Record<number, SpellSlot>;
+  /** Risorse di CLASSE (merge su tutte le classi, senza risorse da razza/talenti) */
+  resources: Record<string, CharacterResource>;
+  /** Tiri salvezza della classe primaria */
+  savingThrows: Ability[];
+  /** Competenze armature/armi/strumenti (unione di tutte le classi) */
+  armor: ArmorType[];
+  weapons: WeaponType[];
+  tools: string[];
+}
+
+/** Calcola le statistiche derivate a partire dai riepiloghi delle classi. */
+export function computeClassDerived(
+  summaries: ClassSummary[],
+  abilities: AbilityScores,
+  opts?: { hpRoll?: number }
+): ClassDerived {
+  const [primary, ...rest] = summaries;
+  const conMod = getAbilityModifier(abilities.constitution);
+  const level = summaries.reduce((n, s) => n + s.level, 0);
+  const proficiencyBonus = getProficiencyBonus(level);
+
+  // PF: 1ª classe lv1 = dado MAX (o tiro) + CON; poi media+CON (min 1) per ogni livello extra
+  let maxHp = (opts?.hpRoll ?? primary.hitDie) + conMod;
+  for (let i = 2; i <= primary.level; i++) {
+    maxHp += Math.max(primary.classDef.hitPoints.average + conMod, 1);
+  }
+  for (const cls of rest) {
+    // Il 1° livello di una classe aggiunta conta come livello normale (media, non max)
+    for (let i = 1; i <= cls.level; i++) {
+      maxHp += Math.max(cls.classDef.hitPoints.average + conMod, 1);
+    }
+  }
+
+  // Feature di classe (unione, con descrizione/tabella da classes.json)
+  const classFeatures: { level: number; name: string; description?: string; table?: string }[] = [];
+  for (const sum of summaries) {
+    for (const lvl of sum.features) {
+      for (const name of lvl.features) {
+        const cf = sum.classDef.featuresByLevel[lvl.level]?.find((f) => f.name === name);
+        classFeatures.push({ level: lvl.level, name, description: cf?.description, table: cf?.table });
+      }
+    }
+  }
+
+  // Feature di sottoclasse (unione, fino al livello della singola classe)
+  const subclassFeatures: ClassFeatureRaw[] = [];
+  for (const sum of summaries) {
+    if (sum.subclass?.id != null) {
+      subclassFeatures.push(...getSubclassFeaturesUpToLevel(sum.subclass.id, sum.level));
+    }
+  }
+
+  // Slot incantesimi: con UNA sola classe si usa la tabella della classe
+  // (half/third caster usano la propria tabella, NON full_caster); con più
+  // classi vale la regola del multiclasse (caster level combinato → full_caster)
+  // + la Pact Magic del Warlock separata.
+  const characterClasses: CharacterClass[] = summaries.map((s) => ({
+    className: s.classDef.name as ClassName,
+    level: s.level,
+  }));
+  const spellSlots =
+    summaries.length === 1
+      ? getSpellSlots(primary.classDef.name, primary.level)
+      : calculateMulticlassSpellSlots(characterClasses);
+
+  // Risorse di classe (merge su tutte le classi)
+  const resources: Record<string, CharacterResource> = {};
+  for (const sum of summaries) {
+    for (const [key, res] of Object.entries(getClassResources(sum.classDef.name))) {
+      const max = getResourceMax(
+        sum.classDef.name,
+        key,
+        sum.level,
+        (ability) => getAbilityModifier((abilities as Record<string, number>)[ability] ?? 10)
+      );
+      if (typeof max !== 'number') continue;
+      let label = res.label;
+      const die = getResourceDie(sum.classDef.name, key, sum.level);
+      if (die) label = `${label} (${die})`;
+      resources[key] = {
+        label,
+        max,
+        current: max,
+        resetOn: typeof res.recovery === 'string' ? res.recovery : 'long_rest',
+      };
+    }
+  }
+
+  // Competenze (unione) + tiri salvezza (solo classe primaria)
+  const armor: ArmorType[] = [];
+  const weapons: WeaponType[] = [];
+  const tools: string[] = [];
+  const pushUnique = <T,>(arr: T[], v: T) => {
+    if (!arr.includes(v)) arr.push(v);
+  };
+  for (const sum of summaries) {
+    for (const a of sum.classDef.proficiencies.armor
+      .map((x) => ARMOR_TYPE_MAP[x])
+      .filter((x): x is ArmorType => x != null)) pushUnique(armor, a);
+    for (const w of sum.classDef.proficiencies.weapons
+      .map((x) => WEAPON_TYPE_MAP[x])
+      .filter((x): x is WeaponType => x != null)) pushUnique(weapons, w);
+    for (const t of sum.classDef.proficiencies.tools) pushUnique(tools, t);
+  }
+  const savingThrows = primary.classDef.savingThrows;
+
+  return {
+    level,
+    proficiencyBonus,
+    maxHp,
+    hitDie: `d${primary.hitDie}`,
+    classFeatures,
+    subclassFeatures,
+    spellSlots,
+    resources,
+    savingThrows,
+    armor,
+    weapons,
+    tools,
+  };
+}
+
+// ── Level up ───────────────────────────────────────────────────
+
+/** Riepilogo dei cambiamenti quando si sale di livello (funzione PURA, nessuna mutazione) */
+export type LevelUpPreview =
+  | {
+      success: true;
+      className: string;
+      classLabel: string;
+      currentClassLevel: number;
+      newClassLevel: number;
+      /** Nuovo livello TOTALE del personaggio */
+      totalLevel: number;
+      /** PF guadagnati con la MEDIA (senza tiro): media dado + CON, min 1 */
+      averageHpGained: number;
+      /** Dado vita della classe da livellare */
+      hitDie: number;
+      /** Nuove feature della classe al livello raggiunto (ASI escluse) */
+      newFeatures: { level: number; features: string[] }[];
+      /** Livelli ASI della classe attraversati (di solito al più uno) */
+      asiLevels: number[];
+      /** True se il livello raggiunto sblocca la sottoclasse della classe */
+      subclassUnlocked: boolean;
+      /** Sottoclassi disponibili quando subclassUnlocked (per il picker) */
+      subclasses: { id: number; name: string }[];
+      /** Nuovi slot guadagnati (delta max) per livello incantesimo */
+      newSpellSlots: Record<number, number>;
+      /** Slot totali dopo il level-up */
+      totalSpellSlots: Record<number, SpellSlot>;
+      /** Risorse che cambiano max */
+      resourceChanges: { resource: string; newValue: number }[];
+    }
+  | { success: false; error: string };
+
+export function calculateLevelUpPreview(character: Character, className: string): LevelUpPreview {
+  const clsIndex = character.classes.findIndex((c) => c.className === className);
+  if (clsIndex === -1) return { success: false, error: 'Classe non trovata' };
+  const cls = character.classes[clsIndex];
+  if (cls.level >= 20) return { success: false, error: 'Livello massimo raggiunto (20)' };
+
+  const classDef = getClass(className);
+  if (!classDef) return { success: false, error: 'Classe non trovata' };
+
+  const oldClasses = character.classes.map((c) => ({
+    className: c.className,
+    level: c.level,
+    subclassId: c.subclassId,
+  }));
+  const newClasses = character.classes.map((c) => ({
+    className: c.className,
+    level: c.level,
+    subclassId: c.subclassId,
+  }));
+  newClasses[clsIndex] = { ...newClasses[clsIndex], level: cls.level + 1 };
+
+  const oldSum = buildClassSummaries(oldClasses);
+  const newSum = buildClassSummaries(newClasses);
+  if (!oldSum.success || !newSum.success) return { success: false, error: 'Classi non valide' };
+
+  const oldDerived = computeClassDerived(oldSum.summaries, character.abilities);
+  const newDerived = computeClassDerived(newSum.summaries, character.abilities);
+  if (newDerived.level > 20) {
+    return { success: false, error: 'Livello massimo del personaggio raggiunto (20)' };
+  }
+
+  const conMod = getAbilityModifier(character.abilities.constitution);
+  const averageHpGained = Math.max(classDef.hitPoints.average + conMod, 1);
+
+  // Feature nuove della classe al livello raggiunto
+  const newFeatures: { level: number; features: string[] }[] = [];
+  for (const lvl of newSum.summaries[clsIndex].features) {
+    if (lvl.level > cls.level) newFeatures.push(lvl);
+  }
+
+  // ASI della classe attraversati (di norma uno per salita di livello)
+  const asiLevels = getAsiLevels(className).filter((l) => l > cls.level && l <= cls.level + 1);
+
+  // La sottoclasse si SCEGLIE solo al primo livello di sottoclasse (di solito 3°),
+  // quando la classe non ne ha ancora una. Ai livelli successivi (6, 10, 14, …) si
+  // ricevono solo le FEATURE di sottoclasse, che il motore aggiunge automaticamente
+  // se `subclassId` è già presente sul personaggio.
+  const alreadyHasSubclass = character.classes[clsIndex].subclassId != null;
+  const subclassUnlocked =
+    newSum.summaries[clsIndex].subclassLevels.includes(cls.level + 1) && !alreadyHasSubclass;
+  const subclasses = subclassUnlocked
+    ? getSubclassesByClassId(classDef.id).map((sc) => ({ id: sc.id, name: sc.name }))
+    : [];
+
+  // Delta slot (multiclasse-aware)
+  const newSpellSlots: Record<number, number> = {};
+  for (const [lvl, slot] of Object.entries(newDerived.spellSlots)) {
+    const n = Number(lvl);
+    const oldMax = oldDerived.spellSlots[n]?.max ?? 0;
+    if (slot.max > oldMax) newSpellSlots[n] = slot.max - oldMax;
+  }
+
+  // Risorse che cambiano max
+  const resourceChanges: { resource: string; newValue: number }[] = [];
+  for (const [key, res] of Object.entries(newDerived.resources)) {
+    const oldMax = oldDerived.resources[key]?.max;
+    if (oldMax == null || oldMax !== res.max) {
+      resourceChanges.push({ resource: res.label, newValue: res.max });
+    }
+  }
+
+  return {
+    success: true,
+    className,
+    classLabel: classDef.labelIt ?? className,
+    currentClassLevel: cls.level,
+    newClassLevel: cls.level + 1,
+    totalLevel: newDerived.level,
+    averageHpGained,
+    hitDie: classDef.hitDie,
+    newFeatures,
+    asiLevels,
+    subclassUnlocked,
+    subclasses,
+    newSpellSlots,
+    totalSpellSlots: newDerived.spellSlots,
+    resourceChanges,
   };
 }
 
@@ -681,28 +983,30 @@ export function buildCharacterSheet(
   meta: { id: string; name: string }
 ): Character {
   const raceData = plan.raceResult.data!;
-  const classData = plan.classResult.data!;
   const bgData = plan.backgroundResult.data!;
+
+  // TUTTE le classi (la prima = primaria). Per single-class coincide con [classResult]
+  const classResults =
+    plan.classResults && plan.classResults.length > 0 ? plan.classResults : [plan.classResult];
+  const summaries = classResults.map((r) => r.data!);
+  const classData = summaries[0];
   const classDef = classData.classDef;
 
   const abilities = plan.abilities;
-  const level = classData.level;
-  const conMod = getAbilityModifier(abilities.constitution);
   const dexMod = getAbilityModifier(abilities.dexterity);
-  const proficiencyBonus = getProficiencyBonus(level);
 
-  // PF: 1° livello = tiro del dado vita (o MAX se non tirato) + CON; livelli successivi = media + CON
-  const lvl1Hp = plan.hpRoll ?? classDef.hitDie;
-  const maxHp = lvl1Hp + conMod + (level - 1) * Math.max(classDef.hitPoints.average + conMod, 1);
+  // Statistiche DERIVATE dalla/e classe/i (motore condiviso con il level-up)
+  const derived = computeClassDerived(summaries, abilities, { hpRoll: plan.hpRoll });
+  const level = derived.level;
+  const proficiencyBonus = derived.proficiencyBonus;
+  const maxHp = derived.maxHp;
+  const conMod = getAbilityModifier(abilities.constitution);
 
-  // Competenze
-  const armor = classDef.proficiencies.armor
-    .map((a) => ARMOR_TYPE_MAP[a])
-    .filter((a): a is ArmorType => a != null);
-  const weapons = classDef.proficiencies.weapons
-    .map((w) => WEAPON_TYPE_MAP[w])
-    .filter((w): w is WeaponType => w != null);
-  const tools = [...classDef.proficiencies.tools];
+  // Competenze: armature/armi/strumenti = UNIONE di tutte le classi (dal motore);
+  // tiri salvezza = solo classe primaria
+  const armor = derived.armor;
+  const weapons = derived.weapons;
+  const tools = [...derived.tools];
   if (bgData.toolProficiency?.toolId) tools.push(bgData.toolProficiency.toolId);
   // Strumenti scelti dal background (CHOICE) e dal talento di origine
   for (const t of plan.bgToolProficiencies ?? []) if (!tools.includes(t)) tools.push(t);
@@ -720,47 +1024,20 @@ export function buildCharacterSheet(
   ] as SkillName[]) {
     if (!skills.includes(s)) skills.push(s);
   }
-  const savingThrows: Ability[] = classDef.savingThrows;
+  const savingThrows: Ability[] = derived.savingThrows;
 
   // Effetti risolti (razza + lineage)
   const effects = raceData.effects;
 
-  // Feature di classe (per livello, ASI esclusi) con descrizione/tabella da classes.json e della sottoclasse
-  const classFeatures: { level: number; name: string; description?: string; table?: string }[] = [];
-  for (const lvl of classData.features) {
-    for (const name of lvl.features) {
-      const cf = classDef.featuresByLevel[lvl.level]?.find((f) => f.name === name);
-      classFeatures.push({ level: lvl.level, name, description: cf?.description, table: cf?.table });
-    }
-  }
-  const subclassFeatures =
-    classData.subclass?.id != null ? getSubclassFeaturesUpToLevel(classData.subclass.id, level) : [];
+  // Feature di classe + sottoclasse (motore condiviso)
+  const classFeatures = derived.classFeatures;
+  const subclassFeatures = derived.subclassFeatures;
 
   // Slot incantesimi (max = disponibili), incl. Pact Magic del Warlock
-  const spellSlots = getSpellSlots(classDef.name, level);
+  const spellSlots = derived.spellSlots;
 
-  // Risorse (Ira, Ki, …) da progression.json + effetti con risorsa
-  const resources: Record<string, CharacterResource> = {};
-  for (const [key, res] of Object.entries(getClassResources(classDef.name))) {
-    const max = getResourceMax(
-      classDef.name,
-      key,
-      level,
-      (ability) => getAbilityModifier((abilities as Record<string, number>)[ability] ?? 10)
-    );
-    if (typeof max === 'number') {
-      // Mostra il dado associato (es. Ispirazione Bardica → "Ispirazione Bardica (d6)")
-      let label = res.label;
-      const die = getResourceDie(classDef.name, key, level);
-      if (die) label = `${label} (${die})`;
-      resources[key] = {
-        label,
-        max,
-        current: max,
-        resetOn: typeof res.recovery === 'string' ? res.recovery : 'long_rest',
-      };
-    }
-  }
+  // Risorse (Ira, Ki, …): di classe (motore condiviso) + effetti con risorsa
+  const resources: Record<string, CharacterResource> = { ...derived.resources };
   for (const eff of effects) {
     const hasResource = eff.type === 'resource_grant' || eff.type === 'action_grant';
     if (hasResource && typeof eff.key === 'string') {
@@ -830,11 +1107,14 @@ export function buildCharacterSheet(
     }
   }
 
+  // Spellcasting: se ALMENO una classe lancia, usa la prima incantatrice
+  // (abilità, progressione) — gli slot restano quelli combinati del multiclasse
   let spellcasting: CharacterSpellcasting | undefined;
-  if (classData.spellcasting) {
+  const casterSummary = summaries.find((s) => s.spellcasting);
+  if (casterSummary) {
     spellcasting = {
-      ability: classData.spellcasting.ability ?? 'intelligence',
-      progression: classData.spellProgression,
+      ability: casterSummary.spellcasting?.ability ?? 'intelligence',
+      progression: casterSummary.spellProgression,
       slotDetails: spellSlots,
       // Incantesimi da fonti automatiche (talento background + razza/lineage)
       knownSpells: [...autoSpells],
@@ -889,13 +1169,13 @@ export function buildCharacterSheet(
     id: meta.id,
     name: meta.name,
     level,
-    classes: [{
-      className: classDef.name as ClassName,
-      level,
-      subclass: classData.subclass?.name,
-      subclassId: classData.subclass?.id,
-      hitDie: classDef.hitDie,
-    }],
+    classes: summaries.map((sum) => ({
+      className: sum.classDef.name as ClassName,
+      level: sum.level,
+      subclass: sum.subclass?.name,
+      subclassId: sum.subclass?.id,
+      hitDie: sum.classDef.hitDie,
+    })),
     race: raceData.race.name,
     raceId: raceData.race.id,
     lineage: raceData.lineage?.name,
@@ -909,7 +1189,7 @@ export function buildCharacterSheet(
       temporary: 0,
       hitDiceMax: level,
       hitDiceCurrent: level,
-      hitDie: `d${classDef.hitDie}`,
+      hitDie: derived.hitDie,
     },
     proficiencyBonus,
     armorClass: 10 + dexMod,

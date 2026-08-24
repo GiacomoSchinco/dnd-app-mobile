@@ -17,13 +17,14 @@ type Props = {
   fightingStyleOptions: FeatRaw[];
   fightingStyleId: number | null;
   onSelectFightingStyle: (id: number | null) => void;
-  // ASI per livello: a ogni livello ASI si sceglie O l'ASI O un talento generale
-  asiLevels: number[];
-  asiAssignments: Record<number, AsiAssignment>;
-  onAsiModeChange: (level: number, mode: AsiMode) => void;
-  onAsiToggleAbility: (level: number, ability: Ability) => void;
-  featAtAsiLevel: Record<number, number | null>;
-  onSetAsiLevelFeat: (lvl: number, featId: number | null) => void;
+  // ASI per livello (chiave composita `classe:livello` — ogni classe ha i suoi):
+  // a ogni livello ASI si sceglie O l'ASI O un talento generale
+  asiKeys: { key: string; label: string }[];
+  asiAssignments: Record<string, AsiAssignment>;
+  onAsiModeChange: (key: string, mode: AsiMode) => void;
+  onAsiToggleAbility: (key: string, ability: Ability) => void;
+  featAtAsiLevel: Record<string, number | null>;
+  onSetAsiLevelFeat: (key: string, featId: number | null) => void;
   generalFeatOptions: FeatRaw[];
   // ASI scelti per i talenti selezionati (chiave = feat id)
   featAsiPicks: Record<number, Ability[]>;
@@ -123,7 +124,7 @@ export default function FeatStep({
   fightingStyleOptions,
   fightingStyleId,
   onSelectFightingStyle,
-  asiLevels,
+  asiKeys,
   asiAssignments,
   onAsiModeChange,
   onAsiToggleAbility,
@@ -172,30 +173,30 @@ export default function FeatStep({
         </View>
       )}
 
-      {/* ASI oppure Talento generale, per livello */}
-      {asiLevels.length > 0 && (
+      {/* ASI oppure Talento generale, per livello ASI di ogni classe */}
+      {asiKeys.length > 0 && (
         <View>
           <SectionTitle
             large
             text="ASI O TALENTO GENERALE"
-            note="Per ogni livello scegli una delle due opzioni."
+            note="Per ogni livello ASI scegli una delle due opzioni."
           />
           <View style={{ gap: t.spacing[3] }}>
-            {asiLevels.map((lvl) => {
-              const chosenId = featAtAsiLevel[lvl] ?? null;
+            {asiKeys.map((asi) => {
+              const chosenId = featAtAsiLevel[asi.key] ?? null;
               const isFeat = chosenId != null;
-              const sec = asiAssignments[lvl];
+              const sec = asiAssignments[asi.key];
               // Talenti già scelti a un ALTRO livello (non riproponibili qui)
               const takenElsewhere = new Set(
                 Object.entries(featAtAsiLevel)
-                  .filter(([l, id]) => id != null && id !== FEAT_MODE_PENDING && Number(l) !== lvl)
+                  .filter(([k, id]) => id != null && id !== FEAT_MODE_PENDING && k !== asi.key)
                   .map(([, id]) => id as number),
               );
               const available = generalFeatOptions.filter((f) => !takenElsewhere.has(f.id));
 
               return (
                 <View
-                  key={lvl}
+                  key={asi.key}
                   style={{
                     borderRadius: t.radius.md,
                     borderWidth: 1,
@@ -207,14 +208,14 @@ export default function FeatStep({
                 >
                   <View style={[s.row, { justifyContent: 'space-between', alignItems: 'center' }]}>
                     <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                      Livello {lvl}
+                      {asi.label}
                     </Text>
                     <View style={[s.row, s.gap(t.spacing[1.5])]}>
                       <Chip
                         label="ASI"
                         selected={!isFeat}
                         compact
-                        onPress={() => onSetAsiLevelFeat(lvl, null)}
+                        onPress={() => onSetAsiLevelFeat(asi.key, null)}
                       />
                       <Chip
                         label="Talento"
@@ -222,7 +223,7 @@ export default function FeatStep({
                         compact
                         onPress={() => {
                           // Passa alla modalità talento (se non ci sei già)
-                          if (!isFeat) onSetAsiLevelFeat(lvl, FEAT_MODE_PENDING);
+                          if (!isFeat) onSetAsiLevelFeat(asi.key, FEAT_MODE_PENDING);
                         }}
                       />
                     </View>
@@ -235,13 +236,13 @@ export default function FeatStep({
                           label="+2 a una caratteristica"
                           selected={sec?.mode === 'plus_two'}
                           compact
-                          onPress={() => onAsiModeChange(lvl, 'plus_two')}
+                          onPress={() => onAsiModeChange(asi.key, 'plus_two')}
                         />
                         <Chip
                           label="+1 a due caratteristiche"
                           selected={sec?.mode !== 'plus_two'}
                           compact
-                          onPress={() => onAsiModeChange(lvl, 'two_plus_ones')}
+                          onPress={() => onAsiModeChange(asi.key, 'two_plus_ones')}
                         />
                       </View>
                       <View style={[s.row, s.gap(t.spacing[1.5]), { flexWrap: 'wrap' }]}>
@@ -254,7 +255,7 @@ export default function FeatStep({
                               label={getAbilityAbbreviation(a)}
                               selected={picked}
                               selectedSuffix={picked ? ` +${bonus}` : undefined}
-                              onPress={() => onAsiToggleAbility(lvl, a)}
+                              onPress={() => onAsiToggleAbility(asi.key, a)}
                             />
                           );
                         })}
@@ -278,7 +279,7 @@ export default function FeatStep({
                           selected={chosenId === f.id}
                           asiPicks={chosenId === f.id ? featAsiPicks[f.id] : undefined}
                           onToggle={() =>
-                            onSetAsiLevelFeat(lvl, chosenId === f.id ? FEAT_MODE_PENDING : f.id)
+                            onSetAsiLevelFeat(asi.key, chosenId === f.id ? FEAT_MODE_PENDING : f.id)
                           }
                           onToggleAsi={(a) => onToggleFeatAsi(f.id, a)}
                         />

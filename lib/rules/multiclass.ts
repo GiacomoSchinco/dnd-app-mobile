@@ -1,7 +1,8 @@
 import spellcastingData from '../data/spellcasting.json';
-import { getAbilityModifier } from './abilities';
+import { getAbilityModifier, getAbilityAbbreviation } from './abilities';
 import { getClass, type ClassFeatureDefinition } from './classes';
-import type { Ability, AbilityScores, Character, CharacterClass, SpellcastingDataRaw, SpellSlots } from '../../types';
+import { getSpellProgression } from './spellcasting';
+import type { Ability, AbilityScores, Character, CharacterClass, SpellcastingDataRaw, SpellSlot, SpellSlots } from '../../types';
 
 /**
  * multiclass.ts — Regole per il multiclasse (D&D 2024).
@@ -76,6 +77,51 @@ export function calculateSpellSlots(character: Character): SpellSlots {
       slots[`level${n}` as keyof SpellSlots] = count;
     }
   }
+  return slots;
+}
+
+/**
+ * Slot incantesimi di un multiclasse nel formato del modello `Character`
+ * (`Record<livello, SpellSlot>`, max = disponibili).
+ *
+ * Combina:
+ * - gli slot standard dal Caster Level combinato (tabella full_caster);
+ * - la Pact Magic del Warlock (slots + Mistico Arcano) per OGNI classe warlock,
+ *   separata dagli slot normali ma nello stesso record per livello.
+ *
+ * Con una singola classe equivale a `getSpellSlots` di spellcasting.ts
+ * (full caster → tabella, warlock → solo Pact Magic).
+ */
+export function calculateMulticlassSpellSlots(classes: CharacterClass[]): Record<number, SpellSlot> {
+  const casterLevel = calculateCasterLevel(classes);
+  const row = DATA.spell_slots.full_caster[String(casterLevel)] ?? {};
+  const slots: Record<number, SpellSlot> = {};
+  for (const [key, count] of Object.entries(row)) {
+    const n = Number(key);
+    if (n >= 1 && n <= 9) {
+      slots[n] = { max: count, current: count };
+    }
+  }
+
+  // Pact Magic (Warlock) + Mistico Arcano: per ogni classe warlock
+  for (const cls of classes) {
+    const classDef = getClass(cls.className);
+    if (classDef?.spellcastingType !== 'pact') continue;
+    const prog = getSpellProgression(cls.className, cls.level);
+    if (!prog.pactMagic) continue;
+
+    const existing = slots[prog.pactMagic.level];
+    slots[prog.pactMagic.level] = {
+      max: Math.max(existing?.max ?? 0, prog.pactMagic.slots),
+      current: Math.max(existing?.current ?? 0, prog.pactMagic.slots),
+    };
+    for (const arcanumLevel of prog.pactMagic.mysticArcanum ?? []) {
+      if (!slots[arcanumLevel]) {
+        slots[arcanumLevel] = { max: 1, current: 1 };
+      }
+    }
+  }
+
   return slots;
 }
 
@@ -175,5 +221,29 @@ export function canLevelUp(character: Character, className: string): boolean {
   const cls = character.classes.find((c) => c.className === className);
   if (!cls) return false;
   return cls.level < 20;
+}
+
+// ── Prerequisiti per la CREAZIONE (multiclasse) ────────────────
+
+/**
+ * Prerequisiti del multiclasse per la creazione: ogni classe richiede 13+
+ * nelle sue caratteristiche primarie. Ritorna messaggi leggibili (es.
+ * "Guerriero: serve FOR 13") per il blocco in creazione.
+ */
+export function getMulticlassPrerequisiteWarnings(
+  classes: Array<{ className: string }>,
+  abilities: AbilityScores
+): string[] {
+  const warnings: string[] = [];
+  for (const cls of classes) {
+    const def = getClass(cls.className);
+    if (!def) continue;
+    for (const ability of def.primaryAbilities) {
+      if ((abilities[ability] ?? 0) < 13) {
+        warnings.push(`${def.labelIt}: serve ${getAbilityAbbreviation(ability)} 13`);
+      }
+    }
+  }
+  return warnings;
 }
 

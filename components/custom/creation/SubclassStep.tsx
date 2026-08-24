@@ -3,7 +3,9 @@ import { useTokens } from '../../ui/prism-provider';
 import CardCarousel from '../CardCarousel';
 import type { CardCarouselItem } from '../CardCarousel';
 import StepLabel from './StepLabel';
+import ClassSwitcher from './ClassSwitcher';
 import type { SubclassDefinition } from '../../../lib/rules/subclasses';
+import type { ClassName } from '../../../types';
 
 type Props = {
   subclassLabel?: string;
@@ -11,6 +13,12 @@ type Props = {
   subclassId: number | null;
   onSubclassChange: (id: number | null) => void;
   subclasses: SubclassDefinition[];
+  /** Etichetta della classe attiva (multiclasse) */
+  classNameLabel?: string;
+  /** Switcher classe attiva (multiclasse) */
+  classList: { className: ClassName; level: number }[];
+  activeIndex: number;
+  onSelectActive: (i: number) => void;
 };
 
 /** Step dedicato — Sottoclasse (mostrato solo se il livello la sblocca) */
@@ -20,6 +28,10 @@ export default function SubclassStep({
   subclassId,
   onSubclassChange,
   subclasses,
+  classNameLabel,
+  classList,
+  activeIndex,
+  onSelectActive,
 }: Props) {
   const t = useTokens();
 
@@ -31,7 +43,11 @@ export default function SubclassStep({
 
   return (
     <View>
-      <StepLabel>SOTTOCLASSE ({subclassLabel ?? 'Sottoclasse'})</StepLabel>
+      <ClassSwitcher classList={classList} activeIndex={activeIndex} onSelectActive={onSelectActive} />
+
+      <StepLabel>
+        {classNameLabel ? `SOTTOCLASSE ${classNameLabel.toUpperCase()}` : `SOTTOCLASSE (${subclassLabel ?? 'Sottoclasse'})`}
+      </StepLabel>
       {firstSubclassLevel != null && (
         <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundTertiary, marginBottom: t.spacing[2] }}>
           Disponibile dal livello {firstSubclassLevel} — scegli il tuo cammino.

@@ -13,6 +13,7 @@ export function useActiveCharacter(): ActiveCharacterActions {
   const restoreSpellSlots = useCharacterStore((s) => s.restoreSpellSlots);
   const createCharacter = useCharacterStore((s) => s.createCharacter);
   const createCharacterFull = useCharacterStore((s) => s.createCharacterFull);
+  const applyLevelUp = useCharacterStore((s) => s.applyLevelUp);
   const deleteCharacter = useCharacterStore((s) => s.deleteCharacter);
   const updateCharacter = useCharacterStore((s) => s.updateCharacter);
 
@@ -31,6 +32,7 @@ export function useActiveCharacter(): ActiveCharacterActions {
     restoreSpellSlots,
     createCharacter,
     createCharacterFull,
+    applyLevelUp,
     deleteCharacter,
     updateCharacter,
   };

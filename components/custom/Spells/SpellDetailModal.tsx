@@ -6,7 +6,7 @@ import { Button } from '../../ui/button';
 import { s } from '../../../utils/style-helpers';
 import type { Spell, ClassName, Character, ManualSpellBadge } from '../../../types';
 import { SCHOOL_LABELS, CLASS_LABELS, SCHOOL_MAP } from './types';
-import { MANUAL_BADGES, resolveSpellBadge } from './spellSourceBadges';
+import { MANUAL_BADGES, resolveSpellBadgeForSpell } from './spellSourceBadges';
 import DndIcon, { type IconName } from '../DndIcon';
 import BottomModal from '../BottomModal';
 import DetailChip from '../DetailChip';
@@ -35,11 +35,12 @@ export default function SpellDetailModal({
 }: Props) {
   const t = useTokens();
 
-  // Badge manuale scelto dall'utente (ha precedenza) + badge automatico risolto
+  // Badge manuale scelto dall'utente (ha precedenza) + badge risolto
+  // (automatico da fonte speciale → multiclasse per la seconda classe)
   const manualBadge = activeChar?.spellBadges?.[spell?.name ?? ''] ?? null;
   const badge = useMemo(
-    () => (activeChar && spell ? resolveSpellBadge(activeChar, spell.name) : null),
-    [activeChar, spell?.name],
+    () => (activeChar && spell ? resolveSpellBadgeForSpell(activeChar, spell) : null),
+    [activeChar, spell],
   );
 
   return (
@@ -103,7 +104,9 @@ export default function SpellDetailModal({
                       ? 'Da talento di origine del background: puoi lanciarla una volta per riposo lungo senza consumare slot.'
                       : badge.source === 'feat'
                         ? 'Da un talento scelto: puoi lanciarla una volta per riposo lungo senza consumare slot.'
-                        : 'Da razza/lineage: puoi lanciarla una volta per riposo lungo senza consumare slot.'}
+                        : badge.source === 'race'
+                          ? 'Da razza/lineage: puoi lanciarla una volta per riposo lungo senza consumare slot.'
+                          : 'Dalla seconda classe (multiclasse): la magia appartiene a una classe diversa dalla primaria e va aggiunta manualmente da "Gestisci magie".'}
                   </Text>
                 </View>
               )}

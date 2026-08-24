@@ -12,6 +12,7 @@ import ClassAvatar from '../../components/custom/ClassAvatar';
 import CardBox from '../../components/custom/CardBox';
 import ConfirmDeleteCharacterModal from '../../components/custom/ConfirmDeleteCharacterModal';
 import LabelValueRow from '../../components/custom/LabelValueRow';
+import LevelUpModal from '../../components/custom/LevelUpModal';
 import SectionButton from '../../components/custom/SectionButton';
 import SectionTitle from '../../components/custom/SectionTitle';
 import StatTile from '../../components/custom/StatTile';
@@ -30,8 +31,9 @@ const SECTIONS = [
 export default function CharacterDetailScreen() {
   const t = useTokens();
   const navigation = useNavigation<TabToRootNav>();
-  const { activeChar, updateCharacter, deleteCharacter } = useActiveCharacter();
+  const { activeChar, updateCharacter, deleteCharacter, applyLevelUp } = useActiveCharacter();
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [levelUpVisible, setLevelUpVisible] = useState(false);
 
   const handleSection = (key: string) => {
     if (key === 'magie') navigation.navigate(ROUTES.MAGIE);
@@ -69,7 +71,6 @@ export default function CharacterDetailScreen() {
   }
 
   const mainClass = activeChar.classes[0];
-  const classLabel = mainClass ? getClassNameItalian(mainClass.className) : '—';
 
   return (
     <>
@@ -89,10 +90,12 @@ export default function CharacterDetailScreen() {
             <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.bold, color: t.colors.foreground }}>
               {activeChar.name}
             </Text>
-            <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>
-              <Badge variant="solid" size="sm" color={t.colors.accent}>
-                {classLabel} {activeChar.level}°
-              </Badge>
+            <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5]), { flexWrap: 'wrap' }]}>
+              {activeChar.classes.map((cl) => (
+                <Badge key={cl.className} variant="solid" size="sm" color={t.colors.accent}>
+                  {getClassNameItalian(cl.className)} {cl.level}°
+                </Badge>
+              ))}
               {activeChar.race && (
                 <Badge variant="subtle" size="sm">{activeChar.race}</Badge>
               )}
@@ -113,6 +116,16 @@ export default function CharacterDetailScreen() {
           </View>
         )}
       </CardBox>
+
+      {/* Salì di livello */}
+      <View style={[s.fullWidth, s.mb(t.spacing[4])]}>
+        <SectionButton
+          icon="⤴️"
+          label="Salì di livello"
+          description={activeChar.level >= 20 ? 'Livello massimo raggiunto (20)' : `${activeChar.level}° → ${activeChar.level + 1}°`}
+          onPress={() => activeChar.level < 20 && setLevelUpVisible(true)}
+        />
+      </View>
 
       {/* Punti Ferita — gestione diretta (danno / cura / temporanei) */}
       <CardBox marginBottom={t.spacing[4]} gap={t.spacing[3]} style={s.fullWidth}>
@@ -187,6 +200,14 @@ export default function CharacterDetailScreen() {
         characterName={activeChar.name}
         onClose={() => setConfirmDelete(false)}
         onConfirm={handleDelete}
+      />
+
+      {/* Level up */}
+      <LevelUpModal
+        visible={levelUpVisible}
+        character={activeChar}
+        onClose={() => setLevelUpVisible(false)}
+        onConfirm={(className, options) => applyLevelUp(activeChar.id, className, options)}
       />
     </>
   );

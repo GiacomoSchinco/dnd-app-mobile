@@ -25,7 +25,7 @@ import {
   Spell,
   useSpellFilters,
   applySpellFilters,
-  getSpellSourceBadges,
+  resolveSpellBadgeForSpell,
 } from '../../components/custom/Spells';
 
 type Props = {
@@ -54,11 +54,6 @@ export default function SpellsScreen({ standalone = false }: Props) {
   const hasActiveCharacter = !!activeChar;
   // "Scheda magie del PG": solo con PG attivo e NON standalone → lista delle SUE magie
   const isSheet = hasActiveCharacter && !standalone;
-
-  // Badge delle magie con regole particolari (gratis 1/gg da bg/talento/razza)
-  const spellBadges = useMemo(() => getSpellSourceBadges(activeChar), [activeChar]);
-  // Badge MANUALI scelti dall'utente: hanno la precedenza su quelli automatici
-  const manualBadges = activeChar?.spellBadges ?? {};
 
   const bottomClearance = standalone ? insets.bottom + t.spacing[6] : insets.bottom + 80;
 
@@ -162,13 +157,13 @@ export default function SpellsScreen({ standalone = false }: Props) {
         isPrepared={prepared.includes(item.name)}
         isFavorite={favorites.includes(item.name)}
         hasActiveCharacter={hasActiveCharacter}
-        badge={manualBadges[item.name] ?? spellBadges.get(item.name) ?? null}
+        badge={resolveSpellBadgeForSpell(activeChar, item)}
         onPress={() => setSelectedSpell(item)}
         onToggleFavorite={() => toggleFavoriteSpell(item.name)}
         onTogglePrepared={() => togglePreparedSpell(item.name)}
       />
     );
-  }, [prepared, favorites, hasActiveCharacter, toggleFavoriteSpell, togglePreparedSpell, spellBadges, manualBadges]);
+  }, [prepared, favorites, hasActiveCharacter, toggleFavoriteSpell, togglePreparedSpell, activeChar]);
 
   // ── Render foglio PG ──
   const renderSheetSpell = useCallback(({ item }: { item: Spell }) => (
@@ -178,9 +173,9 @@ export default function SpellsScreen({ standalone = false }: Props) {
       canCast={hasSpellSlots}
       onCast={handleCast}
       onInfo={setSelectedSpell}
-      badge={manualBadges[item.name] ?? spellBadges.get(item.name) ?? null}
+      badge={resolveSpellBadgeForSpell(activeChar, item)}
     />
-  ), [t, hasSpellSlots, handleCast, spellBadges, manualBadges]);
+  ), [t, hasSpellSlots, handleCast, activeChar]);
 
   // ── Main render ──
   return (

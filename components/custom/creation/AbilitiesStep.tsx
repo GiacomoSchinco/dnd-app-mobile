@@ -36,6 +36,8 @@ type Props = {
   picks: (Ability | null)[];
   onTogglePick: (ability: Ability) => void;
   finalResult: AbilityAssignmentResult | null;
+  /** Prerequisiti multiclasse mancanti (13+ nelle caratteristiche primarie) */
+  multiclassPrereqMissing: string[];
 };
 
 /** Step 6 — Punteggi di caratteristica (standard array / punto acquisto + boost background + ASI) */
@@ -54,12 +56,39 @@ export default function AbilitiesStep({
   picks,
   onTogglePick,
   finalResult,
+  multiclassPrereqMissing,
 }: Props) {
   const t = useTokens();
 
   return (
     <View style={[s.gap(t.spacing[4])]}>
       <StepLabel>PUNTEGGI DI CARATTERISTICA</StepLabel>
+
+      {/* Prerequisiti multiclasse (13+ nelle caratteristiche primarie) */}
+      {multiclassPrereqMissing.length > 0 && (
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: t.colors.danger,
+            borderRadius: t.radius.md,
+            padding: t.spacing[3],
+            backgroundColor: t.colors.danger + '0F',
+            gap: t.spacing[1],
+          }}
+        >
+          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.danger }}>
+            ⚠️ Prerequisiti multiclasse non soddisfatti
+          </Text>
+          {multiclassPrereqMissing.map((m) => (
+            <Text key={m} style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+              {m}
+            </Text>
+          ))}
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+            Il multiclasse richiede almeno 13 nelle caratteristiche primarie di ogni classe.
+          </Text>
+        </View>
+      )}
 
       {/* Metodo di generazione punteggi */}
       <View style={[s.row, s.gap(t.spacing[2]), { flexWrap: 'wrap' }]}>

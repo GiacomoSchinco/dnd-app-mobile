@@ -52,7 +52,18 @@ export default function CharacterCreateScreen() {
           {w.step === 'name' && <NameStep value={w.name} onChange={w.setName} />}
 
           {w.step === 'class' && (
-            <ClassStep items={w.classes} selected={w.selectedClass} onSelect={w.setSelectedClass} />
+            <ClassStep
+              items={w.classes}
+              selected={w.selectedClass}
+              onSelect={w.setSelectedClass}
+              classList={w.classList}
+              activeIndex={w.activeClassIndex}
+              onSelectActive={w.setActiveClassIndex}
+              onAddClass={w.addClass}
+              onRemoveClass={w.removeClass}
+              canAddClass={w.canAddClass}
+              totalLevel={w.totalLevel}
+            />
           )}
 
           {w.step === 'skills' && (
@@ -62,6 +73,9 @@ export default function CharacterCreateScreen() {
               skillCount={w.skillCount}
               selectedSkills={w.classSkills}
               onToggleSkill={w.toggleSkill}
+              classList={w.classList}
+              activeIndex={w.activeClassIndex}
+              onSelectActive={w.setActiveClassIndex}
             />
           )}
 
@@ -71,6 +85,12 @@ export default function CharacterCreateScreen() {
               onLevelChange={w.setLevel}
               hitDie={w.hitDie}
               levelFeatures={w.levelFeatures}
+              classNameLabel={w.classLabel}
+              totalLevel={w.totalLevel}
+              maxLevel={20 - (w.totalLevel - w.level)}
+              classList={w.classList}
+              activeIndex={w.activeClassIndex}
+              onSelectActive={w.setActiveClassIndex}
             />
           )}
 
@@ -81,6 +101,10 @@ export default function CharacterCreateScreen() {
               subclassId={w.subclassId}
               onSubclassChange={w.setSubclassId}
               subclasses={w.subclasses}
+              classNameLabel={w.classLabel}
+              classList={w.classList}
+              activeIndex={w.activeClassIndex}
+              onSelectActive={w.setActiveClassIndex}
             />
           )}
 
@@ -125,6 +149,7 @@ export default function CharacterCreateScreen() {
               picks={w.picks}
               onTogglePick={w.togglePick}
               finalResult={w.finalResult}
+              multiclassPrereqMissing={w.multiclassPrereqMissing}
             />
           )}
 
@@ -135,7 +160,7 @@ export default function CharacterCreateScreen() {
               fightingStyleOptions={w.fightingStyleOptions}
               fightingStyleId={w.fightingStyleId}
               onSelectFightingStyle={w.selectFightingStyle}
-              asiLevels={w.asiLevelsApplied}
+              asiKeys={w.asiKeys}
               asiAssignments={w.asiAssignments}
               onAsiModeChange={w.setAsiMode}
               onAsiToggleAbility={w.toggleAsiAbility}
@@ -155,8 +180,8 @@ export default function CharacterCreateScreen() {
 
           {w.step === 'hp' && (
             <HpStep
-              hitDie={w.hitDie}
-              level={w.level}
+              hitDie={w.primaryHitDie}
+              level={w.totalLevel}
               conMod={w.conMod}
               averagePerLevel={w.averagePerLevel}
               hpRoll={w.hpRoll}

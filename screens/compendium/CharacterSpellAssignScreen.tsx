@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
-import { SpellCard, SpellFilters, SpellDetailModal, Spell, useSpellFilters, applySpellFilters, getSpellSourceBadges } from '../../components/custom/Spells';
+import { SpellCard, SpellFilters, SpellDetailModal, Spell, useSpellFilters, applySpellFilters, resolveSpellBadgeForSpell } from '../../components/custom/Spells';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
 import spellsData from '../../lib/data/spells.json';
@@ -46,11 +46,6 @@ export default function CharacterSpellAssignScreen() {
   const favorites = activeChar?.favoriteSpells ?? [];
   const initialClass = activeChar?.classes?.[0]?.className ?? null;
 
-  // Badge delle magie con regole particolari (gratis 1/gg da bg/talento/razza)
-  const spellBadges = useMemo(() => getSpellSourceBadges(activeChar), [activeChar]);
-  // Badge MANUALI scelti dall'utente: hanno la precedenza su quelli automatici
-  const manualBadges = activeChar?.spellBadges ?? {};
-
   // Pre-seleziona la classe del PG al primo montaggio (il filtro resta modificabile)
   useEffect(() => {
     if (initialClass) setClassFilter(initialClass);
@@ -80,13 +75,13 @@ export default function CharacterSpellAssignScreen() {
         isPrepared={prepared.includes(item.name)}
         isFavorite={favorites.includes(item.name)}
         hasActiveCharacter
-        badge={manualBadges[item.name] ?? spellBadges.get(item.name) ?? null}
+        badge={resolveSpellBadgeForSpell(activeChar, item)}
         onPress={() => setSelectedSpell(item)}
         onToggleFavorite={() => toggleFavoriteSpell(item.name)}
         onTogglePrepared={() => togglePreparedSpell(item.name)}
       />
     ),
-    [prepared, favorites, manualBadges, spellBadges, toggleFavoriteSpell, togglePreparedSpell]
+    [prepared, favorites, activeChar, toggleFavoriteSpell, togglePreparedSpell]
   );
 
   if (!activeChar) {

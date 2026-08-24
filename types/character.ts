@@ -345,6 +345,11 @@ export interface CharacterDraft {
   name: string;
   race: { raceId?: number; raceName?: string; lineageId?: number };
   classChoice: { classId?: number; className?: string; subclassId?: number; level: number };
+  /**
+   * Classi del personaggio per il MULTICLASSE. La PRIMA è la classe primaria.
+   * Se assente si usa `classChoice` (backward-compat, single-class).
+   */
+  classes?: { classId?: number; className?: string; subclassId?: number; level: number }[];
   background: { backgroundId: number; chosenSkills?: string[] };
   /** Skill di classe scelte (competenze dalla classe) */
   classSkills?: SkillName[];
@@ -378,6 +383,28 @@ export interface CharacterDraft {
   };
 }
 
+// ── Level up ───────────────────────────────────────────────────
+
+/** Boost di caratteristica per un ASI durante il level-up */
+export interface LevelUpAsiBoost {
+  ability: Ability;
+  amount: 1 | 2;
+}
+
+/** Opzioni per l'azione `applyLevelUp` (scelte fatte nel modale di level-up) */
+export interface LevelUpOptions {
+  /** Tiro del dado vita per il nuovo livello (se assente → media) */
+  hpRoll?: number;
+  /** Se il livello è un ASI e si sceglie l'ASI: boost +2 / +1+1 da applicare */
+  asiBoosts?: LevelUpAsiBoost[];
+  /** Se il livello è un ASI e si sceglie un talento generale: id del talento */
+  generalFeatId?: number;
+  /** Scelte caratteristica per l'ASI del talento scelto */
+  featAsiPicks?: Ability[];
+  /** Sottoclasse scelta al livello che la sblocca */
+  subclassId?: number;
+}
+
 /** Stato dello store dei personaggi */
 export interface CharacterState {
   characters: Character[];
@@ -386,6 +413,12 @@ export interface CharacterState {
   createCharacter: (name: string, className: ClassName, level?: number) => void;
   /** Crea un personaggio COMPLETO dal wizard (buildCharacter + buildCharacterSheet) */
   createCharacterFull: (draft: CharacterDraft) => Character | null;
+  /**
+   * Applica un level-up a una classe del personaggio: ricalcola le statistiche
+   * derivate dall'insieme delle classi (motore condiviso) PRESERVANDO lo stato
+   * runtime (PF attuali, slot consumati, risorse correnti, magie, equip).
+   */
+  applyLevelUp: (id: string, className: string, options?: LevelUpOptions) => void;
   deleteCharacter: (id: string) => void;
   setActiveCharacterId: (id: string | null) => void;
   updateCharacter: (id: string, updates: Partial<Omit<Character, 'id'>>) => void;
@@ -413,6 +446,7 @@ export interface ActiveCharacterActions {
   createCharacter: (name: string, className: ClassName, level?: number) => void;
   /** Crea un personaggio COMPLETO dal wizard (buildCharacter + buildCharacterSheet) */
   createCharacterFull: (draft: CharacterDraft) => Character | null;
+  applyLevelUp: (id: string, className: string, options?: LevelUpOptions) => void;
   deleteCharacter: (id: string) => void;
   updateCharacter: (id: string, updates: Partial<Omit<Character, 'id'>>) => void;
 }

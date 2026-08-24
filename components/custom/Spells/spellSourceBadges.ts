@@ -1,5 +1,6 @@
-import type { Character } from '../../../types';
+import type { Character, Spell } from '../../../types';
 import { getFeat } from '../../../lib/rules/feats';
+import { CLASS_LABELS } from './types';
 
 /**
  * spellSourceBadges.ts — Badge colorati per le magie con regole particolari.
@@ -22,7 +23,7 @@ export type SpellSourceBadge = {
   /** Colore del badge */
   color: string;
   /** Fonte della regola (assente = badge manuale scelto dall'utente) */
-  source?: 'background' | 'feat' | 'race' | 'manual';
+  source?: 'background' | 'feat' | 'race' | 'multiclass' | 'manual';
 };
 
 /** Colori per fonte — unica fonte per i badge delle magie */
@@ -33,6 +34,8 @@ export const SPELL_BADGE_COLORS = {
   feat: '#8B5CF6',
   /** Teal → razza/lineage */
   race: '#14B8A6',
+  /** Azzurro → seconda classe del multiclasse */
+  multiclass: '#0EA5E9',
 } as const;
 
 /**
@@ -121,4 +124,50 @@ export function resolveSpellBadge(
   const manual = activeChar.spellBadges?.[spellName];
   if (manual) return { ...manual, source: 'manual' as const };
   return getSpellSourceBadges(activeChar).get(spellName) ?? null;
+}
+
+/**
+ * Badge di CLASSE per il MULTICLASSE: la magia appartiene a una classe del PG
+ * DIVERSA dalla primaria (es. Guerriero 3 / Mago 2 → badge "Mago").
+ * Serve a segnalare visivamente le magie della seconda classe (aggiunte a mano
+ * da "Gestisci magie", visto che i talenti/feature non codificati si aggiungono
+ * manualmente). È un fallback: NON sovrascrive badge manuali o automatici.
+ */
+export function getMulticlassClassBadge(
+  activeChar: Character | null,
+  spell: Spell | undefined,
+): SpellSourceBadge | null {
+  if (!activeChar || activeChar.classes.length < 2 || !spell) return null;
+  const spellClasses = (spell.classes ?? []) as string[];
+  // Se la magia è anche della classe primaria, non è "extra" da multiclasse
+  const primary = activeChar.classes[0].className;
+  if (spellClasses.some((c) => c.toLowerCase() === primary.toLowerCase())) return null;
+  // Cerca la prima classe secondaria del PG che ha questa magia nella sua lista
+  for (const cls of activeChar.classes.slice(1)) {
+    if (spellClasses.some((c) => c.toLowerCase() === cls.className.toLowerCase())) {
+      return {
+        label: CLASS_LABELS[cls.className] ?? cls.className,
+        color: SPELL_BADGE_COLORS.multiclass,
+        source: 'multiclass' as const,
+      };
+    }
+  }
+  return null;
+}
+
+/**
+ * Badge RISOLTO completo per una magia (con la Spell, per la classe d'origine):
+ * manuale (precedenza) → automatico (fonte speciale) → multiclasse (fallback).
+ */
+export function resolveSpellBadgeForSpell(
+  activeChar: Character | null,
+  spell: Spell | undefined,
+): SpellSourceBadge | null {
+  if (!activeChar || !spell) return null;
+  const manual = activeChar.spellBadges?.[spell.name];
+  if (manual) return { ...manual, source: 'manual' as const };
+  return (
+    getSpellSourceBadges(activeChar).get(spell.name) ??
+    getMulticlassClassBadge(activeChar, spell)
+  );
 }

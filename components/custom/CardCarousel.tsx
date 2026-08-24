@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, Pressable, useWindowDimensions, type ImageSourcePropType } from 'react-native';
 import { Carousel, type CarouselRef } from 'react-native-reanimated-carousel';
 import { useTokens } from '../ui/prism-provider';
@@ -47,6 +47,18 @@ export default function CardCarousel({
   const ref = useRef<CarouselRef>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+
+  // Sincronizza la posizione del carousel quando `selected` cambia
+  // dall'esterno (es. cambio di classe attiva nel multiclasse del wizard).
+  useEffect(() => {
+    if (!selected) return;
+    const idx = items.findIndex((it) => it.key === selected);
+    if (idx >= 0 && ref.current) {
+      ref.current.scrollTo({ index: idx, animated: false });
+      setCurrentIndex(idx);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   // Larghezza pagina = larghezza reale del container (misurata via onLayout),
   // con fallback sulla larghezza schermo meno i margini orizzontali.

@@ -1,8 +1,24 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import type { CharacterState, Character, ClassName, CharacterDraft } from '../types';
-import { buildCharacter, buildCharacterSheet } from '../lib/rules/character-builder';
+import type {
+  CharacterState,
+  Character,
+  ClassName,
+  CharacterDraft,
+  CharacterResource,
+  LevelUpOptions,
+  SpellSlot,
+} from '../types';
+import {
+  buildCharacter,
+  buildCharacterSheet,
+  buildClassSummaries,
+  computeClassDerived,
+} from '../lib/rules/character-builder';
 import { getClass } from '../lib/rules/classes';
+import { getFeat, getFeatAsiCap, getFeatAsiOptions } from '../lib/rules/feats';
+import { applyFeat } from '../lib/rules/apply-feat';
+import { getSubclass } from '../lib/rules/subclasses';
 import { getAbilityModifier } from '../lib/rules/abilities';
 import { getProficiencyBonus, getAllFeaturesUpToLevel } from '../lib/rules/progression';
 import { getSubclassFeaturesUpToLevel } from '../lib/rules/subclasses';
@@ -178,6 +194,7 @@ export const useCharacterStore = create<CharacterState>()(
         const plan = buildCharacter({
           race: draft.race,
           classChoice: draft.classChoice,
+          classes: draft.classes,
           background: draft.background,
           abilities: draft.abilities,
           classSkills: draft.classSkills,
@@ -207,6 +224,154 @@ export const useCharacterStore = create<CharacterState>()(
           activeCharacterId: id,
         }));
         return newChar;
+      },
+
+      applyLevelUp: (id, className, options) => {
+        set((s) => ({
+          characters: s.characters.map((c) => {
+            if (c.id !== id) return c;
+            const clsIndex = c.classes.findIndex((cl) => cl.className === className);
+            if (clsIndex === -1 || c.classes[clsIndex].level >= 20) return c;
+
+            const classDef = getClass(className);
+            const conMod = getAbilityModifier(c.abilities?.constitution ?? 10);
+            const oldMaxHp = c.hitPoints?.max ?? 0;
+            const oldCurrentHp = c.hitPoints?.current ?? oldMaxHp;
+            const oldHitDice = c.hitPoints?.hitDiceCurrent ?? 0;
+
+            // Nuove classi (livello +1) con eventuale sottoclasse appena sbloccata
+            const newClasses = c.classes.map((cl, i) => {
+              if (i !== clsIndex) return cl;
+              const base = { ...cl, level: cl.level + 1 };
+              if (options?.subclassId != null) {
+                const sub = getSubclass(options.subclassId);
+                return { ...base, subclassId: sub?.id, subclass: sub?.name };
+              }
+              return base;
+            });
+
+            const summaries = buildClassSummaries(newClasses);
+            if (!summaries.success) return c;
+            const derived = computeClassDerived(summaries.summaries, c.abilities);
+            if (derived.level > 20) return c;
+
+            // PF guadagnati: media (o tiro del dado) + CON, min 1 — indipendente dai PF salvati
+            const averageHpGained = classDef
+              ? Math.max(classDef.hitPoints.average + conMod, 1)
+              : derived.maxHp - oldMaxHp;
+            const hpGained =
+              options?.hpRoll != null ? Math.max(options.hpRoll + conMod, 1) : averageHpGained;
+            const maxHp = oldMaxHp + hpGained;
+
+            // Risorse: aggiorna max, preserva current (aggiunge il delta del max)
+            const oldResources = c.resources ?? {};
+            const resources: Record<string, CharacterResource> = {};
+            for (const [key, res] of Object.entries(derived.resources)) {
+              const old = oldResources[key];
+              const oldMax = old?.max ?? res.max;
+              const current = Math.min((old?.current ?? res.max) + Math.max(res.max - oldMax, 0), res.max);
+              resources[key] = { ...res, current };
+            }
+
+            // Slot: preserva current, aggiunge il delta dei nuovi max
+            const oldSlots = c.spellSlots ?? {};
+            const spellSlots: Record<number, SpellSlot> = {};
+            for (const [lvl, slot] of Object.entries(derived.spellSlots)) {
+              const n = Number(lvl);
+              const old = oldSlots[n];
+              const current = old
+                ? Math.min(old.current + Math.max(slot.max - old.max, 0), slot.max)
+                : slot.current;
+              spellSlots[n] = { max: slot.max, current };
+            }
+
+            // ASI / talento al livello
+            let abilities = c.abilities;
+            let feats = c.feats ?? [];
+            let epicBoons = c.epicBoons ?? [];
+            let featModifiers = c.featModifiers ?? [];
+            let choices = c.choices ?? {};
+            let skills = [...(c.proficiencies?.skills ?? [])];
+            let resourcesAll = { ...resources };
+
+            if (options?.asiBoosts && options.asiBoosts.length > 0) {
+              const next = { ...abilities };
+              for (const b of options.asiBoosts) {
+                next[b.ability] = Math.min((next[b.ability] ?? 10) + b.amount, 20);
+              }
+              abilities = next;
+              choices = { ...choices, asiBoosts: [...(choices.asiBoosts ?? []), ...options.asiBoosts] };
+            }
+
+            if (options?.generalFeatId != null) {
+              const feat = getFeat(options.generalFeatId);
+              if (feat) {
+                const isEpic = feat.category === 'epic_boon';
+                if (isEpic) epicBoons = [...epicBoons, feat.name];
+                else feats = [...feats, feat.name];
+                choices = {
+                  ...choices,
+                  ...(isEpic
+                    ? { epicBoonId: feat.id }
+                    : { generalFeatIds: [...(choices.generalFeatIds ?? []), feat.id] }),
+                };
+                // ASI del talento: automatico se una sola caratteristica consentita
+                const singleAsi =
+                  !options.featAsiPicks && getFeatAsiOptions(feat).length === 1
+                    ? getFeatAsiOptions(feat)
+                    : options.featAsiPicks;
+                const apply = applyFeat(feat, { asiChoices: singleAsi });
+                featModifiers = [...featModifiers, ...(apply.modifiers ?? [])];
+                for (const sk of apply.skills ?? []) if (!skills.includes(sk)) skills.push(sk);
+                for (const b of apply.asiBoosts) {
+                  const cap = getFeatAsiCap(feat);
+                  const next = { ...abilities };
+                  next[b.ability] = Math.min((next[b.ability] ?? 10) + b.amount, cap);
+                  abilities = next;
+                }
+                for (const grant of apply.resources ?? []) {
+                  const max = grant.max === 'proficiency_bonus' ? derived.proficiencyBonus : grant.max;
+                  if (typeof max === 'number' && !resourcesAll[grant.key]) {
+                    resourcesAll[grant.key] = {
+                      label: grant.label,
+                      max,
+                      current: max,
+                      resetOn: grant.resetOn,
+                    };
+                  }
+                }
+              }
+            }
+
+            return {
+              ...c,
+              level: derived.level,
+              classes: newClasses,
+              proficiencyBonus: derived.proficiencyBonus,
+              abilities,
+              feats,
+              epicBoons,
+              featModifiers,
+              choices,
+              hitPoints: {
+                max: maxHp,
+                current: oldCurrentHp + hpGained,
+                temporary: c.hitPoints?.temporary ?? 0,
+                hitDiceMax: derived.level,
+                hitDiceCurrent: Math.min(oldHitDice + 1, derived.level),
+                hitDie: derived.hitDie,
+              },
+              classFeatures: derived.classFeatures,
+              subclassFeatures: derived.subclassFeatures,
+              proficiencies: { ...c.proficiencies, skills },
+              spellSlots,
+              resources: Object.keys(resourcesAll).length > 0 ? resourcesAll : undefined,
+              spellcasting: c.spellcasting
+                ? { ...c.spellcasting, slotDetails: spellSlots }
+                : c.spellcasting,
+            };
+          }),
+        }));
       },
 
       deleteCharacter: (id) => {
