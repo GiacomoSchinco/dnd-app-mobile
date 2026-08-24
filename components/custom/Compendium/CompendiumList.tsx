@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../ui/prism-provider';
 import { Input } from '../../ui/input';
@@ -49,6 +49,14 @@ export default function CompendiumList<T>({
     return items.filter((it) => filterBy(it, q));
   }, [items, query, filterBy]);
 
+  const handleSelect = useCallback((item: T) => setSelected(item), []);
+
+  // renderItem memoizzato: evita di ricreare le arrow a ogni render
+  const renderRow = useCallback(
+    ({ item }: { item: T }) => <>{renderCard(item, () => handleSelect(item))}</>,
+    [renderCard, handleSelect]
+  );
+
   return (
     <View style={[s.flex, { backgroundColor: t.colors.background }]}>
       <View
@@ -75,7 +83,10 @@ export default function CompendiumList<T>({
       <FlatList
         data={filtered}
         keyExtractor={keyExtractor}
-        renderItem={({ item }) => <>{renderCard(item, () => setSelected(item))}</>}
+        renderItem={renderRow}
+        maxToRenderPerBatch={12}
+        windowSize={7}
+        removeClippedSubviews={Platform.OS !== 'web'}
         contentContainerStyle={{ paddingBottom: insets.bottom + 90, paddingHorizontal: t.spacing[4] }}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"

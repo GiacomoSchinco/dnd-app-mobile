@@ -1,4 +1,5 @@
 import { View, Pressable, StyleSheet } from 'react-native';
+import { useTokens } from '../../ui/prism-provider';
 import { spacing, radius } from '../../../utils/styles';
 import DndIcon from '../DndIcon';
 import type { DiceType } from '../../../types';
@@ -12,6 +13,7 @@ type Props = {
 const ICON_SIZE = 40;
 
 export default function DiceTypeGrid({ selected, onSelect }: Props) {
+  const t = useTokens();
   return (
     <View style={styles.grid}>
       {DICE_TYPES.map((dt) => {
@@ -29,7 +31,7 @@ export default function DiceTypeGrid({ selected, onSelect }: Props) {
               },
             ]}
           >
-            <DndIcon name={dt} size={ICON_SIZE} color={isSelected ? c : '#666'} />
+            <DndIcon name={dt} size={ICON_SIZE} color={isSelected ? c : t.colors.foregroundTertiary} />
           </Pressable>
         );
       })}

@@ -6,10 +6,7 @@ import { THEME_LIST } from '../ui/themes/registry';
 
 export default function ThemePicker() {
   const t = useTokens();
-  const { theme: activeTheme, setTheme } = useTheme() as unknown as {
-    theme: { name: string; colors: Record<string, string>; [key: string]: any };
-    setTheme: (theme: any, options?: any) => void;
-  };
+  const { theme: activeTheme, setTheme } = useTheme();
 
   return (
     <View>
@@ -17,7 +14,7 @@ export default function ThemePicker() {
         🎨 Scegli il tema
       </Text>
       <View style={{ gap: 10 }}>
-        {THEME_LIST.map((item:any) => {
+        {THEME_LIST.map((item) => {
           const isActive = activeTheme.name === item.theme.name;
           return (
             <Pressable key={item.key} onPress={() => setTheme(item.theme)}>

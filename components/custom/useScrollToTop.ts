@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 
 /**
  * Stato condiviso del FAB "Torna su" (vedi `ScrollToTopFab`): mostra il
@@ -8,7 +9,7 @@ import { useCallback, useState } from 'react';
 export function useScrollToTop() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const handleScroll = useCallback((event: any) => {
+  const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     setShowScrollTop(event.nativeEvent.contentOffset.y > 300);
   }, []);
 

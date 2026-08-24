@@ -1,11 +1,12 @@
 import { View, Text, ScrollView } from 'react-native';
+import type { ReactNode } from 'react';
 import { useTokens } from '../../ui/prism-provider';
 import { Badge } from '../../ui/badge';
 import { s } from '../../../utils/style-helpers';
 import { Ionicons } from '@expo/vector-icons';
 import DndIcon from '../DndIcon';
 import type { ItemDefinition } from '../../../types';
-import { TYPE_LABELS, RARITY_LABELS, TYPE_COLORS, getTypeColor, getCategoryLabel, getTypeLabel } from './types';
+import { TYPE_LABELS, RARITY_LABELS, TYPE_COLORS, getTypeColor, getCategoryLabel, getTypeLabel, getItemIconName } from './types';
 import BottomModal from '../BottomModal';
 import DetailChip from '../DetailChip';
 import DetailModalHeader from '../DetailModalHeader';
@@ -37,7 +38,9 @@ function formatRange(r: unknown): string {
 
 export default function ItemDetailModal({ item, onClose }: Props) {
   const t = useTokens();
-  const itemProps = (item?.properties ?? {}) as Record<string, any>;
+  // Le proprietà variano per tipo di oggetto: bag di valori "renderable"
+  // (ReactNode) così i guard `&&` in JSX restano tipizzati senza `any`.
+  const itemProps = (item?.properties ?? {}) as Record<string, ReactNode>;
 
   return (
     <BottomModal visible={!!item} onClose={onClose}>
@@ -45,7 +48,7 @@ export default function ItemDetailModal({ item, onClose }: Props) {
         <>
           {/* Header */}
           <DetailModalHeader
-            icon={<DndIcon name={item.type as any} size={30} color={TYPE_COLORS[item.type] || '#888'} />}
+            icon={<DndIcon name={getItemIconName(item.type)} size={30} color={TYPE_COLORS[item.type] || '#888'} />}
             iconBg={(TYPE_COLORS[item.type] || '#888') + '20'}
             title={item.name}
             onClose={onClose}

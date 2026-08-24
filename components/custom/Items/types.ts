@@ -1,4 +1,5 @@
-import type { ItemDefinition } from '../../../types';
+import type { ItemDefinition, ItemTypeName } from '../../../types';
+import type { IconName } from '../DndIcon';
 
 export type { ItemDefinition };
 
@@ -32,6 +33,23 @@ export const TYPE_COLORS: Record<string, string> = {
 
 export function getTypeColor(type: string): string {
   return TYPE_COLORS[type] || '#888';
+}
+
+/**
+ * Mappa il tipo oggetto alla relativa icona DndIcon.
+ * I tipi sconosciuti (es. 'magic') ricadono su 'gear' (icona generica).
+ */
+export function getItemIconName(type: ItemTypeName): IconName {
+  switch (type) {
+    case 'weapon': return 'weapon';
+    case 'armor': return 'armor';
+    case 'consumable': return 'consumable';
+    case 'gear': return 'gear';
+    case 'tool': return 'tool';
+    case 'ammunition': return 'ammunition';
+    case 'currency': return 'currency';
+    default: return 'gear';
+  }
 }
 
 export const RARITY_COLORS: Record<string, string> = {

@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { View, Text, FlatList, Image, type StyleProp, type ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { TabToRootNav } from '../../types/navigation';
@@ -72,14 +73,25 @@ export default function HomeScreen() {
   const characters = useCharacterStore((st) => st.characters);
   const setActiveCharacterId = useCharacterStore((st) => st.setActiveCharacterId);
 
-  const handleCreate = () => {
+  const handleCreate = useCallback(() => {
     navigation.navigate(ROUTES.CHARACTER_CREATE);
-  };
+  }, [navigation]);
 
-  const handleCharacterPress = (character: Character) => {
-    setActiveCharacterId(character.id);
-    navigation.navigate(ROUTES.CHARACTER_DETAIL);
-  };
+  const handleCharacterPress = useCallback(
+    (character: Character) => {
+      setActiveCharacterId(character.id);
+      navigation.navigate(ROUTES.CHARACTER_DETAIL);
+    },
+    [navigation, setActiveCharacterId]
+  );
+
+  // renderItem memoizzato per la FlatList della Home
+  const renderCharacter = useCallback(
+    ({ item }: { item: Character }) => (
+      <CharacterCard character={item} onPress={() => handleCharacterPress(item)} />
+    ),
+    [handleCharacterPress]
+  );
 
   // Accesso diretto a Impostazioni/Compendio: pusha sullo stack radice (schermo intero, back = Home)
   const handleQuickAction = (screen: QuickActionRoute) => {
@@ -118,9 +130,9 @@ export default function HomeScreen() {
       <FlatList
         data={characters}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <CharacterCard character={item} onPress={() => handleCharacterPress(item)} />
-        )}
+        renderItem={renderCharacter}
+        maxToRenderPerBatch={8}
+        windowSize={5}
         style={[s.flex, s.fullWidth]}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: t.spacing[8] }}

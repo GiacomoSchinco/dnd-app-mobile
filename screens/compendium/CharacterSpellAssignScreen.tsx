@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -72,6 +72,23 @@ export default function CharacterSpellAssignScreen() {
     [search, levelFilter, classFilter, schoolFilter, showPreparedOnly, showFavoritesOnly, prepared, favorites]
   );
 
+  // renderItem memoizzato per la FlatList (evita ri-render di tutte le righe)
+  const renderSpellCard = useCallback(
+    ({ item }: { item: Spell }) => (
+      <SpellCard
+        spell={item}
+        isPrepared={prepared.includes(item.name)}
+        isFavorite={favorites.includes(item.name)}
+        hasActiveCharacter
+        badge={manualBadges[item.name] ?? spellBadges.get(item.name) ?? null}
+        onPress={() => setSelectedSpell(item)}
+        onToggleFavorite={() => toggleFavoriteSpell(item.name)}
+        onTogglePrepared={() => togglePreparedSpell(item.name)}
+      />
+    ),
+    [prepared, favorites, manualBadges, spellBadges, toggleFavoriteSpell, togglePreparedSpell]
+  );
+
   if (!activeChar) {
     return <MissingActiveCharacter message="Apri un personaggio dalla Home per gestire le sue magie." />;
   }
@@ -111,18 +128,9 @@ export default function CharacterSpellAssignScreen() {
         <FlatList
           data={filteredSpells}
           keyExtractor={(item) => item.name}
-          renderItem={({ item }) => (
-            <SpellCard
-              spell={item}
-              isPrepared={prepared.includes(item.name)}
-              isFavorite={favorites.includes(item.name)}
-              hasActiveCharacter
-              badge={manualBadges[item.name] ?? spellBadges.get(item.name) ?? null}
-              onPress={() => setSelectedSpell(item)}
-              onToggleFavorite={() => toggleFavoriteSpell(item.name)}
-              onTogglePrepared={() => togglePreparedSpell(item.name)}
-            />
-          )}
+          renderItem={renderSpellCard}
+          maxToRenderPerBatch={12}
+          windowSize={7}
           style={[s.flex, { marginTop: t.spacing[1] }]}
           contentContainerStyle={{ paddingBottom: insets.bottom + t.spacing[10] }}
           showsVerticalScrollIndicator={false}

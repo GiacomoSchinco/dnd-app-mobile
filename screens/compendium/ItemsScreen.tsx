@@ -15,6 +15,21 @@ import {
   ItemFilters,
 } from '../../components/custom/Items';
 
+/** Forma raw degli item in items.json (snake_case, come da catalogo) */
+interface RawItem {
+  id: number;
+  name: string;
+  type: string;
+  weight: number;
+  value: number;
+  currency: string;
+  rarity: string;
+  requires_attunement: boolean;
+  category: string;
+  description: string;
+  properties: unknown;
+}
+
 export default function ItemsScreen({ onBack }: { onBack?: () => void }) {
   const t = useTokens();
   const insets = useSafeAreaInsets();
@@ -37,7 +52,7 @@ export default function ItemsScreen({ onBack }: { onBack?: () => void }) {
 
   // ── Parse items ──
   const allItems = useMemo(() => {
-    return (itemsData as any[]).map((raw) => ({
+    return (itemsData as RawItem[]).map((raw) => ({
       ...raw,
       requiresAttunement: raw.requires_attunement,
     })) as ItemDefinition[];

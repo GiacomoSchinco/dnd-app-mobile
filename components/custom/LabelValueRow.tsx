@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, type TextStyle } from 'react-native';
 import type { ReactNode } from 'react';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
@@ -11,11 +11,11 @@ type Props = {
   /** Font size del valore (default sm) */
   valueSize?: number;
   /** Peso del valore (default '600') */
-  valueWeight?: string;
+  valueWeight?: TextStyle['fontWeight'];
   /** Colore dell'etichetta (default foregroundSecondary) */
   labelColor?: string;
   /** Peso dell'etichetta (default '400') */
-  labelWeight?: string;
+  labelWeight?: TextStyle['fontWeight'];
   /** Riga divisoria superiore (bordo top) */
   dividerTop?: boolean;
   /** Padding superiore quando dividerTop (default t.spacing[2]) */
@@ -50,11 +50,11 @@ export default function LabelValueRow({
         },
       ]}
     >
-      <Text style={{ fontSize: t.typography.sm, fontWeight: labelWeight as any, color: labelColor ?? t.colors.foregroundSecondary }}>{label}</Text>
+      <Text style={{ fontSize: t.typography.sm, fontWeight: labelWeight, color: labelColor ?? t.colors.foregroundSecondary }}>{label}</Text>
       <Text
         style={{
           fontSize: valueSize ?? t.typography.sm,
-          fontWeight: valueWeight as any,
+          fontWeight: valueWeight,
           color: valueColor ?? t.colors.foreground,
         }}
       >

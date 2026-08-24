@@ -1,5 +1,6 @@
-import type { ComponentType } from 'react';
+import type { ComponentType, ComponentProps } from 'react';
 import { ROUTES } from '../../../lib/routes';
+import { Ionicons } from '@expo/vector-icons';
 
 // Schermate
 import HomeScreen from '../../../screens/home/HomeScreen';
@@ -15,10 +16,13 @@ export type NavigationTab = {
   routeName: string;
   /** Testo visualizzato nella tab bar */
   label: string;
-  /** Componente della schermata */
+  /**
+   * Componente della schermata. `any` è richiesto da React Navigation
+   * (`ScreenComponentType` è tipizzato come `ComponentType<any>` dalla libreria).
+   */
   component: ComponentType<any>;
-  iconActive: string;
-  iconInactive: string;
+  iconActive: ComponentProps<typeof Ionicons>['name'];
+  iconInactive: ComponentProps<typeof Ionicons>['name'];
   /** Quando mostrare il pulsante: 'always', 'noCharacter', 'withCharacter' */
   show?: 'always' | 'noCharacter' | 'withCharacter';
   /** Nasconde la tab bar quando questa schermata è attiva */

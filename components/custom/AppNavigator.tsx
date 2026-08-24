@@ -84,9 +84,9 @@ export default function AppNavigator() {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {
             const currentTab = NAVIGATION_TABS.find((tab) => tab.routeName === route.name);
-            const iconName = (currentTab
+            const iconName = currentTab
               ? (focused ? currentTab.iconActive : currentTab.iconInactive)
-              : 'help-outline') as any;
+              : 'help-outline';
             return <Ionicons name={iconName} size={20} color={color} />;
           },
           tabBarActiveTintColor: t.colors.accent,

@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, type TextStyle } from 'react-native';
 import type { ReactNode } from 'react';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
@@ -14,7 +14,7 @@ type Props = {
   /** Font size del valore (default base) */
   valueSize?: number;
   /** Peso del valore (default '600') */
-  valueWeight?: string;
+  valueWeight?: TextStyle['fontWeight'];
   /** Colore del valore (default foreground) */
   valueColor?: string;
   /** Font size dell'etichetta (default sm) */
@@ -57,7 +57,7 @@ export default function StepperRow({
             minWidth,
             textAlign: 'center',
             fontSize: valueSize ?? t.typography.base,
-            fontWeight: valueWeight as any,
+            fontWeight: valueWeight,
             color: valueColor ?? t.colors.foreground,
           }}
         >

@@ -6,7 +6,7 @@ import { s } from '../../../utils/style-helpers';
 import { Ionicons } from '@expo/vector-icons';
 import DndIcon from '../DndIcon';
 import type { ItemDefinition } from '../../../types';
-import { TYPE_LABELS, RARITY_LABELS, TYPE_COLORS, getTypeColor, getCategoryLabel, getTypeLabel } from './types';
+import { TYPE_LABELS, RARITY_LABELS, TYPE_COLORS, getTypeColor, getCategoryLabel, getTypeLabel, getItemIconName } from './types';
 
 type Props = {
   item: ItemDefinition;
@@ -23,7 +23,7 @@ export default function ItemCard({ item, onPress }: Props) {
         <View style={[s.row, s.gap(t.spacing[3])]}>
           {/* Type Icon */}
           <View style={[s.box(52, 12), { backgroundColor: typeColor + '20' }]}>
-            <DndIcon name={item.type as any} size={28} color={typeColor} />
+            <DndIcon name={getItemIconName(item.type)} size={28} color={typeColor} />
           </View>
 
           <View style={s.flex}>
