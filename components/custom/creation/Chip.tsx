@@ -31,9 +31,14 @@ export default function Chip({
     <Pressable
       onPress={onPress}
       disabled={disabled}
+      accessibilityRole="button"
+      accessibilityState={{ selected, disabled }}
       style={{
         paddingHorizontal: t.spacing[3],
         paddingVertical: compact ? t.spacing[1] : t.spacing[1.5],
+        minHeight: compact ? 34 : 44,
+        alignItems: 'center',
+        justifyContent: 'center',
         borderRadius: t.radius.full,
         borderWidth: 1,
         borderColor: selected ? t.colors.accent : t.colors.border,

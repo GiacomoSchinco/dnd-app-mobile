@@ -22,6 +22,8 @@ type Props = {
   onSelect: (key: string) => void;
   /** Altezza delle card (default 340) */
   cardHeight?: number;
+  /** Mostra il pulsante info "(i)" sulla card e lo notifica (per il dettaglio completo) */
+  onShowDetails?: (item: CardCarouselItem) => void;
 };
 
 const DEFAULT_HEIGHT = 340;
@@ -41,6 +43,7 @@ export default function CardCarousel({
   selected,
   onSelect,
   cardHeight = DEFAULT_HEIGHT,
+  onShowDetails,
 }: Props) {
   const t = useTokens();
   const { width } = useWindowDimensions();
@@ -87,6 +90,9 @@ export default function CardCarousel({
             <View style={[s.flex, { marginHorizontal: 8, paddingVertical: 6 }]}>
               <Pressable
                 onPress={() => onSelect(item.key)}
+                accessibilityRole="button"
+                accessibilityState={{ selected: isSelected }}
+                accessibilityLabel={`Scegli ${item.label}`}
                 style={{
                   flex: 1,
                   borderRadius: t.radius.xl,
@@ -105,7 +111,7 @@ export default function CardCarousel({
                   }),
                 }}
               >
-                {item.image && (
+                {item.image ? (
                   <View
                     style={[
                       s.box(IMAGE_SIZE, IMAGE_BOX_HEIGHT),
@@ -123,6 +129,28 @@ export default function CardCarousel({
                       style={{ width: IMAGE_SIZE, height: IMAGE_SIZE }}
                       resizeMode="cover"
                     />
+                  </View>
+                ) : (
+                  // P4 — card senza immagine (razze/background/sottoclasse): monogramma colorato
+                  <View
+                    style={{
+                      width: 64,
+                      height: 64,
+                      borderRadius: 32,
+                      backgroundColor: isSelected ? t.colors.accent : t.colors.accentSubtle,
+                      ...s.center,
+                      marginBottom: t.spacing[5],
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: t.typography.xl,
+                        fontWeight: '800',
+                        color: isSelected ? t.colors.accentForeground : t.colors.accent,
+                      }}
+                    >
+                      {item.label.charAt(0).toUpperCase()}
+                    </Text>
                   </View>
                 )}
 
@@ -164,6 +192,39 @@ export default function CardCarousel({
                   {item.desc}
                 </Text>
               </Pressable>
+
+              {/* P1 — pulsante info "(i)": apre il dettaglio completo (BottomModal) */}
+              {onShowDetails && (
+                <Pressable
+                  onPress={() => onShowDetails(item)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Dettagli di ${item.label}`}
+                  hitSlop={8}
+                  style={{
+                    position: 'absolute',
+                    top: t.spacing[3],
+                    right: t.spacing[3],
+                    width: 34,
+                    height: 34,
+                    borderRadius: 17,
+                    borderWidth: 1,
+                    borderColor: isSelected ? t.colors.accent : t.colors.border,
+                    backgroundColor: isSelected ? t.colors.accent : t.colors.backgroundSecondary,
+                    ...s.center,
+                    zIndex: 5,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: t.typography.md,
+                      fontWeight: '800',
+                      color: isSelected ? t.colors.accentForeground : t.colors.accent,
+                    }}
+                  >
+                    i
+                  </Text>
+                </Pressable>
+              )}
             </View>
           );
         }}

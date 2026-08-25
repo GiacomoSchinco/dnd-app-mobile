@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import { getFeatAsiOptions } from '../../../lib/rules/feats';
@@ -73,6 +74,8 @@ function FeatRow({
       <Pressable
         onPress={onToggle}
         disabled={disabled}
+        accessibilityRole="button"
+        accessibilityState={{ selected, disabled }}
         style={({ pressed }) => ({
           flexDirection: 'row',
           alignItems: 'center',
@@ -141,9 +144,16 @@ export default function FeatStep({
   finalScores,
 }: Props) {
   const t = useTokens();
-  const chosenIds = Object.values(featAtAsiLevel).filter(
-    (v): v is number => v != null && v !== FEAT_MODE_PENDING,
+  // P10 — memoizzati: non ricalcolare la lista talenti ad ogni render
+  const chosenIds = useMemo(
+    () =>
+      Object.values(featAtAsiLevel).filter(
+        (v): v is number => v != null && v !== FEAT_MODE_PENDING,
+      ),
+    [featAtAsiLevel],
   );
+  // P3 — blocchi ASI/Talento collassabili (default espansi) per accorciare lo step
+  const [expandedKeys, setExpandedKeys] = useState<Record<string, boolean>>({});
 
   return (
     <View style={[s.gap(t.spacing[4])]}>
@@ -193,6 +203,11 @@ export default function FeatStep({
                   .map(([, id]) => id as number),
               );
               const available = generalFeatOptions.filter((f) => !takenElsewhere.has(f.id));
+              // Stato incompleto del blocco: evidenziato anche a collasso
+              const incomplete =
+                (isFeat && chosenId === FEAT_MODE_PENDING) ||
+                (!isFeat && (!sec || !sec.slots.every((sl) => sl != null)));
+              const expanded = expandedKeys[asi.key] ?? true;
 
               return (
                 <View
@@ -200,90 +215,125 @@ export default function FeatStep({
                   style={{
                     borderRadius: t.radius.md,
                     borderWidth: 1,
-                    borderColor: t.colors.border,
+                    borderColor: incomplete ? t.colors.danger : t.colors.border,
                     backgroundColor: t.colors.backgroundSecondary,
-                    padding: t.spacing[3],
-                    gap: t.spacing[2],
+                    overflow: 'hidden',
                   }}
                 >
-                  <View style={[s.row, { justifyContent: 'space-between', alignItems: 'center' }]}>
-                    <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-                      {asi.label}
-                    </Text>
-                    <View style={[s.row, s.gap(t.spacing[1.5])]}>
-                      <Chip
-                        label="ASI"
-                        selected={!isFeat}
-                        compact
-                        onPress={() => onSetAsiLevelFeat(asi.key, null)}
-                      />
-                      <Chip
-                        label="Talento"
-                        selected={isFeat}
-                        compact
-                        onPress={() => {
-                          // Passa alla modalità talento (se non ci sei già)
-                          if (!isFeat) onSetAsiLevelFeat(asi.key, FEAT_MODE_PENDING);
-                        }}
-                      />
+                  {/* Header collassabile: etichetta + stato + chevron */}
+                  <Pressable
+                    onPress={() =>
+                      setExpandedKeys((prev) => ({ ...prev, [asi.key]: !(prev[asi.key] ?? true) }))
+                    }
+                    accessibilityRole="button"
+                    accessibilityState={{ expanded }}
+                    accessibilityLabel={`${asi.label}${incomplete ? ', da completare' : ''}`}
+                    style={[s.row, { justifyContent: 'space-between', alignItems: 'center', padding: t.spacing[3] }]}
+                  >
+                    <View style={[s.row, { alignItems: 'center', gap: t.spacing[2], flex: 1 }]}>
+                      <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+                        {asi.label}
+                      </Text>
+                      {incomplete && (
+                        <Text style={{ fontSize: t.typography.xs, color: t.colors.danger }}>
+                          da completare
+                        </Text>
+                      )}
                     </View>
+                    <Text
+                      style={{
+                        fontSize: t.typography.md,
+                        color: t.colors.foregroundTertiary,
+                        transform: [{ rotate: expanded ? '180deg' : '0deg' }],
+                      }}
+                    >
+                      ▾
+                    </Text>
+                  </Pressable>
+
+                  {/* Modalità ASI / Talento (visibili anche a collasso) */}
+                  <View
+                    style={[
+                      s.row,
+                      s.gap(t.spacing[1.5]),
+                      { paddingHorizontal: t.spacing[3], paddingBottom: t.spacing[3], flexWrap: 'wrap' },
+                    ]}
+                  >
+                    <Chip
+                      label="ASI"
+                      selected={!isFeat}
+                      compact
+                      onPress={() => onSetAsiLevelFeat(asi.key, null)}
+                    />
+                    <Chip
+                      label="Talento"
+                      selected={isFeat}
+                      compact
+                      onPress={() => {
+                        if (!isFeat) onSetAsiLevelFeat(asi.key, FEAT_MODE_PENDING);
+                      }}
+                    />
                   </View>
 
-                  {!isFeat ? (
-                    <View style={{ gap: t.spacing[2] }}>
-                      <View style={[s.row, s.gap(t.spacing[1.5]), { flexWrap: 'wrap' }]}>
-                        <Chip
-                          label="+2 a una caratteristica"
-                          selected={sec?.mode === 'plus_two'}
-                          compact
-                          onPress={() => onAsiModeChange(asi.key, 'plus_two')}
-                        />
-                        <Chip
-                          label="+1 a due caratteristiche"
-                          selected={sec?.mode !== 'plus_two'}
-                          compact
-                          onPress={() => onAsiModeChange(asi.key, 'two_plus_ones')}
-                        />
-                      </View>
-                      <View style={[s.row, s.gap(t.spacing[1.5]), { flexWrap: 'wrap' }]}>
-                        {ABILITY_ORDER.map((a) => {
-                          const picked = sec?.slots.includes(a) ?? false;
-                          const bonus = sec?.mode === 'plus_two' ? 2 : 1;
-                          return (
+                  {expanded && (
+                    <View style={{ paddingHorizontal: t.spacing[3], paddingBottom: t.spacing[3], gap: t.spacing[2] }}>
+                      {!isFeat ? (
+                        <View style={{ gap: t.spacing[2] }}>
+                          <View style={[s.row, s.gap(t.spacing[1.5]), { flexWrap: 'wrap' }]}>
                             <Chip
-                              key={a}
-                              label={getAbilityAbbreviation(a)}
-                              selected={picked}
-                              selectedSuffix={picked ? ` +${bonus}` : undefined}
-                              onPress={() => onAsiToggleAbility(asi.key, a)}
+                              label="+2 a una caratteristica"
+                              selected={sec?.mode === 'plus_two'}
+                              compact
+                              onPress={() => onAsiModeChange(asi.key, 'plus_two')}
                             />
-                          );
-                        })}
-                      </View>
-                      {!sec || !sec.slots.every((s) => s != null) ? (
-                        <Text style={{ fontSize: t.typography.xs, color: t.colors.danger }}>
-                          Completa l'ASI: tocca una caratteristica per continuare.
+                            <Chip
+                              label="+1 a due caratteristiche"
+                              selected={sec?.mode !== 'plus_two'}
+                              compact
+                              onPress={() => onAsiModeChange(asi.key, 'two_plus_ones')}
+                            />
+                          </View>
+                          <View style={[s.row, s.gap(t.spacing[1.5]), { flexWrap: 'wrap' }]}>
+                            {ABILITY_ORDER.map((a) => {
+                              const picked = sec?.slots.includes(a) ?? false;
+                              const bonus = sec?.mode === 'plus_two' ? 2 : 1;
+                              return (
+                                <Chip
+                                  key={a}
+                                  label={getAbilityAbbreviation(a)}
+                                  selected={picked}
+                                  selectedSuffix={picked ? ` +${bonus}` : undefined}
+                                  onPress={() => onAsiToggleAbility(asi.key, a)}
+                                />
+                              );
+                            })}
+                          </View>
+                          {!sec || !sec.slots.every((s) => s != null) ? (
+                            <Text style={{ fontSize: t.typography.xs, color: t.colors.danger }}>
+                              Completa l'ASI: tocca una caratteristica per continuare.
+                            </Text>
+                          ) : null}
+                        </View>
+                      ) : available.length === 0 ? (
+                        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+                          Nessun talento disponibile per questo livello.
                         </Text>
-                      ) : null}
-                    </View>
-                  ) : available.length === 0 ? (
-                    <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
-                      Nessun talento disponibile per questo livello.
-                    </Text>
-                  ) : (
-                    <View style={{ gap: t.spacing[2] }}>
-                      {available.map((f) => (
-                        <FeatRow
-                          key={f.id}
-                          feat={f}
-                          selected={chosenId === f.id}
-                          asiPicks={chosenId === f.id ? featAsiPicks[f.id] : undefined}
-                          onToggle={() =>
-                            onSetAsiLevelFeat(asi.key, chosenId === f.id ? FEAT_MODE_PENDING : f.id)
-                          }
-                          onToggleAsi={(a) => onToggleFeatAsi(f.id, a)}
-                        />
-                      ))}
+                      ) : (
+                        <View style={{ gap: t.spacing[2] }}>
+                          {available.map((f) => (
+                            <FeatRow
+                              key={f.id}
+                              feat={f}
+                              selected={chosenId === f.id}
+                              asiPicks={chosenId === f.id ? featAsiPicks[f.id] : undefined}
+                              onToggle={() =>
+                                onSetAsiLevelFeat(asi.key, chosenId === f.id ? FEAT_MODE_PENDING : f.id)
+                              }
+                              onToggleAsi={(a) => onToggleFeatAsi(f.id, a)}
+                            />
+                          ))}
+                        </View>
+                      )}
                     </View>
                   )}
                 </View>

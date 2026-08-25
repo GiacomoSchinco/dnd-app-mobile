@@ -14,6 +14,8 @@ type Props = {
   onRaceChange: (id: number) => void;
   lineageId: number | null;
   onLineageChange: (id: number) => void;
+  /** Apre il dettaglio completo della razza (pulsante info sul carousel) */
+  onShowDetails?: (item: CardCarouselItem) => void;
   // Competenze in abilità concesse dalla razza (es. Umano, Elfo)
   raceSkillOptions: { key: SkillName; label: string }[];
   raceSkills: SkillName[];
@@ -37,6 +39,7 @@ export default function RaceStep({
   onRaceChange,
   lineageId,
   onLineageChange,
+  onShowDetails,
   raceSkillOptions,
   raceSkills,
   raceSkillCount,
@@ -53,6 +56,7 @@ export default function RaceStep({
         items={RACE_ITEMS}
         selected={raceId != null ? String(raceId) : null}
         onSelect={(key) => onRaceChange(Number(key))}
+        onShowDetails={onShowDetails}
       />
 
       {lineages && lineages.length > 0 && (

@@ -12,6 +12,8 @@ import { s } from '../../../utils/style-helpers';
 type Props = {
   backgroundId: number | null;
   onSelect: (id: number) => void;
+  /** Apre il dettaglio completo del background (pulsante info sul carousel) */
+  onShowDetails?: (item: CardCarouselItem) => void;
   // Scelte strumenti del background (CHOICE)
   bgToolOptions: ToolOption[];
   bgToolChoices: string[];
@@ -75,6 +77,7 @@ function ToolPicker({
 export default function BackgroundStep({
   backgroundId,
   onSelect,
+  onShowDetails,
   bgToolOptions,
   bgToolChoices,
   bgToolCount,
@@ -90,6 +93,7 @@ export default function BackgroundStep({
         items={BACKGROUND_ITEMS}
         selected={backgroundId != null ? String(backgroundId) : null}
         onSelect={(key) => onSelect(Number(key))}
+        onShowDetails={onShowDetails}
       />
       <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundTertiary, marginTop: t.spacing[2] }}>
         Il background determina boost alle caratteristiche, competenze, strumenti e un talento.

@@ -146,3 +146,9 @@ export function getFeatAsiCap(feat: FeatRaw): number {
   const cfg = feat.asi_config as { max_cap?: number } | null | undefined;
   return typeof cfg?.max_cap === 'number' ? cfg.max_cap : 20;
 }
+
+/** Numero di scelte caratteristica concesse dall'ASI di un talento (default 1) */
+export function getFeatAsiCount(feat: FeatRaw | null | undefined): number {
+  const cfg = feat?.asi_config as { choices_count?: number } | null | undefined;
+  return cfg?.choices_count ?? 1;
+}

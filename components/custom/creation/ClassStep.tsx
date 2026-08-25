@@ -2,6 +2,7 @@ import { Pressable, Text, View } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
 import ClassCarousel from '../ClassCarousel';
 import type { ClassCarouselItem } from '../ClassCarousel';
+import type { CardCarouselItem } from '../CardCarousel';
 import { getClassNameItalian } from '../../../lib/rules/classes';
 import { s } from '../../../utils/style-helpers';
 import StepLabel from './StepLabel';
@@ -12,6 +13,8 @@ type Props = {
   items: ClassCarouselItem[];
   selected: ClassName;
   onSelect: (key: ClassName) => void;
+  /** Apre il dettaglio completo della classe (pulsante info sul carousel) */
+  onShowDetails?: (item: CardCarouselItem) => void;
   // Multiclasse
   classList: { className: ClassName; level: number }[];
   activeIndex: number;
@@ -27,6 +30,7 @@ export default function ClassStep({
   items,
   selected,
   onSelect,
+  onShowDetails,
   classList,
   activeIndex,
   onSelectActive,
@@ -40,7 +44,7 @@ export default function ClassStep({
   return (
     <View>
       <StepLabel>CLASSE</StepLabel>
-      <ClassCarousel items={items} selected={selected} onSelect={onSelect} />
+      <ClassCarousel items={items} selected={selected} onSelect={onSelect} onShowDetails={onShowDetails} />
       <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundTertiary, marginTop: t.spacing[2] }}>
         La classe determina dado vita, tiri salvezza, competenze e (se incantatore) la progressione magica.
       </Text>

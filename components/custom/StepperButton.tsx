@@ -14,10 +14,11 @@ export default function StepperButton({ onPress, children }: Props) {
   return (
     <Pressable
       onPress={onPress}
-      hitSlop={8}
+      hitSlop={10}
+      accessibilityRole="button"
       style={({ pressed }) => ({
-        width: 34,
-        height: 34,
+        width: 40,
+        height: 40,
         borderRadius: t.radius.sm,
         backgroundColor: pressed ? t.colors.accent : t.colors.accent + '18',
         ...s.center,

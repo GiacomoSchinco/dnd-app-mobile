@@ -5,7 +5,7 @@ import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { calculateLevelUpPreview, type LevelUpPreview } from '../../lib/rules/character-builder';
 import { getClassNameItalian, getClass } from '../../lib/rules/classes';
-import { getGeneralFeats, isFeatAvailable, getFeatAsiOptions } from '../../lib/rules/feats';
+import { getGeneralFeats, isFeatAvailable, getFeatAsiOptions, getFeatAsiCount } from '../../lib/rules/feats';
 import { getAbilityAbbreviation, getAbilityModifier } from '../../lib/rules/abilities';
 import { rollDie, DICE_COLORS } from '../../utils/dice';
 import { s } from '../../utils/style-helpers';
@@ -98,7 +98,7 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
   // ASI del talento scelto
   const selectedFeat = featId != null ? getGeneralFeats().find((f) => f.id === featId) : undefined;
   const selectedFeatAsiOptions = selectedFeat ? getFeatAsiOptions(selectedFeat) : [];
-  const featAsiCount = ((selectedFeat?.asi_config as { choices_count?: number } | null)?.choices_count) ?? 1;
+  const featAsiCount = getFeatAsiCount(selectedFeat);
   const featAsiComplete = selectedFeatAsiOptions.length <= 1 || featAsiPicks.length >= featAsiCount;
   const toggleFeatAsi = (a: Ability) => {
     setFeatAsiPicks((prev) => {

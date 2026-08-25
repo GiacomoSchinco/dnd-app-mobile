@@ -13,6 +13,8 @@ type Props = {
   subclassId: number | null;
   onSubclassChange: (id: number | null) => void;
   subclasses: SubclassDefinition[];
+  /** Apre il dettaglio completo della sottoclasse (pulsante info sul carousel) */
+  onShowDetails?: (item: CardCarouselItem) => void;
   /** Etichetta della classe attiva (multiclasse) */
   classNameLabel?: string;
   /** Switcher classe attiva (multiclasse) */
@@ -28,6 +30,7 @@ export default function SubclassStep({
   subclassId,
   onSubclassChange,
   subclasses,
+  onShowDetails,
   classNameLabel,
   classList,
   activeIndex,
@@ -57,6 +60,7 @@ export default function SubclassStep({
         items={items}
         selected={subclassId != null ? String(subclassId) : null}
         onSelect={(key) => onSubclassChange(Number(key))}
+        onShowDetails={onShowDetails}
       />
     </View>
   );

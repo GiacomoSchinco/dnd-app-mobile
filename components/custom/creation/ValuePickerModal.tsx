@@ -47,6 +47,9 @@ export default function ValuePickerModal({ ability, options, method, pointsLeft,
               key={o.value}
               disabled={o.disabled}
               onPress={() => onSelect(o.value)}
+              accessibilityRole="button"
+              accessibilityState={{ disabled: o.disabled }}
+              accessibilityLabel={`Assegna ${o.value}`}
               style={{
                 width: 72,
                 paddingVertical: t.spacing[2],

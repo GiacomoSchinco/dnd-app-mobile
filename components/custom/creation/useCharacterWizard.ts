@@ -7,7 +7,7 @@ import { getClassProgression, getFeaturesAtLevel, getAsiLevels } from '../../../
 import { getMulticlassPrerequisiteWarnings } from '../../../lib/rules/multiclass';
 import { hasLineages, getRaceEffects } from '../../../lib/rules/races';
 import { getBackground } from '../../../lib/rules/backgrounds';
-import { getFeat, getGeneralFeats, getEpicBoons, isFeatAvailable, getFeatAsiCap } from '../../../lib/rules/feats';
+import { getFeat, getGeneralFeats, getEpicBoons, isFeatAvailable, getFeatAsiCap, getFeatAsiCount } from '../../../lib/rules/feats';
 import { getToolOptions, applyFeat, type ToolOption } from '../../../lib/rules/apply-feat';
 import { STANDARD_ARRAY, POINT_BUY_COST, POINT_BUY_TOTAL, POINT_BUY_MIN, POINT_BUY_MAX, getPointBuyValues, parseAbilityFromAbbreviation, getAbilityLabel, getAbilityModifier, suggestScoreAssignment } from '../../../lib/rules/abilities';
 import { parseSkillFromItalian, getAllSkills, getSkillNameItalian } from '../../../lib/rules/skills';
@@ -729,6 +729,15 @@ export function useCharacterWizard(): CharacterWizard {
         return (!hasFightingStyle || fightingStyleId != null) && asiOk;
       }
       case 'hp': return hpRoll != null;
+      case 'summary':
+        // Raggiungibile solo a valle di hp: pronta se tutto il resto è valido
+        return (
+          stepValid('hp') &&
+          stepValid('feat') &&
+          finalResult?.success === true &&
+          allClassesValid &&
+          multiclassPrereqMissing.length === 0
+        );
     }
   };
 
@@ -793,6 +802,9 @@ export function useCharacterWizard(): CharacterWizard {
         if (multiclassPrereqMissing.length > 0)
           return `Prerequisiti multiclasse: ${multiclassPrereqMissing.join(', ')}`;
         return null;
+      case 'summary':
+        // Lo step è raggiungibile solo se 'hp' è valido → riusa il motivo di hp
+        return stepInvalidReason('hp');
     }
   };
 
@@ -1037,9 +1049,7 @@ export function useCharacterWizard(): CharacterWizard {
       if (current.includes(ability)) {
         return { ...prev, [featId]: current.filter((a) => a !== ability) };
       }
-      const feat = getFeat(featId);
-      const count =
-        ((feat?.asi_config as { choices_count?: number } | null)?.choices_count) ?? 1;
+      const count = getFeatAsiCount(getFeat(featId));
       if (current.length >= count) return prev;
       return { ...prev, [featId]: [...current, ability] };
     });
@@ -1161,7 +1171,7 @@ export function useCharacterWizard(): CharacterWizard {
     takeMaxHp: () => { if (primaryClassDef) setHpRoll(primaryClassDef.hitDie); },
     conMod, averagePerLevel, primaryHitDie,
     canGoNext: stepValid(step),
-    isLastStep: step === 'hp',
+    isLastStep: step === 'summary',
     canCreate:
       stepValid('hp') &&
       stepValid('feat') &&

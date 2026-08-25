@@ -12,13 +12,15 @@ type Props = {
   items: ClassCarouselItem[];
   selected: ClassName | null;
   onSelect: (key: ClassName) => void;
+  /** Mostra il pulsante info "(i)" e apre il dettaglio completo */
+  onShowDetails?: (item: CardCarouselItem) => void;
 };
 
 /**
  * Carousel orizzontale INFINITO per la scelta della classe.
  * Wrapper sottile su `CardCarousel`: aggiunge la token PNG della classe.
  */
-export default function ClassCarousel({ items, selected, onSelect }: Props) {
+export default function ClassCarousel({ items, selected, onSelect, onShowDetails }: Props) {
   const cardItems: CardCarouselItem[] = items.map((it) => ({
     key: it.key,
     label: it.label,
@@ -31,6 +33,7 @@ export default function ClassCarousel({ items, selected, onSelect }: Props) {
       items={cardItems}
       selected={selected}
       onSelect={(key) => onSelect(key as ClassName)}
+      onShowDetails={onShowDetails}
     />
   );
 }

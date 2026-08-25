@@ -162,12 +162,11 @@ export function getMulticlassClassBadge(
 export function resolveSpellBadgeForSpell(
   activeChar: Character | null,
   spell: Spell | undefined,
+  autoBadges?: Map<string, SpellSourceBadge>,
 ): SpellSourceBadge | null {
   if (!activeChar || !spell) return null;
   const manual = activeChar.spellBadges?.[spell.name];
   if (manual) return { ...manual, source: 'manual' as const };
-  return (
-    getSpellSourceBadges(activeChar).get(spell.name) ??
-    getMulticlassClassBadge(activeChar, spell)
-  );
+  const map = autoBadges ?? getSpellSourceBadges(activeChar);
+  return map.get(spell.name) ?? getMulticlassClassBadge(activeChar, spell);
 }

@@ -25,6 +25,7 @@ import {
   Spell,
   useSpellFilters,
   applySpellFilters,
+  getSpellSourceBadges,
   resolveSpellBadgeForSpell,
 } from '../../components/custom/Spells';
 
@@ -149,6 +150,9 @@ export default function SpellsScreen({ standalone = false }: Props) {
     return Object.values(slots).some((s) => (s?.max ?? 0) > 0);
   }, [activeChar?.spellSlots]);
 
+  // Badge magie: Map precalcolata UNA volta per character, riusata per ogni riga
+  const autoBadges = useMemo(() => getSpellSourceBadges(activeChar), [activeChar]);
+
   // ── Render compendio ──
   const renderSpell = useCallback(({ item }: { item: Spell }) => {
     return (
@@ -157,13 +161,13 @@ export default function SpellsScreen({ standalone = false }: Props) {
         isPrepared={prepared.includes(item.name)}
         isFavorite={favorites.includes(item.name)}
         hasActiveCharacter={hasActiveCharacter}
-        badge={resolveSpellBadgeForSpell(activeChar, item)}
+        badge={resolveSpellBadgeForSpell(activeChar, item, autoBadges)}
         onPress={() => setSelectedSpell(item)}
         onToggleFavorite={() => toggleFavoriteSpell(item.name)}
         onTogglePrepared={() => togglePreparedSpell(item.name)}
       />
     );
-  }, [prepared, favorites, hasActiveCharacter, toggleFavoriteSpell, togglePreparedSpell, activeChar]);
+  }, [prepared, favorites, hasActiveCharacter, toggleFavoriteSpell, togglePreparedSpell, activeChar, autoBadges]);
 
   // ── Render foglio PG ──
   const renderSheetSpell = useCallback(({ item }: { item: Spell }) => (
@@ -173,9 +177,9 @@ export default function SpellsScreen({ standalone = false }: Props) {
       canCast={hasSpellSlots}
       onCast={handleCast}
       onInfo={setSelectedSpell}
-      badge={resolveSpellBadgeForSpell(activeChar, item)}
+      badge={resolveSpellBadgeForSpell(activeChar, item, autoBadges)}
     />
-  ), [t, hasSpellSlots, handleCast, activeChar]);
+  ), [t, hasSpellSlots, handleCast, activeChar, autoBadges]);
 
   // ── Main render ──
   return (

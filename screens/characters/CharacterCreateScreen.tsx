@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/navigation';
 import { useTokens } from '../../components/ui/prism-provider';
+import type { CardCarouselItem } from '../../components/custom/CardCarousel';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import BackButton from '../../components/custom/BackButton';
@@ -20,7 +22,9 @@ import BackgroundStep from '../../components/custom/creation/BackgroundStep';
 import AbilitiesStep from '../../components/custom/creation/AbilitiesStep';
 import FeatStep from '../../components/custom/creation/FeatStep';
 import HpStep from '../../components/custom/creation/HpStep';
+import SummaryStep from '../../components/custom/creation/SummaryStep';
 import ValuePickerModal from '../../components/custom/creation/ValuePickerModal';
+import CardDetailModal from '../../components/custom/creation/CardDetailModal';
 import { useCharacterWizard } from '../../components/custom/creation/useCharacterWizard';
 
 /**
@@ -33,6 +37,8 @@ export default function CharacterCreateScreen() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const w = useCharacterWizard();
+  // P1 — dettaglio completo della card del carousel (pulsante info "(i)")
+  const [detailItem, setDetailItem] = useState<CardCarouselItem | null>(null);
 
   return (
     // Il padding bottom di default (safePadding) riserva spazio per la floating tab
@@ -56,6 +62,7 @@ export default function CharacterCreateScreen() {
               items={w.classes}
               selected={w.selectedClass}
               onSelect={w.setSelectedClass}
+              onShowDetails={setDetailItem}
               classList={w.classList}
               activeIndex={w.activeClassIndex}
               onSelectActive={w.setActiveClassIndex}
@@ -100,6 +107,7 @@ export default function CharacterCreateScreen() {
               firstSubclassLevel={w.subclassLevels[0]}
               subclassId={w.subclassId}
               onSubclassChange={w.setSubclassId}
+              onShowDetails={setDetailItem}
               subclasses={w.subclasses}
               classNameLabel={w.classLabel}
               classList={w.classList}
@@ -114,6 +122,7 @@ export default function CharacterCreateScreen() {
               onRaceChange={w.setRaceId}
               lineageId={w.lineageId}
               onLineageChange={w.setLineageId}
+              onShowDetails={setDetailItem}
               raceSkillOptions={w.raceSkillOptions}
               raceSkills={w.raceSkills}
               raceSkillCount={w.raceSkillCount}
@@ -125,6 +134,7 @@ export default function CharacterCreateScreen() {
             <BackgroundStep
               backgroundId={w.backgroundId}
               onSelect={w.setBackgroundId}
+              onShowDetails={setDetailItem}
               bgToolOptions={w.bgToolOptions}
               bgToolChoices={w.bgToolChoices}
               bgToolCount={w.bgToolCount}
@@ -190,6 +200,26 @@ export default function CharacterCreateScreen() {
             />
           )}
 
+          {w.step === 'summary' && (
+            <SummaryStep
+              name={w.name}
+              classList={w.classList}
+              totalLevel={w.totalLevel}
+              raceId={w.raceId}
+              lineageId={w.lineageId}
+              backgroundId={w.backgroundId}
+              abilityMethod={w.abilityMethod}
+              finalScores={w.finalScores}
+              generalFeatIds={w.generalFeatIds}
+              fightingStyleId={w.fightingStyleId}
+              epicBoonId={w.epicBoonId}
+              hitDie={w.primaryHitDie}
+              conMod={w.conMod}
+              averagePerLevel={w.averagePerLevel}
+              hpRoll={w.hpRoll}
+            />
+          )}
+
           {w.error && (
             <Text style={{ fontSize: t.typography.sm, color: t.colors.danger, marginTop: t.spacing[3] }}>{w.error}</Text>
           )}
@@ -245,6 +275,9 @@ export default function CharacterCreateScreen() {
         onSelect={(value) => { if (w.editingAbility) w.assignToAbility(w.editingAbility, value); }}
         onClose={w.closeAbilityPicker}
       />
+
+      {/* Modale dettaglio completo della card del carousel (P1) */}
+      <CardDetailModal item={detailItem} onClose={() => setDetailItem(null)} />
     </Screen>
   );
 }

@@ -16,6 +16,7 @@ export const STEPS = [
   { key: 'abilities', label: 'Punteggi' },
   { key: 'feat', label: 'Talenti' },
   { key: 'hp', label: 'Punti Ferita' },
+  { key: 'summary', label: 'Riepilogo' },
 ] as const;
 
 export type StepKey = (typeof STEPS)[number]['key'];

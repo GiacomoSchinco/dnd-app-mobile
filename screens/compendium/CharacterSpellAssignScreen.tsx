@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
-import { SpellCard, SpellFilters, SpellDetailModal, Spell, useSpellFilters, applySpellFilters, resolveSpellBadgeForSpell } from '../../components/custom/Spells';
+import { SpellCard, SpellFilters, SpellDetailModal, Spell, useSpellFilters, applySpellFilters, getSpellSourceBadges, resolveSpellBadgeForSpell } from '../../components/custom/Spells';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
 import spellsData from '../../lib/data/spells.json';
@@ -67,6 +67,9 @@ export default function CharacterSpellAssignScreen() {
     [search, levelFilter, classFilter, schoolFilter, showPreparedOnly, showFavoritesOnly, prepared, favorites]
   );
 
+  // Badge magie: Map precalcolata UNA volta per character, riusata per ogni riga
+  const autoBadges = useMemo(() => getSpellSourceBadges(activeChar), [activeChar]);
+
   // renderItem memoizzato per la FlatList (evita ri-render di tutte le righe)
   const renderSpellCard = useCallback(
     ({ item }: { item: Spell }) => (
@@ -75,13 +78,13 @@ export default function CharacterSpellAssignScreen() {
         isPrepared={prepared.includes(item.name)}
         isFavorite={favorites.includes(item.name)}
         hasActiveCharacter
-        badge={resolveSpellBadgeForSpell(activeChar, item)}
+        badge={resolveSpellBadgeForSpell(activeChar, item, autoBadges)}
         onPress={() => setSelectedSpell(item)}
         onToggleFavorite={() => toggleFavoriteSpell(item.name)}
         onTogglePrepared={() => togglePreparedSpell(item.name)}
       />
     ),
-    [prepared, favorites, activeChar, toggleFavoriteSpell, togglePreparedSpell]
+    [prepared, favorites, activeChar, toggleFavoriteSpell, togglePreparedSpell, autoBadges]
   );
 
   if (!activeChar) {
