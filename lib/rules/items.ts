@@ -1,6 +1,7 @@
 import itemsData from '../data/items.json';
 import type {
   Currency,
+  Ability,
   ItemRaw,
   ItemType,
   ItemDefinition,
@@ -100,4 +101,59 @@ export function getArmorProperties(item: ItemDefinition): ArmorProperties | null
     stealth: props.stealth as string | undefined,
     strength: props.strength as number | undefined,
   };
+}
+
+// ── Modificatore di danno delle armi (regole 2024) ─────────────
+
+/** Risultato del calcolo del modificatore di danno di un'arma dal PG */
+export interface WeaponDamageModifier {
+  /** Modificatore di danno (abilità) effettivo (per 'accurata' = il migliore tra FOR e DES) */
+  modifier: number;
+  /** Bonus di attacco (Colpire) = Bonus di Competenza + modificatore abilità */
+  attackBonus: number;
+  /** Sigla dell'abilità scelta (FOR / DES) */
+  abilityLabel: string;
+  /** true se l'arma è "accurata" (finesse): si può scegliere tra FOR e DES */
+  flexible?: boolean;
+  /** Per 'accurata': modificatore FOR (per mostrare entrambe le opzioni) */
+  strengthModifier?: number;
+  /** Per 'accurata': modificatore DES (per mostrare entrambe le opzioni) */
+  dexterityModifier?: number;
+}
+
+/**
+ * Bonus di attacco e danno di un'arma derivati dalle abilità del personaggio.
+ * Regole D&D 2024: "accurata" (finesse) → si usa FOR o DES (qui il migliore);
+ * armi a distanza / con "munizioni" → DES; tutte le altre (mischia / "lancio") → FOR.
+ * `proficiencyBonus` serve per il COLPIRE (attacco): PB + modificatore abilità.
+ */
+export function getWeaponDamageModifier(
+  item: ItemDefinition,
+  getMod: (ability: Ability) => number,
+  proficiencyBonus = 0,
+): WeaponDamageModifier | null {
+  if (item.type !== 'weapon') return null;
+  const props = item.properties as Record<string, unknown>;
+  const properties = (props.properties as string[] | undefined) ?? [];
+  const finesse = properties.includes('accurata');
+  const ranged = props.range != null || properties.includes('munizioni');
+  const strength = getMod('strength');
+  const dexterity = getMod('dexterity');
+
+  if (finesse) {
+    const useStr = strength >= dexterity;
+    const chosen = useStr ? strength : dexterity;
+    return {
+      modifier: chosen,
+      attackBonus: proficiencyBonus + chosen,
+      abilityLabel: useStr ? 'FOR' : 'DES',
+      flexible: true,
+      strengthModifier: strength,
+      dexterityModifier: dexterity,
+    };
+  }
+
+  return ranged
+    ? { modifier: dexterity, attackBonus: proficiencyBonus + dexterity, abilityLabel: 'DES' }
+    : { modifier: strength, attackBonus: proficiencyBonus + strength, abilityLabel: 'FOR' };
 }

@@ -2,10 +2,13 @@ import { View, Text, ScrollView } from 'react-native';
 import type { ReactNode } from 'react';
 import { useTokens } from '../../ui/prism-provider';
 import { Badge } from '../../ui/badge';
+import { Button } from '../../ui/button';
 import { s } from '../../../utils/style-helpers';
 import { Ionicons } from '@expo/vector-icons';
 import DndIcon from '../DndIcon';
-import type { ItemDefinition } from '../../../types';
+import { getWeaponDamageModifier } from '../../../lib/rules/items';
+import { formatModifier } from '../../../lib/rules/abilities';
+import type { Ability, ItemDefinition } from '../../../types';
 import { TYPE_LABELS, RARITY_LABELS, TYPE_COLORS, getTypeColor, getCategoryLabel, getTypeLabel, getItemIconName } from './types';
 import BottomModal from '../BottomModal';
 import DetailChip from '../DetailChip';
@@ -14,6 +17,13 @@ import DetailModalHeader from '../DetailModalHeader';
 type Props = {
   item: ItemDefinition | null;
   onClose: () => void;
+  /** Se presente, mostra il pulsante di assegnazione/rimozione dall'equipaggiamento */
+  isOwned?: boolean;
+  onToggleOwned?: () => void;
+  /** Calcola il modificatore di un'abilità del PG (per i bonus armi Colpire/Danno) */
+  abilityModifier?: (ability: Ability) => number;
+  /** Bonus di competenza del PG (per il bonus di attacco "Colpire") */
+  proficiencyBonus?: number;
 };
 
 /** Formatta la CA delle armature ({ base, type } o numero) */
@@ -36,11 +46,13 @@ function formatRange(r: unknown): string {
   return String(r ?? '—');
 }
 
-export default function ItemDetailModal({ item, onClose }: Props) {
+export default function ItemDetailModal({ item, onClose, isOwned = false, onToggleOwned, abilityModifier, proficiencyBonus = 0 }: Props) {
   const t = useTokens();
   // Le proprietà variano per tipo di oggetto: bag di valori "renderable"
   // (ReactNode) così i guard `&&` in JSX restano tipizzati senza `any`.
   const itemProps = (item?.properties ?? {}) as Record<string, ReactNode>;
+  // Bonus di attacco/danno derivati dalle abilità del PG (solo se fornite)
+  const weaponMod = item && abilityModifier ? getWeaponDamageModifier(item, abilityModifier, proficiencyBonus) : null;
 
   return (
     <BottomModal visible={!!item} onClose={onClose}>
@@ -89,6 +101,21 @@ export default function ItemDetailModal({ item, onClose }: Props) {
             </View>
           )}
 
+          {/* Bonus di attacco/danno derivati dal personaggio (armi) */}
+          {weaponMod && (
+            <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>
+              <DetailChip label="Colpire" value={formatModifier(weaponMod.attackBonus)} t={t} color="#4A90D9" />
+              <DetailChip
+                label="Mod. danno"
+                value={weaponMod.flexible
+                  ? `FOR ${formatModifier(weaponMod.strengthModifier ?? 0)} · DES ${formatModifier(weaponMod.dexterityModifier ?? 0)} (accurata)`
+                  : `${formatModifier(weaponMod.modifier)} (${weaponMod.abilityLabel})`}
+                t={t}
+                color="#D94A4A"
+              />
+            </View>
+          )}
+
           {/* Armor properties */}
           {item.type === 'armor' && (itemProps.ac || itemProps.armorType) && (
             <View style={[s.rowWrap, s.gap(t.spacing[2]), s.mb(t.spacing[3])]}>
@@ -130,6 +157,19 @@ export default function ItemDetailModal({ item, onClose }: Props) {
           }}>
             {item.description}
           </Text>
+
+          {/* Assegnazione / rimozione dall'equipaggiamento */}
+          {onToggleOwned && (
+            <Button
+              variant={isOwned ? 'subtle' : 'solid'}
+              size="md"
+              fullWidth
+              onPress={onToggleOwned}
+              style={s.mt(t.spacing[4])}
+            >
+              {isOwned ? '✓ Rimuovi dall\'equipaggiamento' : '+ Aggiungi all\'equipaggiamento'}
+            </Button>
+          )}
         </>
       )}
     </BottomModal>

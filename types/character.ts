@@ -429,6 +429,15 @@ export interface CharacterState {
   useSpellSlot: (level: number) => void;
   recoverSpellSlot: (level: number) => void;
   restoreSpellSlots: (level?: number) => void;
+
+  /** Aggiunge un oggetto all'equipaggiamento del PG attivo (o ne aumenta la quantità) */
+  addEquipmentItem: (itemId: number, quantity?: number) => void;
+  /** Rimuove completamente un oggetto dall'equipaggiamento del PG attivo */
+  removeEquipmentItem: (itemId: number) => void;
+  /** Imposta la quantità di un oggetto (min 1; 0 → rimozione) */
+  setEquipmentQuantity: (itemId: number, quantity: number) => void;
+  /** Equipaggia / smette un oggetto del PG attivo */
+  toggleEquippedItem: (itemId: number) => void;
 }
 
 /** Azioni esposte per il personaggio attivo */
@@ -443,6 +452,10 @@ export interface ActiveCharacterActions {
   useSpellSlot: (level: number) => void;
   recoverSpellSlot: (level: number) => void;
   restoreSpellSlots: (level?: number) => void;
+  addEquipmentItem: (itemId: number, quantity?: number) => void;
+  removeEquipmentItem: (itemId: number) => void;
+  setEquipmentQuantity: (itemId: number, quantity: number) => void;
+  toggleEquippedItem: (itemId: number) => void;
   createCharacter: (name: string, className: ClassName, level?: number) => void;
   /** Crea un personaggio COMPLETO dal wizard (buildCharacter + buildCharacterSheet) */
   createCharacterFull: (draft: CharacterDraft) => Character | null;

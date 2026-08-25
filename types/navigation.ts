@@ -12,6 +12,8 @@ export type RootStackParamList = {
   CharacterCreate: undefined;
   /** Gestione magie assegnate al PG — raggiungibile dalla tab Spells */
   SpellAssign: undefined;
+  /** Gestione oggetti assegnati al PG — raggiungibile dalla tab Equip */
+  ItemAssign: undefined;
   /** Appunti / todo-list del PG attivo — raggiungibile dalla Scheda */
   Notes: undefined;
   /** Sezioni consultive — raggiungibili SOLO dalla Home, senza storico nel menu More */

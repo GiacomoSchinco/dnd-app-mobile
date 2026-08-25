@@ -13,6 +13,7 @@ export const ROUTES = {
   CHARACTER_DETAIL: 'CharacterDetail',
   CHARACTER_CREATE: 'CharacterCreate',
   SPELL_ASSIGN: 'SpellAssign',
+  ITEM_ASSIGN: 'ItemAssign',
   NOTES: 'Notes',
 } as const;
 

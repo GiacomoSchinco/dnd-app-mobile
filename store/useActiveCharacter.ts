@@ -11,6 +11,10 @@ export function useActiveCharacter(): ActiveCharacterActions {
   const useSpellSlot = useCharacterStore((s) => s.useSpellSlot);
   const recoverSpellSlot = useCharacterStore((s) => s.recoverSpellSlot);
   const restoreSpellSlots = useCharacterStore((s) => s.restoreSpellSlots);
+  const addEquipmentItem = useCharacterStore((s) => s.addEquipmentItem);
+  const removeEquipmentItem = useCharacterStore((s) => s.removeEquipmentItem);
+  const setEquipmentQuantity = useCharacterStore((s) => s.setEquipmentQuantity);
+  const toggleEquippedItem = useCharacterStore((s) => s.toggleEquippedItem);
   const createCharacter = useCharacterStore((s) => s.createCharacter);
   const createCharacterFull = useCharacterStore((s) => s.createCharacterFull);
   const applyLevelUp = useCharacterStore((s) => s.applyLevelUp);
@@ -30,6 +34,10 @@ export function useActiveCharacter(): ActiveCharacterActions {
     useSpellSlot,
     recoverSpellSlot,
     restoreSpellSlots,
+    addEquipmentItem,
+    removeEquipmentItem,
+    setEquipmentQuantity,
+    toggleEquippedItem,
     createCharacter,
     createCharacterFull,
     applyLevelUp,

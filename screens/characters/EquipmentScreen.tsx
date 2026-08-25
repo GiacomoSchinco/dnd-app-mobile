@@ -1,31 +1,58 @@
-import { useState } from 'react';
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { View, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { TabToRootNav } from '../../types/navigation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
+import { Button } from '../../components/ui/button';
 import TabHeader from '../../components/custom/TabHeader';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
+import EmptyState from '../../components/custom/EmptyState';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import ListItem from '../../components/custom/ListItem';
 import SectionTitle from '../../components/custom/SectionTitle';
 import CardBox from '../../components/custom/CardBox';
-import CircleCheck from '../../components/custom/CircleCheck';
 import StepperRow from '../../components/custom/StepperRow';
 import ListCard from '../../components/custom/ListCard';
-import { ItemDetailModal } from '../../components/custom/Items';
+import { ItemDetailModal, EquipmentRow } from '../../components/custom/Items';
 import { getItem } from '../../lib/rules/items';
-import type { ItemDefinition } from '../../types';
+import { getEffectiveAbilityScores, getAbilityModifier } from '../../lib/rules/abilities';
+import type { Ability, AbilityScores, ItemDefinition, EquipmentItem } from '../../types';
 import { ALTRO_ROUTES } from '../more/altro-routes';
+import { ROUTES } from '../../lib/routes';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
+
+/** Gruppi di equipaggiamento mostrati come sezioni (per tipo di oggetto) */
+const EQUIPMENT_GROUPS: { key: string; label: string; emoji: string; matches: (type: string) => boolean }[] = [
+  { key: 'weapon', label: 'Armi', emoji: '⚔️', matches: (t) => t === 'weapon' },
+  { key: 'armor', label: 'Armature', emoji: '🛡️', matches: (t) => t === 'armor' },
+  { key: 'ammunition', label: 'Munizioni', emoji: '🎯', matches: (t) => t === 'ammunition' },
+  { key: 'consumable', label: 'Consumabili', emoji: '🧪', matches: (t) => t === 'consumable' },
+  { key: 'other', label: 'Equipaggiamento', emoji: '🎒', matches: (t) => t !== 'weapon' && t !== 'armor' && t !== 'ammunition' && t !== 'consumable' },
+];
+
+/** Punteggi neutri (10) usati quando non c'è un PG attivo */
+const DEFAULT_ABILITIES: AbilityScores = {
+  strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10,
+};
 
 export default function EquipmentScreen() {
   const t = useTokens();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<TabToRootNav>();
-  const { activeChar, updateCharacter } = useActiveCharacter();
+  const { activeChar, updateCharacter, addEquipmentItem, removeEquipmentItem, setEquipmentQuantity, toggleEquippedItem } = useActiveCharacter();
   const [selectedItem, setSelectedItem] = useState<ItemDefinition | null>(null);
+
+  // Punteggi effettivi del PG (base + correzioni manuali) per il modificatore di danno delle armi
+  const effectiveScores = useMemo(
+    () => getEffectiveAbilityScores(activeChar?.abilities ?? DEFAULT_ABILITIES, activeChar?.abilityModifiers ?? []),
+    [activeChar?.abilities, activeChar?.abilityModifiers]
+  );
+  const getWeaponModifier = useCallback(
+    (ability: Ability) => getAbilityModifier(effectiveScores[ability] ?? 10),
+    [effectiveScores]
+  );
 
   if (!activeChar) {
     return <MissingActiveCharacter emoji="🎒" message="Apri un personaggio dalla Home per vedere il suo equipaggiamento." />;
@@ -43,18 +70,30 @@ export default function EquipmentScreen() {
     });
   };
 
-  const toggleEquipped = (itemId: number) => {
-    updateCharacter(activeChar.id, {
-      equipment: equipment.map((it) => (it.itemId === itemId ? { ...it, equipped: !it.equipped } : it)),
-    });
-  };
+  // ── Oggetti raggruppati per tipo (Armi, Armature, …) ──
+  const grouped = useMemo(() => {
+    const groups = EQUIPMENT_GROUPS.map((g) => ({ ...g, items: [] as EquipmentItem[] }));
+    for (const it of equipment) {
+      const type = getItem(it.itemId)?.type ?? 'gear';
+      const group = groups.find((g) => g.matches(type)) ?? groups[groups.length - 1];
+      group.items.push(it);
+    }
+    return groups.filter((g) => g.items.length > 0);
+  }, [equipment]);
+
+  const equippedCount = equipment.filter((it) => it.equipped).length;
 
   return (
     <View style={[s.flex, { backgroundColor: t.colors.background }]}>
       <TabHeader title="Equipaggiamento" icon="bag-handle-outline">
         <CharacterBar activeChar={activeChar} spellInformation={false} />
+        <View style={[s.row, s.gap(t.spacing[2]), s.mt(t.spacing[1])]}>
+          <Button variant="outline" size="md" style={s.flex} onPress={() => navigation.navigate(ROUTES.ITEM_ASSIGN)}>
+            + Aggiungi oggetti
+          </Button>
+        </View>
         <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[1] }}>
-          👆 Tocca un oggetto per il dettaglio · ✓ per equipaggiarlo
+          👆 Tocca un oggetto per il dettaglio · ✓ per equipaggiarlo · − / + per la quantità
         </Text>
       </TabHeader>
 
@@ -92,64 +131,51 @@ export default function EquipmentScreen() {
         </CardBox>
 
         {/* ── Oggetti ── */}
-        <SectionTitle text={`Oggetti (${equipment.length})`} />
-
-        {equipment.length === 0 ? (
-          <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, marginBottom: t.spacing[5] }}>
-            Nessun oggetto — l'equipaggiamento iniziale viene assegnato in creazione.
-          </Text>
-        ) : (
-          <ListCard marginBottom={t.spacing[5]}>
-            {equipment.map((it, idx) => (
-              <View
-                key={it.itemId}
-                style={[
-                  s.row,
-                  { justifyContent: 'space-between', paddingHorizontal: t.spacing[3], paddingVertical: t.spacing[2.5] },
-                  idx > 0 && { borderTopWidth: 1, borderTopColor: t.colors.border },
-                ]}
-              >
-                {/* Tap → dettaglio oggetto (descrizione, danno, ecc.) */}
-                <Pressable
-                  onPress={() => setSelectedItem(getItem(it.itemId) ?? null)}
-                  style={({ pressed }) => [
-                    s.flex,
-                    s.row,
-                    { alignItems: 'center' },
-                    pressed && { opacity: 0.7 },
-                  ]}
-                >
-                  <Text style={{ fontSize: t.typography.md, marginRight: t.spacing[2] }}>{it.equipped ? '⚔️' : '🎒'}</Text>
-                  <View style={s.flex}>
-                    <Text style={{ fontSize: t.typography.base, fontWeight: '600', color: t.colors.foreground }}>
-                      {it.name}
-                    </Text>
-                    <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: 2 }}>
-                      {it.quantity > 1 ? `${it.quantity}× ` : ''}
-                      {it.equipped ? 'Equipaggiato' : 'Non equipaggiato'}
-                    </Text>
-                  </View>
-                </Pressable>
-
-                {/* Equipaggia / smetto */}
-                <CircleCheck checked={it.equipped} onPress={() => toggleEquipped(it.itemId)} size={30} />
-              </View>
-            ))}
-          </ListCard>
-        )}
-
-        {/* ── Link al Compendio (equipaggiamento iniziale) ── */}
-        <ListItem
-          variant="menu"
-          icon={<Text style={{ fontSize: 22 }}>📖</Text>}
-          title="Equipaggiamento iniziale"
-          description="Consulta i preset di classe e background (Compendio)"
-          onPress={() => navigation.navigate(ALTRO_ROUTES.EQUIPAGGIAMENTO)}
+        <SectionTitle
+          text={`Oggetti (${equipment.length})`}
+          note={equippedCount > 0 ? `${equippedCount} equipaggiati` : undefined}
         />
+
+        {grouped.length === 0 ? (
+          <View style={s.mb(t.spacing[5])}>
+            <EmptyState
+              emoji="🎒"
+              title="Nessun oggetto"
+              message="Tocca '+ Aggiungi oggetti' per assegnare l'equipaggiamento del personaggio dal catalogo."
+            />
+          </View>
+        ) : (
+          grouped.map((group) => (
+            <View key={group.key}>
+              <SectionTitle text={`${group.emoji} ${group.label} (${group.items.length})`} />
+              <ListCard marginBottom={t.spacing[4]}>
+                {group.items.map((it, idx) => (
+                  <EquipmentRow
+                    key={it.itemId}
+                    equipment={it}
+                    index={idx}
+                    abilityModifier={getWeaponModifier}
+                    proficiencyBonus={activeChar.proficiencyBonus ?? 0}
+                    onPress={() => setSelectedItem(getItem(it.itemId) ?? null)}
+                    onToggleEquipped={() => toggleEquippedItem(it.itemId)}
+                    onIncrementQuantity={() => setEquipmentQuantity(it.itemId, it.quantity + 1)}
+                    onDecrementQuantity={() => setEquipmentQuantity(it.itemId, it.quantity - 1)}
+                    onRemove={() => removeEquipmentItem(it.itemId)}
+                  />
+                ))}
+              </ListCard>
+            </View>
+          ))
+        )}
       </ScrollView>
 
       {/* Dettaglio oggetto (come per le magie) */}
-      <ItemDetailModal item={selectedItem} onClose={() => setSelectedItem(null)} />
+      <ItemDetailModal
+        item={selectedItem}
+        onClose={() => setSelectedItem(null)}
+        abilityModifier={getWeaponModifier}
+        proficiencyBonus={activeChar.proficiencyBonus ?? 0}
+      />
     </View>
   );
 }

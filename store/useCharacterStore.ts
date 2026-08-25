@@ -24,6 +24,7 @@ import { getProficiencyBonus, getAllFeaturesUpToLevel } from '../lib/rules/progr
 import { getSubclassFeaturesUpToLevel } from '../lib/rules/subclasses';
 import { getRaceEffects } from '../lib/rules/races';
 import { getClassPreset, getBackgroundPreset } from '../lib/rules/equipment-preset';
+import { getItem } from '../lib/rules/items';
 import { getSpellSlots } from '../lib/rules/spellcasting';
 import { fileSystemStorage } from './file-system-storage';
 
@@ -488,6 +489,85 @@ export const useCharacterStore = create<CharacterState>()(
                 if (slot) slots[lvl] = { ...slot, current: slot.max };
               });
               return { ...c, spellSlots: slots };
+            }),
+          };
+        }),
+
+      // ── Equipaggiamento ──────────────────────────────────────────
+
+      addEquipmentItem: (itemId, quantity = 1) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id || quantity <= 0) return {};
+          return {
+            characters: s.characters.map((c) => {
+              if (c.id !== id) return c;
+              const existing = (c.equipment ?? []).find((it) => it.itemId === itemId);
+              if (existing) {
+                return {
+                  ...c,
+                  equipment: (c.equipment ?? []).map((it) =>
+                    it.itemId === itemId ? { ...it, quantity: it.quantity + quantity } : it,
+                  ),
+                };
+              }
+              return {
+                ...c,
+                equipment: [
+                  ...(c.equipment ?? []),
+                  {
+                    itemId,
+                    name: getItem(itemId)?.name ?? 'Oggetto',
+                    quantity,
+                    equipped: false,
+                  },
+                ],
+              };
+            }),
+          };
+        }),
+
+      removeEquipmentItem: (itemId) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) =>
+              c.id === id
+                ? { ...c, equipment: (c.equipment ?? []).filter((it) => it.itemId !== itemId) }
+                : c,
+            ),
+          };
+        }),
+
+      setEquipmentQuantity: (itemId, quantity) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) => {
+              if (c.id !== id) return c;
+              const equipment = (c.equipment ?? [])
+                .map((it) => (it.itemId === itemId ? { ...it, quantity: Math.max(0, quantity) } : it))
+                .filter((it) => it.quantity > 0);
+              return { ...c, equipment };
+            }),
+          };
+        }),
+
+      toggleEquippedItem: (itemId) =>
+        set((s) => {
+          const id = s.activeCharacterId;
+          if (!id) return {};
+          return {
+            characters: s.characters.map((c) => {
+              if (c.id !== id) return c;
+              return {
+                ...c,
+                equipment: (c.equipment ?? []).map((it) =>
+                  it.itemId === itemId ? { ...it, equipped: !it.equipped } : it,
+                ),
+              };
             }),
           };
         }),
