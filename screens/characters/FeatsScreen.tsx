@@ -3,7 +3,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import TabHeader from '../../components/custom/TabHeader';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
-import SectionBlock from '../../components/custom/SectionBlock';
 import CardBox from '../../components/custom/CardBox';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import { getFeatByName } from '../../lib/rules/feats';
@@ -22,52 +21,144 @@ function groupClassFeaturesByLevel(features: { level: number; name: string }[]) 
   return groups;
 }
 
-/** Card con il testo (regole sempre leggibili) */
-function InfoCard({ icon, title, subtitle, children }: { icon?: string; title: string; subtitle?: string; children?: React.ReactNode }) {
+/** Intestazione di sezione ordinata: titolo uppercase + contatore in badge + nota */
+function SectionHeader({ title, count, note }: { title: string; count: number; note?: string }) {
   const t = useTokens();
   return (
-    <CardBox padding={t.spacing[3]} gap={t.spacing[1.5]}>
-      <View style={[s.row, s.gap(t.spacing[2]), { alignItems: 'flex-start' }]}>
-        {icon ? <Text style={{ fontSize: t.typography.md }}>{icon}</Text> : null}
-        <View style={s.flex}>
-          <Text style={{ fontSize: t.typography.md, fontWeight: '600', color: t.colors.foreground, lineHeight: 21 }}>
-            {title}
-          </Text>
-          {subtitle ? (
-            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[0.5] }}>
-              {subtitle}
-            </Text>
-          ) : null}
+    <View style={{ marginBottom: t.spacing[2] }}>
+      <View style={[s.row, { justifyContent: 'space-between', alignItems: 'center' }]}>
+        <Text
+          style={{
+            fontSize: t.typography.sm,
+            fontWeight: '700',
+            color: t.colors.foreground,
+            textTransform: 'uppercase',
+            letterSpacing: 0.5,
+            flex: 1,
+          }}
+        >
+          {title}
+        </Text>
+        <View
+          style={{
+            backgroundColor: t.colors.accentSubtle,
+            borderRadius: t.radius.full,
+            paddingHorizontal: t.spacing[2],
+            paddingVertical: t.spacing[0.5],
+          }}
+        >
+          <Text style={{ fontSize: t.typography.xs, fontWeight: '700', color: t.colors.accent }}>{count}</Text>
         </View>
       </View>
-      {children}
+      {note ? (
+        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[0.5] }}>
+          {note}
+        </Text>
+      ) : null}
+    </View>
+  );
+}
+
+/**
+ * Card unificata per talenti/doni/feature di classe/sottoclasse.
+ * Gerarchia leggibile: header (icona in box + nome + categoria) → descrizione →
+ * blocchi distinti "Effetti" e tabella. Tutto con i token del tema.
+ */
+function FeatureCard({
+  title,
+  icon,
+  category,
+  description,
+  effects,
+  table,
+}: {
+  title: string;
+  icon: string;
+  category: string;
+  description?: string;
+  effects?: string[];
+  table?: string;
+}) {
+  const t = useTokens();
+  return (
+    <CardBox padding={t.spacing[3]} gap={t.spacing[2]}>
+      {/* Header: icona in box + nome + categoria */}
+      <View style={[s.row, { alignItems: 'center', gap: t.spacing[2] }]}>
+        <View style={[s.box(40, t.radius.sm), { backgroundColor: t.colors.accentSubtle, ...s.center }]}>
+          <Text style={{ fontSize: t.typography.base }}>{icon}</Text>
+        </View>
+        <View style={s.flex}>
+          <Text style={{ fontSize: t.typography.md, fontWeight: '700', color: t.colors.foreground, lineHeight: 20 }}>
+            {title}
+          </Text>
+          <Text
+            style={{
+              fontSize: t.typography.xs,
+              color: t.colors.foregroundTertiary,
+              textTransform: 'uppercase',
+              letterSpacing: 0.5,
+              marginTop: t.spacing[0.25],
+            }}
+          >
+            {category}
+          </Text>
+        </View>
+      </View>
+
+      {description ? (
+        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
+          {description}
+        </Text>
+      ) : null}
+
+      {effects && effects.length > 0 ? (
+        <View
+          style={{
+            backgroundColor: t.colors.backgroundTertiary,
+            borderRadius: t.radius.sm,
+            padding: t.spacing[2],
+            gap: t.spacing[1],
+          }}
+        >
+          <Text
+            style={{
+              fontSize: t.typography.xs,
+              fontWeight: '700',
+              color: t.colors.foregroundTertiary,
+              textTransform: 'uppercase',
+              letterSpacing: 0.5,
+            }}
+          >
+            Effetti
+          </Text>
+          {effects.map((e, i) => (
+            <Text key={i} style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 19 }}>
+              • {e}
+            </Text>
+          ))}
+        </View>
+      ) : null}
+
+      {table ? (
+        <View style={{ backgroundColor: t.colors.backgroundTertiary, borderRadius: t.radius.sm, padding: t.spacing[2] }}>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 18 }}>{table}</Text>
+        </View>
+      ) : null}
     </CardBox>
   );
 }
 
-/** Dettaglio di un singolo talento/dono: descrizione + effetti */
-function FeatCard({ name, icon }: { name: string; icon: string }) {
-  const t = useTokens();
+/** Card di un talento/dono epico: descrizione + effetti risolti da feats.json */
+function FeatCard({ name, icon, category }: { name: string; icon: string; category: string }) {
   const feat = getFeatByName(name);
   return (
-    <InfoCard icon={icon} title={name}>
-      {feat ? (
-        <>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
-            {feat.description}
-          </Text>
-          {feat.granted_modifiers.filter((m) => m.description).map((m, i) => (
-            <Text key={i} style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 19, marginLeft: t.spacing[2] }}>
-              • {m.description}
-            </Text>
-          ))}
-        </>
-      ) : (
-        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundTertiary }}>
-          Descrizione non disponibile.
-        </Text>
-      )}
-    </InfoCard>
+    <FeatureCard
+      title={name}
+      icon={icon}
+      category={category}
+      description={feat?.description}
+      effects={(feat?.granted_modifiers ?? []).map((m) => m.description).filter((d) => d.length > 0)}
+    />
   );
 }
 
@@ -95,10 +186,11 @@ export default function FeatsScreen() {
     }
   }
 
-  const hasFeats = (activeChar.feats ?? []).length > 0;
-  const hasEpicBoons = (activeChar.epicBoons ?? []).length > 0;
-  const hasClassFeatures = (activeChar.classFeatures ?? []).length > 0;
-  const hasSubclassFeatures = (activeChar.subclassFeatures ?? []).length > 0;
+  const feats = activeChar.feats ?? [];
+  const epicBoons = activeChar.epicBoons ?? [];
+  const classFeatures = activeChar.classFeatures ?? [];
+  const subclassFeatures = activeChar.subclassFeatures ?? [];
+  const featCount = feats.length + (featChoice ? 1 : 0);
 
   return (
     <View style={[s.flex, { backgroundColor: t.colors.background }]}>
@@ -115,105 +207,112 @@ export default function FeatsScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* ── Talenti ── */}
-        <SectionBlock title={`Talenti · ${classLabel}`} marginBottom={t.spacing[5]}>
-          {!hasFeats && !featChoice ? (
+        <View style={{ marginBottom: t.spacing[5] }}>
+          <SectionHeader
+            title={`Talenti · ${classLabel}`}
+            count={featCount}
+            note={featCount === 0 ? undefined : 'Talenti generali e di origine'}
+          />
+          {featCount === 0 ? (
             <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
               Nessun talento acquisito.
             </Text>
           ) : (
             <View style={{ gap: t.spacing[2.5] }}>
-              {(activeChar.feats ?? []).map((f) => (
-                <FeatCard key={f} name={f} icon="🎖️" />
+              {feats.map((f) => (
+                <FeatCard key={f} name={f} icon="🎖️" category="Talento" />
               ))}
               {featChoice && (
-                <InfoCard icon="🔮" title="Iniziato alla Magia" subtitle={`Caratteristica da incantatore: ${featChoice.ability}`}>
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 19 }}>
-                    Trucchetti: {featChoice.cantrips.join(', ')}
-                  </Text>
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 19 }}>
-                    Incantesimo: {featChoice.spells.join(', ')}
-                  </Text>
-                </InfoCard>
+                <FeatureCard
+                  title="Iniziato alla Magia"
+                  icon="🔮"
+                  category="Talento di origine"
+                  description={`Caratteristica da incantatore: ${featChoice.ability}`}
+                  effects={[
+                    `Trucchetti: ${featChoice.cantrips.join(', ')}`,
+                    `Incantesimo: ${featChoice.spells.join(', ')}`,
+                  ]}
+                />
               )}
             </View>
           )}
-        </SectionBlock>
+        </View>
 
         {/* ── Doni epici ── */}
-        {hasEpicBoons && (
-          <SectionBlock title="Doni epici" marginBottom={t.spacing[5]}>
+        {epicBoons.length > 0 && (
+          <View style={{ marginBottom: t.spacing[5] }}>
+            <SectionHeader title="Doni epici" count={epicBoons.length} />
             <View style={{ gap: t.spacing[2.5] }}>
-              {(activeChar.epicBoons ?? []).map((b) => (
-                <FeatCard key={b} name={b} icon="🏆" />
+              {epicBoons.map((b) => (
+                <FeatCard key={b} name={b} icon="🏆" category="Dono epico" />
               ))}
             </View>
-          </SectionBlock>
+          </View>
         )}
 
         {/* ── Caratteristiche di classe ── */}
-        {hasClassFeatures && (
-          <SectionBlock title="Caratteristiche di classe" marginBottom={t.spacing[5]}>
+        {classFeatures.length > 0 && (
+          <View style={{ marginBottom: t.spacing[5] }}>
+            <SectionHeader
+              title={`Caratteristiche di classe · ${classLabel}`}
+              count={classFeatures.length}
+            />
             <View style={{ gap: t.spacing[3] }}>
-              {groupClassFeaturesByLevel(activeChar.classFeatures ?? []).map(({ level, names }) => (
-                <View key={level}>
-                  <Text
-                    style={{
-                      fontSize: t.typography.xs,
-                      fontWeight: '700',
-                      color: t.colors.foregroundTertiary,
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                      marginBottom: t.spacing[1.5],
-                    }}
-                  >
-                    Livello {level}
-                  </Text>
+              {groupClassFeaturesByLevel(classFeatures).map(({ level, names }) => (
+                <View key={level} style={{ gap: t.spacing[2] }}>
+                  {/* Etichetta livello + linea divisoria per separare i gruppi */}
+                  <View style={[s.row, { alignItems: 'center', gap: t.spacing[2] }]}>
+                    <View
+                      style={{
+                        backgroundColor: t.colors.backgroundTertiary,
+                        borderRadius: t.radius.sm,
+                        paddingHorizontal: t.spacing[2],
+                        paddingVertical: t.spacing[0.5],
+                      }}
+                    >
+                      <Text style={{ fontSize: t.typography.xs, fontWeight: '700', color: t.colors.foreground }}>
+                        Liv. {level}
+                      </Text>
+                    </View>
+                    <View style={{ flex: 1, height: 1, backgroundColor: t.colors.border }} />
+                  </View>
                   <View style={{ gap: t.spacing[2.5] }}>
                     {names.map((name) => {
                       const info = classFeatureInfo.get(name);
                       return (
-                        <InfoCard key={name} title={name} icon="⚔️">
-                          {info?.description ? (
-                            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
-                              {info.description}
-                            </Text>
-                          ) : null}
-                          {info?.table ? (
-                            <View
-                              style={{
-                                padding: t.spacing[2],
-                                borderRadius: t.radius.sm,
-                                backgroundColor: t.colors.backgroundTertiary,
-                              }}
-                            >
-                              <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 18 }}>
-                                {info.table}
-                              </Text>
-                            </View>
-                          ) : null}
-                        </InfoCard>
+                        <FeatureCard
+                          key={name}
+                          title={name}
+                          icon="⚔️"
+                          category="Classe"
+                          description={info?.description}
+                          table={info?.table}
+                        />
                       );
                     })}
                   </View>
                 </View>
               ))}
             </View>
-          </SectionBlock>
+          </View>
         )}
 
         {/* ── Sottoclasse ── */}
-        {hasSubclassFeatures && (
-          <SectionBlock title={`Sottoclasse · ${mainClass?.subclass ?? ''}`} marginBottom={t.spacing[4]}>
+        {subclassFeatures.length > 0 && (
+          <View style={{ marginBottom: t.spacing[4] }}>
+            <SectionHeader title={`Sottoclasse · ${mainClass?.subclass ?? ''}`} count={subclassFeatures.length} />
             <View style={{ gap: t.spacing[2.5] }}>
-              {(activeChar.subclassFeatures ?? []).map((f) => (
-                <InfoCard key={f.name} title={f.name} icon="🛡️">
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
-                    {f.description}
-                  </Text>
-                </InfoCard>
+              {subclassFeatures.map((f) => (
+                <FeatureCard
+                  key={f.name}
+                  title={f.name}
+                  icon="🛡️"
+                  category="Sottoclasse"
+                  description={f.description}
+                />
               ))}
             </View>
-          </SectionBlock>
+          </View>
         )}
       </ScrollView>
     </View>

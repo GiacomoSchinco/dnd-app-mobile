@@ -232,7 +232,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
           sections={sheetSections.map((sec) => ({ level: sec.level, data: sec.spells }))}
           renderItem={renderSheetSpell}
           renderSectionHeader={({ section }) => (
-            <View style={{ marginTop: t.spacing[2], marginBottom: t.spacing[1] }}>
+            <View style={[s.row, { alignItems: 'center', gap: t.spacing[2], marginTop: t.spacing[2], marginBottom: t.spacing[1] }]}>
               <Text
                 style={{
                   fontSize: t.typography.xs,
@@ -244,6 +244,18 @@ export default function SpellsScreen({ standalone = false }: Props) {
               >
                 {section.level === 0 ? 'Trucchetti' : `Livello ${section.level}`}
               </Text>
+              <View
+                style={{
+                  backgroundColor: t.colors.accentSubtle,
+                  borderRadius: t.radius.full,
+                  paddingHorizontal: t.spacing[1.5],
+                  paddingVertical: t.spacing[0.25],
+                }}
+              >
+                <Text style={{ fontSize: t.typography.xs, fontWeight: '700', color: t.colors.accent }}>
+                  {section.data.length}
+                </Text>
+              </View>
             </View>
           )}
           keyExtractor={(item) => item.name}

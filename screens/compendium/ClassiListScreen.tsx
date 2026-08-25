@@ -7,6 +7,7 @@ import { Badge } from '../../components/ui/badge';
 import CompendiumList, {
   CompendiumSectionTitle,
   CompendiumRow,
+  CompendiumDetailHeader,
 } from '../../components/custom/Compendium/CompendiumList';
 import DetailBlock from '../../components/custom/Compendium/DetailBlock';
 import ListItem from '../../components/custom/ListItem';
@@ -54,18 +55,18 @@ export default function ClassiListScreen() {
         const subclasses = getSubclassesByClassId(c.id);
         return (
           <View>
-            <View style={[s.row, s.gap(t.spacing[3])]}>
-              <ClassAvatar className={c.name} size={64} />
-              <View style={s.flex}>
-                <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>{c.labelIt}</Text>
-                <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>
+            <CompendiumDetailHeader
+              icon={<ClassAvatar className={c.name} size={40} />}
+              title={c.labelIt}
+              badges={
+                <>
                   <Badge variant="solid" size="sm" color={t.colors.accent}>Dado vita d{c.hitDie}</Badge>
                   {c.isSpellcaster && c.spellcastingType && (
                     <Badge variant="subtle" size="sm">{CASTER_LABELS[c.spellcastingType]}</Badge>
                   )}
-                </View>
-              </View>
-            </View>
+                </>
+              }
+            />
 
             <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
               {c.description}
@@ -104,9 +105,14 @@ export default function ClassiListScreen() {
                   {sc.description}
                 </Text>
                 {sc.features.map((f) => (
-                  <Text key={f.name} style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, marginTop: t.spacing[1] }}>
-                    • {f.name} — {f.description}
-                  </Text>
+                  <View key={f.name} style={{ marginTop: t.spacing[2] }}>
+                    <Text style={{ fontSize: t.typography.xs, fontWeight: '700', color: t.colors.foreground }}>
+                      {f.level > 0 ? `${f.level}° — ` : ''}{f.name}
+                    </Text>
+                    <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 17, marginTop: t.spacing[0.5] }}>
+                      {f.description}
+                    </Text>
+                  </View>
                 ))}
               </DetailBlock>
             ))}

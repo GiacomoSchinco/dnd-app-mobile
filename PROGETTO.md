@@ -94,10 +94,10 @@ android/               → progetto nativo generato da prebuild (build APK local
   I talenti applicano via `applyFeat`: ASI (asi_config, cap 20/30, auto se 1 sola
   caratteristica), modificatori, risorse, competenze, magie. Anteprima punteggi
   finali con ASI dei talenti (`finalScoresWithFeats`).
-- **Scheda PG** (`CharacterDetailScreen`): header (nome/classe/avatar/PF/CA/PB/Velocità/Iniz),
-  Punti Ferita (stepper danno/cura/temporanei, dadi vita), `StatsGrid` (6 caratteristiche),
-  Risorse (es. Ispirazione Bardica d6, Rage, Ki), sezioni Talenti (feat + feature di
-  classe + feature di sottoclasse) e Note, Elimina personaggio (conferma).
+- **Scheda PG** (`CharacterDetailScreen`): header (nome/classe/avatar/CA/PB/Velocità/Iniz),
+  "Salì di livello", Punti Ferita (stepper danno/cura/temporanei, dadi vita), `StatsGrid`
+  (6 caratteristiche), Risorse (es. Ispirazione Bardica d6, Rage, Ki). I talenti vivono
+  nella tab dedicata; Note ed Elimina personaggio nella tab Altro.
 - **Backfill automatico** (`backfillDerivedStats` nello store): ripara i PG vecchi
   (PF/PB/CA, feature, magie automatiche da background/talento/razza).
 
@@ -122,7 +122,8 @@ android/               → progetto nativo generato da prebuild (build APK local
 
 ### Impostazioni / Altro
 - `SettingsScreen` su RootStack: cambio tema (`ThemePicker` → `setTheme`).
-- Tab Altro: menu con **Elimina personaggio** (danger + conferma).
+- Tab Altro: menu (gestito con una mappa dichiarativa) con **Modifica personaggio**,
+  **Note** (appunti del PG) ed **Elimina personaggio** (danger + conferma).
 
 ## 🗄️ Dati e regole
 

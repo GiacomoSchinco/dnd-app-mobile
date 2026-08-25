@@ -26,6 +26,9 @@ export default function SpellCastRow({ spell, t, onCast, onInfo, canCast = true,
   return (
     <Pressable
       onPress={() => onInfo(spell)}
+      // Niente accessibilityRole button qui: la riga può contenere il bottone
+      // "Lancia" annidato → su web sarebbe un <button> dentro <button> (HTML invalido)
+      accessibilityLabel={`Dettaglio di ${spell.name}`}
       style={({ pressed }) => ({
         flexDirection: 'row',
         alignItems: 'center',
@@ -59,9 +62,12 @@ export default function SpellCastRow({ spell, t, onCast, onInfo, canCast = true,
       ) : canCast ? (
         <TouchableOpacity
           onPress={() => onCast(spell)}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel={`Lancia ${spell.name} (slot ${spell.level}°)`}
           style={{
             paddingHorizontal: t.spacing[3],
-            paddingVertical: t.spacing[1.5],
+            paddingVertical: t.spacing[2],
             borderRadius: t.radius.md,
             backgroundColor: t.colors.accent,
           }}

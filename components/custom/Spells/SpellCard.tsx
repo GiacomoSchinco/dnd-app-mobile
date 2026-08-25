@@ -33,7 +33,13 @@ export default function SpellCard({
   const t = useTokens();
 
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}>
+    <Pressable
+      onPress={onPress}
+      // Niente accessibilityRole button qui: l'esterno della card può contenere
+      // i bottoni ★/✓ annidati → su web sarebbe un <button> dentro <button> (HTML invalido)
+      accessibilityLabel={`Dettaglio di ${spell.name}`}
+      style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}
+    >
       <Card
         variant={isPrepared ? 'elevated' : 'default'}
         style={{
@@ -70,16 +76,22 @@ export default function SpellCard({
           </View>
 
           {hasActiveCharacter && (
-            <View style={[s.row, s.gap(t.spacing[1])]}>
+            <View style={[s.row, s.gap(t.spacing[1.5])]}>
               <TouchableOpacity
                 onPress={onToggleFavorite}
-                style={[s.box(32, 16), { backgroundColor: isFavorite ? FAVORITE_COLOR : t.colors.backgroundSecondary }]}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel={isFavorite ? `Rimuovi ${spell.name} dalle preferite` : `Aggiungi ${spell.name} alle preferite`}
+                style={[s.box(40, 20), { backgroundColor: isFavorite ? FAVORITE_COLOR : t.colors.backgroundSecondary, ...s.center }]}
               >
                 <Text style={{ fontSize: 16, color: isFavorite ? t.colors.accentForeground : FAVORITE_COLOR }}>{isFavorite ? '★' : '☆'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={onTogglePrepared}
-                style={[s.box(32, 16), { backgroundColor: isPrepared ? t.colors.accent : t.colors.backgroundSecondary }]}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel={isPrepared ? `Rimuovi ${spell.name} dalle preparate` : `Assegna ${spell.name} come preparata`}
+                style={[s.box(40, 20), { backgroundColor: isPrepared ? t.colors.accent : t.colors.backgroundSecondary, ...s.center }]}
               >
                 <Text style={{ fontSize: 14, color: isPrepared ? t.colors.accentForeground : t.colors.foregroundTertiary }}>
                   {isPrepared ? '✓' : '+'}

@@ -45,6 +45,7 @@ export default function ListItem({
     return (
       <Pressable
         onPress={onPress}
+        accessibilityRole="button"
         style={({ pressed }) => ({
           ...s.row,
           gap: t.spacing[4],
@@ -72,13 +73,17 @@ export default function ListItem({
             </Text>
           )}
         </View>
-        <Text style={{ color: t.colors.foregroundSecondary, fontSize: 18 }}>›</Text>
+        <Text style={{ color: t.colors.foregroundSecondary, fontSize: t.typography.md }}>›</Text>
       </Pressable>
     );
   }
 
   return (
-    <Pressable onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      style={({ pressed }) => ({ opacity: pressed ? 0.85 : 1 })}
+    >
       <Card variant="elevated" style={{ marginBottom: t.spacing[3] }}>
         <View style={s.row}>
           {icon !== undefined &&
@@ -100,7 +105,7 @@ export default function ListItem({
             </Text>
             {badges && <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>{badges}</View>}
           </View>
-          <Text style={{ color: t.colors.foregroundTertiary, fontSize: 20 }}>›</Text>
+          <Text style={{ color: t.colors.foregroundTertiary, fontSize: t.typography.lg }}>›</Text>
         </View>
       </Card>
     </Pressable>

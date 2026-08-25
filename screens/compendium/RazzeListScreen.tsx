@@ -6,7 +6,7 @@ import { useTokens } from '../../components/ui/prism-provider';
 import { Badge } from '../../components/ui/badge';
 import CompendiumList, {
   CompendiumSectionTitle,
-  CompendiumRow,
+  CompendiumDetailHeader,
 } from '../../components/custom/Compendium/CompendiumList';
 import DetailBlock from '../../components/custom/Compendium/DetailBlock';
 import ListItem from '../../components/custom/ListItem';
@@ -43,13 +43,19 @@ export default function RazzeListScreen() {
       )}
       renderDetail={(r) => (
         <View>
-          <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>{r.name}</Text>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[2] }}>
+          <CompendiumDetailHeader
+            icon={<Text style={{ fontSize: 24 }}>🧝</Text>}
+            title={r.name}
+            badges={
+              <>
+                <Badge variant="solid" size="sm" color={t.colors.accent}>{r.sizeOptions.join(' / ')}</Badge>
+                <Badge variant="subtle" size="sm">Velocità {r.baseSpeed} {r.speedUnit}</Badge>
+              </>
+            }
+          />
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
             {r.description}
           </Text>
-
-          <CompendiumRow label="Velocità" value={`${r.baseSpeed} ${r.speedUnit}`} />
-          <CompendiumRow label="Taglie" value={r.sizeOptions.join(', ')} />
 
           <CompendiumSectionTitle>Tratti razziali</CompendiumSectionTitle>
           {r.effects.map((e) => (
@@ -66,9 +72,12 @@ export default function RazzeListScreen() {
               {r.lineages.map((l) => (
                 <DetailBlock key={l.id} title={l.name}>
                   {l.effects.map((e) => (
-                    <Text key={e.id} style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, marginTop: t.spacing[1] }}>
-                      • {e.name} — {e.description}
-                    </Text>
+                    <View key={e.id} style={{ marginTop: t.spacing[2] }}>
+                      <Text style={{ fontSize: t.typography.xs, fontWeight: '700', color: t.colors.foreground }}>{e.name}</Text>
+                      <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 17, marginTop: t.spacing[0.5] }}>
+                        {e.description}
+                      </Text>
+                    </View>
                   ))}
                 </DetailBlock>
               ))}

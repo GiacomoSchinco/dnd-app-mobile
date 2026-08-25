@@ -10,7 +10,6 @@ import MissingActiveCharacter from '../../components/custom/MissingActiveCharact
 import StatsGrid from '../../components/custom/StatsGrid';
 import ClassAvatar from '../../components/custom/ClassAvatar';
 import CardBox from '../../components/custom/CardBox';
-import ConfirmDeleteCharacterModal from '../../components/custom/ConfirmDeleteCharacterModal';
 import LabelValueRow from '../../components/custom/LabelValueRow';
 import LevelUpModal from '../../components/custom/LevelUpModal';
 import SectionButton from '../../components/custom/SectionButton';
@@ -23,23 +22,11 @@ import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 
-const SECTIONS = [
-  { key: 'talenti', icon: '⭐', label: 'Talenti', desc: 'Talenti e abilità speciali' },
-  { key: 'note', icon: '📝', label: 'Note', desc: 'Appunti e storia del personaggio' },
-];
-
 export default function CharacterDetailScreen() {
   const t = useTokens();
   const navigation = useNavigation<TabToRootNav>();
-  const { activeChar, updateCharacter, deleteCharacter, applyLevelUp } = useActiveCharacter();
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const { activeChar, updateCharacter, applyLevelUp } = useActiveCharacter();
   const [levelUpVisible, setLevelUpVisible] = useState(false);
-
-  const handleSection = (key: string) => {
-    if (key === 'magie') navigation.navigate(ROUTES.MAGIE);
-    else if (key === 'talenti') navigation.navigate(ROUTES.TALENTI);
-    else if (key === 'note') navigation.navigate(ROUTES.NOTES);
-  };
 
   // ── Gestione punti ferita ───────────────────────────────────
   const changeHp = (delta: number) => {
@@ -56,14 +43,6 @@ export default function CharacterDetailScreen() {
     updateCharacter(activeChar.id, {
       hitPoints: { ...hp, temporary: Math.max(0, hp.temporary + delta) },
     });
-  };
-
-  const handleDelete = () => {
-    if (!activeChar) return;
-    deleteCharacter(activeChar.id);
-    setConfirmDelete(false);
-    // Torna alla Home (lista personaggi)
-    navigation.navigate(ROUTES.HOME);
   };
 
   if (!activeChar) {
@@ -117,20 +96,21 @@ export default function CharacterDetailScreen() {
         )}
       </CardBox>
 
-      {/* Salì di livello */}
+      {/* Salì di livello — disabilitato al livello massimo (feedback attenuato) */}
       <View style={[s.fullWidth, s.mb(t.spacing[4])]}>
         <SectionButton
           icon="⤴️"
           label="Salì di livello"
           description={activeChar.level >= 20 ? 'Livello massimo raggiunto (20)' : `${activeChar.level}° → ${activeChar.level + 1}°`}
-          onPress={() => activeChar.level < 20 && setLevelUpVisible(true)}
+          disabled={activeChar.level >= 20}
+          onPress={() => setLevelUpVisible(true)}
         />
       </View>
 
       {/* Punti Ferita — gestione diretta (danno / cura / temporanei) */}
       <CardBox marginBottom={t.spacing[4]} gap={t.spacing[3]} style={s.fullWidth}>
         <View style={[s.row, { justifyContent: 'space-between' }]}>
-          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+          <Text style={{ fontSize: t.typography.sm, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
             Punti Ferita
           </Text>
           <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
@@ -171,7 +151,7 @@ export default function CharacterDetailScreen() {
       {/* Risorse (Punti Fortuna, Ira, Ki…) */}
       {activeChar.resources && Object.keys(activeChar.resources).length > 0 && (
         <CardBox marginBottom={t.spacing[4]} gap={t.spacing[2]} style={s.fullWidth}>
-          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+          <Text style={{ fontSize: t.typography.sm, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
             Risorse
           </Text>
           {Object.entries(activeChar.resources).map(([key, res]) => (
@@ -180,27 +160,7 @@ export default function CharacterDetailScreen() {
         </CardBox>
       )}
 
-      {/* Sezioni — pulsanti condivisi (stesso stile anche in Altro) */}
-      <View style={[s.fullWidth, s.gap(t.spacing[3])]}>
-        {SECTIONS.map((section) => (
-          <SectionButton
-            key={section.key}
-            icon={section.icon}
-            label={section.label}
-            description={section.desc}
-            onPress={() => handleSection(section.key)}
-          />
-        ))}
-      </View>
       </Screen>
-
-      {/* Conferma eliminazione */}
-      <ConfirmDeleteCharacterModal
-        visible={confirmDelete}
-        characterName={activeChar.name}
-        onClose={() => setConfirmDelete(false)}
-        onConfirm={handleDelete}
-      />
 
       {/* Level up */}
       <LevelUpModal

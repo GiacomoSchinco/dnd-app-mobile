@@ -1,8 +1,6 @@
 import { View, Text, Pressable, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../ui/prism-provider';
-import { FLOATING_TAB_HEIGHT, FLOATING_TAB_GAP } from '../../utils/styles';
 
 /** Route dello stack RADICE aperte dai pulsanti rapidi della Home */
 export type QuickActionRoute = 'Settings' | 'Compendium';
@@ -27,29 +25,15 @@ const ACTIONS = [
 ];
 
 /**
- * Pulsanti rapidi flottanti della Home (in basso a destra, sopra la floating tab bar):
- * accesso diretto a Impostazioni e Compendio — sezioni consultive pushate sullo
- * stack radice (schermo intero, back alla Home), fuori dalla tab Altro.
- * Stile circolare con bordo accent, coerente col pulsante centrale del dado.
+ * Pulsanti rapidi della Home (Impostazioni e Compendio) resi INLINE: la barra
+ * azioni della Home li posiziona in fondo (Thumb Zone) sopra la floating tab
+ * bar. Stile circolare con bordo accent, coerente col pulsante centrale del dado.
  */
 export default function HomeQuickActions({ onPress }: Props) {
   const t = useTokens();
-  const insets = useSafeAreaInsets();
-
-  const bottomMargin = insets.bottom > 0 ? insets.bottom : 16;
-  const bottom = bottomMargin + FLOATING_TAB_HEIGHT + FLOATING_TAB_GAP;
 
   return (
-    <View
-      style={{
-        position: 'absolute',
-        right: t.spacing[4],
-        bottom,
-        gap: t.spacing[3],
-        alignItems: 'flex-end',
-        zIndex: 50,
-      }}
-    >
+    <View style={{ gap: t.spacing[3], alignItems: 'flex-end' }}>
       {ACTIONS.map((action) => (
         <View key={action.key} style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
@@ -84,6 +68,8 @@ export default function HomeQuickActions({ onPress }: Props) {
           </View>
           <Pressable
             onPress={() => onPress(action.screen)}
+            accessibilityRole="button"
+            accessibilityLabel={action.label}
             style={({ pressed }) => ({
               width: 52,
               height: 52,

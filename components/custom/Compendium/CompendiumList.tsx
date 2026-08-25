@@ -133,3 +133,32 @@ export function CompendiumRow({ label, value }: { label: string; value: string }
     </View>
   );
 }
+
+/**
+ * Header unificato dei dettagli del Compendio: icona in box accent + titolo + badge.
+ * Dà lo stesso "inizio ordinato" a tutte le voci (Classi, Razze, Background, …).
+ */
+export function CompendiumDetailHeader({
+  icon,
+  title,
+  badges,
+}: {
+  icon?: ReactNode;
+  title: string;
+  badges?: ReactNode;
+}) {
+  const t = useTokens();
+  return (
+    <View style={[s.row, s.gap(t.spacing[3]), { alignItems: 'center' }]}>
+      {icon ? (
+        <View style={[s.box(56, t.radius.md), { backgroundColor: t.colors.accentSubtle, ...s.center }]}>
+          {icon}
+        </View>
+      ) : null}
+      <View style={s.flex}>
+        <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>{title}</Text>
+        {badges ? <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[0.5])]}>{badges}</View> : null}
+      </View>
+    </View>
+  );
+}

@@ -7,6 +7,7 @@ import { Badge } from '../../components/ui/badge';
 import CompendiumList, {
   CompendiumSectionTitle,
   CompendiumRow,
+  CompendiumDetailHeader,
 } from '../../components/custom/Compendium/CompendiumList';
 import ListItem from '../../components/custom/ListItem';
 import { getAllFeats } from '../../lib/rules/feats';
@@ -59,13 +60,18 @@ export default function TalentiListScreen() {
       )}
       renderDetail={(f) => (
         <View>
-          <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>{f.name}</Text>
-          <View style={[s.row, s.gap(t.spacing[1.5]), s.mt(t.spacing[1])]}>
-            <Badge variant="solid" size="sm" color={CATEGORY_COLORS[f.category] || t.colors.accent}>
-              {CATEGORY_LABELS[f.category] || f.category}
-            </Badge>
-            {f.level_requirement > 0 && <Badge variant="subtle" size="sm">Richiede livello {f.level_requirement}+</Badge>}
-          </View>
+          <CompendiumDetailHeader
+            icon={<Text style={{ fontSize: 22 }}>⭐</Text>}
+            title={f.name}
+            badges={
+              <>
+                <Badge variant="solid" size="sm" color={CATEGORY_COLORS[f.category] || t.colors.accent}>
+                  {CATEGORY_LABELS[f.category] || f.category}
+                </Badge>
+                {f.level_requirement > 0 && <Badge variant="subtle" size="sm">Richiede livello {f.level_requirement}+</Badge>}
+              </>
+            }
+          />
 
           <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
             {f.description}

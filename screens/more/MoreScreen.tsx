@@ -31,6 +31,39 @@ export default function MoreScreen() {
     navigation.getParent()?.getParent()?.navigate(ROUTES.HOME);
   };
 
+  // Voci del menu: lista dichiarativa → facile aggiungerne altre (basta una riga)
+  const menuItems: {
+    key: string;
+    icon: string;
+    label: string;
+    description: string;
+    danger?: boolean;
+    onPress: () => void;
+  }[] = [
+    {
+      key: 'modifica',
+      icon: '✏️',
+      label: 'Modifica personaggio',
+      description: activeChar ? `Nome, statistiche e modificatori di ${activeChar.name}` : 'Nessun personaggio attivo',
+      onPress: () => navigation.navigate(ALTRO_ROUTES.MODIFICA_PG),
+    },
+    {
+      key: 'note',
+      icon: '📝',
+      label: 'Note',
+      description: 'Appunti e storia del personaggio',
+      onPress: () => navigation.getParent()?.getParent()?.navigate(ROUTES.NOTES),
+    },
+    {
+      key: 'elimina',
+      icon: '🗑️',
+      label: 'Elimina personaggio',
+      description: activeChar ? activeChar.name : 'Nessun personaggio attivo',
+      danger: true,
+      onPress: () => setConfirmDelete(true),
+    },
+  ];
+
   return (
     <>
       <Screen>
@@ -41,19 +74,16 @@ export default function MoreScreen() {
         </Text>
 
         <View style={[s.fullWidth, s.gap(t.spacing[3])]}>
-          <SectionButton
-            icon="✏️"
-            label="Modifica personaggio"
-            description={activeChar ? `Nome, statistiche e modificatori di ${activeChar.name}` : 'Nessun personaggio attivo'}
-            onPress={() => navigation.navigate(ALTRO_ROUTES.MODIFICA_PG)}
-          />
-          <SectionButton
-            icon="🗑️"
-            label="Elimina personaggio"
-            description={activeChar ? activeChar.name : 'Nessun personaggio attivo'}
-            danger
-            onPress={() => setConfirmDelete(true)}
-          />
+          {menuItems.map((item) => (
+            <SectionButton
+              key={item.key}
+              icon={item.icon}
+              label={item.label}
+              description={item.description}
+              danger={item.danger}
+              onPress={item.onPress}
+            />
+          ))}
         </View>
       </Screen>
 

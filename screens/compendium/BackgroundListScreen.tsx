@@ -7,6 +7,7 @@ import { Badge } from '../../components/ui/badge';
 import CompendiumList, {
   CompendiumSectionTitle,
   CompendiumRow,
+  CompendiumDetailHeader,
 } from '../../components/custom/Compendium/CompendiumList';
 import ListItem from '../../components/custom/ListItem';
 import { getAllBackgrounds } from '../../lib/rules/backgrounds';
@@ -45,8 +46,12 @@ export default function BackgroundListScreen() {
       )}
       renderDetail={(b) => (
         <View>
-          <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>{b.name}</Text>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[2] }}>
+          <CompendiumDetailHeader
+            icon={<Text style={{ fontSize: 24 }}>📜</Text>}
+            title={b.name}
+            badges={b.feat.name ? <Badge variant="solid" size="sm" color={t.colors.accent}>{b.feat.name}</Badge> : undefined}
+          />
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
             {b.description}
           </Text>
 
@@ -57,7 +62,6 @@ export default function BackgroundListScreen() {
             label="Attrezzi"
             value={b.toolProficiency.type === 'CHOICE' ? `a scelta (${b.toolProficiency.category || 'strumenti'})` : (b.toolProficiency.toolId || '—')}
           />
-          <CompendiumRow label="Talento" value={b.feat.name || '—'} />
         </View>
       )}
     />

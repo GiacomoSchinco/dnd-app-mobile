@@ -131,6 +131,9 @@ export default function SpellDetailModal({
                   <View style={[s.row, { alignItems: 'center', gap: t.spacing[2] }]}>
                     <TouchableOpacity
                       onPress={() => onSetBadge(null)}
+                      hitSlop={6}
+                      accessibilityRole="button"
+                      accessibilityLabel="Rimuovi badge"
                       style={[s.box(40, 20), { backgroundColor: t.colors.backgroundTertiary, ...s.center, borderWidth: 2, borderColor: manualBadge ? t.colors.border : t.colors.accent }]}
                     >
                       <Text style={{ color: t.colors.foregroundTertiary, fontSize: t.typography.md }}>✕</Text>
@@ -147,6 +150,9 @@ export default function SpellDetailModal({
                           <TouchableOpacity
                             key={b.key}
                             onPress={() => onSetBadge(active ? null : { color: b.color, label: b.label })}
+                            hitSlop={6}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Badge: ${b.label}`}
                             style={[s.box(40, 20), { backgroundColor: b.color, ...s.center, borderWidth: 2, borderColor: active ? t.colors.accent : t.colors.border }]}
                           >
                             {active && <Text style={{ color: '#FFFFFF', fontWeight: '800', fontSize: t.typography.md }}>✓</Text>}

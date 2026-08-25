@@ -6,7 +6,7 @@ import { useTokens } from '../../components/ui/prism-provider';
 import { Badge } from '../../components/ui/badge';
 import CompendiumList, {
   CompendiumSectionTitle,
-  CompendiumRow,
+  CompendiumDetailHeader,
 } from '../../components/custom/Compendium/CompendiumList';
 import DetailBlock from '../../components/custom/Compendium/DetailBlock';
 import ListItem from '../../components/custom/ListItem';
@@ -55,14 +55,19 @@ export default function EquipaggiamentoListScreen() {
       )}
       renderDetail={(p) => (
         <View>
-          <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>{presetTargetName(p)}</Text>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[2] }}>
+          <CompendiumDetailHeader
+            icon={<Text style={{ fontSize: 22 }}>🎒</Text>}
+            title={presetTargetName(p)}
+            badges={
+              <>
+                <Badge variant="solid" size="sm" color={t.colors.accent}>{p.type === 'class' ? 'Classe' : 'Background'}</Badge>
+                <Badge variant="subtle" size="sm">{p.startingGold} mo</Badge>
+              </>
+            }
+          />
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
             {p.description}
           </Text>
-
-          <CompendiumSectionTitle>Dettagli</CompendiumSectionTitle>
-          <CompendiumRow label="Tipo" value={p.type === 'class' ? 'Classe' : 'Background'} />
-          <CompendiumRow label="Oro iniziale" value={`${p.startingGold} mo`} />
 
           <CompendiumSectionTitle>Oggetti ({p.items.length})</CompendiumSectionTitle>
           {p.items.map((it, i) => (

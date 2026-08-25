@@ -10,6 +10,7 @@ import { getClassNameItalian } from '../../lib/rules/classes';
 import Screen from '../../components/custom/Screen';
 import ClassAvatar from '../../components/custom/ClassAvatar';
 import ListItem from '../../components/custom/ListItem';
+import EmptyState from '../../components/custom/EmptyState';
 import HomeQuickActions from '../../components/custom/HomeQuickActions';
 import { s } from '../../utils/style-helpers';
 import { useCharacterStore } from '../../store/useCharacterStore';
@@ -94,51 +95,49 @@ export default function HomeScreen() {
   );
 
   // Accesso diretto a Impostazioni/Compendio: pusha sullo stack radice (schermo intero, back = Home)
-  const handleQuickAction = (screen: QuickActionRoute) => {
-    navigation.navigate(screen);
-  };
-
-  if (characters.length === 0) {
-    return (
-      <Screen scrollable={false}>
-        <LogoHeader size={72} subtitle="Il tuo compagno di avventure D&D" style={{ marginBottom: t.spacing[0] }} />
-
-        <View style={[s.flex, s.center, s.gap(t.spacing[6]), s.fullWidth, { paddingBottom: t.spacing[10] }]}>
-          <Text style={{ fontSize: 60 }}>👥</Text>
-          <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.semibold, color: t.colors.foreground, textAlign: 'center' }}>
-            Nessun personaggio
-          </Text>
-          <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center' }}>
-            Crea il tuo primo eroe per iniziare{'\n'}l'avventura!
-          </Text>
-          <Button onPress={handleCreate} size="md" style={{ alignSelf: 'center' }}>+ Crea Personaggio</Button>
-        </View>
-
-        <HomeQuickActions onPress={handleQuickAction} />
-      </Screen>
-    );
-  }
+  const handleQuickAction = useCallback(
+    (screen: QuickActionRoute) => {
+      navigation.navigate(screen);
+    },
+    [navigation]
+  );
 
   return (
     <Screen scrollable={false}>
-      <LogoHeader size={56} />
+      {characters.length === 0 ? (
+        <>
+          <LogoHeader size={72} subtitle="Il tuo compagno di avventure D&D" style={{ marginBottom: t.spacing[0] }} />
+          <View style={[s.flex, s.fullWidth]}>
+            <EmptyState
+              emoji="👥"
+              title="Nessun personaggio"
+              message="Crea il tuo primo eroe per iniziare l'avventura!"
+            />
+          </View>
+        </>
+      ) : (
+        <>
+          <LogoHeader size={56} />
+          <FlatList
+            data={characters}
+            keyExtractor={(item) => item.id}
+            renderItem={renderCharacter}
+            maxToRenderPerBatch={8}
+            windowSize={5}
+            style={[s.flex, s.fullWidth]}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: t.spacing[2] }}
+          />
+        </>
+      )}
 
-      <View style={[s.fullWidth, s.mb(t.spacing[3])]}>
-        <Button onPress={handleCreate} fullWidth size="md">+ Nuovo Personaggio</Button>
+      {/* Barra azioni in fondo (Thumb Zone): quick actions + CTA primaria ancorata in basso, sopra la tab bar */}
+      <View style={[s.fullWidth, s.gap(t.spacing[2]), { paddingTop: t.spacing[2] }]}>
+        <HomeQuickActions onPress={handleQuickAction} />
+        <Button onPress={handleCreate} fullWidth size="md">
+          {characters.length === 0 ? '+ Crea Personaggio' : '+ Nuovo Personaggio'}
+        </Button>
       </View>
-
-      <FlatList
-        data={characters}
-        keyExtractor={(item) => item.id}
-        renderItem={renderCharacter}
-        maxToRenderPerBatch={8}
-        windowSize={5}
-        style={[s.flex, s.fullWidth]}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: t.spacing[8] }}
-      />
-
-      <HomeQuickActions onPress={handleQuickAction} />
     </Screen>
   );
 }

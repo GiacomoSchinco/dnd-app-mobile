@@ -44,10 +44,15 @@ export default function SpellSlotsBar({ spellSlots, onUseSlot, onRecoverSlot, on
       </View>
 
       {levels.map(({ level, max, current }) => (
-        <View key={level} style={[s.row, { justifyContent: 'space-between' }]}>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, width: 64 }}>
-            Livello {level}
-          </Text>
+        <View key={level} style={[s.row, { justifyContent: 'space-between', alignItems: 'center' }]}>
+          <View style={[s.row, { alignItems: 'center', gap: t.spacing[2] }]}>
+            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary }}>
+              Livello {level}
+            </Text>
+            <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+              {current}/{max}
+            </Text>
+          </View>
           <View style={[s.row, s.gap(t.spacing[1])]}>
             {Array.from({ length: max }).map((_, i) => {
               const available = i < current;
@@ -55,7 +60,9 @@ export default function SpellSlotsBar({ spellSlots, onUseSlot, onRecoverSlot, on
                 <Pressable
                   key={i}
                   onPress={() => (available ? onUseSlot(level) : onRecoverSlot(level))}
-                  hitSlop={4}
+                  hitSlop={10}
+                  accessibilityRole="button"
+                  accessibilityLabel={available ? `Consuma uno slot di livello ${level}` : `Recupera uno slot di livello ${level}`}
                   style={[
                     {
                       width: 22,
@@ -77,6 +84,27 @@ export default function SpellSlotsBar({ spellSlots, onUseSlot, onRecoverSlot, on
           </View>
         </View>
       ))}
+
+      {/* Legenda disponibile/usato */}
+      <View style={[s.row, s.gap(t.spacing[4]), { marginTop: t.spacing[1] }]}>
+        <View style={[s.row, { alignItems: 'center', gap: t.spacing[1] }]}>
+          <View style={{ width: 14, height: 14, borderRadius: 7, backgroundColor: t.colors.accent }} />
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>disponibile</Text>
+        </View>
+        <View style={[s.row, { alignItems: 'center', gap: t.spacing[1] }]}>
+          <View
+            style={{
+              width: 14,
+              height: 14,
+              borderRadius: 7,
+              borderWidth: 2,
+              borderColor: t.colors.accent,
+              backgroundColor: t.colors.background,
+            }}
+          />
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>usato</Text>
+        </View>
+      </View>
     </CardBox>
   );
 }

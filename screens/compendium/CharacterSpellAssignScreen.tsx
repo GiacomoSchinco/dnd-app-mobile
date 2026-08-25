@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/navigation';
@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../../components/ui/prism-provider';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
+import EmptyState from '../../components/custom/EmptyState';
 import { SpellCard, SpellFilters, SpellDetailModal, Spell, useSpellFilters, applySpellFilters, getSpellSourceBadges, resolveSpellBadgeForSpell } from '../../components/custom/Spells';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
@@ -119,9 +120,13 @@ export default function CharacterSpellAssignScreen() {
       />
 
       {filteredSpells.length === 0 ? (
-        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginTop: t.spacing[4], textAlign: 'center' }}>
-          Nessun incantesimo corrisponde ai filtri.
-        </Text>
+        <View style={[s.flex]}>
+          <EmptyState
+            emoji="🔍"
+            title="Nessun risultato"
+            message="Nessun incantesimo corrisponde ai filtri. Prova a cambiare ricerca o filtro."
+          />
+        </View>
       ) : (
         <FlatList
           data={filteredSpells}
