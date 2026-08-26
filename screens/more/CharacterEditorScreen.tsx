@@ -10,6 +10,7 @@ import BackButton from '../../components/custom/BackButton';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
 import CardBox from '../../components/custom/CardBox';
 import StepperButton from '../../components/custom/StepperButton';
+import StepperRow from '../../components/custom/StepperRow';
 import AddModifierModal from '../../components/custom/AddModifierModal';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -23,7 +24,7 @@ import {
   getModifierTargetLabel,
 } from '../../lib/rules/abilities';
 import { getAllSkills, getSkillModifierTargetLabel } from '../../lib/rules/skills';
-import type { Ability, AbilityModifier, AbilityScores, SkillModifier, SkillName } from '../../types';
+import type { Ability, AbilityModifier, AbilityScores, HitPoints, SkillModifier, SkillName } from '../../types';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
 import { FLOATING_TAB_HEIGHT, FLOATING_TAB_GAP } from '../../utils/styles';
@@ -32,6 +33,16 @@ const SCORE_MIN = 1;
 const SCORE_MAX = 30;
 const MOD_MIN = -10;
 const MOD_MAX = 10;
+const HP_MIN = 0;
+const HP_MAX = 9999;
+const ARMOR_MIN = 0;
+const ARMOR_MAX = 40;
+
+/** PF di partenza per chi non ne ha ancora (bozza dell'editor) */
+const DEFAULT_HP: HitPoints = { max: 1, current: 1, temporary: 0, hitDiceMax: 0, hitDiceCurrent: 0, hitDie: 'd8' };
+
+/** Bozza PF a partire da un personaggio (default se assenti) */
+const draftHpFrom = (hp?: HitPoints | null): HitPoints => (hp ? { ...hp } : { ...DEFAULT_HP });
 
 /**
  * Editor di correzione del PG attivo (tab Altro): modifica a mano
@@ -58,6 +69,8 @@ export default function CharacterEditorScreen() {
   const [draftSkillMods, setDraftSkillMods] = useState<SkillModifier[]>(() => [
     ...(activeChar?.skillModifiers ?? []),
   ]);
+  const [draftHitPoints, setDraftHitPoints] = useState<HitPoints>(() => draftHpFrom(activeChar?.hitPoints));
+  const [draftArmorClass, setDraftArmorClass] = useState<number>(activeChar?.armorClass ?? 10);
 
   // ── Form "aggiungi modificatore abilità" ──
   const [showAddMod, setShowAddMod] = useState(false);
@@ -98,9 +111,11 @@ export default function CharacterEditorScreen() {
       draftName !== activeChar.name ||
       abDirty ||
       JSON.stringify(draftAbilityMods) !== JSON.stringify(activeChar.abilityModifiers ?? []) ||
-      JSON.stringify(draftSkillMods) !== JSON.stringify(activeChar.skillModifiers ?? [])
+      JSON.stringify(draftSkillMods) !== JSON.stringify(activeChar.skillModifiers ?? []) ||
+      JSON.stringify(draftHitPoints) !== JSON.stringify(activeChar.hitPoints ?? DEFAULT_HP) ||
+      draftArmorClass !== (activeChar.armorClass ?? 10)
     );
-  }, [activeChar, draftName, draftAbilities, draftAbilityMods, draftSkillMods, abilities]);
+  }, [activeChar, draftName, draftAbilities, draftAbilityMods, draftSkillMods, draftHitPoints, draftArmorClass, abilities]);
 
   if (!activeChar) {
     return <MissingActiveCharacter message="Apri un personaggio dalla Home per modificarne le caratteristiche." />;
@@ -115,6 +130,25 @@ export default function CharacterEditorScreen() {
       const current = prev[ability] ?? 10;
       return { ...prev, [ability]: Math.min(SCORE_MAX, Math.max(SCORE_MIN, current + delta)) };
     });
+  };
+
+  // ── Punti Ferita (solo bozza) ──
+  const setHp = (field: 'max' | 'current' | 'temporary', delta: number) => {
+    setDraftHitPoints((prev) => {
+      const hp = draftHpFrom(prev);
+      const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
+      if (field === 'max') {
+        const max = clamp(hp.max + delta, HP_MIN, HP_MAX);
+        return { ...hp, max, current: clamp(hp.current, HP_MIN, max) };
+      }
+      if (field === 'current') return { ...hp, current: clamp(hp.current + delta, HP_MIN, hp.max) };
+      return { ...hp, temporary: clamp(hp.temporary + delta, HP_MIN, HP_MAX) };
+    });
+  };
+
+  // ── Classe Armatura (solo bozza) ──
+  const setArmorClass = (delta: number) => {
+    setDraftArmorClass((prev) => Math.min(ARMOR_MAX, Math.max(ARMOR_MIN, prev + delta)));
   };
 
   // ── Modificatori abilità (solo bozza) ──
@@ -167,6 +201,8 @@ export default function CharacterEditorScreen() {
       abilities: draftAbilities,
       abilityModifiers: draftAbilityMods,
       skillModifiers: draftSkillMods,
+      hitPoints: draftHitPoints,
+      armorClass: draftArmorClass,
     });
   };
 
@@ -176,6 +212,9 @@ export default function CharacterEditorScreen() {
     setDraftAbilities({ ...activeChar.abilities });
     setDraftAbilityMods([...(activeChar.abilityModifiers ?? [])]);
     setDraftSkillMods([...(activeChar.skillModifiers ?? [])]);
+    setDraftHitPoints(draftHpFrom(activeChar.hitPoints));
+    setDraftArmorClass(activeChar.armorClass ?? 10);
+    setDraftArmorClass(activeChar.armorClass ?? 10);
   };
 
   return (
@@ -256,6 +295,70 @@ export default function CharacterEditorScreen() {
               </View>
             );
           })}
+        </CardBox>
+
+        {/* ── Punti Ferita ── */}
+        <CardBox gap={t.spacing[2]} marginBottom={t.spacing[5]}>
+          <View style={[s.row, { justifyContent: 'space-between' }]}>
+            <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+              Punti Ferita
+            </Text>
+            {draftHitPoints.hitDie && (
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+                Dado vita: {draftHitPoints.hitDie}
+              </Text>
+            )}
+          </View>
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+            Corregge a mano PF massimi, attuali e temporanei (es. dopo un errore di livello).
+          </Text>
+          <StepperRow
+            label="Massimi"
+            value={draftHitPoints.max}
+            onDecrement={() => setHp('max', -1)}
+            onIncrement={() => setHp('max', 1)}
+            labelSize={t.typography.base}
+            labelColor={t.colors.foreground}
+            valueColor={t.colors.foreground}
+          />
+          <StepperRow
+            label="Attuali"
+            value={draftHitPoints.current}
+            onDecrement={() => setHp('current', -1)}
+            onIncrement={() => setHp('current', 1)}
+            labelSize={t.typography.base}
+            labelColor={t.colors.foreground}
+            valueColor={t.colors.accent}
+          />
+          <StepperRow
+            label="Temporanei"
+            value={draftHitPoints.temporary}
+            onDecrement={() => setHp('temporary', -1)}
+            onIncrement={() => setHp('temporary', 1)}
+            labelSize={t.typography.base}
+            labelColor={t.colors.foreground}
+            valueColor={t.colors.foreground}
+          />
+        </CardBox>
+
+        {/* ── Classe Armatura (CA) ── */}
+        <CardBox gap={t.spacing[2]} marginBottom={t.spacing[5]}>
+          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+            Classe Armatura (CA)
+          </Text>
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+            Corregge a mano la CA (es. armatura, scudo, modificatori particolari).
+          </Text>
+          <StepperRow
+            label="CA"
+            value={draftArmorClass}
+            onDecrement={() => setArmorClass(-1)}
+            onIncrement={() => setArmorClass(1)}
+            labelSize={t.typography.base}
+            labelColor={t.colors.foreground}
+            valueColor={t.colors.foreground}
+            minWidth={48}
+          />
         </CardBox>
 
         {/* ── Modificatori alle abilità ── */}

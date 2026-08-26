@@ -12,6 +12,7 @@ import SectionBlock from '../../components/custom/SectionBlock';
 import CircleCheck from '../../components/custom/CircleCheck';
 import ListCard from '../../components/custom/ListCard';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
+import DndIcon from '../../components/custom/DndIcon';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
@@ -93,7 +94,7 @@ export default function NotesScreen() {
             onSubmitEditing={addNote}
           />
           <Button variant="solid" size="md" fullWidth style={{ marginTop: t.spacing[3] }} onPress={addNote}>
-            ➕ Aggiungi
+            + Aggiungi
           </Button>
         </SectionBlock>
 
@@ -105,7 +106,7 @@ export default function NotesScreen() {
 
         {notes.length === 0 ? (
           <View style={{ paddingVertical: t.spacing[8], alignItems: 'center', gap: t.spacing[2] }}>
-            <Text style={{ fontSize: 32 }}>🗒️</Text>
+            <DndIcon name="notebook" size={32} color={t.colors.accent} />
             <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, textAlign: 'center' }}>
               Nessun appunto ancora.
               {'\n'}Aggiungi il primo mentre giochi!

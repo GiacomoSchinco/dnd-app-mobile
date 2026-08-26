@@ -99,7 +99,7 @@ export default function EquipmentScreen() {
           </Button>
         </View>
         <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: t.spacing[1] }}>
-          👆 Tocca un oggetto per il dettaglio · ✓ per equipaggiarlo · − / + per la quantità
+          Tocca un oggetto per il dettaglio · ✓ per equipaggiarlo · − / + per la quantità
         </Text>
       </TabHeader>
 

@@ -1,5 +1,8 @@
 # 📓 Appunti — Campaign Chronicle
 
+> **Documento INTERNO** — guida operativa di sviluppo ("gestire senza l'AI").
+> Il documento pubblico (per GitHub) è `README.md`.
+
 ## ⚠️ REGOLA PRINCIPALE
 
 > **Expo è cambiato!** Leggere sempre le docs ufficiali prima di scrivere codice:
@@ -18,7 +21,7 @@
        │   ├── RootStack.tsx    ← Stack radice (Main + schermate di dettaglio)
        │   ├── tab-config.ts    ← Config tab (route, icone, visibilità)
        │   ├── CentralDiceButton.tsx · DicePanel.tsx
-       ├── AppNavigator.tsx     ← Tab navigator (Scheda, Magie, Abilità, Altro, Dadi)
+       ├── AppNavigator.tsx     ← Tab navigator (Scheda, Talenti, Equip., Magie, Abilità, Altro, Dadi)
        ├── TabHeader.tsx        ← Header fisso tab con safe-area (Abilità, Magie)
        ├── ScreenHeader.tsx     ← Titolo schermata (icon Ionicons oppure iconNode DndIcon)
        ├── EmptyState.tsx       ← Stato vuoto centrato (emoji + titolo + messaggio)
@@ -33,18 +36,22 @@
        ├── creation/            ← WIZARD creazione PG
        │   ├── useCharacterWizard.ts ← TUTTA la logica/stato/validazione del wizard (hook)
        │   ├── NameStep · ClassStep · LevelStep · SubclassStep · SkillsStep · RaceStep
-       │   ├── BackgroundStep · FeatChoice · AbilitiesStep · HpStep
+       │   ├── BackgroundStep · FeatChoice · AbilitiesStep · HpStep · SummaryStep (Riepilogo finale)
+       │   ├── ClassSwitcher.tsx (multiclasse: quale classe configuri) · CardDetailModal.tsx (info card)
        │   ├── Chip.tsx (pill) · StepIndicator · StepLabel · ValuePickerModal · wizardSteps.ts
-       ├── Compendium/          ← CompendiumList.tsx · DetailBlock.tsx
+       ├── Compendium/          ← CompendiumList.tsx (export: CompendiumDetailHeader) · DetailBlock.tsx
        ├── DiceRoller/          ← DiceTypeGrid · RollButton · ResultBreakdown · StepperControl
-       ├── Items/               ← ItemCard · ItemDetailModal · ItemFilters
-       └── Spells/              ← SpellCard · SpellDetailModal · SpellFilters · CharacterBar
+       ├── Items/               ← ItemCard · ItemDetailModal · ItemFilters · EquipmentRow · equipmentStats · useItemFilters
+       └── Spells/              ← SpellCard · SpellCastRow · SpellDetailModal · SpellFilters · SpellSlotsBar · spellSourceBadges · CharacterBar · useSpellFilters
 
 📁 screens/
    ├── home/        → HomeScreen (lista PG + pulsanti rapidi)
-   ├── characters/  → CharacterCreateScreen (wizard) · CharacterDetailScreen (Scheda PG) · SkillsScreen (tab Abilità)
+   ├── characters/  → CharacterCreateScreen (wizard) · CharacterDetailScreen (Scheda PG) · FeatsScreen (tab Talenti)
+   │                  · EquipmentScreen (tab Equip.) · SkillsScreen (tab Abilità) · NotesScreen (Note del PG)
    ├── compendium/  → CompendioScreen · Classi · Razze · Background · Talenti · Equipaggiamento · Oggetti · Magie (standalone)
-   └── more/        → AltroStack · MoreScreen (Altro: menu ✏️ Modifica PG + 🗑️ Elimina) · CharacterEditorScreen (correzione nome/statistiche/modificatori abilità) · SettingsScreen (su RootStack) · altro-routes
+   │                  · CharacterSpellAssignScreen (Gestisci magie) · CharacterItemAssignScreen (Gestisci oggetti)
+   └── more/        → AltroStack · MoreScreen (menu) · CharacterEditorScreen (Modifica PG: nome/statistiche/CA/PF/modificatori)
+                      · SettingsScreen (su RootStack) · altro-routes
 
 📁 lib/
    ├── data/        → JSON (fonte unica: classi, razze, magie, oggetti, ecc.)
@@ -106,10 +113,16 @@
 | `StatTile` | Quadrato statistico (etichetta + valore, aspectRatio 1) | Header Scheda PG (CA/PB/Velocità/Iniz) |
 | `DetailModalHeader` | Header modali di dettaglio: box icona 56×56 + titolo + ✕ + badge (props `icon`/`iconBg`/`title`/`badges`/`onClose`) | Dettaglio Incantesimo, dettaglio Oggetto |
 | `AddModifierModal` | Modale "Aggiungi modificatore" (chip target una/più/tutte + etichetta + stepper valore) | Editor personaggio (abilità e skill) |
+| `useSpellFilters` / `useItemFilters` | Hook filtro condivisi (search/livello/classe/tipo/rarità) + `applySpellFilters`/`applyItemFilters` puri | SpellsScreen · CharacterSpellAssign · ItemsScreen · CharacterItemAssign |
+| `EquipmentRow` | Riga equipaggiamento con statistiche INLINE (danno/CA/gittata/proprietà) | Tab Equip. (`EquipmentScreen`) |
+| `CompendiumDetailHeader` | Header unificato dettagli compendio (icona box 56 accentSubtle + titolo xl/700 + badge) | Liste/dettagli Compendio (Classi/Razze/Background/Talenti/Equip.) |
+| `ClassSwitcher` | Chips delle classi configurate per scegliere QUALE classe configurare (multiclasse) | Wizard multiclasse (Level/Subclass/Skills step) |
 
 **Wizard creazione**: la schermata (`CharacterCreateScreen`) è un renderer sottile →
 tutta la logica vive in `useCharacterWizard` (hook) e ogni passo è un componente
-presentational in `components/custom/creation/`. Per aggiungere/modificare un passo:
+presentational in `components/custom/creation/`. L'ultimo passo è `summary`
+(Riepilogo, `SummaryStep.tsx`): il footer diventa "Crea Personaggio"
+(`isLastStep = step === 'summary'`). Per aggiungere/modificare un passo:
 1. tocca il componente step (es. `RaceStep.tsx`) o lo stato in `useCharacterWizard.ts`,
 2. se serve un nuovo passo, aggiorna `wizardSteps.ts` (`STEPS`/`StepKey`) e `stepValid`.
 
@@ -127,7 +140,7 @@ presentational in `components/custom/creation/`. Per aggiungere/modificare un pa
 Cambio tema: runtime dalle Impostazioni (`ThemePicker` → `setTheme()`) oppure
 cambiando l'import in `App.tsx`. I temi supportano transizioni animate, haptic e ombre.
 
-## 📦 Dipendenze principali (aggiornato 2026-08-03)
+## 📦 Dipendenze principali (aggiornato 2026-08-26)
 
 | Pacchetto | Versione | Cosa fa |
 |---|---|---|
@@ -231,10 +244,21 @@ Due prerequisiti necessari per `gradlew` (mancavano entrambi → build in errore
 - I componenti nuovi vanno in `components/custom/`; le pagine/viste in `screens/`.
 - Lista abilità: usare `getAllAbilities()` da `lib/rules/abilities.ts` (NON ridefinirla).
 - `APPUNTI.md` sono appunti personali — tenerlo aggiornato.
+- `README.md` è il documento PUBBLICO (GitHub) — aggiornarlo quando cambiano
+  funzionalità/stack/navigazione. `PROGETTO.md` è stato sostituito dal README.
 
 ### 📐 Altro
 - Prism UI supporta cambio tema runtime (tramite ThemePicker o `setTheme()`)
 - Per il TypeScript: quando usi `useTheme()`, serve un cast perché il context è js puro
+- **Hooks (P0)**: in ogni schermata con `if (!activeChar) return <MissingActiveCharacter/>`,
+  TUTTI gli `useMemo`/`useEffect` vanno PRIMA della guardia (fallback a module scope, es.
+  `DEFAULT_ABILITIES`). Violazione → crash se il tab resta montato e activeChar cambia.
+- **DndIcon è un `View`** → NON metterlo dentro `<Text>` (non renderizza). Per icone inline
+  usare righe `s.row` con `<DndIcon>` + `<Text>`, o la prop `icon` di `Button`.
+- **Web (Playwright)**: il click nativo DOM `el.click()` (via `page.evaluate`) innesca gli
+  onPress dei TouchableOpacity/Pressable RN Web (dispatchEvent/force NON bastano).
+- **Nested buttons (web)**: Pressable con bottoni ANNIDATI (es. SpellCard con toggle ★/✓)
+  → NIENTE `accessibilityRole="button"` sull'outer (HTML invalido `<button>` in `<button>`).
 - **Icone**: usare sempre `DndIcon` (`components/custom/DndIcon.tsx`) per le icone custom
   (dadi, scuole, oggetti, classi, statistiche). Aggiungere un'icona = mettere l'SVG in `assets/icon/` e
   esporlo in `DndIcon` (agganciato anche a `IconName`). NIENTE emoji come icone.

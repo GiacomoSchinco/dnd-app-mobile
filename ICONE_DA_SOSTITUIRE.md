@@ -40,6 +40,7 @@ direttamente nel file indicato (sono stringhe letterali nel JSX/TSX).
 | Tab Abilità senza PG | `bullseye` |
 | Tab Talenti senza PG | `medal` |
 | Note senza PG | `notebook` |
+| Note: stato "Nessun appunto" (blocco inline) | `notebook` |
 | Default "nessun personaggio selezionato" | `invisible` |
 
 ### A2. Icone di sezione / menu — ✅ RISOLTO
@@ -122,6 +123,9 @@ direttamente nel file indicato (sono stringhe letterali nel JSX/TSX).
 | `HpStep` "Tira il dado" | 🎲 | DndIcon `d20` (prop `icon` di Button) |
 | `LevelUpModal` "Tira (dX)" | 🎲 | emoji rimossa (testo) |
 | `AbilitiesStep` "Suggerisci" | ✨ | DndIcon `magic-swirl` (prop `icon` di Button) |
+| `EquipmentScreen` hint "Tocca un oggetto…" | 👆 | emoji rimossa |
+| `SkillsScreen` hint "Tocca una competenza…" | 👆 | emoji rimossa |
+| `NotesScreen` bottone "➕ Aggiungi" | ➕ | normalizzato in "+ Aggiungi" |
 
 > ✅ **RISOLTO / RIMOSSO** (non più in elenco): emoji classi nel wizard (sostituite dal
 > `ClassCarousel` con token PNG, 2026-08-03); sezioni emoji della Scheda PG (💪 🔮 ⚔️ ⭐ 📝,
@@ -135,10 +139,12 @@ direttamente nel file indicato (sono stringhe letterali nel JSX/TSX).
 
 ---
 
-## B. Glyph di testo (› ‹ ✓ ✕ ★ ☆ + ⚡) — caratteri tipografici
+## B. Glyph di testo (› ‹ ✓ ✕ ★ ☆ + ⚡) — ✅ ACCETTATO (scelta utente)
 
-Presenti ovunque come `<Text>` (nativi e leggibili, ma non in tema). Valutare se sostituirli
-con icone vere o tenerli. Se vuoi, compila la colonna **Mia scelta** per contesto.
+> ✅ **ACCETTATO (2026-08-26)**: sono caratteri tipografici nativi e leggibili — **si tengono
+> come sono** (scelta utente). La tabella sotto resta solo come riferimento.
+
+Presenti ovunque come `<Text>`. Se in futuro volessi uniformarli, la tabella elenca i punti.
 
 | Dove | Riga | Glyph | Contesto | **Mia scelta** |
 |------|------|-------|----------|----------------|
@@ -165,7 +171,11 @@ con icone vere o tenerli. Se vuoi, compila la colonna **Mia scelta** per contest
 
 ---
 
-## C. Ionicons (`@expo/vector-icons`) — 16+ punti
+## C. Ionicons (`@expo/vector-icons`) — ✅ ACCETTATO (scelta utente)
+
+> ✅ **ACCETTATO (2026-08-26)**: è una **scelta dell'utente** usare Ionicons per tab bar,
+> header e chevron — vanno bene così, NON vanno sostituite. Le tabelle sotto restano solo
+> come riferimento/inventario.
 
 ### C1. Tab bar
 Definite in `components/custom/navigation/tab-config.ts`, renderizzate in
@@ -201,21 +211,21 @@ trovata (righe 87-89).
 |------|------|-------|----------|----------------|
 | `components/custom/Items/ItemCard.tsx` | 93 | `chevron-forward` | Freccia destra card oggetto | |
 | `components/custom/HomeQuickActions.tsx` | 24, 33 | `settings` + `book` | Pulsanti rapidi Home (Impostazioni/Compendio) | |
+| `components/custom/ScrollToTopFab.tsx` | ~40 | `chevron-up` | FAB "Torna su" flottante (ex SVG inline, 2026-08-26) | |
 | `components/custom/Items/ItemDetailModal.tsx` | 7 | *(import non usato)* | Import Ionicons **morto** → da rimuovere | |
 
 ---
 
-## D. SVG inline (`SvgXml`) — 1 punto
+## D. SVG inline (`SvgXml`) — ✅ RISOLTO (0 punti)
 
-FAB "Torna su" con chevron-up SVG inline (componente condiviso, non più duplicato).
-
-| File | Riga | Icona | Contesto | **Mia scelta** |
-|------|------|-------|----------|----------------|
-| `components/custom/ScrollToTopFab.tsx` | 40 | chevron-up (SVG inline) | Pulsante "torna su" flottante | |
+> ✅ **RISOLTO (2026-08-26)**: la freccia del FAB "Torna su" usa ora **Ionicons `chevron-up`**
+> (`ScrollToTopFab.tsx`), non più l'SVG inline. **Non restano SVG in linea nell'app.**
 
 ---
 
-## E. Asset icon ESISTENTI ma NON esposti in `DndIcon` (potenziali sostituti gratuiti)
+## E. Asset icon ESISTENTI ma NON esposti in `DndIcon` — ⏸️ RINVIATO (da riutilizzare più avanti)
+
+> ⏸️ **RINVIATO (2026-08-26)**: vanno bene così — si riutilizzeranno in futuro quando serviranno.
 
 | Cartella | Contenuto | Stato |
 |----------|-----------|-------|
@@ -229,8 +239,8 @@ Esporre questi in `DndIcon.tsx` = sostituzioni immediate senza caricare nuovi as
 
 ## F. Riepilogo per priorità
 
-1. **Emoji come icone** (sez. A): il grosso del lavoro estetico — compila la colonna «Mia scelta».
-2. **Glyph di testo** (sez. B): valutare se sostituirli con icone vere o tenerli (sono nativi e leggibili).
-3. **Ionicons** (sez. C): tab bar, header e chevron — sostituibili passando `iconNode={<DndIcon/>}` o cambiando il nome in `tab-config.ts`.
-4. **SVG inline "torna su"** (sez. D): 1 punto condiviso.
-5. **Asset non esposti** (sez. E): esporre in `DndIcon` = sostituzioni immediate.
+1. **Emoji come icone** (sez. A): ✅ **COMPLETATO** (A1–A7 + residue) — ora usano DndIcon.
+2. **Glyph di testo** (sez. B): ✅ **ACCETTATO** (scelta utente) — si tengono come sono (nativi e leggibili).
+3. **Ionicons** (sez. C): ✅ **ACCETTATO** (scelta utente) — nessuna sostituzione.
+4. **SVG inline "torna su"** (sez. D): ✅ **RISOLTO** — ora Ionicons `chevron-up`.
+5. **Asset non esposti** (sez. E): ⏸️ **RINVIATO** — da riutilizzare più avanti.
