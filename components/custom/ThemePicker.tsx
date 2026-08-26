@@ -3,6 +3,7 @@ import { useTokens, useTheme } from '../ui/prism-provider';
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { THEME_LIST } from '../ui/themes/registry';
+import DndIcon from './DndIcon';
 
 export default function ThemePicker() {
   const t = useTokens();
@@ -10,9 +11,12 @@ export default function ThemePicker() {
 
   return (
     <View>
-      <Text style={{ color: t.colors.foreground, fontSize: t.typography.md, fontWeight: t.typography.semibold, marginBottom: 12 }}>
-        🎨 Scegli il tema
-      </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+        <DndIcon name="palette" size={18} color={t.colors.accent} />
+        <Text style={{ color: t.colors.foreground, fontSize: t.typography.md, fontWeight: t.typography.semibold }}>
+          Scegli il tema
+        </Text>
+      </View>
       <View style={{ gap: 10 }}>
         {THEME_LIST.map((item) => {
           const isActive = activeTheme.name === item.theme.name;

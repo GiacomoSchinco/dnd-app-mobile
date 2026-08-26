@@ -49,6 +49,32 @@ import Intelligence from '../../assets/icon/stats/icon_intelligence.svg';
 import Wisdom from '../../assets/icon/stats/icon_wisdom.svg';
 import Charisma from '../../assets/icon/stats/icon_charisma.svg';
 
+import Backpack from '../../assets/icon/utility/backpack.svg';
+import Bullseye from '../../assets/icon/utility/bullseye.svg';
+import Cauldron from '../../assets/icon/utility/cauldron.svg';
+import ClassicalKnowledge from '../../assets/icon/utility/classical-knowledge.svg';
+import CrownCoin from '../../assets/icon/utility/crown-coin.svg';
+import Info from '../../assets/icon/utility/info.svg';
+import Invisible from '../../assets/icon/utility/invisible.svg';
+import Knapsack from '../../assets/icon/utility/knapsack.svg';
+import Medal from '../../assets/icon/utility/medal.svg';
+import Notebook from '../../assets/icon/utility/notebook.svg';
+import Palette from '../../assets/icon/utility/palette.svg';
+import PencilRuler from '../../assets/icon/utility/pencil-ruler.svg';
+import Person from '../../assets/icon/utility/person.svg';
+import SpellBook from '../../assets/icon/utility/spell-book.svg';
+import TrashCan from '../../assets/icon/utility/trash-can.svg';
+import Upgrade from '../../assets/icon/utility/upgrade.svg';
+
+import LaurelCrown from '../../assets/icon/utility/laurel-crown.svg';
+import MagicSwirl from '../../assets/icon/utility/magic-swirl.svg';
+import RosaShield from '../../assets/icon/utility/rosa-shield.svg';
+import SwordWound from '../../assets/icon/utility/sword-wound.svg';
+
+import DragonShield from '../../assets/icon/utility/dragon-shield.svg';
+import Electric from '../../assets/icon/utility/electric.svg';
+import SpikyExplosion from '../../assets/icon/utility/spiky-explosion.svg';
+
 export type ClassName =
   | 'barbarian'
   | 'bard'
@@ -92,7 +118,32 @@ export type StatName =
   | 'wisdom'
   | 'charisma';
 
-export type IconName = DiceName | SchoolName | ItemName | ClassName | StatName;
+export type UtilityName =
+  | 'backpack'
+  | 'bullseye'
+  | 'cauldron'
+  | 'classical-knowledge'
+  | 'crown-coin'
+  | 'dragon-shield'
+  | 'electric'
+  | 'info'
+  | 'invisible'
+  | 'knapsack'
+  | 'laurel-crown'
+  | 'magic-swirl'
+  | 'medal'
+  | 'notebook'
+  | 'palette'
+  | 'pencil-ruler'
+  | 'person'
+  | 'rosa-shield'
+  | 'spiky-explosion'
+  | 'spell-book'
+  | 'sword-wound'
+  | 'trash-can'
+  | 'upgrade';
+
+export type IconName = DiceName | SchoolName | ItemName | ClassName | StatName | UtilityName;
 
 const ICONS: Record<IconName, FC<SvgProps>> = {
   d4: D4,
@@ -134,6 +185,29 @@ const ICONS: Record<IconName, FC<SvgProps>> = {
   intelligence: Intelligence,
   wisdom: Wisdom,
   charisma: Charisma,
+  backpack: Backpack,
+  bullseye: Bullseye,
+  cauldron: Cauldron,
+  'classical-knowledge': ClassicalKnowledge,
+  'crown-coin': CrownCoin,
+  'dragon-shield': DragonShield,
+  electric: Electric,
+  info: Info,
+  invisible: Invisible,
+  knapsack: Knapsack,
+  'laurel-crown': LaurelCrown,
+  'magic-swirl': MagicSwirl,
+  medal: Medal,
+  notebook: Notebook,
+  palette: Palette,
+  'pencil-ruler': PencilRuler,
+  person: Person,
+  'rosa-shield': RosaShield,
+  'spiky-explosion': SpikyExplosion,
+  'spell-book': SpellBook,
+  'sword-wound': SwordWound,
+  'trash-can': TrashCan,
+  upgrade: Upgrade,
 };
 
 type Props = {

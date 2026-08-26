@@ -10,6 +10,7 @@ import CompendiumList, {
 } from '../../components/custom/Compendium/CompendiumList';
 import DetailBlock from '../../components/custom/Compendium/DetailBlock';
 import ListItem from '../../components/custom/ListItem';
+import DndIcon from '../../components/custom/DndIcon';
 import { getAllRaces } from '../../lib/rules/races';
 import type { RaceDefinition } from '../../lib/rules/races';
 import { s } from '../../utils/style-helpers';
@@ -32,7 +33,7 @@ export default function RazzeListScreen() {
         <ListItem
           title={r.name}
           onPress={onPress}
-          icon={<Text style={{ fontSize: 24 }}>🧝</Text>}
+          icon={<DndIcon name="person" size={20} color={t.colors.accent} />}
           badges={
             <>
               <Badge variant="solid" size="sm" color={t.colors.accent}>Velocità {r.baseSpeed} {r.speedUnit}</Badge>
@@ -44,7 +45,7 @@ export default function RazzeListScreen() {
       renderDetail={(r) => (
         <View>
           <CompendiumDetailHeader
-            icon={<Text style={{ fontSize: 24 }}>🧝</Text>}
+            icon={<DndIcon name="person" size={20} color={t.colors.accent} />}
             title={r.name}
             badges={
               <>

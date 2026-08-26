@@ -1,10 +1,13 @@
 import { View, Text, Pressable } from 'react-native';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
+import DndIcon, { type IconName } from './DndIcon';
 
 type Props = {
-  /** Emoji o icona (testo) mostrata nel riquadro */
-  icon: string;
+  /** Emoji o icona (testo) mostrata nel riquadro — alternativa a `dndIcon` */
+  icon?: string;
+  /** Icona DndIcon (SVG) mostrata nel riquadro — alternativa a `icon` */
+  dndIcon?: IconName;
   label: string;
   description?: string;
   onPress: () => void;
@@ -19,7 +22,7 @@ type Props = {
  * descrizione + freccia. Variante `danger` per azioni di eliminazione,
  * `disabled` per funzioni non disponibili (colori attenuati, niente press).
  */
-export default function SectionButton({ icon, label, description, onPress, danger = false, disabled = false }: Props) {
+export default function SectionButton({ icon, dndIcon, label, description, onPress, danger = false, disabled = false }: Props) {
   const t = useTokens();
   const accent = danger ? t.colors.danger : t.colors.accent;
 
@@ -51,7 +54,11 @@ export default function SectionButton({ icon, label, description, onPress, dange
           marginRight: t.spacing[4],
         }}
       >
-        <Text style={{ fontSize: 22 }}>{icon}</Text>
+        {dndIcon ? (
+          <DndIcon name={dndIcon} size={22} color={accent} />
+        ) : (
+          <Text style={{ fontSize: 22 }}>{icon}</Text>
+        )}
       </View>
       <View style={s.flex}>
         <Text style={{ fontSize: t.typography.base, fontWeight: t.typography.semibold, color: disabled ? t.colors.foregroundTertiary : t.colors.foreground }}>

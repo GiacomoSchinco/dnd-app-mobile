@@ -3,6 +3,7 @@ import { useTokens } from '../../ui/prism-provider';
 import { Card } from '../../ui/card';
 import { Button } from '../../ui/button';
 import StepperButton from '../StepperButton';
+import DndIcon from '../DndIcon';
 import {
   STANDARD_ARRAY,
   POINT_BUY_TOTAL,
@@ -110,7 +111,14 @@ export default function AbilitiesStep({
           Distribuzione automatica consigliata in base alla classe (massimo
           sull'abilità principale).
         </Text>
-        <Button variant="outline" size="sm" onPress={onSuggest}>✨ Suggerisci</Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onPress={onSuggest}
+          icon={<DndIcon name="magic-swirl" size={16} color={t.colors.foreground} />}
+        >
+          Suggerisci
+        </Button>
       </View>
 
       <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, marginBottom: t.spacing[1] }}>

@@ -10,6 +10,7 @@ import CompendiumList, {
 } from '../../components/custom/Compendium/CompendiumList';
 import DetailBlock from '../../components/custom/Compendium/DetailBlock';
 import ListItem from '../../components/custom/ListItem';
+import DndIcon from '../../components/custom/DndIcon';
 import { EQUIPMENT_PRESETS_DATA } from '../../lib/rules/equipment-preset';
 import type { EquipmentPresetDefinition } from '../../lib/rules/equipment-preset';
 import { getClassById } from '../../lib/rules/classes';
@@ -42,7 +43,7 @@ export default function EquipaggiamentoListScreen() {
         <ListItem
           title={presetTargetName(p)}
           onPress={onPress}
-          icon={<Text style={{ fontSize: 22 }}>🎒</Text>}
+          icon={<DndIcon name="knapsack" size={20} color={t.colors.accent} />}
           badges={
             <>
               <Badge variant="solid" size="sm" color={t.colors.accent}>
@@ -56,7 +57,7 @@ export default function EquipaggiamentoListScreen() {
       renderDetail={(p) => (
         <View>
           <CompendiumDetailHeader
-            icon={<Text style={{ fontSize: 22 }}>🎒</Text>}
+            icon={<DndIcon name="knapsack" size={20} color={t.colors.accent} />}
             title={presetTargetName(p)}
             badges={
               <>

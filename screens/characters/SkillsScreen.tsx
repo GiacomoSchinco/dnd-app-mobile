@@ -10,11 +10,17 @@ import ListCard from '../../components/custom/ListCard';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import { getAllSkills, getSkillModifierTotal, type SkillDefinition } from '../../lib/rules/skills';
 import { getAllAbilities, getAbilityModifier, formatModifier, getEffectiveAbilityScores } from '../../lib/rules/abilities';
+import type { AbilityScores } from '../../types';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
 
 /** Le 6 caratteristiche in ordine canonico (FOR → CAR) */
 const ABILITIES = getAllAbilities();
+
+/** Punteggi neutri (10) usati quando non c'è un PG attivo (regola hooks: nessun hook dopo la guardia) */
+const DEFAULT_ABILITIES: AbilityScores = {
+  strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10,
+};
 
 /**
  * Tab "Abilità" — elenco leggibile delle 18 skill del PG attivo.
@@ -27,18 +33,20 @@ export default function SkillsScreen() {
   const { activeChar } = useActiveCharacter();
   const [selectedSkill, setSelectedSkill] = useState<SkillDefinition | null>(null);
 
+  // Punteggi effettivi = base + modificatori manuali (correzioni utente)
+  // ⚠️ REGOLA HOOK: dichiarato PRIMA della guardia `if (!activeChar)` (fallback neutro = 10)
+  const effectiveScores = useMemo(
+    () => getEffectiveAbilityScores(activeChar?.abilities ?? DEFAULT_ABILITIES, activeChar?.abilityModifiers ?? []),
+    [activeChar?.abilities, activeChar?.abilityModifiers],
+  );
+
   if (!activeChar) {
-    return <MissingActiveCharacter emoji="🎯" message="Apri un personaggio dalla Home per vedere le sue abilità." />;
+    return <MissingActiveCharacter dndIcon="bullseye" message="Apri un personaggio dalla Home per vedere le sue abilità." />;
   }
 
   const pb = activeChar.proficiencyBonus ?? 0;
   const profSkills = activeChar.proficiencies?.skills ?? [];
   const expSkills = activeChar.proficiencies?.expertise ?? [];
-  // Punteggi effettivi = base + modificatori manuali (correzioni utente)
-  const effectiveScores = useMemo(
-    () => getEffectiveAbilityScores(activeChar.abilities, activeChar.abilityModifiers ?? []),
-    [activeChar.abilities, activeChar.abilityModifiers],
-  );
   // Modificatori manuali alle skill (correzioni utente)
   const skillModifiers = activeChar.skillModifiers ?? [];
 

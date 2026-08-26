@@ -1,5 +1,6 @@
 import type { ItemDefinition } from '../../../types';
 import { getWeaponProperties, getArmorProperties } from '../../../lib/rules/items';
+import { TYPE_COLORS } from './types';
 
 /** Formatta la CA delle armature ({ base, type } o numero) */
 function formatAc(ac: unknown): string {
@@ -36,26 +37,26 @@ export function getEquipmentStatsSummary(item: ItemDefinition, modifier?: number
     if (w.damage) {
       const m = modifier ?? 0;
       const sign = m > 0 ? ` +${m}` : m < 0 ? ` −${Math.abs(m)}` : '';
-      parts.push(`⚔ ${w.damage}${sign}${w.damageType ? ` ${w.damageType}` : ''}`);
+      parts.push(`${w.damage}${sign}${w.damageType ? ` ${w.damageType}` : ''}`);
     }
     if (w.versatileDamage) parts.push(`2 mani ${w.versatileDamage}`);
-    if (w.range) parts.push(`🎯 ${formatRange(w.range)}`);
+    if (w.range) parts.push(formatRange(w.range));
     if (w.magicBonus != null) parts.push(`+${w.magicBonus} magico`);
     if (w.properties && w.properties.length > 0) parts.push(w.properties.join(', '));
     if (parts.length === 0) return null;
-    return { label: parts.join(' · '), color: '#D94A4A' };
+    return { label: parts.join(' · '), color: TYPE_COLORS.weapon };
   }
 
   if (item.type === 'armor') {
     const a = getArmorProperties(item);
     if (!a) return null;
     const parts: string[] = [];
-    if (a.ac) parts.push(`🛡 CA ${formatAc(a.ac)}`);
+    if (a.ac) parts.push(`CA ${formatAc(a.ac)}`);
     if (a.armorType) parts.push(a.armorType);
     if (a.strength != null) parts.push(`FOR ${a.strength}`);
     if (a.stealth === 'svantaggio') parts.push('Svantaggio furtività');
     if (parts.length === 0) return null;
-    return { label: parts.join(' · '), color: '#4A90D9' };
+    return { label: parts.join(' · '), color: TYPE_COLORS.armor };
   }
 
   return null;

@@ -99,7 +99,7 @@ export default function CharacterDetailScreen() {
       {/* Salì di livello — disabilitato al livello massimo (feedback attenuato) */}
       <View style={[s.fullWidth, s.mb(t.spacing[4])]}>
         <SectionButton
-          icon="⤴️"
+          dndIcon="upgrade"
           label="Salì di livello"
           description={activeChar.level >= 20 ? 'Livello massimo raggiunto (20)' : `${activeChar.level}° → ${activeChar.level + 1}°`}
           disabled={activeChar.level >= 20}

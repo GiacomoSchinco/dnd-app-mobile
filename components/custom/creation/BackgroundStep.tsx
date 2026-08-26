@@ -8,6 +8,7 @@ import FilterChip from '../FilterChip';
 import StepLabel from './StepLabel';
 import FeatChoice, { type FeatChoiceState } from './FeatChoice';
 import { s } from '../../../utils/style-helpers';
+import DndIcon from '../DndIcon';
 
 type Props = {
   backgroundId: number | null;
@@ -101,9 +102,12 @@ export default function BackgroundStep({
 
       {featChoice.name && (
         <View style={{ marginTop: t.spacing[3], padding: t.spacing[3], borderRadius: t.radius.md, backgroundColor: t.colors.backgroundSecondary }}>
-          <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
-            🎖 Talento: {featChoice.name}
-          </Text>
+          <View style={[s.row, s.gap(t.spacing[1.5]), { alignItems: 'center' }]}>
+            <DndIcon name="medal" size={16} color={t.colors.accent} />
+            <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>
+              Talento: {featChoice.name}
+            </Text>
+          </View>
         </View>
       )}
 

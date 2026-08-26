@@ -12,6 +12,8 @@ import {
   ItemCard,
   ItemDetailModal,
   ItemFilters,
+  useItemFilters,
+  applyItemFilters,
 } from '../../components/custom/Items';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { getEffectiveAbilityScores, getAbilityModifier } from '../../lib/rules/abilities';
@@ -52,9 +54,7 @@ export default function CharacterItemAssignScreen() {
   const { activeChar, addEquipmentItem, removeEquipmentItem } = useActiveCharacter();
 
   // ── Filtri ──
-  const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState<string | null>(null);
-  const [rarityFilter, setRarityFilter] = useState<string | null>(null);
+  const { search, setSearch, typeFilter, setTypeFilter, rarityFilter, setRarityFilter } = useItemFilters();
 
 // Modale di dettaglio dell'oggetto (per leggerlo prima di assegnarlo)
   const [selectedItem, setSelectedItem] = useState<ItemDefinition | null>(null);
@@ -87,16 +87,10 @@ export default function CharacterItemAssignScreen() {
     return map;
   }, [activeChar?.equipment]);
 
-  const filteredItems = useMemo(() => {
-    let list = allItems;
-    if (search) {
-      const q = search.toLowerCase();
-      list = list.filter((it) => it.name.toLowerCase().includes(q));
-    }
-    if (typeFilter) list = list.filter((it) => it.type === typeFilter);
-    if (rarityFilter) list = list.filter((it) => it.rarity === rarityFilter);
-    return list;
-  }, [search, typeFilter, rarityFilter, allItems]);
+  const filteredItems = useMemo(
+    () => applyItemFilters(allItems, { search, typeFilter, rarityFilter }),
+    [search, typeFilter, rarityFilter, allItems]
+  );
 
   const toggleOwned = useCallback(
     (item: ItemDefinition) => {
@@ -147,7 +141,7 @@ export default function CharacterItemAssignScreen() {
       {filteredItems.length === 0 ? (
         <View style={[s.flex]}>
           <EmptyState
-            emoji="🔍"
+            dndIcon="knapsack"
             title="Nessun risultato"
             message="Nessun oggetto corrisponde ai filtri. Prova a cambiare ricerca o filtro."
           />

@@ -1,8 +1,9 @@
 import EmptyState from './EmptyState';
+import type { IconName } from './DndIcon';
 
 type Props = {
-  /** Emoji decorativa (default 🔮) */
-  emoji?: string;
+  /** Icona DndIcon (SVG) mostrata in grande (default: personaggio invisibile) */
+  dndIcon?: IconName;
   /** Sottotitolo con le istruzioni (dipende dalla schermata) */
   message?: string;
 };
@@ -13,10 +14,10 @@ type Props = {
  * personaggio selezionato" — qui centralizzato (titolo fisso).
  */
 export default function MissingActiveCharacter({
-  emoji = '🔮',
+  dndIcon = 'invisible',
   message = 'Apri un personaggio dalla Home per gestire la sua scheda.',
 }: Props) {
   return (
-    <EmptyState emoji={emoji} title="Nessun personaggio selezionato" message={message} />
+    <EmptyState dndIcon={dndIcon} title="Nessun personaggio selezionato" message={message} />
   );
 }

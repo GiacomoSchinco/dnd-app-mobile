@@ -6,6 +6,7 @@ import { s } from '../../../utils/style-helpers';
 import StepLabel from './StepLabel';
 import CardBox from '../CardBox';
 import LabelValueRow from '../LabelValueRow';
+import DndIcon from '../DndIcon';
 import type { DiceType } from '../../../types';
 
 type Props = {
@@ -70,7 +71,13 @@ export default function HpStep({
 
       {/* Lancio */}
       <View style={[s.row, s.gap(t.spacing[3])]}>
-        <Button onPress={() => onRoll(rollDie(die))} style={{ flex: 1 }}>🎲 Tira il dado</Button>
+        <Button
+          onPress={() => onRoll(rollDie(die))}
+          style={{ flex: 1 }}
+          icon={<DndIcon name="d20" size={18} color={t.colors.accentForeground} />}
+        >
+          Tira il dado
+        </Button>
         <Button variant="outline" onPress={onTakeMax} style={{ flex: 1 }}>Massimo</Button>
       </View>
 

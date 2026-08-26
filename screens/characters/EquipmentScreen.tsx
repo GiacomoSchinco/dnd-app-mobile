@@ -8,6 +8,7 @@ import { Button } from '../../components/ui/button';
 import TabHeader from '../../components/custom/TabHeader';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
 import EmptyState from '../../components/custom/EmptyState';
+import DndIcon, { type IconName } from '../../components/custom/DndIcon';
 import CharacterBar from '../../components/custom/Spells/CharacterBar';
 import ListItem from '../../components/custom/ListItem';
 import SectionTitle from '../../components/custom/SectionTitle';
@@ -24,18 +25,21 @@ import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
 
 /** Gruppi di equipaggiamento mostrati come sezioni (per tipo di oggetto) */
-const EQUIPMENT_GROUPS: { key: string; label: string; emoji: string; matches: (type: string) => boolean }[] = [
-  { key: 'weapon', label: 'Armi', emoji: '⚔️', matches: (t) => t === 'weapon' },
-  { key: 'armor', label: 'Armature', emoji: '🛡️', matches: (t) => t === 'armor' },
-  { key: 'ammunition', label: 'Munizioni', emoji: '🎯', matches: (t) => t === 'ammunition' },
-  { key: 'consumable', label: 'Consumabili', emoji: '🧪', matches: (t) => t === 'consumable' },
-  { key: 'other', label: 'Equipaggiamento', emoji: '🎒', matches: (t) => t !== 'weapon' && t !== 'armor' && t !== 'ammunition' && t !== 'consumable' },
+const EQUIPMENT_GROUPS: { key: string; label: string; dndIcon: IconName; matches: (type: string) => boolean }[] = [
+  { key: 'weapon', label: 'Armi', dndIcon: 'sword-wound', matches: (t) => t === 'weapon' },
+  { key: 'armor', label: 'Armature', dndIcon: 'dragon-shield', matches: (t) => t === 'armor' },
+  { key: 'ammunition', label: 'Munizioni', dndIcon: 'bullseye', matches: (t) => t === 'ammunition' },
+  { key: 'consumable', label: 'Consumabili', dndIcon: 'cauldron', matches: (t) => t === 'consumable' },
+  { key: 'other', label: 'Equipaggiamento', dndIcon: 'knapsack', matches: (t) => t !== 'weapon' && t !== 'armor' && t !== 'ammunition' && t !== 'consumable' },
 ];
 
 /** Punteggi neutri (10) usati quando non c'è un PG attivo */
 const DEFAULT_ABILITIES: AbilityScores = {
   strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10,
 };
+
+/** Colori dei metalli per il denaro (Oro/Argento/Rame) */
+const MONEY_COLORS = { mo: '#D4AF37', ma: '#C0C0C0', mr: '#B87333' } as const;
 
 export default function EquipmentScreen() {
   const t = useTokens();
@@ -54,21 +58,8 @@ export default function EquipmentScreen() {
     [effectiveScores]
   );
 
-  if (!activeChar) {
-    return <MissingActiveCharacter emoji="🎒" message="Apri un personaggio dalla Home per vedere il suo equipaggiamento." />;
-  }
-
-  const money = activeChar.money ?? { mo: 0, ma: 0, mr: 0 };
-  const equipment = activeChar.equipment ?? [];
-
-  const changeMoney = (key: 'mo' | 'ma' | 'mr', delta: number) => {
-    updateCharacter(activeChar.id, {
-      money: {
-        ...money,
-        [key]: Math.max(0, (money[key] ?? 0) + delta),
-      },
-    });
-  };
+  // ⚠️ REGOLA HOOK: derivati/useMemo dichiarati PRIMA della guardia `if (!activeChar)`
+  const equipment = activeChar?.equipment ?? [];
 
   // ── Oggetti raggruppati per tipo (Armi, Armature, …) ──
   const grouped = useMemo(() => {
@@ -80,6 +71,21 @@ export default function EquipmentScreen() {
     }
     return groups.filter((g) => g.items.length > 0);
   }, [equipment]);
+
+  if (!activeChar) {
+    return <MissingActiveCharacter dndIcon="backpack" message="Apri un personaggio dalla Home per vedere il suo equipaggiamento." />;
+  }
+
+  const money = activeChar.money ?? { mo: 0, ma: 0, mr: 0 };
+
+  const changeMoney = (key: 'mo' | 'ma' | 'mr', delta: number) => {
+    updateCharacter(activeChar.id, {
+      money: {
+        ...money,
+        [key]: Math.max(0, (money[key] ?? 0) + delta),
+      },
+    });
+  };
 
   const equippedCount = equipment.filter((it) => it.equipped).length;
 
@@ -105,7 +111,9 @@ export default function EquipmentScreen() {
         <CardBox gap={t.spacing[2]} marginBottom={t.spacing[5]}>
           <SectionTitle text="Denaro" marginBottom={t.spacing[1]} />
           <StepperRow
-            label="🪙 Oro (mo)"
+            label="Oro (mo)"
+            labelIcon="crown-coin"
+            labelIconColor={MONEY_COLORS.mo}
             value={money.mo ?? 0}
             onDecrement={() => changeMoney('mo', -1)}
             onIncrement={() => changeMoney('mo', 1)}
@@ -113,7 +121,9 @@ export default function EquipmentScreen() {
             labelColor={t.colors.foreground}
           />
           <StepperRow
-            label="🪙 Argento (ma)"
+            label="Argento (ma)"
+            labelIcon="crown-coin"
+            labelIconColor={MONEY_COLORS.ma}
             value={money.ma ?? 0}
             onDecrement={() => changeMoney('ma', -1)}
             onIncrement={() => changeMoney('ma', 1)}
@@ -121,7 +131,9 @@ export default function EquipmentScreen() {
             labelColor={t.colors.foreground}
           />
           <StepperRow
-            label="🪙 Rame (mr)"
+            label="Rame (mr)"
+            labelIcon="crown-coin"
+            labelIconColor={MONEY_COLORS.mr}
             value={money.mr ?? 0}
             onDecrement={() => changeMoney('mr', -1)}
             onIncrement={() => changeMoney('mr', 1)}
@@ -139,7 +151,7 @@ export default function EquipmentScreen() {
         {grouped.length === 0 ? (
           <View style={s.mb(t.spacing[5])}>
             <EmptyState
-              emoji="🎒"
+              dndIcon="backpack"
               title="Nessun oggetto"
               message="Tocca '+ Aggiungi oggetti' per assegnare l'equipaggiamento del personaggio dal catalogo."
             />
@@ -147,7 +159,12 @@ export default function EquipmentScreen() {
         ) : (
           grouped.map((group) => (
             <View key={group.key}>
-              <SectionTitle text={`${group.emoji} ${group.label} (${group.items.length})`} />
+              <View style={[s.row, { alignItems: 'center', gap: t.spacing[2], marginBottom: t.spacing[2] }]}>
+                <DndIcon name={group.dndIcon} size={16} color={t.colors.accent} />
+                <View style={s.flex}>
+                  <SectionTitle text={`${group.label} (${group.items.length})`} marginBottom={0} />
+                </View>
+              </View>
               <ListCard marginBottom={t.spacing[4]}>
                 {group.items.map((it, idx) => (
                   <EquipmentRow

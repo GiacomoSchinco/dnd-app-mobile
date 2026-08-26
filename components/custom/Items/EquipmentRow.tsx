@@ -66,7 +66,7 @@ export default function EquipmentRow({
           </View>
         ) : (
           <View style={[s.box(40, 10), { backgroundColor: t.colors.backgroundTertiary, ...s.center }]}>
-            <Text style={{ fontSize: 18 }}>🎒</Text>
+            <DndIcon name="knapsack" size={22} color={t.colors.foregroundTertiary} />
           </View>
         )}
 
@@ -75,11 +75,18 @@ export default function EquipmentRow({
             {equipment.name}
             {equipment.quantity > 1 ? ` ×${equipment.quantity}` : ''}
           </Text>
-          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary, marginTop: 2 }}>
-            {def ? getTypeLabel(def.type) : 'Oggetto'}
-            {def && RARITY_LABELS[def.rarity] ? ` · ${RARITY_LABELS[def.rarity]}` : ''}
-            {def && def.requiresAttunement ? ' · ⚡ Sintonia' : ''}
-          </Text>
+          <View style={[s.row, s.gap(t.spacing[1]), { alignItems: 'center', marginTop: 2 }]}>
+            <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>
+              {def ? getTypeLabel(def.type) : 'Oggetto'}
+              {def && RARITY_LABELS[def.rarity] ? ` · ${RARITY_LABELS[def.rarity]}` : ''}
+            </Text>
+            {def && def.requiresAttunement && (
+              <>
+                <DndIcon name="electric" size={12} color={t.colors.foregroundTertiary} />
+                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundTertiary }}>Sintonia</Text>
+              </>
+            )}
+          </View>
         </View>
 
         <CircleCheck checked={equipment.equipped} onPress={onToggleEquipped} size={30} />
@@ -103,20 +110,25 @@ export default function EquipmentRow({
 
       {/* Bonus di attacco (Colpire) e modificatore di danno derivati dal PG */}
       {weaponMod && (
-        <Text
-          numberOfLines={1}
-          style={{
-            fontSize: t.typography.xs,
-            color: t.colors.foregroundSecondary,
-            fontWeight: '600',
-            marginTop: t.spacing[0.5],
-            marginLeft: t.spacing[2.5] + 40 + t.spacing[2.5],
-          }}
+        <View
+          style={[
+            s.row,
+            s.gap(t.spacing[1.5]),
+            { alignItems: 'center', marginTop: t.spacing[0.5], marginLeft: t.spacing[2.5] + 40 + t.spacing[2.5] },
+          ]}
         >
-          🎯 Colpire {formatModifier(weaponMod.attackBonus)} · 💥 Danno {weaponMod.flexible
-            ? `FOR ${formatModifier(weaponMod.strengthModifier ?? 0)} · DES ${formatModifier(weaponMod.dexterityModifier ?? 0)} (accurata)`
-            : `${formatModifier(weaponMod.modifier)} (${weaponMod.abilityLabel})`}
-        </Text>
+          <DndIcon name="bullseye" size={12} color={t.colors.foregroundSecondary} />
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, fontWeight: '600' }}>
+            Colpire {formatModifier(weaponMod.attackBonus)}
+          </Text>
+          <DndIcon name="spiky-explosion" size={12} color={t.colors.foregroundSecondary} />
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, fontWeight: '600' }}>
+            Danno{' '}
+            {weaponMod.flexible
+              ? `FOR ${formatModifier(weaponMod.strengthModifier ?? 0)} · DES ${formatModifier(weaponMod.dexterityModifier ?? 0)} (accurata)`
+              : `${formatModifier(weaponMod.modifier)} (${weaponMod.abilityLabel})`}
+          </Text>
+        </View>
       )}
 
       {/* Azioni: quantità + rimuovi */}

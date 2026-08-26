@@ -109,7 +109,6 @@ export default function HomeScreen() {
           <LogoHeader size={72} subtitle="Il tuo compagno di avventure D&D" style={{ marginBottom: t.spacing[0] }} />
           <View style={[s.flex, s.fullWidth]}>
             <EmptyState
-              emoji="👥"
               title="Nessun personaggio"
               message="Crea il tuo primo eroe per iniziare l'avventura!"
             />

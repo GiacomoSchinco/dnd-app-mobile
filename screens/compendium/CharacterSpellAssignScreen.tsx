@@ -122,7 +122,7 @@ export default function CharacterSpellAssignScreen() {
       {filteredSpells.length === 0 ? (
         <View style={[s.flex]}>
           <EmptyState
-            emoji="🔍"
+            dndIcon="cauldron"
             title="Nessun risultato"
             message="Nessun incantesimo corrisponde ai filtri. Prova a cambiare ricerca o filtro."
           />

@@ -16,7 +16,7 @@ const sizes = {
   lg: (t) => ({ container: { paddingHorizontal: t.spacing[6], paddingVertical: t.spacing[3.5], borderRadius: t.radius.lg }, label: { fontSize: t.typography.md, fontWeight: t.typography.semibold } }),
 }
 export function Button(props) {
-  const { variant = 'solid', size = 'md', loading = false, disabled = false, fullWidth = false, onPress, children, style, labelStyle, theme, ...rest } = props
+  const { variant = 'solid', size = 'md', loading = false, disabled = false, fullWidth = false, onPress, children, icon, style, labelStyle, theme, ...rest } = props
   const contextTokens = useTokens()
   const t = theme || contextTokens
   const pressed = useSharedValue(0)
@@ -32,6 +32,7 @@ export function Button(props) {
       style={[animatedStyle, { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: fullWidth ? 'stretch' : 'flex-start' },
         (variant === 'solid' || variant === 'danger') && t.shadow.sm, variantStyle.container, sizeStyle.container, isDisabled && { opacity: 0.45 }, style]} {...rest}>
       {loading && <ActivityIndicator size="small" color={variantStyle.label.color} />}
+      {icon && <View style={{ marginRight: t.spacing[1.5] }}>{icon}</View>}
       <Text style={[variantStyle.label, sizeStyle.label, labelStyle]}>{children}</Text>
     </AnimatedPressable>
   )

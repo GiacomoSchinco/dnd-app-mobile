@@ -2,10 +2,15 @@ import { View, Text, type TextStyle } from 'react-native';
 import type { ReactNode } from 'react';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
+import DndIcon, { type IconName } from './DndIcon';
 import StepperButton from './StepperButton';
 
 type Props = {
   label: ReactNode;
+  /** Icona DndIcon mostrata prima dell'etichetta (opzionale) */
+  labelIcon?: IconName;
+  /** Colore dell'icona (default: labelColor, altrimenti foregroundSecondary) */
+  labelIconColor?: string;
   value: ReactNode;
   onDecrement: () => void;
   onIncrement: () => void;
@@ -29,6 +34,8 @@ type Props = {
  */
 export default function StepperRow({
   label,
+  labelIcon,
+  labelIconColor,
   value,
   onDecrement,
   onIncrement,
@@ -41,15 +48,20 @@ export default function StepperRow({
 }: Props) {
   const t = useTokens();
   return (
-    <View style={[s.row, { justifyContent: 'space-between' }]}>
-      <Text
-        style={{
-          fontSize: labelSize ?? t.typography.sm,
-          color: labelColor ?? t.colors.foregroundSecondary,
-        }}
-      >
-        {label}
-      </Text>
+    <View style={[s.row, { justifyContent: 'space-between', alignItems: 'center' }]}>
+      <View style={[s.row, s.gap(t.spacing[1]), { alignItems: 'center' }]}>
+        {labelIcon && (
+          <DndIcon name={labelIcon} size={16} color={labelIconColor ?? labelColor ?? t.colors.foregroundSecondary} />
+        )}
+        <Text
+          style={{
+            fontSize: labelSize ?? t.typography.sm,
+            color: labelColor ?? t.colors.foregroundSecondary,
+          }}
+        >
+          {label}
+        </Text>
+      </View>
       <View style={[s.row, s.gap(t.spacing[3])]}>
         <StepperButton onPress={onDecrement}>−</StepperButton>
         <Text

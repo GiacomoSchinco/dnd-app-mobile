@@ -10,6 +10,7 @@ import CompendiumList, {
   CompendiumDetailHeader,
 } from '../../components/custom/Compendium/CompendiumList';
 import ListItem from '../../components/custom/ListItem';
+import DndIcon from '../../components/custom/DndIcon';
 import { getAllFeats } from '../../lib/rules/feats';
 import type { FeatRaw } from '../../types';
 import { s } from '../../utils/style-helpers';
@@ -47,7 +48,7 @@ export default function TalentiListScreen() {
           title={f.name}
           onPress={onPress}
           iconBg={(CATEGORY_COLORS[f.category] || t.colors.accent) + '18'}
-          icon={<Text style={{ fontSize: 22 }}>⭐</Text>}
+          icon={<DndIcon name="medal" size={20} color={CATEGORY_COLORS[f.category] || t.colors.accent} />}
           badges={
             <>
               <Badge variant="solid" size="sm" color={CATEGORY_COLORS[f.category] || t.colors.accent}>
@@ -61,7 +62,7 @@ export default function TalentiListScreen() {
       renderDetail={(f) => (
         <View>
           <CompendiumDetailHeader
-            icon={<Text style={{ fontSize: 22 }}>⭐</Text>}
+            icon={<DndIcon name="medal" size={20} color={CATEGORY_COLORS[f.category] || t.colors.accent} />}
             title={f.name}
             badges={
               <>

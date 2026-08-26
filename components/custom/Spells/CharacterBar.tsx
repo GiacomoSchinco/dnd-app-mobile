@@ -3,6 +3,7 @@ import { useTokens } from '../../ui/prism-provider';
 import { s } from '../../../utils/style-helpers';
 import type { Character, ClassName } from '../../../types';
 import { CLASS_LABELS } from './types';
+import DndIcon from '../DndIcon';
 
 type Props = {
   activeChar: Character | null;
@@ -37,9 +38,12 @@ export default function CharacterBar({ activeChar, onPress, spellInformation = t
       </View>
     </>
   ) : (
-    <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary }}>
-      👤 Nessun personaggio — aprine uno dalla Home per gestire abilità e magie
-    </Text>
+    <View style={[s.row, s.gap(t.spacing[1.5]), { alignItems: 'center' }]}>
+      <DndIcon name="person" size={16} color={t.colors.foregroundSecondary} />
+      <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary }}>
+        Nessun personaggio — aprine uno dalla Home per gestire abilità e magie
+      </Text>
+    </View>
   );
 
   const baseStyle: ViewStyle[] = [

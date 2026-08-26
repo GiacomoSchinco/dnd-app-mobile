@@ -1,184 +1,233 @@
-# Icone NON DndIcon — elenco per la sostituzione
+# Icone NON DndIcon — checklist per la sostituzione
 
 > **Scopo**: inventario completo di tutte le icone che **non** usano il sistema `DndIcon`
 > (SVG da `assets/icon/`), incluse le emoji usate come icone. Serve come checklist per
 > caricare icone personalizzate e poi sostituirle una a una.
+>
+> **📝 COME USARE QUESTO FILE**: ogni voce delle tabelle emoji ha una colonna **«Mia scelta»**
+> VUOTA in fondo. Scrivi lì l'emoji (o il nome dell'icona) che vuoi usare per quel contesto —
+> poi si sostituisce nel codice al posto di quella attuale. Le voci già risolte o eliminate
+> (es. emoji classi nel wizard, sezioni della Scheda, file morti) sono state rimosse/segnalate.
 
 **Come sostituire**: le icone DndIcon vivono in `assets/icon/` (file SVG) e vengono esposte
 in `components/custom/DndIcon.tsx`. Per usarne una basta passare `iconNode={<DndIcon .../>}`
-a `ScreenHeader`/`ListItem` o `<DndIcon name="..." />`.
+a `ScreenHeader`/`ListItem` o `<DndIcon name="..." />`. Le emoji invece si cambiano
+direttamente nel file indicato (sono stringhe letterali nel JSX/TSX).
 
 ---
 
-## 1. Ionicons (`@expo/vector-icons`) — 13 punti
+## A. EMOJI usate come icone — elenco completo con stato
 
-Le icone Ionicons sono usate in **3 posti**: tab bar, header schermate e chevron delle card.
+> **STATO (aggiornato 2026-08-26)**: A1 ✅ · A2 ✅ · A3 ✅ · A4 ✅ · A5 ✅ · A6 ✅ · A7 ✅
+> (✅ = sostituite con DndIcon · ⏳ = ancora emoji da sostituire)
 
-### 1a. Tab bar (bassa priorità estetica, ma non-DndIcon)
-Definite in `components/custom/navigation/tab-config.ts` e renderizzate in `components/custom/AppNavigator.tsx` (riga 90).
+> Le voci risolte mostrano l'icona DndIcon usata; le altre hanno la colonna **«Mia scelta»**
+> da compilare con l'emoji/icona che vuoi. Suggerimento: usa emoji coerenti col tema oppure
+> le icone SVG della sezione E.
 
-| Tab | Icona attiva | Icona inattiva |
-|-----|-------------|----------------|
-| Home | `home` | `home-outline` |
-| Scheda | `person` | `person-outline` |
-| Magie | `flash` | `flash-outline` |
-| Oggetti | `cube` | `cube-outline` |
-| Altro | `ellipsis-horizontal` | `ellipsis-horizontal-outline` |
+### A1. Stati vuoti (`EmptyState` / `MissingActiveCharacter`) — ✅ RISOLTO
 
-Nota: fallback `help-outline` in `AppNavigator.tsx` (riga 87-89) se una tab non viene trovata.
+> ✅ **RISOLTO (2026-08-26)**: tutti gli stati vuoti usano ora le icone **DndIcon** da
+> `assets/icon/utility/` (game-icons esposte in `DndIcon` come `UtilityName`).
+> `EmptyState` ora accetta la prop `dndIcon?: IconName` (niente più emoji).
 
-### 1b. Icone header `ScreenHeader` (Ionicons)
-`ScreenHeader` (`components/custom/ScreenHeader.tsx`, riga 31) renderizza Ionicons se non gli passi `iconNode` con un `DndIcon`.
+| Contesto | Icona DndIcon (`utility/`) |
+|----------|---------------------------|
+| Nessuna magia assegnata al PG | `spell-book` |
+| Nessun risultato — ricerca magie | `cauldron` |
+| Nessun risultato — ricerca oggetti | `knapsack` |
+| Equipaggiamento vuoto / senza PG | `backpack` |
+| Tab Abilità senza PG | `bullseye` |
+| Tab Talenti senza PG | `medal` |
+| Note senza PG | `notebook` |
+| Default "nessun personaggio selezionato" | `invisible` |
 
-| File | Riga | Icona | Contesto |
-|------|------|-------|----------|
-| `screens/characters/CharacterCreateScreen.tsx` | 48 | `person-add-outline` | Header "Nuovo Personaggio" |
-| `screens/characters/CharacterDetailScreen.tsx` | 67 | `person-outline` | Header "Scheda Personaggio" |
-| `screens/compendium/ItemsScreen.tsx` | 84 | `cube-outline` | Header "Oggetti" |
-| `screens/compendium/SpellsScreen.tsx` | 84 | `flash-outline` | Header "Magie" |
-| `screens/compendium/CompendioScreen.tsx` | 78 | `book-outline` | Header "Compendio" |
-| `screens/more/MoreScreen.tsx` | 32 | `ellipsis-horizontal-outline` | Header "Altro" |
-| `screens/more/SettingsScreen.tsx` | 19 | `settings-outline` | Header "Impostazioni" |
+### A2. Icone di sezione / menu — ✅ RISOLTO
 
-> Le schermate del Compendio (`ClassiListScreen`, `RazzeListScreen`, `BackgroundListScreen`,
-> `TalentiListScreen`, `EquipaggiamentoListScreen`) usano **già** `iconNode={<DndIcon/>}` via
-> `CompendiumList` → non sono in elenco.
+> ✅ **RISOLTO (2026-08-26)**: `SectionButton` ora accetta `dndIcon?: IconName`; il menu Altro
+> usa una mappa dichiarativa con `dndIcon` (niente più emoji).
 
-### 1c. Ionicons altrove
-| File | Riga | Icona | Contesto |
-|------|------|-------|----------|
-| `components/custom/Items/ItemCard.tsx` | 49 | `chevron-forward` | Freccia destra della card oggetto |
-| `components/custom/Items/ItemDetailModal.tsx` | 5 | *(import non usato)* | Import Ionicons **morto** → da rimuovere |
+| Contesto | Icona DndIcon (`utility/`) |
+|----------|---------------------------|
+| Bottone "Salì di livello" (Scheda PG) | `upgrade` |
+| Voce menu "Modifica personaggio" | `pencil-ruler` |
+| Voce menu "Note" | `notebook` |
+| Voce menu "Elimina personaggio" (danger) | `trash-can` |
 
----
+### A3. Tab Talenti — icone delle card (`screens/characters/FeatsScreen.tsx`) — ✅ RISOLTO
 
-## 2. SVG inline (`SvgXml`) — 2 punti
+> ✅ **RISOLTO (2026-08-26)**: `FeatureCard`/`FeatCard` ora usano `dndIcon?: IconName`
+> (DndIcon in box 40px accentSubtle). Niente più emoji.
 
-Pulsante flottante "Torna su" con chevron-up SVG inline (duplicato identico in 2 file).
+| Emoji prima | Card | Icona DndIcon (`utility/`) |
+|------------|------|---------------------------|
+| 🎖️ | Talento | `medal` |
+| 🏆 | Dono epico | `laurel-crown` |
+| 🔮 | Iniziato alla Magia (talento di origine) | `magic-swirl` |
+| ⚔️ | Caratteristiche di classe | `sword-wound` |
+| 🛡️ | Sottoclasse | `rosa-shield` |
 
-| File | Riga | Icona | Contesto |
-|------|------|-------|----------|
-| `screens/compendium/ItemsScreen.tsx` | 125 | chevron-up (SVG inline) | Pulsante "torna su" flottante |
-| `screens/compendium/SpellsScreen.tsx` | 131 | chevron-up (SVG inline) | Pulsante "torna su" flottante |
+### A4. Equipaggiamento — gruppi e righe — ✅ RISOLTO
 
----
+> ✅ **RISOLTO (2026-08-26)**: i gruppi usano `dndIcon` (DndIcon + SectionTitle); le righe
+> usano DndIcon inline (sintonia, colpire/danno); le stats inline perdono le emoji ridondanti
+> (la riga mostra già l'icona del tipo).
 
-## 3. Emoji usate come icone (⚠️ le "più terribili") — 40+ punti
+| Contesto | Icona DndIcon (`utility/`) |
+|----------|---------------------------|
+| Gruppo "Armi" | `sword-wound` |
+| Gruppo "Armature" | `dragon-shield` |
+| Gruppo "Munizioni" | `bullseye` |
+| Gruppo "Consumabili" | `cauldron` |
+| Gruppo "Equipaggiamento" | `knapsack` |
+| Fallback riga oggetto (item non trovato) | `knapsack` |
+| "Sintonia" | `electric` |
+| "Colpire" | `bullseye` |
+| "Danno" | `spiky-explosion` |
+| Oro / Argento / Rame (label denaro) | `crown-coin` |
+| Gittata / CA / danno nelle stats | emoji rimosse (testo puro) |
 
-### 3a. Creazione personaggio — icone classe (`screens/characters/CharacterCreateScreen.tsx`, righe 16–27)
+### A5. Liste Compendio — icone riga + header dettaglio — ✅ RISOLTO
 
-> ✅ **RISOLTO (2026-08-03)**: la lista è stata sostituita da `ClassCarousel`
-> (`components/custom/ClassCarousel.tsx`, carousel infinito con le icone classe SVG
-> ora esposte in `DndIcon`). Le 12 emoji classe sono state rimosse.
+> ✅ **RISOLTO (2026-08-26)**: righe `ListItem` e `CompendiumDetailHeader` ora usano `<DndIcon>`
+> (dimensione 20, colore accent; per Talenti il colore categoria).
 
-| Riga | Emoji | Classe | DndIcon disponibile? |
-|------|-------|--------|----------------------|
-| 16 | 🪓 | Barbaro | **Sì** → `assets/icon/classes/barbarian.svg` (non esposto) |
-| 17 | 🎵 | Bardo | **Sì** → `assets/icon/classes/bard.svg` (non esposto) |
-| 18 | ⚜️ | Chierico | **Sì** → `assets/icon/classes/cleric.svg` (non esposto) |
-| 19 | 🌿 | Druido | **Sì** → `assets/icon/classes/druid.svg` (non esposto) |
-| 20 | ⚔️ | Guerriero | **Sì** → `assets/icon/classes/fighter.svg` (non esposto) |
-| 21 | 🥋 | Monaco | **Sì** → `assets/icon/classes/monk.svg` (non esposto) |
-| 22 | 🛡️ | Paladino | **Sì** → `assets/icon/classes/paladin.svg` (non esposto) |
-| 23 | 🏹 | Ranger | **Sì** → `assets/icon/classes/ranger.svg` (non esposto) |
-| 24 | 🗡️ | Ladro | **Sì** → `assets/icon/classes/rogue.svg` (non esposto) |
-| 25 | 🔮 | Stregone | **Sì** → `assets/icon/classes/sorcerer.svg` (non esposto) |
-| 26 | ☠️ | Warlock | **Sì** → `assets/icon/classes/warlock.svg` (non esposto) |
-| 27 | 📜 | Mago | **Sì** → `assets/icon/classes/wizard.svg` (non esposto) |
-| 105 | ✓ | Indicatore "selezionato" | — (glyph testo) |
+| Lista | Icona DndIcon (`utility/`) |
+|-------|---------------------------|
+| Background (riga + header) | `notebook` |
+| Razze (riga + header) | `person` |
+| Talenti (riga + header) | `medal` |
+| Equipaggiamento (riga + header) | `knapsack` |
 
-> 💡 **Opportunità**: esistono già 13 SVG classe in `assets/icon/classes/` (incluso `artificer.svg`)
-> che NON sono esposti in `DndIcon`. Basterebbe esporli nel file `DndIcon.tsx` per sostituire
-> tutte queste emoji senza caricare nulla di nuovo.
+### A6. Vari / fallback — ✅ RISOLTO
 
-### 3b. Scheda personaggio — sezioni (`screens/characters/CharacterDetailScreen.tsx`, righe 18–22)
-| Riga | Emoji | Sezione |
-|------|-------|---------|
-| 18 | 💪 | Caratteristiche |
-| 19 | 🔮 | Incantesimi |
-| 20 | ⚔️ | Equipaggiamento |
-| 21 | ⭐ | Talenti |
-| 22 | 📝 | Note |
+> ✅ **RISOLTO (2026-08-26)**: tutte le emoji vari/fallback sostituite con DndIcon.
 
-Altro in questo file:
-| Riga | Glyph | Contesto |
-|------|-------|----------|
-| 53 | 🔮 (fontSize 60) | Stato vuoto "Nessun personaggio selezionato" |
-| 129 | › | Freccia righe sezione |
+| Contesto | Icona DndIcon (`utility/`) |
+|----------|---------------------------|
+| Barra "Nessun personaggio" (`CharacterBar`) | `person` |
+| Fallback avatar classe (`ClassAvatar`) | `classical-knowledge` |
+| Bottone "Info app" (`SettingsScreen`) | `info` |
+| Titolo "Scegli il tema" (`ThemePicker`) | `palette` |
 
-### 3c. Liste Compendio — icone riga (emoji in `ListItem`)
-| File | Riga | Emoji | Lista |
-|------|------|-------|-------|
-| `screens/compendium/BackgroundListScreen.tsx` | 35 | 📜 | Righe background |
-| `screens/compendium/RazzeListScreen.tsx` | 35 | 🧝 | Righe razze |
-| `screens/compendium/TalentiListScreen.tsx` | 49 | ⭐ | Righe talenti |
-| `screens/compendium/EquipaggiamentoListScreen.tsx` | 45 | 🎒 | Righe equipaggiamento |
+### A7. Emoji DENTRO i testi (non icone UI, ma visibili) — ✅ RISOLTO
 
-### 3d. Home
-| File | Riga | Glyph | Contesto |
-|------|------|-------|----------|
-| `screens/home/HomeScreen.tsx` | 83 | 👥 (fontSize 60) | Stato vuoto "Nessun personaggio" |
-| `screens/home/HomeScreen.tsx` | 40 | › | Freccia card personaggio |
+> ✅ **RISOLTO (2026-08-26)**: `Button` ora supporta la prop `icon` (ReactNode prima del testo);
+> le emoji decorative nei testi sostituite o rimosse.
 
-### 3e. Componenti Magie (`components/custom/Spells/`)
-| File | Riga | Glyph | Contesto |
-|------|------|-------|----------|
-| `CharacterBar.tsx` | 33 | 👤 | "Nessun personaggio — tocca per crearne uno" |
-| `CharacterBar.tsx` | 36 | › | Freccia |
-| `CharacterPickerModal.tsx` | 50 | 👥 | Titolo "Personaggi" |
-| `CharacterPickerModal.tsx` | 75 | ✓ | Check personaggio attivo |
-| `SpellFilters.tsx` | 82 | ☆ | Trucchetto (livello 0) |
-| `SpellFilters.tsx` | 110 | 🎯 | Chip filtro classe |
-| `SpellFilters.tsx` | 129 | ✓ | Toggle "Preparate" |
-| `SpellFilters.tsx` | 145 | ★ | Toggle "Preferite" |
-| `SpellFilters.tsx` | 194 | ✓ | Selezione "Tutte le classi" |
-| `SpellSlotManager.tsx` | 41 | 🔮 (fontSize 2xl) | Stato vuoto "nessuno slot" |
-| `SpellSlotManager.tsx` | 146 | ⚡ | Footer "Lungo riposo" |
-| `SpellSlotManager.tsx` | 164 | ⚡ | Hint Warlock |
-| `SpellCard.tsx` | 71 | ★ / ☆ | Toggle preferita |
-| `SpellCard.tsx` | 78 | ✓ / + | Toggle preparata |
-| `SpellDetailModal.tsx` | 44 | ✕ | Pulsante chiudi |
-| `SpellDetailModal.tsx` | 95 | ★ / ☆ | Bottone "Preferita" |
-| `SpellDetailModal.tsx` | 103 | ✓ / + | Bottone "Prepara" |
+| Dove | Emoji prima | Come risolto |
+|------|-------------|--------------|
+| `SettingsScreen` Alert "Creato con Prism UI 🎨" | 🎨 | emoji rimossa dal testo |
+| `BackgroundStep` "Talento: {nome}" | 🎖 | DndIcon `medal` + testo (riga) |
+| `HpStep` "Tira il dado" | 🎲 | DndIcon `d20` (prop `icon` di Button) |
+| `LevelUpModal` "Tira (dX)" | 🎲 | emoji rimossa (testo) |
+| `AbilitiesStep` "Suggerisci" | ✨ | DndIcon `magic-swirl` (prop `icon` di Button) |
 
-### 3f. Componenti vari / altre schermate
-| File | Riga | Glyph | Contesto |
-|------|------|-------|----------|
-| `components/custom/ClassAvatar.tsx` | 19 | 🧙 | Fallback avatar classe |
-| `components/custom/Items/ItemDetailModal.tsx` | 56 | ✕ | Pulsante chiudi |
-| `components/custom/DiceRoller/ResultBreakdown.tsx` | 64 | ✕ | Bottone "Annulla" |
-| `components/custom/DiceRoller/StepperControl.tsx` | 43 | + | Bottone incremento |
-| `components/custom/BackButton.tsx` | ~31 | ‹ | Freccia indietro (glyph testo) |
-| `components/custom/ListItem.tsx` | 75, 100 | › | Freccia destra (entrambe le varianti) |
-| `screens/more/SettingsScreen.tsx` | 23 | ℹ️ | Bottone "Info app" |
-| `components/custom/ThemePicker.tsx` | 32 | 🎨 | Titolo "Scegli il tema" |
-
-> `screens/more/SettingsScreen.tsx` riga 22: emoji 🎨 solo nel testo dell'`Alert` ("Creato con Prism UI 🎨") — non è un'icona UI, ma se vuoi un'estetica uniforme sistemala anche lì.
-
-### 3g. Emoji SOLO nei commenti (da ignorare, non visibili)
-| File | Riga | Emoji |
-|------|------|-------|
-| `App.tsx` | 11–14 | ☀️ 🌑 💚 🪨 (commenti import temi) |
-| `components/custom/ThemePicker.tsx` | 14–16 | 🌑 💚 🪨 (commenti temi disattivati) |
+> ✅ **RISOLTO / RIMOSSO** (non più in elenco): emoji classi nel wizard (sostituite dal
+> `ClassCarousel` con token PNG, 2026-08-03); sezioni emoji della Scheda PG (💪 🔮 ⚔️ ⭐ 📝,
+> oggi StatsGrid + tab dedicate); `CharacterPickerModal` e `SpellSlotManager` (file eliminati,
+> codice morto); chip 🎯 filtro classe in `SpellFilters` (ora senza emoji); 👥 stato vuoto
+> Home (icona tolta — `EmptyState` supporta l'assenza di icona); **tutte le sezioni A1–A7**
+> (2026-08-26) ora usano icone `DndIcon` da `assets/icon/utility/`.
 
 ---
 
-## 4. Asset icon ESISTENTI ma NON esposti in `DndIcon` (potenziali sostituti gratuiti)
+## B. Glyph di testo (› ‹ ✓ ✕ ★ ☆ + ⚡) — caratteri tipografici
+
+Presenti ovunque come `<Text>` (nativi e leggibili, ma non in tema). Valutare se sostituirli
+con icone vere o tenerli. Se vuoi, compila la colonna **Mia scelta** per contesto.
+
+| Dove | Riga | Glyph | Contesto | **Mia scelta** |
+|------|------|-------|----------|----------------|
+| `components/custom/ListItem.tsx` | 76, 108 | › | Freccia destra (varianti card/menu) | |
+| `components/custom/SectionButton.tsx` | 66 | › | Freccia destra bottone sezione | |
+| `components/custom/Spells/CharacterBar.tsx` | 65 | › | Freccia destra barra PG | |
+| `components/custom/BackButton.tsx` | 31 | ‹ | Freccia indietro | |
+| `components/custom/DetailModalHeader.tsx` | 41 | ✕ | Pulsante chiudi modali (Magia/Oggetto) | |
+| `components/custom/Spells/SpellDetailModal.tsx` | 139 | ✕ | Pulsante chiudi | |
+| `components/custom/Spells/SpellDetailModal.tsx` | 191 | ★ / ☆ | Bottone "Preferita" | |
+| `components/custom/Spells/SpellDetailModal.tsx` | 201 | ✓ / + | Bottone "Prepara" | |
+| `components/custom/Spells/SpellCard.tsx` | 87 | ★ / ☆ | Toggle preferita | |
+| `components/custom/Spells/SpellCard.tsx` | 97 | ✓ / + | Toggle preparata | |
+| `components/custom/Spells/SpellFilters.tsx` | 85 | ☆ | Chip trucchetti (livello 0) | |
+| `components/custom/Spells/SpellFilters.tsx` | 118 | ✓ | Toggle "Preparate" | |
+| `components/custom/Spells/SpellFilters.tsx` | 123 | ★ | Toggle "Preferite" | |
+| `components/custom/Items/ItemCard.tsx` | 89 | ✓ / + | Toggle posseduto | |
+| `components/custom/Items/ItemDetailModal.tsx` | 170 | ✓ / + | Bottone "Aggiungi/Rimuovi dall'equipaggiamento" | |
+| `components/custom/Items/EquipmentRow.tsx` | 139 | ✕ | Bottone "Rimuovi" | |
+| `components/custom/creation/ClassStep.tsx` | 73 | ✕ | Rimozione classe | |
+| `components/custom/creation/FeatStep.tsx` | 90 | ✓ / + | Chip selezionato | |
+| `components/custom/creation/FeatChoice.tsx` | 158 | ✓ | Scelta selezionata | |
+| `components/custom/CircleCheck.tsx` | 28 | ✓ | Icona interna checkbox (default) | |
+
+---
+
+## C. Ionicons (`@expo/vector-icons`) — 16+ punti
+
+### C1. Tab bar
+Definite in `components/custom/navigation/tab-config.ts`, renderizzate in
+`components/custom/AppNavigator.tsx` (riga ~90). Fallback `help-outline` se la tab non viene
+trovata (righe 87-89).
+
+| Tab | Attiva | Inattiva | **Mia scelta** |
+|-----|--------|----------|----------------|
+| Home (bottone nascosto) | `home` | `home-outline` | |
+| Scheda | `person` | `person-outline` | |
+| Talenti | `star` | `star-outline` | |
+| Equip. | `bag-handle` | `bag-handle-outline` | |
+| Magie | `flash` | `flash-outline` | |
+| Abilità | `bulb` | `bulb-outline` | |
+| Altro | `ellipsis-horizontal` | `ellipsis-horizontal-outline` | |
+
+### C2. Header `ScreenHeader` (Ionicons)
+`ScreenHeader` (`components/custom/ScreenHeader.tsx`) renderizza Ionicons se non gli passi
+`iconNode` con un `DndIcon`.
+
+| File | Riga | Icona | Contesto | **Mia scelta** |
+|------|------|-------|----------|----------------|
+| `screens/characters/CharacterCreateScreen.tsx` | 47 | `person-add-outline` | "Nuovo Personaggio" | |
+| `screens/characters/CharacterDetailScreen.tsx` | 59 | `person-outline` | "Scheda Personaggio" | |
+| `screens/compendium/ItemsScreen.tsx` | 83 | `cube-outline` | "Oggetti" | |
+| `screens/compendium/SpellsScreen.tsx` | 189 | `flash-outline` | "Magie" | |
+| `screens/compendium/CompendioScreen.tsx` | 75 | `book-outline` | "Compendio" | |
+| `screens/more/MoreScreen.tsx` | 70 | `ellipsis-horizontal-outline` | "Altro" | |
+| `screens/more/SettingsScreen.tsx` | 19 | `settings-outline` | "Impostazioni" | |
+
+### C3. Altrove
+| File | Riga | Icona | Contesto | **Mia scelta** |
+|------|------|-------|----------|----------------|
+| `components/custom/Items/ItemCard.tsx` | 93 | `chevron-forward` | Freccia destra card oggetto | |
+| `components/custom/HomeQuickActions.tsx` | 24, 33 | `settings` + `book` | Pulsanti rapidi Home (Impostazioni/Compendio) | |
+| `components/custom/Items/ItemDetailModal.tsx` | 7 | *(import non usato)* | Import Ionicons **morto** → da rimuovere | |
+
+---
+
+## D. SVG inline (`SvgXml`) — 1 punto
+
+FAB "Torna su" con chevron-up SVG inline (componente condiviso, non più duplicato).
+
+| File | Riga | Icona | Contesto | **Mia scelta** |
+|------|------|-------|----------|----------------|
+| `components/custom/ScrollToTopFab.tsx` | 40 | chevron-up (SVG inline) | Pulsante "torna su" flottante | |
+
+---
+
+## E. Asset icon ESISTENTI ma NON esposti in `DndIcon` (potenziali sostituti gratuiti)
 
 | Cartella | Contenuto | Stato |
 |----------|-----------|-------|
 | `assets/icon/classes/` | 13 SVG classi (artificer, barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard) | **Non esposti** — le classi usano token PNG (`assets/classes/token_*.png`) |
-| `assets/icon/stats/` | 6 SVG abilità (strength, dexterity, constitution, intelligence, wisdom, charisma) | **Non esposti** — potrebbero sostituire 💪 e le sezioni abilità |
-| `assets/icon/utility/spell-book.svg` | 1 SVG (libro magie) | **Non esposto** — potrebbe sostituire 📜/📖/🔮 in vari punti |
+| `assets/icon/stats/` | 6 SVG abilità (strength, dexterity, constitution, intelligence, wisdom, charisma) | **Non esposti** — potrebbero sostituire le emoji sezioni/stats |
+| `assets/icon/utility/` | 24 SVG game-icons (backpack, bullseye, cauldron, classical-knowledge, crown-coin, dragon-shield, electric, info, invisible, knapsack, laurel-crown, magic-swirl, medal, notebook, palette, pencil-ruler, person, rosa-shield, spiky-explosion, spell-book, sword-wound, trash-can, trophy-cup, upgrade) | **Esposti in `DndIcon`** (tipo `UtilityName`) — usati da tutte le sezioni A1–A7. ⚠️ `trophy-cup` presente ma non esposto (alternativa a `laurel-crown` per il Dono epico) |
 
 Esporre questi in `DndIcon.tsx` = sostituzioni immediate senza caricare nuovi asset.
 
 ---
 
-## 5. Riepilogo per priorità
+## F. Riepilogo per priorità
 
-1. **Emoji icone** (sez. 3): il grosso del lavoro estetico — 40+ punti.
-2. **SVG inline "torna su"** (sez. 2): 2 punti, duplicato da estrarre in un'unica icona.
-3. **Ionicons header** (sez. 1b): 7 schermate — sostituibili passando `iconNode={<DndIcon/>}`.
-4. **Ionicons tab bar** (sez. 1a): 5 tab — sostituibili in `tab-config.ts` + `AppNavigator.tsx`.
-5. **Glyph testo** (› ‹ ✓ ✕ ★ ☆ + ⚡): presenti ovunque come `<Text>` — valutare se sostituirli con icone vere o tenerli come caratteri tipografici (sono nativi e leggibili).
+1. **Emoji come icone** (sez. A): il grosso del lavoro estetico — compila la colonna «Mia scelta».
+2. **Glyph di testo** (sez. B): valutare se sostituirli con icone vere o tenerli (sono nativi e leggibili).
+3. **Ionicons** (sez. C): tab bar, header e chevron — sostituibili passando `iconNode={<DndIcon/>}` o cambiando il nome in `tab-config.ts`.
+4. **SVG inline "torna su"** (sez. D): 1 punto condiviso.
+5. **Asset non esposti** (sez. E): esporre in `DndIcon` = sostituzioni immediate.

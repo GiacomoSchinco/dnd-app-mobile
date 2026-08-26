@@ -9,6 +9,7 @@ import { getFeatByName } from '../../lib/rules/feats';
 import { getClassNameItalian, getClass } from '../../lib/rules/classes';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 import { s } from '../../utils/style-helpers';
+import DndIcon, { type IconName } from '../../components/custom/DndIcon';
 
 /** Raggruppa le feature di classe per livello (ordine di apprendimento) */
 function groupClassFeaturesByLevel(features: { level: number; name: string }[]) {
@@ -66,14 +67,14 @@ function SectionHeader({ title, count, note }: { title: string; count: number; n
  */
 function FeatureCard({
   title,
-  icon,
+  dndIcon,
   category,
   description,
   effects,
   table,
 }: {
   title: string;
-  icon: string;
+  dndIcon: IconName;
   category: string;
   description?: string;
   effects?: string[];
@@ -85,7 +86,7 @@ function FeatureCard({
       {/* Header: icona in box + nome + categoria */}
       <View style={[s.row, { alignItems: 'center', gap: t.spacing[2] }]}>
         <View style={[s.box(40, t.radius.sm), { backgroundColor: t.colors.accentSubtle, ...s.center }]}>
-          <Text style={{ fontSize: t.typography.base }}>{icon}</Text>
+          <DndIcon name={dndIcon} size={20} color={t.colors.accent} />
         </View>
         <View style={s.flex}>
           <Text style={{ fontSize: t.typography.md, fontWeight: '700', color: t.colors.foreground, lineHeight: 20 }}>
@@ -149,12 +150,12 @@ function FeatureCard({
 }
 
 /** Card di un talento/dono epico: descrizione + effetti risolti da feats.json */
-function FeatCard({ name, icon, category }: { name: string; icon: string; category: string }) {
+function FeatCard({ name, dndIcon, category }: { name: string; dndIcon: IconName; category: string }) {
   const feat = getFeatByName(name);
   return (
     <FeatureCard
       title={name}
-      icon={icon}
+      dndIcon={dndIcon}
       category={category}
       description={feat?.description}
       effects={(feat?.granted_modifiers ?? []).map((m) => m.description).filter((d) => d.length > 0)}
@@ -168,7 +169,7 @@ export default function FeatsScreen() {
   const { activeChar } = useActiveCharacter();
 
   if (!activeChar) {
-    return <MissingActiveCharacter emoji="🎖️" message="Apri un personaggio dalla Home per vedere talenti e caratteristiche." />;
+    return <MissingActiveCharacter dndIcon="medal" message="Apri un personaggio dalla Home per vedere talenti e caratteristiche." />;
   }
 
   const mainClass = activeChar.classes[0];
@@ -220,12 +221,12 @@ export default function FeatsScreen() {
           ) : (
             <View style={{ gap: t.spacing[2.5] }}>
               {feats.map((f) => (
-                <FeatCard key={f} name={f} icon="🎖️" category="Talento" />
+                <FeatCard key={f} name={f} dndIcon="medal" category="Talento" />
               ))}
               {featChoice && (
                 <FeatureCard
                   title="Iniziato alla Magia"
-                  icon="🔮"
+                  dndIcon="magic-swirl"
                   category="Talento di origine"
                   description={`Caratteristica da incantatore: ${featChoice.ability}`}
                   effects={[
@@ -244,7 +245,7 @@ export default function FeatsScreen() {
             <SectionHeader title="Doni epici" count={epicBoons.length} />
             <View style={{ gap: t.spacing[2.5] }}>
               {epicBoons.map((b) => (
-                <FeatCard key={b} name={b} icon="🏆" category="Dono epico" />
+                <FeatCard key={b} name={b} dndIcon="laurel-crown" category="Dono epico" />
               ))}
             </View>
           </View>
@@ -283,7 +284,7 @@ export default function FeatsScreen() {
                         <FeatureCard
                           key={name}
                           title={name}
-                          icon="⚔️"
+                          dndIcon="sword-wound"
                           category="Classe"
                           description={info?.description}
                           table={info?.table}
@@ -306,7 +307,7 @@ export default function FeatsScreen() {
                 <FeatureCard
                   key={f.name}
                   title={f.name}
-                  icon="🛡️"
+                  dndIcon="rosa-shield"
                   category="Sottoclasse"
                   description={f.description}
                 />

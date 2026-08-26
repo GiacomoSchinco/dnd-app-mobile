@@ -10,6 +10,7 @@ import CompendiumList, {
   CompendiumDetailHeader,
 } from '../../components/custom/Compendium/CompendiumList';
 import ListItem from '../../components/custom/ListItem';
+import DndIcon from '../../components/custom/DndIcon';
 import { getAllBackgrounds } from '../../lib/rules/backgrounds';
 import type { BackgroundDefinition } from '../../lib/rules/backgrounds';
 import { getSkillNameItalian } from '../../lib/rules/skills';
@@ -33,7 +34,7 @@ export default function BackgroundListScreen() {
         <ListItem
           title={b.name}
           onPress={onPress}
-          icon={<Text style={{ fontSize: 24 }}>📜</Text>}
+          icon={<DndIcon name="notebook" size={20} color={t.colors.accent} />}
           badges={
             <>
               <Badge variant="solid" size="sm" color={t.colors.accent}>
@@ -47,7 +48,7 @@ export default function BackgroundListScreen() {
       renderDetail={(b) => (
         <View>
           <CompendiumDetailHeader
-            icon={<Text style={{ fontSize: 24 }}>📜</Text>}
+            icon={<DndIcon name="notebook" size={20} color={t.colors.accent} />}
             title={b.name}
             badges={b.feat.name ? <Badge variant="solid" size="sm" color={t.colors.accent}>{b.feat.name}</Badge> : undefined}
           />

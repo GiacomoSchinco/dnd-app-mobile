@@ -13,6 +13,8 @@ import {
   ItemCard,
   ItemDetailModal,
   ItemFilters,
+  useItemFilters,
+  applyItemFilters,
 } from '../../components/custom/Items';
 
 /** Forma raw degli item in items.json (snake_case, come da catalogo) */
@@ -43,9 +45,7 @@ export default function ItemsScreen({ onBack }: { onBack?: () => void }) {
   }, []);
 
   // ── Filters ──
-  const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState<string | null>(null);
-  const [rarityFilter, setRarityFilter] = useState<string | null>(null);
+  const { search, setSearch, typeFilter, setTypeFilter, rarityFilter, setRarityFilter } = useItemFilters();
 
   // ── Modal state ──
   const [selectedItem, setSelectedItem] = useState<ItemDefinition | null>(null);
@@ -59,22 +59,10 @@ export default function ItemsScreen({ onBack }: { onBack?: () => void }) {
   }, []);
 
   // ── Filtered items ──
-  const filteredItems = useMemo(() => {
-    let list = allItems;
-
-    if (search) {
-      const q = search.toLowerCase();
-      list = list.filter((s) => s.name.toLowerCase().includes(q));
-    }
-    if (typeFilter) {
-      list = list.filter((s) => s.type === typeFilter);
-    }
-    if (rarityFilter) {
-      list = list.filter((s) => s.rarity === rarityFilter);
-    }
-
-    return list;
-  }, [search, typeFilter, rarityFilter, allItems]);
+  const filteredItems = useMemo(
+    () => applyItemFilters(allItems, { search, typeFilter, rarityFilter }),
+    [search, typeFilter, rarityFilter, allItems]
+  );
 
   // ── Render item ──
   const renderItem = useCallback(({ item }: { item: ItemDefinition }) => {
@@ -109,6 +97,8 @@ export default function ItemsScreen({ onBack }: { onBack?: () => void }) {
         data={filteredItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.name}
+        maxToRenderPerBatch={12}
+        windowSize={7}
         contentContainerStyle={{ paddingBottom: insets.bottom + 80, paddingHorizontal: t.spacing[4] }}
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}

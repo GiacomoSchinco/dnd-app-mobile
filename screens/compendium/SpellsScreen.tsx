@@ -221,7 +221,7 @@ export default function SpellsScreen({ standalone = false }: Props) {
       {isSheet && sheetSpells.length === 0 ? (
         <View style={[s.flex, { paddingHorizontal: t.spacing[4] }]}>
           <EmptyState
-            emoji="🔮"
+            dndIcon="spell-book"
             title="Nessuna magia assegnata"
             message="Tocca '+ Aggiungi' per scegliere le magie del personaggio dalla sua classe."
           />
@@ -280,6 +280,8 @@ export default function SpellsScreen({ standalone = false }: Props) {
           data={filteredSpells}
           renderItem={renderSpell}
           keyExtractor={(item) => item.name}
+          maxToRenderPerBatch={12}
+          windowSize={7}
           contentContainerStyle={{ paddingBottom: bottomClearance }}
           showsVerticalScrollIndicator={false}
           onScroll={handleScroll}

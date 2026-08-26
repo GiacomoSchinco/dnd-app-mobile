@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
+import DndIcon, { type IconName } from './DndIcon';
 
 type Props = {
-  /** Emoji decorativa mostrata in grande (es. 🎯, 🔮) */
-  emoji: string;
+  /** Icona DndIcon (SVG) mostrata in grande. Opzionale: se assente non viene mostrata. */
+  dndIcon?: IconName;
   /** Titolo principale (es. 'Nessun personaggio selezionato') */
   title: string;
   /** Sottotitolo opzionale con istruzioni */
@@ -12,10 +13,10 @@ type Props = {
 };
 
 /**
- * Stato vuoto centrato riutilizzabile (emoji + titolo + messaggio).
+ * Stato vuoto centrato riutilizzabile (icona + titolo + messaggio).
  * Usato quando non c'è un personaggio attivo o una lista è vuota.
  */
-export default function EmptyState({ emoji, title, message }: Props) {
+export default function EmptyState({ dndIcon, title, message }: Props) {
   const t = useTokens();
 
   return (
@@ -27,7 +28,7 @@ export default function EmptyState({ emoji, title, message }: Props) {
         { backgroundColor: t.colors.background, paddingHorizontal: t.spacing[6] },
       ]}
     >
-      <Text style={{ fontSize: 60 }}>{emoji}</Text>
+      {dndIcon && <DndIcon name={dndIcon} size={56} color={t.colors.accent} />}
       <Text
         style={{
           fontSize: t.typography.lg,

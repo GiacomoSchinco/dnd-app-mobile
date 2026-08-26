@@ -31,7 +31,7 @@ export default function NotesScreen() {
   const [draft, setDraft] = useState('');
 
   if (!activeChar) {
-    return <MissingActiveCharacter emoji="📝" message="Apri un personaggio dalla Home per prendere appunti." />;
+    return <MissingActiveCharacter dndIcon="notebook" message="Apri un personaggio dalla Home per prendere appunti." />;
   }
 
   const notes = activeChar.notesList ?? [];

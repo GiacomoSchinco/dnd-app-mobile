@@ -9,6 +9,7 @@ import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import ConfirmDeleteCharacterModal from '../../components/custom/ConfirmDeleteCharacterModal';
 import SectionButton from '../../components/custom/SectionButton';
+import type { IconName } from '../../components/custom/DndIcon';
 import { ROUTES } from '../../lib/routes';
 import { ALTRO_ROUTES } from './altro-routes';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
@@ -34,7 +35,7 @@ export default function MoreScreen() {
   // Voci del menu: lista dichiarativa → facile aggiungerne altre (basta una riga)
   const menuItems: {
     key: string;
-    icon: string;
+    dndIcon: IconName;
     label: string;
     description: string;
     danger?: boolean;
@@ -42,21 +43,21 @@ export default function MoreScreen() {
   }[] = [
     {
       key: 'modifica',
-      icon: '✏️',
+      dndIcon: 'pencil-ruler',
       label: 'Modifica personaggio',
       description: activeChar ? `Nome, statistiche e modificatori di ${activeChar.name}` : 'Nessun personaggio attivo',
       onPress: () => navigation.navigate(ALTRO_ROUTES.MODIFICA_PG),
     },
     {
       key: 'note',
-      icon: '📝',
+      dndIcon: 'notebook',
       label: 'Note',
       description: 'Appunti e storia del personaggio',
       onPress: () => navigation.getParent()?.getParent()?.navigate(ROUTES.NOTES),
     },
     {
       key: 'elimina',
-      icon: '🗑️',
+      dndIcon: 'trash-can',
       label: 'Elimina personaggio',
       description: activeChar ? activeChar.name : 'Nessun personaggio attivo',
       danger: true,
@@ -77,7 +78,7 @@ export default function MoreScreen() {
           {menuItems.map((item) => (
             <SectionButton
               key={item.key}
-              icon={item.icon}
+              dndIcon={item.dndIcon}
               label={item.label}
               description={item.description}
               danger={item.danger}

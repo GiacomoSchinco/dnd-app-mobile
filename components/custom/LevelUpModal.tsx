@@ -202,7 +202,7 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
               label={
                 hpChoice === 'roll' && hpRolled != null
                   ? `Tiro: ${hpRolled}`
-                  : `🎲 Tira (d${preview.hitDie})`
+                  : `Tira (d${preview.hitDie})`
               }
               selected={hpChoice === 'roll'}
               compact

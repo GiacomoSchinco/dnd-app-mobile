@@ -17,10 +17,10 @@ export type NavigationTab = {
   /** Testo visualizzato nella tab bar */
   label: string;
   /**
-   * Componente della schermata. `any` è richiesto da React Navigation
-   * (`ScreenComponentType` è tipizzato come `ComponentType<any>` dalla libreria).
+   * Componente della schermata. Tipizzato come `ComponentType<{}>` (accetta
+   * qualsiasi screen senza props obbligatorie, evitando `any`).
    */
-  component: ComponentType<any>;
+  component: ComponentType<{}>;
   iconActive: ComponentProps<typeof Ionicons>['name'];
   iconInactive: ComponentProps<typeof Ionicons>['name'];
   /** Quando mostrare il pulsante: 'always', 'noCharacter', 'withCharacter' */
