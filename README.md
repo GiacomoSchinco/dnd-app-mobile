@@ -17,7 +17,8 @@
   (classe, razza, background, punteggi, talenti, punti ferita, riepilogo).
 - **Multiclasse** — creazione e level-up con più classi (prerequisiti 13+, slot
   incantesimi combinati, ASI per classe).
-- **Scheda personaggio** — PF (danno/cura/temporanei), caratteristiche, risorse,
+- **Scheda personaggio** — PF (danno/cura/temporanei), caratteristiche, risorse
+  **interattive** (consuma/recupera, ripristina tutte, spiegazione via info),
   header con CA/PB/Velocità/Iniziativa.
 - **Tab Talenti** — talenti, doni epici, caratteristiche di classe e sottoclasse.
 - **Tab Equipaggiamento** — denaro e oggetti del PG con statistiche inline,
@@ -30,6 +31,9 @@
 - **Temi fantasy** commutabili (chiaro/scuro) dalle Impostazioni.
 - **Editor personaggio** — correzione di nome, statistiche, CA, PF e modificatori
   manuali (abilità/skill) con salvataggio a conferma.
+- **Promemoria manuale** — card "Regole da verificare" nella Scheda con accesso
+  rapido agli strumenti manuali (modifica PG, gestisci magie/oggetti, note),
+  chiudibile per personaggio; badge "Da verificare" sulla card in Home.
 
 <!--
 ## 📸 Schermate
@@ -127,7 +131,9 @@ android/               → progetto nativo generato da prebuild (build APK local
 - **Level-up** (`LevelUpModal`): tiro PF, nuove feature, ASI/talento al livello,
   sottoclasse, aggiornamento slot e risorse preservando lo stato runtime.
 - **Scheda PG** (`CharacterDetailScreen`): header (nome/classe/CA/PB/Velocità/Iniz),
-  "Salì di livello", Punti Ferita (stepper), `StatsGrid` (6 caratteristiche), Risorse.
+  "Salì di livello", Punti Ferita (stepper), `StatsGrid` (6 caratteristiche),
+  **Risorse interattive** (stepper consuma/recupera + "Ripristina tutte" + info (i)
+  con descrizione e tipo di riposo, da `progression.json`/`effects.json`/`feats.json`).
 - **Backfill automatico** (`backfillDerivedStats` nello store): ripara i PG salvati
   prima di modifiche (PF/PB/CA, feature, magie automatiche).
 
@@ -178,8 +184,8 @@ android/               → progetto nativo generato da prebuild (build APK local
 - **Character** (`types/character.ts`): modello completo (HP, PB, CA, initiative,
   speed, size, senses, defenses, effects, spellcasting, resources, equipment,
   money, choices, notes, classFeatures, subclassFeatures…).
-- **Progressione** (`progression.json`): tabelle 1–20, feature per livello, risorse,
-  livelli di sblocco sottoclasse.
+- **Progressione** (`progression.json`): tabelle 1–20, feature per livello, risorse
+  (con `description` mostrate nella card Risorse), livelli di sblocco sottoclasse.
 
 ---
 

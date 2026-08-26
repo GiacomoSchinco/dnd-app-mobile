@@ -16,11 +16,12 @@ import {
   computeClassDerived,
 } from '../lib/rules/character-builder';
 import { getClass } from '../lib/rules/classes';
-import { getFeat, getFeatAsiCap, getFeatAsiOptions } from '../lib/rules/feats';
+import { getFeat, getFeatAsiCap, getFeatAsiOptions, getAllFeats } from '../lib/rules/feats';
 import { applyFeat } from '../lib/rules/apply-feat';
 import { getSubclass } from '../lib/rules/subclasses';
 import { getAbilityModifier } from '../lib/rules/abilities';
-import { getProficiencyBonus, getAllFeaturesUpToLevel } from '../lib/rules/progression';
+import { getProficiencyBonus, getAllFeaturesUpToLevel, getClassResources } from '../lib/rules/progression';
+import { getAllEffects } from '../lib/rules/effects';
 import { getSubclassFeaturesUpToLevel } from '../lib/rules/subclasses';
 import { getRaceEffects } from '../lib/rules/races';
 import { getClassPreset, getBackgroundPreset } from '../lib/rules/equipment-preset';
@@ -136,6 +137,36 @@ function backfillDerivedStats(c: Character): Character {
   const hasSpellSlots = Object.values(c.spellSlots ?? {}).some((s) => (s?.max ?? 0) > 0);
   const spellSlots = hasSpellSlots ? c.spellSlots : getSpellSlots(cls.className, level);
 
+  // Descrizioni risorse mancanti (PG esistenti) → patch da progression.json + effects.json
+  const oldResources = c.resources ?? {};
+  const needsDescPatch =
+    Object.keys(oldResources).length > 0 && Object.values(oldResources).some((r) => !r.description);
+  let resources: Record<string, CharacterResource> | undefined;
+  if (needsDescPatch) {
+    const descByKey = new Map<string, string>();
+    for (const cl of c.classes ?? []) {
+      for (const [key, res] of Object.entries(getClassResources(cl.className))) {
+        if (res.description && !descByKey.has(key)) descByKey.set(key, res.description);
+      }
+    }
+    for (const eff of getAllEffects()) {
+      const hasResource = eff.type === 'resource_grant' || eff.type === 'action_grant';
+      if (hasResource && typeof eff.key === 'string' && eff.description && !descByKey.has(eff.key)) {
+        descByKey.set(eff.key, eff.description);
+      }
+    }
+    // Risorse dai TALENTI (granted_resource, es. Punti Fortuna)
+    for (const feat of getAllFeats()) {
+      const gr = feat.granted_resource as { name?: string; description?: string } | null | undefined;
+      if (gr?.name && gr.description && !descByKey.has(gr.name)) descByKey.set(gr.name, gr.description);
+    }
+    const entries = Object.entries(oldResources).map(([key, res]) => [
+      key,
+      res.description ? res : { ...res, description: descByKey.get(key) },
+    ]);
+    resources = Object.fromEntries(entries) as Record<string, CharacterResource>;
+  }
+
   return {
     ...c,
     level,
@@ -159,6 +190,8 @@ function backfillDerivedStats(c: Character): Character {
     equipment,
     // Oro del background aggiunto ai PG vecchi (una tantum)
     money,
+    // Descrizioni risorse patchate (PG esistenti) — o invariate se non serve
+    resources: resources ?? c.resources,
   };
 }
 
@@ -338,6 +371,7 @@ export const useCharacterStore = create<CharacterState>()(
                       max,
                       current: max,
                       resetOn: grant.resetOn,
+                      description: grant.description,
                     };
                   }
                 }

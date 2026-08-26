@@ -27,6 +27,7 @@ export interface FeatResourceGrant {
   /** Numero fisso oppure 'proficiency_bonus' (risolto dal builder col PB reale) */
   max: number | 'proficiency_bonus';
   resetOn?: string;
+  description?: string;
 }
 
 export interface FeatApplyOptions {
@@ -203,6 +204,7 @@ export function applyFeat(feat: FeatRaw, options: FeatApplyOptions = {}): FeatAp
     | {
         name?: string;
         label?: string;
+        description?: string;
         scale_with?: string;
         reset_on?: string;
       }
@@ -212,6 +214,7 @@ export function applyFeat(feat: FeatRaw, options: FeatApplyOptions = {}): FeatAp
     resources.push({
       key: grantedResource.name,
       label: grantedResource.label ?? grantedResource.name,
+      description: grantedResource.description,
       max: grantedResource.scale_with === 'proficiency_bonus' ? 'proficiency_bonus' : 1,
       resetOn: grantedResource.reset_on ?? 'long_rest',
     });

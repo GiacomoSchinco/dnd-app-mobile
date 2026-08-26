@@ -3,6 +3,8 @@
 export interface ProgressionResourceRaw {
   label: string;
   type?: string;
+  /** Descrizione della risorsa (regole, come si usa, quando si recupera) */
+  description?: string;
   /** Valori per livello — numeri (es. cariche) o stringhe (es. dado arti marziali '1d8') */
   per_level?: Record<string, number | string>;
   [key: string]: unknown;

@@ -2,15 +2,18 @@ import { useState } from 'react';
 import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { TabToRootNav } from '../../types/navigation';
+import type { CharacterResource } from '../../types';
 import { useTokens } from '../../components/ui/prism-provider';
 import { Badge } from '../../components/ui/badge';
+import { Button } from '../../components/ui/button';
 import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
+import ManualCheckCard from '../../components/custom/ManualCheckCard';
 import StatsGrid from '../../components/custom/StatsGrid';
 import ClassAvatar from '../../components/custom/ClassAvatar';
 import CardBox from '../../components/custom/CardBox';
-import LabelValueRow from '../../components/custom/LabelValueRow';
+import BottomModal from '../../components/custom/BottomModal';
 import LevelUpModal from '../../components/custom/LevelUpModal';
 import SectionButton from '../../components/custom/SectionButton';
 import SectionTitle from '../../components/custom/SectionTitle';
@@ -22,11 +25,21 @@ import { ROUTES } from '../../lib/routes';
 import { s } from '../../utils/style-helpers';
 import { useActiveCharacter } from '../../store/useActiveCharacter';
 
+/** Etichette leggibili per il campo resetOn delle risorse */
+const RESET_LABELS: Record<string, string> = {
+  short_rest: 'breve',
+  short_rest_one: 'breve',
+  long_rest: 'lungo',
+  none: 'nessuno',
+};
+
 export default function CharacterDetailScreen() {
   const t = useTokens();
   const navigation = useNavigation<TabToRootNav>();
   const { activeChar, updateCharacter, applyLevelUp } = useActiveCharacter();
   const [levelUpVisible, setLevelUpVisible] = useState(false);
+  /** Risorsa selezionata per la spiegazione (modale) */
+  const [resourceInfo, setResourceInfo] = useState<CharacterResource | null>(null);
 
   // ── Gestione punti ferita ───────────────────────────────────
   const changeHp = (delta: number) => {
@@ -45,6 +58,26 @@ export default function CharacterDetailScreen() {
     });
   };
 
+  // ── Gestione risorse (consuma/recupera + ripristino) ────────
+  const changeResource = (key: string, delta: number) => {
+    if (!activeChar?.resources?.[key]) return;
+    const res = activeChar.resources[key];
+    updateCharacter(activeChar.id, {
+      resources: {
+        ...activeChar.resources,
+        [key]: { ...res, current: Math.max(0, Math.min(res.max, res.current + delta)) },
+      },
+    });
+  };
+
+  const restoreAllResources = () => {
+    if (!activeChar?.resources) return;
+    const restored = Object.fromEntries(
+      Object.entries(activeChar.resources).map(([k, r]) => [k, { ...r, current: r.max }])
+    );
+    updateCharacter(activeChar.id, { resources: restored });
+  };
+
   if (!activeChar) {
     return <MissingActiveCharacter message="Apri un personaggio dalla Home per gestire la sua scheda." />;
   }
@@ -60,6 +93,14 @@ export default function CharacterDetailScreen() {
         onBack={() => navigation.navigate(ROUTES.HOME)}
         backLabel="Personaggi"
         />
+
+      {/* Card informativa "Regole da verificare" — chiudibile per PG (persistita);
+          dopo "Ho capito" resta una riga info compatta per rileggere tutto */}
+      <ManualCheckCard
+        dismissed={!!activeChar.manualCheckDismissed}
+        marginBottom={t.spacing[5]}
+        onDismiss={() => updateCharacter(activeChar.id, { manualCheckDismissed: true })}
+      />
 
       {/* Card nome e classe — stile HomeScreen */}
       <CardBox padding={t.spacing[5]} radius={t.radius.lg} marginBottom={t.spacing[5]} style={s.fullWidth}>
@@ -148,19 +189,64 @@ export default function CharacterDetailScreen() {
         <StatsGrid scores={getEffectiveAbilityScores(activeChar.abilities, activeChar.abilityModifiers ?? [])} />
       </View>
 
-      {/* Risorse (Punti Fortuna, Ira, Ki…) */}
+      {/* Risorse (Ira, Ki, Punti Fortuna…) — stepper consuma/recupera + info */}
       {activeChar.resources && Object.keys(activeChar.resources).length > 0 && (
         <CardBox marginBottom={t.spacing[4]} gap={t.spacing[2]} style={s.fullWidth}>
-          <Text style={{ fontSize: t.typography.sm, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
-            Risorse
-          </Text>
+          <View style={[s.row, { justifyContent: 'space-between', alignItems: 'center' }]}>
+            <Text style={{ fontSize: t.typography.sm, fontWeight: t.typography.semibold, color: t.colors.foreground }}>
+              Risorse
+            </Text>
+            <Button size="sm" variant="ghost" onPress={restoreAllResources}>
+              Ripristina tutte
+            </Button>
+          </View>
           {Object.entries(activeChar.resources).map(([key, res]) => (
-            <LabelValueRow key={key} label={res.label} value={`${res.current}/${res.max}`} />
+            <StepperRow
+              key={key}
+              label={res.label}
+              value={`${res.current}/${res.max}`}
+              onDecrement={() => changeResource(key, -1)}
+              onIncrement={() => changeResource(key, +1)}
+              onInfo={res.description ? () => setResourceInfo(res) : undefined}
+            />
           ))}
         </CardBox>
       )}
 
       </Screen>
+
+      {/* Spiegazione risorsa (FUORI dallo Screen, pattern modali) */}
+      <BottomModal visible={resourceInfo != null} onClose={() => setResourceInfo(null)}>
+        {resourceInfo && (
+          <>
+            <Text
+              style={{
+                fontSize: t.typography.lg,
+                fontWeight: t.typography.bold,
+                color: t.colors.foreground,
+                marginBottom: t.spacing[1],
+              }}
+            >
+              {resourceInfo.label}
+            </Text>
+            <Text
+              style={{
+                fontSize: t.typography.sm,
+                color: t.colors.foregroundTertiary,
+                marginBottom: t.spacing[3],
+              }}
+            >
+              {resourceInfo.current}/{resourceInfo.max}
+              {resourceInfo.resetOn
+                ? ` · riposo ${RESET_LABELS[resourceInfo.resetOn] ?? resourceInfo.resetOn}`
+                : ''}
+            </Text>
+            <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, lineHeight: 22 }}>
+              {resourceInfo.description}
+            </Text>
+          </>
+        )}
+      </BottomModal>
 
       {/* Level up */}
       <LevelUpModal

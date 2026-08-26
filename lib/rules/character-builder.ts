@@ -758,6 +758,7 @@ export function computeClassDerived(
         max,
         current: max,
         resetOn: typeof res.recovery === 'string' ? res.recovery : 'long_rest',
+        description: res.description,
       };
     }
   }
@@ -1054,6 +1055,7 @@ export function buildCharacterSheet(
         max: rawMax,
         current: rawMax,
         resetOn: typeof eff.reset_on === 'string' ? eff.reset_on : 'long_rest',
+        description: eff.description,
       };
     }
   }
@@ -1067,6 +1069,7 @@ export function buildCharacterSheet(
         max,
         current: max,
         resetOn: grant.resetOn,
+        description: grant.description,
       };
     }
   }
@@ -1080,6 +1083,7 @@ export function buildCharacterSheet(
           max,
           current: max,
           resetOn: grant.resetOn,
+          description: grant.description,
         };
       }
     }

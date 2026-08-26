@@ -62,6 +62,11 @@ function CharacterCard({ character, onPress }: { character: Character; onPress: 
           {character.race && (
             <Badge variant="subtle" size="sm">{character.race}</Badge>
           )}
+          {!character.manualCheckDismissed && (
+            <Badge variant="subtle" size="sm" color={t.colors.warning} dot>
+              Da verificare
+            </Badge>
+          )}
         </>
       }
     />

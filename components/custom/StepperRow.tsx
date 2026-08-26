@@ -1,4 +1,4 @@
-import { View, Text, type TextStyle } from 'react-native';
+import { View, Text, Pressable, type TextStyle } from 'react-native';
 import type { ReactNode } from 'react';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
@@ -26,6 +26,8 @@ type Props = {
   labelSize?: number;
   /** Colore dell'etichetta (default foregroundSecondary) */
   labelColor?: string;
+  /** Mostra un piccolo pulsante info (i) accanto all'etichetta */
+  onInfo?: () => void;
 };
 
 /**
@@ -45,6 +47,7 @@ export default function StepperRow({
   valueColor,
   labelSize,
   labelColor,
+  onInfo,
 }: Props) {
   const t = useTokens();
   return (
@@ -61,6 +64,23 @@ export default function StepperRow({
         >
           {label}
         </Text>
+        {onInfo && (
+          <Pressable
+            onPress={onInfo}
+            hitSlop={8}
+            accessibilityRole="button"
+            accessibilityLabel="Info sulla risorsa"
+            style={({ pressed }) => ({
+              width: 28,
+              height: 28,
+              borderRadius: t.radius.full,
+              backgroundColor: pressed ? t.colors.accentSubtle : 'transparent',
+              ...s.center,
+            })}
+          >
+            <Text style={{ fontSize: t.typography.sm, fontWeight: '700', color: t.colors.accent }}>i</Text>
+          </Pressable>
+        )}
       </View>
       <View style={[s.row, s.gap(t.spacing[3])]}>
         <StepperButton onPress={onDecrement}>−</StepperButton>

@@ -105,7 +105,7 @@
 | `ConfirmDeleteCharacterModal` | Modale conferma elimina personaggio (Annulla/Elimina) | Scheda PG, tab Altro |
 | `ScrollToTopFab` + `useScrollToTop()` | FAB "Torna su" flottante + stato `showScrollTop`/`handleScroll` | Liste lunghe (Oggetti, Magie) |
 | `LabelValueRow` | Riga `[etichetta → valore]` (space-between, dividerTop, colori custom) | Riepiloghi, risorse, dettagli |
-| `StepperRow` | Riga `[etichetta] [− valore +]` con `StepperButton` | PF (Attuali/Temporanei), denaro (mo/ma/mr) |
+| `StepperRow` | Riga `[etichetta] [− valore +]` con `StepperButton` (+ `onInfo` → pulsante info (i) accanto all'etichetta) | PF (Attuali/Temporanei), denaro (mo/ma/mr), RISORSE (Ira, Ki…) |
 | `CardBox` | Card contenitore `backgroundSecondary` + bordo + raggio (padding/gap/marginBottom/radius) | Qualsiasi box con bordo (Scheda PG, slot, riepiloghi) |
 | `SectionBlock` | `View(marginBottom) + SectionTitle + contenuto` | Sezioni "titolo + lista" (Talenti, Abilità, Note, Equipaggiamento) |
 | `CircleCheck` | Checkbox circolare (cerchio bordo 2, riempito se attivo, ✓ dentro) | Equipaggia oggetti, completa note |
@@ -117,6 +117,7 @@
 | `EquipmentRow` | Riga equipaggiamento con statistiche INLINE (danno/CA/gittata/proprietà) | Tab Equip. (`EquipmentScreen`) |
 | `CompendiumDetailHeader` | Header unificato dettagli compendio (icona box 56 accentSubtle + titolo xl/700 + badge) | Liste/dettagli Compendio (Classi/Razze/Background/Talenti/Equip.) |
 | `ClassSwitcher` | Chips delle classi configurate per scegliere QUALE classe configurare (multiclasse) | Wizard multiclasse (Level/Subclass/Skills step) |
+| `ManualCheckCard` | Card warning "Regole da verificare" + modale "Strumenti manuali" (editor/magie/oggetti/note). Chiudibile per PG (`Character.manualCheckDismissed`); dopo "Ho capito" resta una riga info compatta che riapre tutto | Scheda PG; badge "Da verificare" in Home (`HomeScreen`) |
 
 **Wizard creazione**: la schermata (`CharacterCreateScreen`) è un renderer sottile →
 tutta la logica vive in `useCharacterWizard` (hook) e ogni passo è un componente
@@ -144,7 +145,7 @@ cambiando l'import in `App.tsx`. I temi supportano transizioni animate, haptic e
 
 | Pacchetto | Versione | Cosa fa |
 |---|---|---|
-| `expo` | ~54.0.34 | Framework |
+| `expo` | ~54.0.37 | Framework |
 | `react-native` | 0.81.5 | UI nativa |
 | `react-native-reanimated` | ~4.1.1 | Animazioni (DiceOverlay, ClassCarousel) |
 | `react-native-worklets` | 0.5.1 | Worklets (peer Reanimated 4) |
@@ -156,7 +157,7 @@ cambiando l'import in `App.tsx`. I temi supportano transizioni animate, haptic e
 | `@react-navigation/native` + `bottom-tabs` + `native-stack` | 6.x | Navigazione (tab + stack) |
 | `zustand` | ^5.0.14 | State management (`store/`) |
 | `@expo/vector-icons` | ^15.1.1 | Icone Ionicons (tab bar, header) |
-| `expo-file-system` | ~19.0.23 | Storage PG (`file-system-storage.ts`) |
+| `expo-file-system` | ~19.0.24 | Storage PG (`file-system-storage.ts`) |
 | `expo-font` | ~14.0.12 | Font (plugin in app.json) |
 | `react-native-web` + `react-dom` | — | Supporto target web |
 

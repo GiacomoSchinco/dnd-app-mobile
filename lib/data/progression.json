@@ -42,6 +42,7 @@
         "rage": {
           "label": "Ira",
           "type": "daily_uses",
+          "description": "Il barbaro può infondere in sé un potere primordiale chiamato \"ira\" che gli conferisce potenza e resistenza straordinarie. Può entrare in ira come azione bonus se non indossa un'armatura pesante. Durante l'ira ottiene resistenza ai danni contundenti, perforanti e taglienti, un bonus ai danni che aumenta con il livello, vantaggio alle prove di Forza e ai tiri salvezza su Forza, ma non può mantenere la concentrazione né lanciare incantesimi. Recupera un utilizzo dopo un riposo breve ed entrambi dopo un riposo lungo.",
           "per_level": {
             "1": 2, "2": 2, "3": 3, "4": 3, "5": 3,
             "6": 4, "7": 4, "8": 4, "9": 4, "10": 4,
@@ -57,6 +58,7 @@
         },
         "weapon_mastery": {
           "label": "Padronanza d'armi",
+          "description": "La competenza nell'uso delle armi permette al barbaro di avvalersi delle proprietà di padronanza per due tipi di armi da mischia semplici o da guerra a scelta. Ogni volta che termina un riposo lungo, può esercitarsi con le armi e cambiare una delle armi scelte.",
           "count": {
             "1": 2, "2": 2, "3": 2, "4": 3, "5": 3,
             "6": 3, "7": 3, "8": 3, "9": 3, "10": 4,
@@ -97,6 +99,7 @@
         "bardic_inspiration": {
           "label": "Ispirazione Bardica",
           "type": "per_short_rest",
+          "description": "Come azione bonus, il bardo può ispirare un'altra creatura entro 18 metri da sé che può vederlo o sentirlo, conferendole un dado di Ispirazione Bardica (d6). Entro l'ora successiva, quando la creatura fallisce una prova con d20, può tirare il dado e aggiungere il risultato al d20, trasformando potenzialmente il fallimento in un successo. Il bardo può conferire il dado un numero di volte pari al suo modificatore di Carisma (minimo 1) e recupera tutti gli utilizzi spesi dopo un riposo lungo. Il dado diventa d8 al 5° livello, d10 al 10° e d12 al 15°.",
           "uses_per_rest": "charisma_modifier",
           "die_size": {
             "1": "d6", "2": "d6", "3": "d6", "4": "d6",
@@ -139,6 +142,7 @@
         "channel_divinity": {
           "label": "Incanalare Divinità",
           "type": "per_short_rest",
+          "description": "Il chierico può incanalare l'energia divina direttamente dai Piani Esterni per alimentare effetti magici. Inizia con gli effetti scintilla divina e scacciare non morti, e ogni volta che usa Incanalare Divinità può scegliere quale effetto attivare. Recupera un utilizzo dopo un riposo breve ed entrambi dopo un riposo lungo; ottiene usi aggiuntivi a determinati livelli.",
           "per_level": {
             "1": 2, "2": 2, "3": 2, "4": 2, "5": 2,
             "6": 3, "7": 3, "8": 3, "9": 3, "10": 3,
@@ -180,6 +184,7 @@
         "wild_shape": {
           "label": "Forma Selvatica",
           "type": "daily_uses",
+          "description": "Come azione bonus, il druido assume le sembianze di una bestia di cui ha appreso la forma, rimanendovi per un numero di ore pari alla metà del suo livello da druido, finché non usa di nuovo Forma Selvatica o non è incapacitato o morto. Recupera un utilizzo dopo un riposo breve ed entrambi dopo un riposo lungo; ottiene usi aggiuntivi e nuove forme a livelli superiori.",
           "per_level": {
             "1": 2, "2": 2, "3": 2, "4": 2, "5": 2,
             "6": 3, "7": 3, "8": 3, "9": 3, "10": 3,
@@ -221,6 +226,7 @@
         "second_wind": {
           "label": "Recuperare Energie",
           "type": "per_short_rest",
+          "description": "Come azione bonus, il guerriero attinge alla sua riserva limitata di resistenza fisica e mentale per recuperare punti ferita pari a 1d10 più il suo livello da guerriero. Recupera un utilizzo dopo un riposo breve ed entrambi dopo un riposo lungo; ottiene più utilizzi a livelli superiori.",
           "per_level": {
             "1": 2, "2": 2, "3": 2,
             "4": 3, "5": 3, "6": 3, "7": 3, "8": 3, "9": 3,
@@ -231,6 +237,7 @@
         "action_surge": {
           "label": "Azione impetuosa",
           "type": "per_short_rest",
+          "description": "Il guerriero può spingersi oltre i suoi normali limiti per un istante, effettuando un'azione aggiuntiva nel suo turno, fatta eccezione per l'azione di Magia. Non può riutilizzarlo prima di aver completato un riposo breve o lungo. A partire dal 17° livello può usarlo due volte prima di un riposo, ma solo una volta nello stesso turno.",
           "per_level": {
             "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1,
             "7": 1, "8": 1, "9": 1, "10": 1, "11": 1, "12": 1,
@@ -241,6 +248,7 @@
         "indomitable": {
           "label": "Indomabile",
           "type": "per_long_rest",
+          "description": "Se il guerriero fallisce un tiro salvezza, può ripetere il tiro con un bonus pari al suo livello da guerriero. Ottiene un secondo utilizzo al 13° livello e un terzo al 17°.",
           "per_level": {
             "9": 1, "10": 1, "11": 1, "12": 1,
             "13": 2, "14": 2, "15": 2, "16": 2,
@@ -249,6 +257,7 @@
         },
         "weapon_mastery": {
           "label": "Padronanza d'armi",
+          "description": "La competenza nell'uso delle armi permette al guerriero di avvalersi delle proprietà di padronanza per tre tipi di armi semplici o da guerra a scelta. Ogni volta che termina un riposo lungo, può esercitarsi con le armi e cambiare una delle armi scelte.",
           "count": {
             "1": 3, "2": 3, "3": 3, "4": 4, "5": 4,
             "6": 4, "7": 4, "8": 4, "9": 4, "10": 5,
@@ -258,6 +267,7 @@
         },
         "extra_attack": {
           "label": "Attacco Extra",
+          "description": "Quando effettua l'azione di Attacco nel proprio turno, il guerriero può attaccare due volte anziché una (Due attacchi extra dall'11° livello e Tre attacchi extra dal 20°).",
           "total_attacks_per_level": {
             "1": 1, "2": 1, "3": 1, "4": 1,
             "5": 2, "6": 2, "7": 2, "8": 2, "9": 2, "10": 2,
@@ -298,6 +308,7 @@
         "focus_points": {
           "label": "Punti Concentrazione",
           "type": "per_short_rest",
+          "description": "La concentrazione e l'addestramento marziale del monaco gli permettono di imbrigliare un'energia straordinaria, rappresentata dai punti concentrazione. Questi punti possono essere spesi per potenziare o alimentare alcuni privilegi del monaco, come Difesa paziente, Passo del vento e Raffica di colpi. Il monaco recupera tutti i punti spesi dopo un riposo breve o lungo.",
           "per_level": {
             "1": 0, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
             "7": 7, "8": 8, "9": 9, "10": 10,
@@ -307,6 +318,7 @@
         },
         "martial_arts_die": {
           "label": "Dado delle Arti Marziali",
+          "description": "Il monaco può tirare il dado di Arti Marziali (d6) al posto dei normali danni del suo colpo senz'armi o della sua arma da monaco. Il dado aumenta con il livello: d8 al 5°, d10 all'11° e d12 al 17°.",
           "per_level": {
             "1": "d6", "2": "d6", "3": "d6", "4": "d6",
             "5": "d8", "6": "d8", "7": "d8", "8": "d8", "9": "d8", "10": "d8",
@@ -316,6 +328,7 @@
         },
         "unarmored_movement": {
           "label": "Movimento Senza Armatura",
+          "description": "La velocità del monaco aumenta di 3 metri, purché non indossi un'armatura pesante o impugni uno scudo. Il bonus aumenta man mano che il monaco acquisisce livelli.",
           "bonus_meters": {
             "1": 0, "2": 3, "3": 3, "4": 3, "5": 3,
             "6": 4, "7": 4, "8": 4, "9": 4,
@@ -357,6 +370,7 @@
         "lay_on_hands": {
           "label": "Imposizione delle Mani",
           "type": "pool",
+          "description": "Il paladino possiede una riserva di poteri curativi che si ricostituisce dopo un riposo lungo e che gli consente di ripristinare un numero totale di punti ferita pari a cinque volte il suo livello da paladino. Come azione bonus può toccare una creatura (anche se stesso) per ripristinarne i punti ferita, fino all'ammontare massimo disponibile nella riserva. Può inoltre consumare 5 punti ferita della riserva per curare l'avvelenamento.",
           "pool_per_level": {
             "1": 5, "2": 10, "3": 15, "4": 20, "5": 25,
             "6": 30, "7": 35, "8": 40, "9": 45, "10": 50,
@@ -367,6 +381,7 @@
         "channel_divinity": {
           "label": "Incanalare Divinità",
           "type": "per_short_rest",
+          "description": "Il paladino può incanalare l'energia divina direttamente dai Piani Esterni per alimentare effetti magici, iniziando con l'effetto Percezione del Divino. Recupera un utilizzo dopo un riposo breve ed entrambi dopo un riposo lungo; ottiene un uso aggiuntivo al livello 11.",
           "per_level": {
             "3": 2, "4": 2, "5": 2, "6": 2, "7": 2, "8": 2, "9": 2, "10": 2,
             "11": 3, "12": 3, "13": 3, "14": 3, "15": 3,
@@ -406,6 +421,7 @@
         "favored_enemy": {
           "label": "Nemico Prescelto",
           "type": "daily_uses",
+          "description": "L'incantesimo marchio del cacciatore del ranger è sempre considerato preparato e può essere lanciato due volte senza spendere alcuno slot incantesimo. Gli utilizzi vengono ripristinati dopo un riposo lungo e aumentano al raggiungimento di determinati livelli da ranger.",
           "per_level": {
             "1": 2, "2": 2, "3": 2, "4": 2,
             "5": 3, "6": 3, "7": 3, "8": 3,
@@ -448,6 +464,7 @@
         "sneak_attack": {
           "label": "Attacco Furtivo",
           "type": "scaling_dice",
+          "description": "Una volta per turno, il ladro può infliggere 1d6 danni extra a una creatura che colpisce con un tiro per colpire, se dispone di vantaggio al tiro ed esegue l'attacco con un'arma accurata o a distanza. Il numero di dadi extra aumenta man mano che il ladro sale di livello.",
           "die_size": "d6",
           "dice_count": {
             "1": 1, "2": 1, "3": 2, "4": 2,
@@ -490,6 +507,7 @@
         "sorcery_points": {
           "label": "Punti Stregoneria",
           "type": "pool",
+          "description": "Lo stregone può attingere alla fonte del potere magico dentro di sé, rappresentata dai punti stregoneria. Può consumare uno slot incantesimo per ottenere punti stregoneria pari al livello dello slot, oppure trasformare i punti stregoneria non spesi in uno slot incantesimo (fino al 5° livello). Recupera tutti i punti spesi dopo un riposo lungo.",
           "per_level": {
             "1": 0, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
             "7": 7, "8": 8, "9": 9, "10": 10,
@@ -499,6 +517,7 @@
         },
         "metamagic_options": {
           "label": "Opzioni Metamagiche",
+          "description": "Lo stregone può alterare i suoi incantesimi secondo necessità usando le opzioni di Metamagia, spendendo il costo corrispondente in punti stregoneria. Ottiene due opzioni al 2° livello, altre due al 10° e altre due al 17°. Può usare solo un'opzione di Metamagia su un incantesimo quando lo lancia, salvo diversamente indicato.",
           "count": {
             "2": 2, "3": 2, "4": 2, "5": 2, "6": 2, "7": 2, "8": 2, "9": 2,
             "10": 4, "11": 4, "12": 4, "13": 4, "14": 4, "15": 4, "16": 4,
@@ -538,6 +557,7 @@
         "invocations_known": {
           "label": "Suppliche Occulte",
           "type": "known",
+          "description": "Le Suppliche Occulte sono frammenti di conoscenze proibite che conferiscono al warlock persistenti doti magiche o altre verità nascoste. Quando sale di livello, il warlock può sostituire una supplica con un'altra di cui possiede i prerequisiti, e ottiene ulteriori suppliche a scelta ai livelli superiori.",
           "count": {
             "1": 1, "2": 3, "3": 3, "4": 3,
             "5": 5, "6": 5, "7": 6, "8": 6,
@@ -548,6 +568,7 @@
         },
         "mystic_arcanum": {
           "label": "Arcanum Mistico",
+          "description": "Il patrono rivela al warlock un segreto magico noto come arcanum, rappresentato da un incantesimo da warlock di 6° livello a scelta. Può lanciarlo una volta senza spendere alcuno slot incantesimo e deve completare un riposo lungo prima di poterlo lanciare nuovamente. Ottiene ulteriori arcanum di 7°, 8° e 9° livello ai livelli 13, 15 e 17.",
           "levels": [11, 13, 15, 17],
           "spell_levels": [6, 7, 8, 9]
         }
@@ -584,10 +605,11 @@
         "arcane_recovery": {
           "label": "Recupero Arcanico",
           "type": "per_day",
-          "description": "Una volta al giorno dopo un riposo breve, recuperi slot incantesimo per un totale di livelli pari alla metà del tuo livello da Mago (arrotondato per eccesso)."
+          "description": "Quando il mago completa un riposo breve, può scegliere quali slot incantesimo spesi recuperare, per un livello totale pari o inferiore alla metà del suo livello da mago (arrotondato per eccesso); nessuno slot recuperato può essere di livello pari o superiore al 6°. Dopo aver usato questo privilegio, non può riutilizzarlo prima di aver completato un riposo lungo."
         },
         "spellbook": {
           "label": "Grimorio",
+          "description": "Il libro degli incantesimi è il tomo personale del mago e contiene gli incantesimi di 1° livello o superiore noti al personaggio. Inizia con sei incantesimi da mago di 1° livello a scelta; ogni volta che acquisisce un livello da mago dopo il 1°, può aggiungere due incantesimi da mago a scelta, ciascuno di un livello di cui possiede slot incantesimo.",
           "initial_spells": 6,
           "spells_per_level_up": 2
         }

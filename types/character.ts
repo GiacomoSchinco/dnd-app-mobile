@@ -107,6 +107,8 @@ export interface CharacterResource {
   current: number;
   /** Quando si recupera: 'short_rest' | 'long_rest' | 'none' | custom */
   resetOn?: string;
+  /** Spiegazione di cosa fa la risorsa (regole) */
+  description?: string;
 }
 
 // ── Sensi / Difese (effetti risolti) ───────────────────────────
@@ -285,6 +287,9 @@ export interface Character {
   notes?: string;
   /** Todo-list di appunti (note prese durante il gioco) */
   notesList?: NoteItem[];
+
+  /** L'utente ha chiuso la card "Regole da verificare" per questo PG */
+  manualCheckDismissed?: boolean;
 }
 
 // ── Appunti / todo-list ────────────────────────────────────────
