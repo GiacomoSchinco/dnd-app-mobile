@@ -29,13 +29,13 @@ interface CompendioSection {
 }
 
 const SECTIONS: CompendioSection[] = [
-  { key: 'classi', label: 'Classi', icon: 'd12', description: '12 classi e 48 sottoclassi' },
-  { key: 'razze', label: 'Razze', icon: 'd10', description: 'Umano, Elfo, Nano, Halfling e altre' },
-  { key: 'background', label: 'Background', icon: 'd8', description: 'Origini e storie dei personaggi' },
-  { key: 'talenti', label: 'Talenti', icon: 'd6', description: 'Talenti e abilità speciali' },
-  { key: 'oggetti', label: 'Oggetti', icon: 'd4', description: 'Armi, armature e oggetti' },
-  { key: 'magie', label: 'Magie', icon: 'divination', description: 'Lista completa degli incantesimi' },
-  { key: 'equipaggiamento', label: 'Equipaggiamento', icon: 'gear', description: 'Equipaggiamento da avventuriero' },
+  { key: 'classi', label: 'Classi', icon: 'sword-wound', description: '12 classi e 48 sottoclassi' },
+  { key: 'razze', label: 'Razze', icon: 'person', description: 'Umano, Elfo, Nano, Halfling e altre' },
+  { key: 'background', label: 'Background', icon: 'notebook', description: 'Origini e storie dei personaggi' },
+  { key: 'talenti', label: 'Talenti', icon: 'medal', description: 'Talenti e abilità speciali' },
+  { key: 'oggetti', label: 'Oggetti', icon: 'backpack', description: 'Armi, armature e oggetti' },
+  { key: 'magie', label: 'Magie', icon: 'spell-book', description: 'Lista completa degli incantesimi' },
+  { key: 'equipaggiamento', label: 'Equipaggiamento', icon: 'knapsack', description: 'Equipaggiamento da avventuriero' },
 ];
 
 // Mappa voce del menu → schermata dello stack radice (RootStack)

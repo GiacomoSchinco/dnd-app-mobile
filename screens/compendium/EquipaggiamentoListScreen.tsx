@@ -33,7 +33,7 @@ export default function EquipaggiamentoListScreen() {
   return (
     <CompendiumList<EquipmentPresetDefinition>
       title="Equipaggiamento"
-      icon="gear"
+      icon="knapsack"
       onBack={() => navigation.goBack()}
       items={EQUIPMENT_PRESETS_DATA}
       keyExtractor={(p) => String(p.id)}

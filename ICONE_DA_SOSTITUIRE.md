@@ -128,7 +128,10 @@ direttamente nel file indicato (sono stringhe letterali nel JSX/TSX).
 > oggi StatsGrid + tab dedicate); `CharacterPickerModal` e `SpellSlotManager` (file eliminati,
 > codice morto); chip 🎯 filtro classe in `SpellFilters` (ora senza emoji); 👥 stato vuoto
 > Home (icona tolta — `EmptyState` supporta l'assenza di icona); **tutte le sezioni A1–A7**
-> (2026-08-26) ora usano icone `DndIcon` da `assets/icon/utility/`.
+> (2026-08-26) ora usano icone `DndIcon` da `assets/icon/utility/`; **icone dadi del Compendio**
+> (2026-08-26) sostituite con icone semantiche nel menu (`CompendioScreen`) e negli header
+> delle liste (`CompendiumList`): Classi→`sword-wound`, Razze→`person`, Background→`notebook`,
+> Talenti→`medal`, Oggetti→`backpack`, Magie→`spell-book`, Equipaggiamento→`knapsack`.
 
 ---
 

@@ -23,7 +23,7 @@ export default function RazzeListScreen() {
   return (
     <CompendiumList<RaceDefinition>
       title="Razze"
-      icon="d10"
+      icon="person"
       onBack={() => navigation.goBack()}
       items={races}
       keyExtractor={(r) => String(r.id)}

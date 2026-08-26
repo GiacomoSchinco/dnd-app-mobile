@@ -24,7 +24,7 @@ export default function BackgroundListScreen() {
   return (
     <CompendiumList<BackgroundDefinition>
       title="Background"
-      icon="d8"
+      icon="notebook"
       onBack={() => navigation.goBack()}
       items={backgrounds}
       keyExtractor={(b) => String(b.id)}

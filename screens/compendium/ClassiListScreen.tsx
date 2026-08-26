@@ -32,7 +32,7 @@ export default function ClassiListScreen() {
   return (
     <CompendiumList<ClassDefinition>
       title="Classi"
-      icon="d20"
+      icon="sword-wound"
       onBack={() => navigation.goBack()}
       items={classes}
       keyExtractor={(c) => String(c.id)}

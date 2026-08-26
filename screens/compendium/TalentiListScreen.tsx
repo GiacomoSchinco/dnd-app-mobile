@@ -37,7 +37,7 @@ export default function TalentiListScreen() {
   return (
     <CompendiumList<FeatRaw>
       title="Talenti"
-      icon="d6"
+      icon="medal"
       onBack={() => navigation.goBack()}
       items={feats}
       keyExtractor={(f) => String(f.id)}
