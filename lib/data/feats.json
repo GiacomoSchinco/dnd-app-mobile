@@ -86,7 +86,7 @@
     "has_choices": false,
     "asi_config": null,
     "granted_resource": {
-      "name": "luck_points",
+      "name": "Punti Fortuna",
       "scale_with": "proficiency_bonus",
       "reset_on": "long_rest",
       "description": "Ottieni un ammontare di Punti Fortuna pari al tuo bonus di competenza. Ti vengono restituiti dopo un riposo lungo."

@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MoreScreen from './MoreScreen';
 import CharacterEditorScreen from './CharacterEditorScreen';
+import CharacterFeatAssignScreen from './CharacterFeatAssignScreen';
 import { ALTRO_ROUTES } from './altro-routes';
 
 const Stack = createNativeStackNavigator();
@@ -15,6 +16,7 @@ export default function AltroStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={ALTRO_ROUTES.MENU} component={MoreScreen} />
       <Stack.Screen name={ALTRO_ROUTES.MODIFICA_PG} component={CharacterEditorScreen} />
+      <Stack.Screen name={ALTRO_ROUTES.GESTIONE_TALENTI} component={CharacterFeatAssignScreen} />
     </Stack.Navigator>
   );
 }

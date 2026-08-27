@@ -49,6 +49,13 @@ export default function MoreScreen() {
       onPress: () => navigation.navigate(ALTRO_ROUTES.MODIFICA_PG),
     },
     {
+      key: 'gestione-talenti',
+      dndIcon: 'medal',
+      label: 'Gestione Talenti',
+      description: activeChar ? `Aggiungi o rimuovi talenti di ${activeChar.name}` : 'Nessun personaggio attivo',
+      onPress: () => navigation.navigate(ALTRO_ROUTES.GESTIONE_TALENTI),
+    },
+    {
       key: 'note',
       dndIcon: 'notebook',
       label: 'Note',

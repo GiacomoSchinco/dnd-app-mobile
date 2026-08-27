@@ -8,6 +8,7 @@
 export const ALTRO_ROUTES = {
   MENU: 'MoreMenu',
   MODIFICA_PG: 'ModificaPersonaggio',
+  GESTIONE_TALENTI: 'GestioneTalenti',
   IMPOSTAZIONI: 'Settings',
   COMPENDIO: 'Compendium',
   COMPENDIO_MAGIE: 'CompendiumSpells',

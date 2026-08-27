@@ -32,6 +32,7 @@ export type RootStackParamList = {
 export type AltroStackParamList = {
   MoreMenu: undefined;
   ModificaPersonaggio: undefined;
+  GestioneTalenti: undefined;
 };
 
 /** Tab navigator (Main) */

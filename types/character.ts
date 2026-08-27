@@ -473,6 +473,10 @@ export interface CharacterState {
   setEquipmentQuantity: (itemId: number, quantity: number) => void;
   /** Equipaggia / smette un oggetto del PG attivo */
   toggleEquippedItem: (itemId: number) => void;
+  /** Aggiunge un talento al PG attivo (gestione manuale) — applica anche le concessioni */
+  addFeatToCharacter: (featId: number, featChoice?: FeatChoiceSelection) => void;
+  /** Rimuove un talento dal PG attivo — toglie nome, modificatori e concessioni */
+  removeFeatFromCharacter: (featId: number) => void;
 }
 
 /** Azioni esposte per il personaggio attivo */
@@ -491,6 +495,10 @@ export interface ActiveCharacterActions {
   removeEquipmentItem: (itemId: number) => void;
   setEquipmentQuantity: (itemId: number, quantity: number) => void;
   toggleEquippedItem: (itemId: number) => void;
+  /** Aggiunge un talento al PG attivo (gestione manuale) — applica anche le concessioni */
+  addFeatToCharacter: (featId: number, featChoice?: FeatChoiceSelection) => void;
+  /** Rimuove un talento dal PG attivo — toglie nome, modificatori e concessioni */
+  removeFeatFromCharacter: (featId: number) => void;
   createCharacter: (name: string, className: ClassName, level?: number) => void;
   /** Crea un personaggio COMPLETO dal wizard (buildCharacter + buildCharacterSheet) */
   createCharacterFull: (draft: CharacterDraft) => Character | null;

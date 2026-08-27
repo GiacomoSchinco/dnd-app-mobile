@@ -15,6 +15,8 @@ export function useActiveCharacter(): ActiveCharacterActions {
   const removeEquipmentItem = useCharacterStore((s) => s.removeEquipmentItem);
   const setEquipmentQuantity = useCharacterStore((s) => s.setEquipmentQuantity);
   const toggleEquippedItem = useCharacterStore((s) => s.toggleEquippedItem);
+  const addFeatToCharacter = useCharacterStore((s) => s.addFeatToCharacter);
+  const removeFeatFromCharacter = useCharacterStore((s) => s.removeFeatFromCharacter);
   const createCharacter = useCharacterStore((s) => s.createCharacter);
   const createCharacterFull = useCharacterStore((s) => s.createCharacterFull);
   const applyLevelUp = useCharacterStore((s) => s.applyLevelUp);
@@ -38,6 +40,8 @@ export function useActiveCharacter(): ActiveCharacterActions {
     removeEquipmentItem,
     setEquipmentQuantity,
     toggleEquippedItem,
+    addFeatToCharacter,
+    removeFeatFromCharacter,
     createCharacter,
     createCharacterFull,
     applyLevelUp,

@@ -23,6 +23,11 @@
 - **Tab Talenti** — talenti, doni epici, caratteristiche di classe e sottoclasse,
   con **scelte extra dei talenti** (incantesimi, skill/maestrie, strumenti, tiri
   salvezza, tipi di danno/resistenza, rituali) sia nel wizard sia nel level-up.
+  Umano: il **talento delle origini** ("Versatile") si sceglie qui, con tutte le
+  sue opzioni.
+- **Gestione Talenti** (sezione Altro) — assegna o rimuovi talenti a un PG
+  (es. da oggetti/regole domestiche), configurando le scelte extra prima di
+  aggiungerli; rimuove anche concessioni e scelte registrate.
 - **Tab Equipaggiamento** — denaro e oggetti del PG con statistiche inline,
   gestione completa (aggiungi/rimuovi/equipaggia).
 - **Tab Magie** — magie preparate/assegnate del PG, barra slot incantesimi
@@ -108,7 +113,7 @@ android/               → progetto nativo generato da prebuild (build APK local
 | **Equip.** | solo con PG attivo | equipaggiamento e denaro del PG |
 | **Magie** | sempre | magie del PG (o compendio standalone) |
 | **Abilità** | sempre | 18 skill del PG |
-| **Altro** | sempre | menu (modifica PG, note, elimina) |
+| **Altro** | sempre | menu (modifica PG, gestione talenti, note, elimina) |
 | **Dadi** | sempre | pulsante centrale → `DiceOverlay` globale |
 
 - Route centralizzate in `lib/routes.ts` (`ROUTES` + `RouteName`), tipizzate in
@@ -139,10 +144,16 @@ android/               → progetto nativo generato da prebuild (build APK local
 - **Backfill automatico** (`backfillDerivedStats` nello store): ripara i PG salvati
   prima di modifiche (PF/PB/CA, feature, magie automatiche).
 
-### Talenti (tab)
+### Talenti (tab + gestione)
 - `FeatsScreen`: talenti, doni epici, caratteristiche di classe e sottoclasse
   raggruppati per livello con card unificate (`FeatureCard`), contatori per sezione
-  e descrizioni/effetti risolti dai JSON.
+  e descrizioni/effetti risolti dai JSON. Per l'Umano include la sezione
+  **"Talento delle origini"** (scelta con tutte le opzioni via `FeatChoicePicker`).
+- **`CharacterFeatAssignScreen`** (Altro → Gestione Talenti): catalogo talenti
+  (origini/generali/doni epici) con toggle assegnazione; per i talenti con
+  `choice_config` apre un modale con `FeatChoicePicker` e conferma solo a scelte
+  complete. Azioni store: `addFeatToCharacter`/`removeFeatFromCharacter` (applicano
+  o rimuovono concessioni meccaniche, ASI, risorse, scelte registrate).
 
 ### Equipaggiamento (tab)
 - `EquipmentScreen`: denaro (Oro/Argento/Rame) + oggetti raggruppati per tipo con
@@ -171,8 +182,8 @@ android/               → progetto nativo generato da prebuild (build APK local
 
 ### Impostazioni / Altro
 - `SettingsScreen` su RootStack: cambio tema (`ThemePicker` → `setTheme`).
-- Tab Altro: menu con **Modifica personaggio** (editor), **Note** ed
-  **Elimina personaggio** (danger + conferma).
+- Tab Altro: menu con **Modifica personaggio** (editor), **Gestione Talenti**,
+  **Note** ed **Elimina personaggio** (danger + conferma).
 
 ---
 
@@ -238,11 +249,13 @@ L'APK generato → `android\app\build\outputs\apk\release\app-release.apk`
 
 ---
 
-## 🩺 Stato attuale (2026-08-26)
+## 🩺 Stato attuale (2026-08-27)
 
 - ✅ `npx tsc --noEmit` → **exit 0, nessun errore**.
 - ✅ `get_errors` su tutto il workspace → **0 errori**.
 - ✅ Icone: checklist `ICONE_DA_SOSTITUIRE.md` chiusa (nessun lavoro urgente).
+- ✅ Umano "Versatile" (talento delle origini) implementato nel wizard (step Talenti).
+- ✅ Nuova sezione **Gestione Talenti** in Altro (assegna/rimuovi talenti).
 - ⚠️ Git: verificare lo stato del working tree prima di un commit.
 
 ## 🔲 Gap / roadmap

@@ -8,6 +8,8 @@ import type {
   CharacterResource,
   LevelUpOptions,
   SpellSlot,
+  FeatChoiceSelection,
+  FeatSpellChoice,
 } from '../types';
 import {
   buildCharacter,
@@ -33,6 +35,14 @@ let counter = 0;
 function uid(): string {
   counter += 1;
   return `pg_${Date.now()}_${counter}`;
+}
+
+/** Converte le scelte spellcasting di un talento (FeatChoiceSelection) in FeatSpellChoice per applyFeat */
+function spellChoiceFromFeatChoice(choice?: FeatChoiceSelection): FeatSpellChoice | undefined {
+  if (choice?.spellAbility != null && Array.isArray(choice.cantrips) && Array.isArray(choice.spells)) {
+    return { ability: choice.spellAbility, cantrips: choice.cantrips, spells: choice.spells };
+  }
+  return undefined;
 }
 
 /**
@@ -484,6 +494,191 @@ export const useCharacterStore = create<CharacterState>()(
               spellcasting: c.spellcasting
                 ? { ...c.spellcasting, slotDetails: spellSlots }
                 : c.spellcasting,
+            };
+          }),
+        }));
+      },
+
+      // ── Gestione manuale dei talenti (sezione "Gestione Talenti" in Altro) ──
+      addFeatToCharacter: (featId, featChoice) => {
+        const feat = getFeat(featId);
+        if (!feat) return;
+        set((state) => ({
+          characters: state.characters.map((c) => {
+            if (c.id !== state.activeCharacterId) return c;
+            if ((c.feats ?? []).includes(feat.name) || (c.epicBoons ?? []).includes(feat.name)) return c;
+            const isEpic = feat.category === 'epic_boon';
+            const apply = applyFeat(feat, {
+              choice: featChoice,
+              spellChoice: spellChoiceFromFeatChoice(featChoice),
+            });
+            // ASI del talento (asi_config) → applicati ai punteggi (cap = max_cap)
+            let abilities = c.abilities;
+            for (const b of apply.asiBoosts) {
+              const cap = getFeatAsiCap(feat);
+              abilities = {
+                ...abilities,
+                [b.ability]: Math.min((abilities[b.ability] ?? 10) + b.amount, cap),
+              };
+            }
+            // Registrazione scelte (per riproducibilità)
+            const choices = { ...(c.choices ?? {}) };
+            if (isEpic) choices.epicBoonId = feat.id;
+            else if (feat.category === 'general')
+              choices.generalFeatIds = [...(choices.generalFeatIds ?? []), feat.id];
+            else if (feat.category === 'origin') choices.originFeatChoice = feat.name;
+            if (featChoice) {
+              choices.featChoices = { ...(choices.featChoices ?? {}), [feat.id]: featChoice };
+            }
+            // Unione delle concessioni meccaniche (dedup)
+            const push = <T,>(arr: T[] | undefined, items: T[]) => {
+              const next = [...(arr ?? [])];
+              for (const it of items) if (!next.includes(it)) next.push(it);
+              return next;
+            };
+            const skills = push(c.proficiencies?.skills, apply.skills ?? []);
+            const tools = push(c.proficiencies?.tools, apply.toolProficiencies ?? []);
+            const armor = push(c.proficiencies?.armor, apply.armorProficiencies ?? []);
+            const weapons = push(c.proficiencies?.weapons, apply.weaponProficiencies ?? []);
+            const expertise = push(c.proficiencies?.expertise, apply.expertise ?? []);
+            const savingThrows = push(c.proficiencies?.savingThrows, apply.savingThrows ?? []);
+            const preparedSpells = push(c.preparedSpells, apply.spells ?? []);
+            const resistances = [...(c.defenses?.resistances ?? [])];
+            for (const r of apply.resistances ?? []) if (!resistances.includes(r)) resistances.push(r);
+            const resources = { ...(c.resources ?? {}) };
+            for (const grant of apply.resources ?? []) {
+              const max = grant.max === 'proficiency_bonus' ? (c.proficiencyBonus ?? 2) : grant.max;
+              if (typeof max === 'number' && !resources[grant.key]) {
+                resources[grant.key] = {
+                  label: grant.label,
+                  max,
+                  current: max,
+                  resetOn: grant.resetOn,
+                  description: grant.description,
+                };
+              }
+            }
+            return {
+              ...c,
+              abilities,
+              feats: isEpic ? c.feats ?? [] : [...(c.feats ?? []), feat.name],
+              epicBoons: isEpic ? [...(c.epicBoons ?? []), feat.name] : c.epicBoons ?? [],
+              featModifiers: [...(c.featModifiers ?? []), ...(apply.modifiers ?? [])],
+              choices,
+              proficiencies: {
+                ...(c.proficiencies ?? {}),
+                skills,
+                tools,
+                armor,
+                weapons,
+                expertise,
+                savingThrows,
+              },
+              preparedSpells,
+              defenses:
+                c.defenses && resistances.length > 0
+                  ? { ...c.defenses, resistances }
+                  : c.defenses,
+              resources: Object.keys(resources).length > 0 ? resources : undefined,
+            };
+          }),
+        }));
+      },
+
+      removeFeatFromCharacter: (featId) => {
+        const feat = getFeat(featId);
+        if (!feat) return;
+        set((state) => ({
+          characters: state.characters.map((c) => {
+            if (c.id !== state.activeCharacterId) return c;
+            const feats = (c.feats ?? []).filter((n) => n !== feat.name);
+            const epicBoons = (c.epicBoons ?? []).filter((n) => n !== feat.name);
+            // Contributi ancora presenti dagli ALTRI talenti posseduti → non rimuoverli
+            const kept = new Set<string>();
+            for (const f of [...feats, ...epicBoons]) {
+              const other = getFeatByName(f);
+              if (!other) continue;
+              const a = applyFeat(other, {
+                choice: c.choices?.featChoices?.[other.id],
+                spellChoice: spellChoiceFromFeatChoice(c.choices?.featChoices?.[other.id]),
+              });
+              for (const s of a.skills ?? []) kept.add(s);
+              for (const t of a.toolProficiencies ?? []) kept.add(t);
+              for (const ar of a.armorProficiencies ?? []) kept.add(ar);
+              for (const w of a.weaponProficiencies ?? []) kept.add(w);
+              for (const e of a.expertise ?? []) kept.add(e);
+              for (const st of a.savingThrows ?? []) kept.add(st);
+              for (const r of a.resistances ?? []) kept.add(r);
+              for (const sp of a.spells ?? []) kept.add(sp);
+              for (const gr of a.resources ?? []) kept.add(gr.key);
+            }
+            const apply = applyFeat(feat, {
+              choice: c.choices?.featChoices?.[featId],
+              spellChoice: spellChoiceFromFeatChoice(c.choices?.featChoices?.[featId]),
+            });
+            const filterKept = <T,>(arr: T[] | undefined, contrib: T[] | undefined, key: (x: T) => string) =>
+              (arr ?? []).filter((x) => !(contrib ?? []).some((cc) => key(cc) === key(x)) || kept.has(key(x)));
+            const skills = filterKept(c.proficiencies?.skills, apply.skills, (x) => x);
+            const tools = filterKept(c.proficiencies?.tools, apply.toolProficiencies, (x) => x);
+            const armor = filterKept(c.proficiencies?.armor, apply.armorProficiencies, (x) => x);
+            const weapons = filterKept(c.proficiencies?.weapons, apply.weaponProficiencies, (x) => x);
+            const expertise = filterKept(c.proficiencies?.expertise, apply.expertise, (x) => x);
+            const savingThrows = filterKept(c.proficiencies?.savingThrows, apply.savingThrows, (x) => x);
+            const resistances = filterKept(c.defenses?.resistances, apply.resistances, (x) => x);
+            const preparedSpells = filterKept(c.preparedSpells, apply.spells, (x) => x);
+            // ASI del talento → sottrai dai punteggi (mai sotto 1)
+            let abilities = c.abilities;
+            for (const b of apply.asiBoosts) {
+              abilities = {
+                ...abilities,
+                [b.ability]: Math.max((abilities[b.ability] ?? 10) - b.amount, 1),
+              };
+            }
+            // Risorse concesse dal talento (se non tenute da altri)
+            const resources = { ...(c.resources ?? {}) };
+            for (const grant of apply.resources ?? []) {
+              if (resources[grant.key] && !kept.has(grant.key)) delete resources[grant.key];
+            }
+            // Pulizia registrazioni scelte
+            const choices = { ...(c.choices ?? {}) };
+            if (choices.epicBoonId === feat.id) delete choices.epicBoonId;
+            if (choices.generalFeatIds)
+              choices.generalFeatIds = choices.generalFeatIds.filter((x) => x !== feat.id);
+            if (choices.originFeatChoice === feat.name) delete choices.originFeatChoice;
+            if (choices.featChoices?.[feat.id]) {
+              const fc = { ...choices.featChoices };
+              delete fc[feat.id];
+              choices.featChoices = fc;
+            }
+            if (choices.featAsiPicks?.[feat.id]) {
+              const fa = { ...choices.featAsiPicks };
+              delete fa[feat.id];
+              choices.featAsiPicks = fa;
+            }
+            return {
+              ...c,
+              feats,
+              epicBoons,
+              abilities,
+              choices,
+              featModifiers: (c.featModifiers ?? []).filter(
+                (m) =>
+                  !(apply.modifiers ?? []).some(
+                    (rm) => rm.type === m.type && rm.description === m.description,
+                  ),
+              ),
+              proficiencies: {
+                ...(c.proficiencies ?? {}),
+                skills,
+                tools,
+                armor,
+                weapons,
+                expertise,
+                savingThrows,
+              },
+              preparedSpells,
+              defenses: c.defenses ? { ...c.defenses, resistances } : c.defenses,
+              resources: Object.keys(resources).length > 0 ? resources : undefined,
             };
           }),
         }));

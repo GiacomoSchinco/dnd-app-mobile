@@ -36,7 +36,7 @@
        ├── creation/            ← WIZARD creazione PG
        │   ├── useCharacterWizard.ts ← TUTTA la logica/stato/validazione del wizard (hook)
        │   ├── NameStep · ClassStep · LevelStep · SubclassStep · SkillsStep · RaceStep
-       │   ├── BackgroundStep · FeatChoice · AbilitiesStep · HpStep · SummaryStep (Riepilogo finale)
+       │   ├── BackgroundStep · FeatChoice · AbilitiesStep · FeatStep (Talenti/ASI + talento delle origini) · HpStep · SummaryStep (Riepilogo finale)
        │   ├── ClassSwitcher.tsx (multiclasse: quale classe configuri) · CardDetailModal.tsx (info card)
        │   ├── Chip.tsx (pill) · StepIndicator · StepLabel · ValuePickerModal · wizardSteps.ts
        ├── Compendium/          ← CompendiumList.tsx (export: CompendiumDetailHeader) · DetailBlock.tsx
@@ -50,8 +50,8 @@
    │                  · EquipmentScreen (tab Equip.) · SkillsScreen (tab Abilità) · NotesScreen (Note del PG)
    ├── compendium/  → CompendioScreen · Classi · Razze · Background · Talenti · Equipaggiamento · Oggetti · Magie (standalone)
    │                  · CharacterSpellAssignScreen (Gestisci magie) · CharacterItemAssignScreen (Gestisci oggetti)
-   └── more/        → AltroStack · MoreScreen (menu) · CharacterEditorScreen (Modifica PG: nome/statistiche/CA/PF/modificatori)
-                      · SettingsScreen (su RootStack) · altro-routes
+   └── more/        → AltroStack · MoreScreen (menu: Modifica PG · Gestione Talenti · Note · Elimina) · CharacterEditorScreen (Modifica PG: nome/statistiche/CA/PF/modificatori)
+                      · CharacterFeatAssignScreen (Gestione Talenti: assegna/rimuovi talenti) · SettingsScreen (su RootStack) · altro-routes
 
 📁 lib/
    ├── data/        → JSON (fonte unica: classi, razze, magie, oggetti, ecc.)
@@ -117,7 +117,7 @@
 | `EquipmentRow` | Riga equipaggiamento con statistiche INLINE (danno/CA/gittata/proprietà) | Tab Equip. (`EquipmentScreen`) |
 | `CompendiumDetailHeader` | Header unificato dettagli compendio (icona box 56 accentSubtle + titolo xl/700 + badge) | Liste/dettagli Compendio (Classi/Razze/Background/Talenti/Equip.) |
 | `ClassSwitcher` | Chips delle classi configurate per scegliere QUALE classe configurare (multiclasse) | Wizard multiclasse (Level/Subclass/Skills step) |
-| `FeatChoicePicker` | Picker delle scelte extra dei talenti (`choice_config`): tool, skill competenza/maestria, tiri salvezza, tipi danno, incantesimi, rituali | FeatStep (wizard) + LevelUpModal |
+| `FeatChoicePicker` | Picker delle scelte extra dei talenti (`choice_config`): tool, skill competenza/maestria (anche `hybrid_proficiency` "Abile"), tiri salvezza, tipi danno, `spell_selection`, `ritual_spells_gain` e `spellcasting` ("Iniziato alla Magia": caratteristica + trucchetti + incantesimo 1°) | FeatStep (wizard) + LevelUpModal + Gestione Talenti |
 | `ManualCheckCard` | Card warning "Regole da verificare" + modale "Strumenti manuali" (editor/magie/oggetti/note). Chiudibile per PG (`Character.manualCheckDismissed`); dopo "Ho capito" resta una riga info compatta che riapre tutto | Scheda PG; badge "Da verificare" in Home (`HomeScreen`) |
 
 **Wizard creazione**: la schermata (`CharacterCreateScreen`) è un renderer sottile →
@@ -127,6 +127,23 @@ presentational in `components/custom/creation/`. L'ultimo passo è `summary`
 (`isLastStep = step === 'summary'`). Per aggiungere/modificare un passo:
 1. tocca il componente step (es. `RaceStep.tsx`) o lo stato in `useCharacterWizard.ts`,
 2. se serve un nuovo passo, aggiorna `wizardSteps.ts` (`STEPS`/`StepKey`) e `stepValid`.
+
+**Umano "Versatile" (talento delle origini)**: l'effetto 103 `choice_type: origin_feat`
+concede un talento delle origini a scelta. Si sceglie nello **step Talenti** (NON in
+Razza): `FeatStep` ha la sezione "TALENTO DELLE ORIGINI" che riusa `FeatRow` (card +
+`FeatChoicePicker`). Stato in `useCharacterWizard`: `raceFeatId`/`hasRaceFeat`/
+`raceFeatOptions`/`selectRaceFeat`; opzioni = `getOriginFeats()` escluso
+`background.feat.featId` (evita duplicati). Validazione in `stepValid('feat')`.
+Builder: `draft.raceFeatId` → `buildCharacter` (`additionalIds`) → `buildCharacterSheet`
+(fonde in `feats` con categoria `origin` + `choices.originFeatChoice` = nome).
+
+**Gestione Talenti (sezione Altro)**: `CharacterFeatAssignScreen` elenca origini /
+generali / doni epici con toggle assegnazione. Per i talenti con `choice_config` apre
+un modale con `FeatChoicePicker` e conferma solo a scelte complete. Azioni store
+`addFeatToCharacter(id, choice?)` / `removeFeatFromCharacter(id)`: applicano o
+rimuovono concessioni meccaniche (competenze, modificatori, risorse, magie, ASI) e
+le scelte registrate (`choices.featChoices`/`generalFeatIds`/`epicBoonId`/
+`originFeatChoice`). La rimozione non tocca i contributi condivisi con altri talenti.
 
 ## 🎨 Temi disponibili
 
