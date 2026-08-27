@@ -3,11 +3,11 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getAllClasses, getClass, getClassNameItalian } from '../../../lib/rules/classes';
 import { getSubclassesByClassId, type SubclassDefinition } from '../../../lib/rules/subclasses';
-import { getClassProgression, getFeaturesAtLevel, getAsiLevels } from '../../../lib/rules/progression';
+import { getClassProgression, getFeaturesAtLevel, getAsiLevels, getProficiencyBonus } from '../../../lib/rules/progression';
 import { getMulticlassPrerequisiteWarnings } from '../../../lib/rules/multiclass';
 import { hasLineages, getRaceEffects } from '../../../lib/rules/races';
 import { getBackground } from '../../../lib/rules/backgrounds';
-import { getFeat, getGeneralFeats, getEpicBoons, isFeatAvailable, getFeatAsiCap, getFeatAsiCount } from '../../../lib/rules/feats';
+import { getFeat, getGeneralFeats, getEpicBoons, getOriginFeats, isFeatAvailable, getFeatAsiCap, getFeatAsiCount, isFeatChoiceComplete } from '../../../lib/rules/feats';
 import { getToolOptions, applyFeat, type ToolOption } from '../../../lib/rules/apply-feat';
 import { STANDARD_ARRAY, POINT_BUY_COST, POINT_BUY_TOTAL, POINT_BUY_MIN, POINT_BUY_MAX, getPointBuyValues, parseAbilityFromAbbreviation, getAbilityLabel, getAbilityModifier, suggestScoreAssignment } from '../../../lib/rules/abilities';
 import { parseSkillFromItalian, getAllSkills, getSkillNameItalian } from '../../../lib/rules/skills';
@@ -22,7 +22,7 @@ import type { StepKey, AsiMode, AsiAssignment, SkillOption } from './wizardSteps
 import type { WizardStep } from './StepIndicator';
 import type { ClassCarouselItem } from '../ClassCarousel';
 import type { RootStackParamList } from '../../../types/navigation';
-import type { ClassName, Ability, AbilityScores, CharacterDraft, FeatRaw, SkillName } from '../../../types';
+import type { ClassName, Ability, AbilityScores, CharacterDraft, FeatRaw, SkillName, FeatChoiceSelection } from '../../../types';
 
 /**
  * Hook del wizard di creazione personaggio.
@@ -117,6 +117,11 @@ export interface CharacterWizard {
   raceSkills: SkillName[];
   raceSkillCount: number;
   toggleRaceSkill: (skill: SkillName) => void;
+  /** Talento delle origini concesso dalla razza (es. Umano "Versatile") */
+  raceFeatOptions: { id: number; name: string }[];
+  raceFeatId: number | null;
+  selectRaceFeat: (id: number) => void;
+  hasRaceFeat: boolean;
 
   // ── Background ──
   backgroundId: number | null;
@@ -141,6 +146,9 @@ export interface CharacterWizard {
   generalFeatIds: number[];
   featAsiPicks: Record<number, Ability[]>;
   toggleFeatAsi: (featId: number, ability: Ability) => void;
+  /** Scelte extra dei talenti selezionati (choice_config, per feat id) */
+  featChoices: Record<number, FeatChoiceSelection>;
+  setFeatChoice: (featId: number, v: FeatChoiceSelection) => void;
   epicBoonUnlocked: boolean;
   epicBoonOptions: FeatRaw[];
   epicBoonId: number | null;
@@ -224,7 +232,9 @@ export function useCharacterWizard(): CharacterWizard {
   const [featCantrips, setFeatCantrips] = useState<string[]>([]);
   const [featSpell, setFeatSpell] = useState<string | null>(null);
   const [raceSkills, setRaceSkills] = useState<SkillName[]>([]);
+  const [raceFeatId, setRaceFeatId] = useState<number | null>(null);
   const [featAtAsiLevel, setFeatAtAsiLevel] = useState<Record<string, number | null>>({});
+  const [featChoices, setFeatChoices] = useState<Record<number, FeatChoiceSelection>>({});
   const [fightingStyleId, setFightingStyleId] = useState<number | null>(null);
   const [epicBoonId, setEpicBoonId] = useState<number | null>(null);
   const [featAsiPicks, setFeatAsiPicks] = useState<Record<number, Ability[]>>({});
@@ -371,6 +381,20 @@ export function useCharacterWizard(): CharacterWizard {
   }, [raceSkillEffects]);
   const raceSkillCount = raceSkillEffects.reduce((n, e) => n + (e.count ?? 0), 0);
 
+  // ── Derivati: talento delle origini concesso dalla razza (Umano "Versatile") ──
+  const raceFeatEffects = useMemo(() => {
+    if (raceId == null) return [];
+    return getRaceEffects(raceId, lineageId ?? undefined).filter(
+      (e) => e.type === 'choice' && e.choice_type === 'origin_feat',
+    );
+  }, [raceId, lineageId]);
+  const hasRaceFeat = raceFeatEffects.length > 0;
+  // Opzioni = talenti delle origini (esclude quello già dato dal background per evitare duplicati)
+  const raceFeatOptions = useMemo(
+    () => getOriginFeats().filter((f) => f.id !== background?.feat.featId),
+    [background],
+  );
+
   const classDef = useMemo(() => getClass(selectedClass), [selectedClass]);
   const progression = useMemo(
     () => (classDef ? getClassProgression(classDef.name) : undefined),
@@ -478,6 +502,7 @@ export function useCharacterWizard(): CharacterWizard {
   // Reset delle skill scelte quando cambia razza/sottorazza
   useEffect(() => {
     setRaceSkills([]);
+    setRaceFeatId(null);
   }, [raceId, lineageId]);
 
   // ── Derivati: punteggi ──
@@ -726,7 +751,30 @@ export function useCharacterWizard(): CharacterWizard {
           const sec = asiAssignments[k.key];
           return sec != null && sec.slots.every((s) => s != null);
         });
-        return (!hasFightingStyle || fightingStyleId != null) && asiOk;
+        // Le scelte extra dei talenti selezionati (choice_config) devono essere complete
+        const chosenFeatIds = Object.values(featAtAsiLevel).filter(
+          (id): id is number => id != null && id !== FEAT_MODE_PENDING
+        );
+        const pb = getProficiencyBonus(totalLevel);
+        const featChoicesOk = chosenFeatIds.every((id) =>
+          isFeatChoiceComplete(getFeat(id), featChoices[id], pb)
+        );
+        const epicBoonOk =
+          epicBoonId != null
+            ? isFeatChoiceComplete(getFeat(epicBoonId), featChoices[epicBoonId], pb)
+            : true;
+        // Talento delle origini della razza (es. Umano "Versatile")
+        const raceFeatOk =
+          !hasRaceFeat ||
+          (raceFeatId != null &&
+            isFeatChoiceComplete(getFeat(raceFeatId), featChoices[raceFeatId], pb));
+        return (
+          (!hasFightingStyle || fightingStyleId != null) &&
+          asiOk &&
+          featChoicesOk &&
+          epicBoonOk &&
+          raceFeatOk
+        );
       }
       case 'hp': return hpRoll != null;
       case 'summary':
@@ -784,6 +832,13 @@ export function useCharacterWizard(): CharacterWizard {
         return null;
       case 'feat':
         if (hasFightingStyle && fightingStyleId == null) return 'Scegli lo stile di combattimento.';
+        if (hasRaceFeat && raceFeatId == null) return 'Scegli il talento delle origini della razza.';
+        if (
+          hasRaceFeat &&
+          raceFeatId != null &&
+          !isFeatChoiceComplete(getFeat(raceFeatId), featChoices[raceFeatId], getProficiencyBonus(totalLevel))
+        )
+          return 'Completa la scelta del talento delle origini.';
         if (finalResult && !finalResult.success) return finalResult.error;
         {
           const asiOk = asiKeys.every((k) => {
@@ -982,6 +1037,21 @@ export function useCharacterWizard(): CharacterWizard {
     });
     setError(null);
   };
+  const selectRaceFeat = (id: number) => {
+    setRaceFeatId((prev) => {
+      if (prev != null && prev !== id) {
+        // Cambio talento: pulisce le scelte extra del talento precedente
+        setFeatChoices((p) => {
+          if (!p[prev]) return p;
+          const next = { ...p };
+          delete next[prev];
+          return next;
+        });
+      }
+      return prev === id ? null : id;
+    });
+    setError(null);
+  };
   const selectFeatSpellAbility = (a: Ability) => {
     setFeatSpellAbility((prev) => (prev === a ? null : a));
     setError(null);
@@ -1039,6 +1109,13 @@ export function useCharacterWizard(): CharacterWizard {
         delete copy[previous];
         return copy;
       });
+      // Si pulisce anche la scelta extra del talento rimosso
+      setFeatChoices((p) => {
+        if (!(previous in p)) return p;
+        const copy = { ...p };
+        delete copy[previous];
+        return copy;
+      });
     }
   };
   const selectFightingStyle = (id: number | null) => setFightingStyleId(id);
@@ -1054,6 +1131,10 @@ export function useCharacterWizard(): CharacterWizard {
       return { ...prev, [featId]: [...current, ability] };
     });
   };
+
+  /** Imposta le scelte extra (choice_config) di un talento selezionato */
+  const setFeatChoice = (featId: number, v: FeatChoiceSelection) =>
+    setFeatChoices((prev) => ({ ...prev, [featId]: v }));
 
   // ── Creazione ──
   const handleCreate = () => {
@@ -1085,6 +1166,7 @@ export function useCharacterWizard(): CharacterWizard {
       background: { backgroundId: background.id },
       classSkills: classList.flatMap((cls) => cls.classSkills),
       raceSkillChoices: raceSkills.length > 0 ? raceSkills : undefined,
+      raceFeatId: raceFeatId ?? undefined,
       bgToolChoices: bgToolChoices.length > 0 ? bgToolChoices : undefined,
       featToolChoices: featToolChoices.length > 0 ? featToolChoices : undefined,
       featSkillChoices: featSkillChoices.length > 0 ? featSkillChoices : undefined,
@@ -1096,6 +1178,7 @@ export function useCharacterWizard(): CharacterWizard {
       fightingStyleId: fightingStyleId ?? undefined,
       epicBoonId: epicBoonId ?? undefined,
       featAsiPicks: Object.keys(featAsiPicks).length > 0 ? featAsiPicks : undefined,
+      featChoices: Object.keys(featChoices).length > 0 ? featChoices : undefined,
       hpRoll: hpRoll ?? undefined,
       abilities: {
         method: abilityMethod,
@@ -1127,6 +1210,7 @@ export function useCharacterWizard(): CharacterWizard {
     setRaceId: (id) => { setRaceId(id); setLineageId(null); },
     lineageId, setLineageId,
     raceSkillOptions, raceSkills, raceSkillCount, toggleRaceSkill,
+    raceFeatOptions, raceFeatId, selectRaceFeat, hasRaceFeat,
     backgroundId, setBackgroundId,
     bgToolOptions, bgToolChoices, bgToolCount, toggleBgTool,
     featChoice: {
@@ -1156,6 +1240,7 @@ export function useCharacterWizard(): CharacterWizard {
     featAtAsiLevel, setAsiLevelFeat,
     generalFeatOptions, generalFeatIds,
     featAsiPicks, toggleFeatAsi,
+    featChoices, setFeatChoice,
     epicBoonUnlocked, epicBoonOptions, epicBoonId, selectEpicBoon,
     featError: finalResult && !finalResult.success ? finalResult.error : null,
     finalScores: finalScoresWithFeats,

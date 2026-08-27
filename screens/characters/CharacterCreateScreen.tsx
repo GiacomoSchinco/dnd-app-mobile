@@ -26,6 +26,7 @@ import SummaryStep from '../../components/custom/creation/SummaryStep';
 import ValuePickerModal from '../../components/custom/creation/ValuePickerModal';
 import CardDetailModal from '../../components/custom/creation/CardDetailModal';
 import { useCharacterWizard } from '../../components/custom/creation/useCharacterWizard';
+import { getProficiencyBonus } from '../../lib/rules/progression';
 
 /**
  * Schermata del wizard di creazione personaggio.
@@ -179,6 +180,19 @@ export default function CharacterCreateScreen() {
               generalFeatOptions={w.generalFeatOptions}
               featAsiPicks={w.featAsiPicks}
               onToggleFeatAsi={w.toggleFeatAsi}
+              featChoices={w.featChoices}
+              onFeatChoiceChange={w.setFeatChoice}
+              hasRaceFeat={w.hasRaceFeat}
+              raceFeatOptions={w.raceFeatOptions}
+              raceFeatId={w.raceFeatId}
+              onRaceFeatSelect={w.selectRaceFeat}
+              knownSkills={[
+                ...(w.classSkills ?? []),
+                ...(w.raceSkills ?? []),
+                ...(w.featChoice.skillSelected ?? []),
+              ]}
+              knownExpertise={[]}
+              proficiencyBonus={getProficiencyBonus(w.totalLevel)}
               epicBoonUnlocked={w.epicBoonUnlocked}
               epicBoonOptions={w.epicBoonOptions}
               epicBoonId={w.epicBoonId}

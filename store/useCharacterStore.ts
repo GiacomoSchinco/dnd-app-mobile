@@ -16,7 +16,7 @@ import {
   computeClassDerived,
 } from '../lib/rules/character-builder';
 import { getClass } from '../lib/rules/classes';
-import { getFeat, getFeatAsiCap, getFeatAsiOptions, getAllFeats } from '../lib/rules/feats';
+import { getFeat, getFeatByName, getFeatAsiCap, getFeatAsiOptions, getAllFeats } from '../lib/rules/feats';
 import { applyFeat } from '../lib/rules/apply-feat';
 import { getSubclass } from '../lib/rules/subclasses';
 import { getAbilityModifier } from '../lib/rules/abilities';
@@ -240,7 +240,9 @@ export const useCharacterStore = create<CharacterState>()(
           fightingStyleId: draft.fightingStyleId,
           epicBoonId: draft.epicBoonId,
           featAsiPicks: draft.featAsiPicks,
+          featChoices: draft.featChoices,
           raceSkillChoices: draft.raceSkillChoices,
+          raceFeatId: draft.raceFeatId,
           hpRoll: draft.hpRoll,
         });
         // Il ramo di successo di buildCharacter NON ha `success` (è un
@@ -297,14 +299,61 @@ export const useCharacterStore = create<CharacterState>()(
               options?.hpRoll != null ? Math.max(options.hpRoll + conMod, 1) : averageHpGained;
             const maxHp = oldMaxHp + hpGained;
 
-            // Risorse: aggiorna max, preserva current (aggiunge il delta del max)
+            // Risorse: PARTE dalle esistenti e PRESERVA quelle da effetti/talenti
+            // (es. Ispirazione Eroica, Punti Fortuna) che NON sono in derived.resources
+            // (solo risorse di classe) — altrimenti sparirebbero al level-up.
+            // Per le risorse di classe aggiorna il max dal nuovo livello e preserva
+            // current aggiungendo il delta del max.
             const oldResources = c.resources ?? {};
-            const resources: Record<string, CharacterResource> = {};
+            const resources: Record<string, CharacterResource> = { ...oldResources };
             for (const [key, res] of Object.entries(derived.resources)) {
-              const old = oldResources[key];
+              const old = resources[key];
               const oldMax = old?.max ?? res.max;
               const current = Math.min((old?.current ?? res.max) + Math.max(res.max - oldMax, 0), res.max);
               resources[key] = { ...res, current };
+            }
+            // Risorse da EFFETTI (es. Ispirazione Eroica): riscala il max con il nuovo PB
+            for (const eff of c.effects ?? []) {
+              const hasResource = eff.type === 'resource_grant' || eff.type === 'action_grant';
+              if (!hasResource || typeof eff.key !== 'string') continue;
+              const rawMax =
+                eff.max_uses === 'proficiency_bonus'
+                  ? derived.proficiencyBonus
+                  : typeof eff.max_uses === 'number'
+                    ? eff.max_uses
+                    : typeof eff.value === 'number'
+                      ? eff.value
+                      : 1;
+              const old = resources[eff.key];
+              const oldMax = old?.max ?? rawMax;
+              const current = Math.min((old?.current ?? rawMax) + Math.max(rawMax - oldMax, 0), rawMax);
+              resources[eff.key] = {
+                label: eff.name,
+                max: rawMax,
+                current,
+                resetOn: typeof eff.reset_on === 'string' ? eff.reset_on : 'long_rest',
+                description: eff.description,
+              };
+            }
+            // Risorse dai TALENTI già posseduti (granted_resource, es. Punti Fortuna): riscala il max
+            for (const featName of [...(c.feats ?? []), ...(c.epicBoons ?? [])]) {
+              const feat = getFeatByName(featName);
+              const gr = feat?.granted_resource as
+                | { name?: string; label?: string; description?: string; scale_with?: string; reset_on?: string }
+                | null
+                | undefined;
+              if (!gr?.name) continue;
+              const max = gr.scale_with === 'proficiency_bonus' ? derived.proficiencyBonus : 1;
+              const old = resources[gr.name];
+              const oldMax = old?.max ?? max;
+              const current = Math.min((old?.current ?? max) + Math.max(max - oldMax, 0), max);
+              resources[gr.name] = {
+                label: gr.label ?? gr.name,
+                max,
+                current,
+                resetOn: gr.reset_on ?? 'long_rest',
+                description: gr.description,
+              };
             }
 
             // Slot: preserva current, aggiunge il delta dei nuovi max
@@ -326,6 +375,12 @@ export const useCharacterStore = create<CharacterState>()(
             let featModifiers = c.featModifiers ?? [];
             let choices = c.choices ?? {};
             let skills = [...(c.proficiencies?.skills ?? [])];
+            let armor = [...(c.proficiencies?.armor ?? [])];
+            let weapons = [...(c.proficiencies?.weapons ?? [])];
+            let expertise = [...(c.proficiencies?.expertise ?? [])];
+            let savingThrows = [...(c.proficiencies?.savingThrows ?? [])];
+            let preparedSpells = [...(c.preparedSpells ?? [])];
+            let resistances = c.defenses?.resistances ? [...c.defenses.resistances] : [];
             let resourcesAll = { ...resources };
 
             if (options?.asiBoosts && options.asiBoosts.length > 0) {
@@ -354,9 +409,29 @@ export const useCharacterStore = create<CharacterState>()(
                   !options.featAsiPicks && getFeatAsiOptions(feat).length === 1
                     ? getFeatAsiOptions(feat)
                     : options.featAsiPicks;
-                const apply = applyFeat(feat, { asiChoices: singleAsi });
+                const apply = applyFeat(feat, {
+                  asiChoices: singleAsi,
+                  choice: options.featChoice,
+                });
                 featModifiers = [...featModifiers, ...(apply.modifiers ?? [])];
                 for (const sk of apply.skills ?? []) if (!skills.includes(sk)) skills.push(sk);
+                for (const a of apply.armorProficiencies ?? []) if (!armor.includes(a)) armor.push(a);
+                for (const w of apply.weaponProficiencies ?? []) if (!weapons.includes(w)) weapons.push(w);
+                // Scelte extra (choice_config): maestrie, tiri salvezza, resistenze, incantesimi
+                for (const ex of apply.expertise ?? []) if (!expertise.includes(ex)) expertise.push(ex);
+                for (const st of apply.savingThrows ?? []) if (!savingThrows.includes(st)) savingThrows.push(st);
+                for (const r of apply.resistances ?? []) if (!resistances.includes(r)) resistances.push(r);
+                for (const sp of apply.spells ?? []) if (!preparedSpells.includes(sp)) preparedSpells.push(sp);
+                const featChoice = options.featChoice;
+                if (featChoice) {
+                  choices = {
+                    ...choices,
+                    featChoices: {
+                      ...(choices.featChoices ?? {}),
+                      [feat.id]: featChoice,
+                    },
+                  };
+                }
                 for (const b of apply.asiBoosts) {
                   const cap = getFeatAsiCap(feat);
                   const next = { ...abilities };
@@ -398,7 +473,12 @@ export const useCharacterStore = create<CharacterState>()(
               },
               classFeatures: derived.classFeatures,
               subclassFeatures: derived.subclassFeatures,
-              proficiencies: { ...c.proficiencies, skills },
+              proficiencies: { ...c.proficiencies, skills, armor, weapons, expertise, savingThrows },
+              preparedSpells,
+              defenses:
+                c.defenses && resistances.length > 0
+                  ? { ...c.defenses, resistances }
+                  : c.defenses,
               spellSlots,
               resources: Object.keys(resourcesAll).length > 0 ? resourcesAll : undefined,
               spellcasting: c.spellcasting

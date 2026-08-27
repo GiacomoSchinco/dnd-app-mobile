@@ -28,6 +28,7 @@ import type {
   CharacterMoney,
   EquipmentItem,
   FeatCategory,
+  FeatChoiceSelection,
   FeatSpellChoice,
   ClassFeatureRaw,
   SpellSlot,
@@ -457,10 +458,14 @@ export interface CharacterBuildPlan {
   featAsiBoosts?: AbilityBoost[];
   /** Scelte caratteristica per gli ASI dei talenti (per riproducibilità) */
   featAsiPicks?: Record<number, Ability[]>;
+  /** Scelte extra dei talenti generali/epici (choice_config, per feat id) */
+  featChoices?: Record<number, FeatChoiceSelection>;
   /** Strumenti scelti per la competenza a scelta del background (CHOICE) */
   bgToolProficiencies?: string[];
   /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità", Elfo "Sensi Acuti") */
   raceSkills?: SkillName[];
+  /** Id del talento delle origini scelto dalla razza (es. Umano "Versatile") */
+  raceFeatId?: number;
   startingEquipment?: { name: string; itemId: number; quantity: number }[];
   /** Boost abilità applicati (per registrare la scelta in `choices.abilityBoosts`) */
   boosts?: AbilityBoost[];
@@ -500,8 +505,12 @@ export function buildCharacter(params: {
   epicBoonId?: number;
   /** Scelte caratteristica per gli ASI concessi dai talenti (chiave = feat id) */
   featAsiPicks?: Record<number, Ability[]>;
+  /** Scelte extra dei talenti generali/epici (choice_config, per feat id) */
+  featChoices?: Record<number, FeatChoiceSelection>;
   /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità") */
   raceSkillChoices?: SkillName[];
+  /** Id del talento delle origini scelto dalla razza (es. Umano "Versatile") */
+  raceFeatId?: number;
   /** Tiro del dado vita al 1° livello (opzionale) */
   hpRoll?: number;
 }): CharacterBuildPlan | { success: false; error: string } {
@@ -562,6 +571,7 @@ export function buildCharacter(params: {
     ...(params.generalFeatIds ?? []),
     ...(params.fightingStyleId != null ? [params.fightingStyleId] : []),
     ...(params.epicBoonId != null ? [params.epicBoonId] : []),
+    ...(params.raceFeatId != null ? [params.raceFeatId] : []),
   ];
   for (const id of additionalIds) {
     const extraFeat = getFeat(id);
@@ -571,8 +581,22 @@ export function buildCharacter(params: {
       !params.featAsiPicks?.[id] && getFeatAsiOptions(extraFeat).length === 1
         ? getFeatAsiOptions(extraFeat)
         : undefined;
+    // Scelte spellcasting (Iniziato alla Magia) → FeatSpellChoice per applyFeat
+    const featChoice = params.featChoices?.[id];
+    const spellChoice =
+      featChoice?.spellAbility != null &&
+      Array.isArray(featChoice.cantrips) &&
+      Array.isArray(featChoice.spells)
+        ? {
+            ability: featChoice.spellAbility,
+            cantrips: featChoice.cantrips,
+            spells: featChoice.spells,
+          }
+        : undefined;
     const apply = applyFeat(extraFeat, {
       asiChoices: singleAsi ?? params.featAsiPicks?.[id],
+      choice: featChoice,
+      spellChoice,
     });
     additionalFeats.push({
       featId: id,
@@ -624,8 +648,10 @@ export function buildCharacter(params: {
     additionalFeats: additionalFeats.length > 0 ? additionalFeats : undefined,
     featAsiBoosts: featAsiBoosts.length > 0 ? featAsiBoosts : undefined,
     featAsiPicks: params.featAsiPicks,
+    featChoices: params.featChoices,
     bgToolProficiencies: bgToolProficiencies.length > 0 ? bgToolProficiencies : undefined,
     raceSkills: raceSkills.length > 0 ? raceSkills : undefined,
+    raceFeatId: params.raceFeatId,
     startingEquipment: equipment,
     boosts: params.abilities.boosts,
     abilityMethod: params.abilities.method,
@@ -1005,9 +1031,18 @@ export function buildCharacterSheet(
 
   // Competenze: armature/armi/strumenti = UNIONE di tutte le classi (dal motore);
   // tiri salvezza = solo classe primaria
-  const armor = derived.armor;
-  const weapons = derived.weapons;
+  const armor = [...derived.armor];
+  const weapons = [...derived.weapons];
   const tools = [...derived.tools];
+  // Competenze in armature/armi concesse dai TALENTI (armor_proficiency/weapon_proficiency)
+  if (plan.featApply) {
+    for (const a of plan.featApply.armorProficiencies ?? []) if (!armor.includes(a)) armor.push(a);
+    for (const w of plan.featApply.weaponProficiencies ?? []) if (!weapons.includes(w)) weapons.push(w);
+  }
+  for (const af of plan.additionalFeats ?? []) {
+    for (const a of af.apply.armorProficiencies ?? []) if (!armor.includes(a)) armor.push(a);
+    for (const w of af.apply.weaponProficiencies ?? []) if (!weapons.includes(w)) weapons.push(w);
+  }
   if (bgData.toolProficiency?.toolId) tools.push(bgData.toolProficiency.toolId);
   // Strumenti scelti dal background (CHOICE) e dal talento di origine
   for (const t of plan.bgToolProficiencies ?? []) if (!tools.includes(t)) tools.push(t);
@@ -1025,10 +1060,23 @@ export function buildCharacterSheet(
   ] as SkillName[]) {
     if (!skills.includes(s)) skills.push(s);
   }
-  const savingThrows: Ability[] = derived.savingThrows;
+  const savingThrows: Ability[] = [...derived.savingThrows];
+  const expertise: SkillName[] = [];
+  for (const af of plan.additionalFeats ?? []) {
+    for (const s of af.apply.expertise ?? []) if (!expertise.includes(s)) expertise.push(s);
+    for (const st of af.apply.savingThrows ?? []) if (!savingThrows.includes(st)) savingThrows.push(st);
+  }
 
   // Effetti risolti (razza + lineage)
   const effects = raceData.effects;
+
+  // Resistenze dai talenti (energy_resistance_choice, es. Dono della Resistenza Energetica)
+  const featResistances: string[] = [];
+  for (const af of plan.additionalFeats ?? []) {
+    for (const r of af.apply.resistances ?? []) if (!featResistances.includes(r)) featResistances.push(r);
+  }
+  const defenses = extractDefenses(effects);
+  if (featResistances.length > 0) defenses.resistances = [...defenses.resistances, ...featResistances];
 
   // Feature di classe + sottoclasse (motore condiviso)
   const classFeatures = derived.classFeatures;
@@ -1101,6 +1149,8 @@ export function buildCharacterSheet(
   for (const af of plan.additionalFeats ?? []) {
     for (const cantrip of af.apply.spellcasting?.cantrips ?? []) pushAutoSpell(cantrip);
     for (const spell of af.apply.spellcasting?.spells ?? []) pushAutoSpell(spell);
+    // Incantesimi da scelte dei talenti (spell_selection, ritual_spells_gain)
+    for (const spellName of af.apply.spells ?? []) pushAutoSpell(spellName);
   }
   for (const eff of effects) {
     if (eff.type !== 'spell_grant') continue;
@@ -1166,7 +1216,10 @@ export function buildCharacterSheet(
       .map((f) => f.featId),
     fightingStyleId: plan.additionalFeats?.find((f) => f.category === 'fighting_style')?.featId,
     epicBoonId: plan.additionalFeats?.find((f) => f.category === 'epic_boon')?.featId,
+    originFeatChoice:
+      plan.raceFeatId != null ? getFeat(plan.raceFeatId)?.name : undefined,
     featAsiPicks: plan.featAsiPicks,
+    featChoices: plan.featChoices,
   };
 
   return {
@@ -1201,12 +1254,25 @@ export function buildCharacterSheet(
     speed: raceData.race.baseSpeed,
     size: raceData.race.sizeOptions[0] ?? 'Medium',
     senses: extractSenses(effects),
-    defenses: extractDefenses(effects),
-    proficiencies: { armor, weapons, tools, skills, savingThrows, languages: [] },
+    defenses,
+    proficiencies: {
+      armor,
+      weapons,
+      tools,
+      skills,
+      savingThrows,
+      languages: [],
+      expertise: expertise.length > 0 ? expertise : undefined,
+    },
     feats: [
       bgData.feat.name,
       ...(plan.additionalFeats ?? [])
-        .filter((f) => f.category === 'general' || f.category === 'fighting_style')
+        .filter(
+          (f) =>
+            f.category === 'general' ||
+            f.category === 'fighting_style' ||
+            f.category === 'origin',
+        )
         .map((f) => f.name),
     ],
     epicBoons: (plan.additionalFeats ?? [])

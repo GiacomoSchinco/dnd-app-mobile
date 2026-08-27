@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, ScrollView, Dimensions, Platform } from 'react-native';
+import { View, Pressable, ScrollView, Dimensions, Platform, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTokens } from '../ui/prism-provider';
 import { s } from '../../utils/style-helpers';
@@ -12,6 +12,8 @@ type Props = {
   bottomPadding?: number;
   /** Altezza massima della card in percentuale dello schermo (default: 0.8) */
   maxHeightPercent?: number;
+  /** Mostra un pulsante ✕ per chiudere in alto a destra della card (sempre visibile anche a contenuto scrollato) */
+  showCloseButton?: boolean;
 };
 
 /**
@@ -25,6 +27,7 @@ export default function BottomModal({
   children,
   bottomPadding = 100,
   maxHeightPercent = 0.8,
+  showCloseButton = false,
 }: Props) {
   const t = useTokens();
   const insets = useSafeAreaInsets();
@@ -70,6 +73,27 @@ export default function BottomModal({
           maxHeight: Dimensions.get('window').height * maxHeightPercent,
         }}
       >
+        {showCloseButton && (
+          <Pressable
+            onPress={onClose}
+            hitSlop={10}
+            accessibilityRole="button"
+            accessibilityLabel="Chiudi"
+            style={{
+              position: 'absolute',
+              top: t.spacing[2],
+              right: t.spacing[2],
+              zIndex: 10,
+              width: 32,
+              height: 32,
+              borderRadius: t.radius.full,
+              backgroundColor: t.colors.backgroundTertiary,
+              ...s.center,
+            }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: '700', color: t.colors.foregroundTertiary }}>✕</Text>
+          </Pressable>
+        )}
         <ScrollView
           showsVerticalScrollIndicator={true}
           contentContainerStyle={{ padding: t.spacing[6] }}

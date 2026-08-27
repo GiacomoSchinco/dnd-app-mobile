@@ -1,6 +1,6 @@
 import featsData from '../data/feats.json';
 import { getAbilityByAbbreviation, parseAbilityFromAbbreviation } from './abilities';
-import type { Ability, FeatCategory, FeatRaw } from '../../types';
+import type { Ability, FeatCategory, FeatRaw, FeatChoiceSelection } from '../../types';
 
 /**
  * feats.ts — Gestione dei talenti (feats.json).
@@ -151,4 +151,63 @@ export function getFeatAsiCap(feat: FeatRaw): number {
 export function getFeatAsiCount(feat: FeatRaw | null | undefined): number {
   const cfg = feat?.asi_config as { choices_count?: number } | null | undefined;
   return cfg?.choices_count ?? 1;
+}
+
+/**
+ * True se le scelte extra del talento (choice_config) sono complete.
+ * `pb` = bonus di competenza (per il numero di rituali di Incantatore Rituale).
+ */
+export function isFeatChoiceComplete(
+  feat: FeatRaw | undefined,
+  choice?: FeatChoiceSelection,
+  pb = 2
+): boolean {
+  if (!feat) return true;
+  const cfg = (feat.choice_config ?? {}) as {
+    type?: string;
+    count?: number | string;
+    skill_count?: number;
+    expertise_count?: number;
+    cantrips_count?: number;
+    first_level_spells_count?: number;
+  };
+  const count = (fallback = 1) => (typeof cfg.count === 'number' ? cfg.count : fallback);
+  if (!cfg.type) return true;
+  switch (cfg.type) {
+    case 'saving_throw_proficiency_gain':
+      return true; // segue la caratteristica scelta per l'ASI del talento
+    case 'tool_proficiency':
+      return (choice?.toolChoices ?? []).length >= count();
+    case 'hybrid_proficiency':
+      return (
+        (choice?.skillChoices ?? []).length + (choice?.toolChoices ?? []).length
+      ) >= count();
+    case 'observant_skill_choice':
+    case 'skill_proficiency_or_expertise':
+      return (
+        (choice?.skillChoices ?? []).length + (choice?.expertiseChoices ?? []).length
+      ) >= count();
+    case 'hybrid_proficiency_expertise':
+      return (
+        (choice?.skillChoices ?? []).length >= (cfg.skill_count ?? 1) &&
+        (choice?.expertiseChoices ?? []).length >= (cfg.expertise_count ?? 1)
+      );
+    case 'expertise_gain':
+      return (choice?.expertiseChoices ?? []).length >= count();
+    case 'element_damage_choice':
+    case 'energy_resistance_choice':
+      return (choice?.damageTypes ?? []).length >= count();
+    case 'spell_selection':
+      return !!choice?.spellName;
+    case 'spellcasting':
+      return (
+        !!choice?.spellAbility &&
+        (choice?.cantrips ?? []).length >= (cfg.cantrips_count ?? 0) &&
+        (choice?.spells ?? []).length >= (cfg.first_level_spells_count ?? 1)
+      );
+    case 'ritual_spells_gain':
+      return (choice?.ritualSpells ?? []).length >= (typeof cfg.count === 'number' ? cfg.count : pb);
+    default:
+      return true;
+  }
 }

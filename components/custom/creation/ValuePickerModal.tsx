@@ -31,7 +31,7 @@ export default function ValuePickerModal({ ability, options, method, pointsLeft,
   const t = useTokens();
 
   return (
-    <BottomModal visible={ability != null} onClose={onClose}>
+    <BottomModal visible={ability != null} onClose={onClose} showCloseButton>
       <Card style={{ padding: t.spacing[5] }}>
         <Text style={{ fontSize: t.typography.lg, fontWeight: t.typography.bold, color: t.colors.foreground }}>
           {ability ? getAbilityLabel(ability) : ''}

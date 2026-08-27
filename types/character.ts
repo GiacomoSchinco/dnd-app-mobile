@@ -182,6 +182,28 @@ export interface ManualSpellBadge {
   label: string;
 }
 
+/** Scelte extra dei talenti generali/epici (choice_config) */
+export type FeatChoiceSelection = {
+  /** spell_selection (Contaminazione Fatata/Oscura) — nome incantesimo scelto */
+  spellName?: string;
+  /** ritual_spells_gain (Incantatore Rituale) — nomi incantesimi rituali */
+  ritualSpells?: string[];
+  /** Nuove competenze skill (skill_proficiency_or_expertise, observant, hybrid…) */
+  skillChoices?: SkillName[];
+  /** Maestrie (expertise) skill */
+  expertiseChoices?: SkillName[];
+  /** tool_proficiency (Chef) — slug strumenti scelti */
+  toolChoices?: string[];
+  /** element_damage_choice / energy_resistance_choice — tipi scelti */
+  damageTypes?: string[];
+  /** spellcasting (Iniziato alla Magia) — caratteristica da incantatore scelta */
+  spellAbility?: Ability;
+  /** spellcasting — trucchetti scelti */
+  cantrips?: string[];
+  /** spellcasting — incantesimi di 1° livello scelti */
+  spells?: string[];
+};
+
 export interface CharacterChoices {
   /** Boost abilità applicati dal background */
   abilityBoosts?: { ability: Ability; amount: 1 | 2 }[];
@@ -205,6 +227,8 @@ export interface CharacterChoices {
   featAsiPicks?: Record<number, Ability[]>;
   /** Incantesimi scelti come noti/preparati */
   spellChoices?: string[];
+  /** Scelte extra dei talenti generali/epici (per feat id) */
+  featChoices?: Record<number, FeatChoiceSelection>;
 }
 
 // ── IL MODELLO COMPLETO ────────────────────────────────────────
@@ -368,6 +392,8 @@ export interface CharacterDraft {
   featSpellChoice?: FeatSpellChoice;
   /** Competenze in abilità scelte dalla razza (es. Umano "Pluriabilità", Elfo "Sensi Acuti") */
   raceSkillChoices?: SkillName[];
+  /** Id del talento delle origini scelto dalla razza (es. Umano "Versatile") */
+  raceFeatId?: number;
   /** Id dei talenti generali scelti (uno per livello ASI) */
   generalFeatIds?: number[];
   /** Id dello stile di combattimento (Fighter/Paladin/Ranger) */
@@ -376,6 +402,8 @@ export interface CharacterDraft {
   epicBoonId?: number;
   /** Scelte caratteristica per gli ASI concessi dai talenti (chiave = feat id) */
   featAsiPicks?: Record<number, Ability[]>;
+  /** Scelte extra dei talenti generali/epici (choice_config, per feat id) */
+  featChoices?: Record<number, FeatChoiceSelection>;
   /** Tiro del dado vita al 1° livello (opzionale: se assente, PF = dado MAX + CON) */
   hpRoll?: number;
   abilities: {
@@ -406,6 +434,8 @@ export interface LevelUpOptions {
   generalFeatId?: number;
   /** Scelte caratteristica per l'ASI del talento scelto */
   featAsiPicks?: Ability[];
+  /** Scelte extra del talento scelto (choice_config) */
+  featChoice?: FeatChoiceSelection;
   /** Sottoclasse scelta al livello che la sblocca */
   subclassId?: number;
 }

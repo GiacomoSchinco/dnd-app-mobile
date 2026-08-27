@@ -105,7 +105,7 @@ export default function CompendiumList<T>({
       />
 
       {selected && (
-        <BottomModal visible={!!selected} onClose={() => setSelected(null)}>
+        <BottomModal visible={!!selected} onClose={() => setSelected(null)} showCloseButton>
           {renderDetail(selected)}
         </BottomModal>
       )}

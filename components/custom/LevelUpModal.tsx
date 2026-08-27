@@ -5,7 +5,7 @@ import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { calculateLevelUpPreview, type LevelUpPreview } from '../../lib/rules/character-builder';
 import { getClassNameItalian, getClass } from '../../lib/rules/classes';
-import { getGeneralFeats, isFeatAvailable, getFeatAsiOptions, getFeatAsiCount } from '../../lib/rules/feats';
+import { getGeneralFeats, isFeatAvailable, getFeatAsiOptions, getFeatAsiCount, isFeatChoiceComplete } from '../../lib/rules/feats';
 import { getAbilityAbbreviation, getAbilityModifier } from '../../lib/rules/abilities';
 import { rollDie, DICE_COLORS } from '../../utils/dice';
 import { s } from '../../utils/style-helpers';
@@ -15,7 +15,8 @@ import Chip from './creation/Chip';
 import CardBox from './CardBox';
 import LabelValueRow from './LabelValueRow';
 import SectionTitle from './SectionTitle';
-import type { Ability, Character, DiceType, LevelUpOptions } from '../../types';
+import type { Ability, Character, DiceType, LevelUpOptions, FeatChoiceSelection } from '../../types';
+import FeatChoicePicker from './creation/FeatChoicePicker';
 
 type Props = {
   visible: boolean;
@@ -41,6 +42,7 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
   const [asiSlots, setAsiSlots] = useState<Ability[]>([]);
   const [featId, setFeatId] = useState<number | null>(null);
   const [featAsiPicks, setFeatAsiPicks] = useState<Ability[]>([]);
+  const [featChoice, setFeatChoice] = useState<FeatChoiceSelection | undefined>(undefined);
   const [subclassId, setSubclassId] = useState<number | null>(null);
 
   const preview: LevelUpPreview = useMemo(
@@ -62,6 +64,7 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
     setAsiSlots([]);
     setFeatId(null);
     setFeatAsiPicks([]);
+    setFeatChoice(undefined);
     setSubclassId(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, character.id]);
@@ -110,9 +113,12 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
 
   const hasAsi = preview.success && preview.asiLevels.length > 0;
   const asiValid = !hasAsi || (asiChoice === 'asi' ? asiComplete : featId != null && featAsiComplete);
+  const featChoiceComplete = selectedFeat
+    ? isFeatChoiceComplete(selectedFeat, featChoice, character.proficiencyBonus ?? 2)
+    : true;
   const subclassValid = !preview.success || !preview.subclassUnlocked || subclassId != null;
 
-  const canConfirm = preview.success && asiValid && subclassValid;
+  const canConfirm = preview.success && asiValid && subclassValid && featChoiceComplete;
 
   const handleConfirm = () => {
     if (!canConfirm || !preview.success) return;
@@ -121,6 +127,7 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
       asiBoosts: hasAsi && asiChoice === 'asi' && asiBoosts.length > 0 ? asiBoosts : undefined,
       generalFeatId: hasAsi && asiChoice === 'feat' ? featId ?? undefined : undefined,
       featAsiPicks: featAsiPicks.length > 0 ? featAsiPicks : undefined,
+      featChoice: hasAsi && asiChoice === 'feat' ? featChoice : undefined,
       subclassId: subclassId ?? undefined,
     });
     onClose();
@@ -128,7 +135,7 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
 
   if (!preview.success) {
     return (
-      <BottomModal visible={visible} onClose={onClose}>
+      <BottomModal visible={visible} onClose={onClose} showCloseButton>
         <Text style={{ fontSize: t.typography.md, color: t.colors.danger, fontWeight: '600' }}>
           {preview.error}
         </Text>
@@ -140,7 +147,7 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
   }
 
   return (
-    <BottomModal visible={visible} onClose={onClose}>
+    <BottomModal visible={visible} onClose={onClose} showCloseButton>
       <View style={[s.gap(t.spacing[4])]}>
         {/* Titolo + classe da livellare */}
         <View>
@@ -304,7 +311,11 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
                         label={feat.name}
                         selected={sel}
                         compact
-                        onPress={() => { setFeatId(sel ? null : feat.id); setFeatAsiPicks([]); }}
+                        onPress={() => {
+                          setFeatId(sel ? null : feat.id);
+                          setFeatAsiPicks([]);
+                          setFeatChoice(undefined);
+                        }}
                       />
                       {sel && asiOpts.length > 1 && (
                         <View style={[s.row, { gap: t.spacing[1.5], flexWrap: 'wrap', marginTop: t.spacing[2] }]}>
@@ -317,6 +328,18 @@ export default function LevelUpModal({ visible, character, onClose, onConfirm }:
                               onPress={() => toggleFeatAsi(a)}
                             />
                           ))}
+                        </View>
+                      )}
+                      {sel && feat.choice_config && (
+                        <View style={{ marginTop: t.spacing[2] }}>
+                          <FeatChoicePicker
+                            feat={feat}
+                            value={featChoice}
+                            onChange={setFeatChoice}
+                            knownSkills={character.proficiencies?.skills ?? []}
+                            knownExpertise={character.proficiencies?.expertise ?? []}
+                            proficiencyBonus={character.proficiencyBonus ?? 2}
+                          />
                         </View>
                       )}
                     </View>

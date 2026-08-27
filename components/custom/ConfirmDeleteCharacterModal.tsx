@@ -25,7 +25,7 @@ export default function ConfirmDeleteCharacterModal({
 }: Props) {
   const t = useTokens();
   return (
-    <BottomModal visible={visible} onClose={onClose}>
+    <BottomModal visible={visible} onClose={onClose} showCloseButton>
       <Text style={{ fontSize: t.typography.xl, fontWeight: '700', color: t.colors.foreground }}>
         Eliminare &quot;{characterName}&quot;?
       </Text>

@@ -96,7 +96,7 @@
 | `Card` (`ui/card`) | Card con varianti (default/elevated/outlined/ghost) | Contenitori elevati |
 | `Badge` (`ui/badge`) | Etichetta (solid/outline/subtle, color) | Badge classe/livello/rarità/scuola |
 | `Input` (`ui/input`) | Campo testo con label/error | Nome PG, ricerca |
-| `BottomModal` | Modal dal basso | Conferme, sezioni scheda, picker |
+| `BottomModal` | Modal dal basso — prop `showCloseButton` → ✕ assoluta in alto a destra (sempre visibile anche a contenuto scrollato) | Conferme, sezioni scheda, picker, dettagli |
 | `DndIcon` | Icone SVG custom (dadi/scuole/oggetti/classi) | Icone custom — mai emoji come icone |
 | `StepperControl` | Stepper ± circolare (theme-safe) | Quantità/modificatore dadi |
 | `CharacterBar` | Barra PG attivo (nome + classe + livello) | Tab legate al PG (Magie, Abilità) |
@@ -117,6 +117,7 @@
 | `EquipmentRow` | Riga equipaggiamento con statistiche INLINE (danno/CA/gittata/proprietà) | Tab Equip. (`EquipmentScreen`) |
 | `CompendiumDetailHeader` | Header unificato dettagli compendio (icona box 56 accentSubtle + titolo xl/700 + badge) | Liste/dettagli Compendio (Classi/Razze/Background/Talenti/Equip.) |
 | `ClassSwitcher` | Chips delle classi configurate per scegliere QUALE classe configurare (multiclasse) | Wizard multiclasse (Level/Subclass/Skills step) |
+| `FeatChoicePicker` | Picker delle scelte extra dei talenti (`choice_config`): tool, skill competenza/maestria, tiri salvezza, tipi danno, incantesimi, rituali | FeatStep (wizard) + LevelUpModal |
 | `ManualCheckCard` | Card warning "Regole da verificare" + modale "Strumenti manuali" (editor/magie/oggetti/note). Chiudibile per PG (`Character.manualCheckDismissed`); dopo "Ho capito" resta una riga info compatta che riapre tutto | Scheda PG; badge "Da verificare" in Home (`HomeScreen`) |
 
 **Wizard creazione**: la schermata (`CharacterCreateScreen`) è un renderer sottile →
@@ -134,9 +135,9 @@ presentational in `components/custom/creation/`. L'ultimo passo è `summary`
 | `default` | ☀️ Chiaro · stile Apple | ✅ attivo (default in App.tsx) |
 | `dark_fantasy` | 🐉 Antracite · oro araldico | ✅ attivo (ThemePicker) |
 | `light_fantasy` | 📜 Pergamena · rosso cremisi | ✅ attivo (ThemePicker) |
-| `obsidian` | 🌑 Scuro · viola epico | ⚠️ file presente, disattivato |
-| `neon` | 💚 Cyberpunk · verde glow | ⚠️ file presente, disattivato |
-| `stone` | 🪨 Caldo · marrone naturale | ⚠️ file presente, disattivato |
+| `obsidian` | 🌑 Scuro · viola epico | — file presente, non attivo (scelta) |
+| `neon` | 💚 Cyberpunk · verde glow | — file presente, non attivo (scelta) |
+| `stone` | 🪨 Caldo · marrone naturale | — file presente, non attivo (scelta) |
 
 Cambio tema: runtime dalle Impostazioni (`ThemePicker` → `setTheme()`) oppure
 cambiando l'import in `App.tsx`. I temi supportano transizioni animate, haptic e ombre.

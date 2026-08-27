@@ -1,5 +1,6 @@
-import type { Ability, FeatModifierRaw, FeatRaw, FeatSpellChoice, SkillName } from '../../types';
+import type { Ability, ArmorType, FeatModifierRaw, FeatRaw, FeatSpellChoice, SkillName, WeaponType } from '../../types';
 import { parseAbilityFromAbbreviation } from './abilities';
+import { getAllSkills } from './skills';
 
 /**
  * apply-feat.ts — Motore di applicazione dei talenti.
@@ -30,6 +31,22 @@ export interface FeatResourceGrant {
   description?: string;
 }
 
+/** Scelte extra dei talenti generali/epici (choice_config) */
+export interface FeatChoiceInput {
+  /** spell_selection (Contaminazione Fatata/Oscura) — nome incantesimo scelto */
+  spellName?: string;
+  /** ritual_spells_gain (Incantatore Rituale) — nomi incantesimi rituali */
+  ritualSpells?: string[];
+  /** Competenze skill (skill_proficiency_or_expertise, observant, hybrid…) */
+  skillChoices?: SkillName[];
+  /** Maestrie (expertise) skill */
+  expertiseChoices?: SkillName[];
+  /** tool_proficiency (Chef) — slug strumenti */
+  toolChoices?: string[];
+  /** element_damage_choice / energy_resistance_choice — tipi */
+  damageTypes?: string[];
+}
+
 export interface FeatApplyOptions {
   /** Slug degli strumenti scelti (tool_proficiency o hybrid_proficiency) */
   toolChoices?: string[];
@@ -39,18 +56,34 @@ export interface FeatApplyOptions {
   spellChoice?: FeatSpellChoice;
   /** Abilità scelte per l'ASI (asi_config) — solo scelte esplicite dell'utente */
   asiChoices?: Ability[];
+  /** Scelte extra del choice_config (talenti generali/epici) */
+  choice?: FeatChoiceInput;
 }
 
 export interface FeatApplyResult {
   featId: number;
   modifiers: FeatModifierRaw[];
   toolProficiencies: string[];
-  /** Abilità scelte (hybrid_proficiency) */
+  /** Competenze abilità scelte (hybrid_proficiency, observant, …) */
   skills: SkillName[];
+  /** Maestrie (expertise) scelte */
+  expertise: SkillName[];
   /** Scelta incantesimi risolta (spellcasting) */
   spellcasting?: FeatSpellChoice;
   resources: FeatResourceGrant[];
   asiBoosts: { ability: Ability; amount: 1 | 2 }[];
+  /** Tiri salvezza concessi (Resiliente) */
+  savingThrows: Ability[];
+  /** Resistenze concesse (Dono della Resistenza Energetica) */
+  resistances: string[];
+  /** Nomi incantesimi concessi (spell_selection, ritual_spells_gain) */
+  spells: string[];
+  /** Tipo di danno scelto (Adepto Elementale) */
+  damageType?: string;
+  /** Armature concesse (armor_proficiency / shield_proficiency) */
+  armorProficiencies: ArmorType[];
+  /** Armi concesse (weapon_proficiency) */
+  weaponProficiencies: WeaponType[];
 }
 
 // ── Catalogo strumenti (competenze) ──────────────────────────────
@@ -146,6 +179,18 @@ export function getToolLabel(slug: string): string {
   return TOOL_LABELS[slug] ?? slug;
 }
 
+/** Tutte le skill (per i talenti che danno competenza in tutte) */
+const ALL_SKILLS: SkillName[] = getAllSkills().map((s) => s.name);
+
+/** Pool strumenti: accetta una chiave di pool (artisan_tools…) o un singolo slug (cooks_utensils) */
+function getToolPoolSlugs(pool?: string): string[] {
+  if (!pool) return [];
+  const key = normalizeToolPool(pool);
+  if (key && TOOL_POOLS[key]) return TOOL_POOLS[key];
+  if (TOOL_LABELS[pool]) return [pool];
+  return [];
+}
+
 /**
  * Applica un talento → concessioni meccaniche.
  * Le scelte non ancora risolte (tool scelti mancanti) vengono semplicemente
@@ -154,29 +199,79 @@ export function getToolLabel(slug: string): string {
 export function applyFeat(feat: FeatRaw, options: FeatApplyOptions = {}): FeatApplyResult {
   const modifiers = feat.granted_modifiers ?? [];
   const choiceConfig = feat.choice_config as
-    | { type?: string; pool?: string; count?: number }
+    | {
+        type?: string;
+        pool?: string | string[];
+        count?: number;
+        skill_count?: number;
+        expertise_count?: number;
+      }
     | null
     | undefined;
+  const choice = options.choice;
 
   // Competenze (strumenti e/o abilità) per i choice_config corrispondenti
   const toolProficiencies: string[] = [];
   const skills: SkillName[] = [];
+  const expertise: SkillName[] = [];
+  const savingThrows: Ability[] = [];
+  const resistances: string[] = [];
+  const spells: string[] = [];
+  let damageType: string | undefined;
+
   if (choiceConfig?.type === 'tool_proficiency') {
-    const poolKey = normalizeToolPool(choiceConfig.pool);
-    const pool = poolKey ? TOOL_POOLS[poolKey] : [];
+    // pool: chiave di pool (artisan_tools…) oppure singolo slug (cooks_utensils)
+    const pool = getToolPoolSlugs(choiceConfig.pool as string);
     const count = choiceConfig.count ?? pool.length;
-    const picked = (options.toolChoices ?? []).filter((t) => pool.includes(t));
+    const picked = (choice?.toolChoices ?? options.toolChoices ?? []).filter((t) => pool.includes(t));
     toolProficiencies.push(...picked.slice(0, count));
   } else if (choiceConfig?.type === 'hybrid_proficiency') {
     // "Abile": combinazione di abilità e/o strumenti, totale = count
     const total = choiceConfig.count ?? 3;
     const allTools = Object.keys(TOOL_LABELS);
-    const skillPicked = (options.skillChoices ?? []).slice(0, total);
-    const toolPicked = (options.toolChoices ?? [])
+    const skillPicked = (choice?.skillChoices ?? options.skillChoices ?? []).slice(0, total);
+    const toolPicked = (choice?.toolChoices ?? options.toolChoices ?? [])
       .filter((t) => allTools.includes(t))
       .slice(0, Math.max(0, total - skillPicked.length));
     skills.push(...skillPicked);
     toolProficiencies.push(...toolPicked);
+  } else if (choiceConfig?.type === 'hybrid_proficiency_expertise') {
+    // "Abilità Impeccabile": 1 competenza + 1 maestria
+    const skillCount = choiceConfig.skill_count ?? 1;
+    const expCount = choiceConfig.expertise_count ?? 1;
+    skills.push(...(choice?.skillChoices ?? []).slice(0, skillCount));
+    expertise.push(...(choice?.expertiseChoices ?? []).slice(0, expCount));
+  } else if (choiceConfig?.type === 'expertise_gain') {
+    // "Dono dell'Abilità": maestria su una skill (+ competenza su tutte via modifier)
+    expertise.push(...(choice?.expertiseChoices ?? []).slice(0, choiceConfig.count ?? 1));
+    if (modifiers.some((m) => m.type === 'all_skill_proficiency')) {
+      skills.push(...ALL_SKILLS);
+    }
+  } else if (
+    choiceConfig?.type === 'observant_skill_choice' ||
+    choiceConfig?.type === 'skill_proficiency_or_expertise'
+  ) {
+    // Skill pool: competenza (se non posseduta) o maestria
+    const pool = (choiceConfig.pool as string[] | undefined) ?? [];
+    skills.push(...(choice?.skillChoices ?? []).filter((s) => pool.includes(s)));
+    expertise.push(...(choice?.expertiseChoices ?? []).filter((s) => pool.includes(s)));
+  } else if (choiceConfig?.type === 'saving_throw_proficiency_gain') {
+    // "Resiliente": il tiro salvezza coincide con la caratteristica scelta per l'ASI
+    const asi = (options.asiChoices ?? [])[0];
+    if (asi) savingThrows.push(asi);
+  } else if (choiceConfig?.type === 'element_damage_choice') {
+    // "Adepto Elementale": tipo di danno scelto (informativo)
+    damageType = (choice?.damageTypes ?? [])[0];
+  } else if (choiceConfig?.type === 'energy_resistance_choice') {
+    // "Dono della Resistenza Energetica": resistenze scelte
+    const count = choiceConfig.count ?? 1;
+    resistances.push(...(choice?.damageTypes ?? []).slice(0, count));
+  } else if (choiceConfig?.type === 'spell_selection') {
+    // "Contaminazione Fatata/Oscura": incantesimo scelto (sempre preparato + 1/gg)
+    if (choice?.spellName) spells.push(choice.spellName);
+  } else if (choiceConfig?.type === 'ritual_spells_gain') {
+    // "Incantatore Rituale": incantesimi rituali scelti (sempre preparati)
+    spells.push(...(choice?.ritualSpells ?? []));
   }
 
   // Incantesimi: "Iniziato alla Magia" (spellcasting)
@@ -244,13 +339,37 @@ export function applyFeat(feat: FeatRaw, options: FeatApplyOptions = {}): FeatAp
     }
   }
 
+  // Competenze in armature/armi/scudi concesse dai granted_modifiers
+  // (es. "Competenza nelle Armature Leggere", "Competenza nelle Armi Marziali").
+  // Il tipo è FISSO nei dati (armor_type/weapon_type): qui si applica tale competenza.
+  const armorProficiencies: ArmorType[] = [];
+  const weaponProficiencies: WeaponType[] = [];
+  for (const m of modifiers) {
+    if (m.type === 'armor_proficiency' && typeof m.armor_type === 'string') {
+      const at = m.armor_type as string;
+      if (at === 'light' || at === 'medium' || at === 'heavy') armorProficiencies.push(at);
+    } else if (m.type === 'shield_proficiency') {
+      if (!armorProficiencies.includes('shield')) armorProficiencies.push('shield');
+    } else if (m.type === 'weapon_proficiency' && typeof m.weapon_type === 'string') {
+      const wt = m.weapon_type as string;
+      if (wt === 'simple' || wt === 'martial') weaponProficiencies.push(wt);
+    }
+  }
+
   return {
     featId: feat.id,
     modifiers,
     toolProficiencies,
     skills,
+    expertise,
     spellcasting,
     resources,
     asiBoosts,
+    savingThrows,
+    resistances,
+    spells,
+    damageType,
+    armorProficiencies,
+    weaponProficiencies,
   };
 }

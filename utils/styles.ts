@@ -41,36 +41,5 @@ export function useScreenStyles() {
       paddingBottom: bottomSafe,                    // Protegge dalla floating tab bar
       paddingHorizontal: t.spacing[4],
     },
-
-    /** Section wrapper con gap verticale basato sui token */
-    section: {
-      width: '100%' as const,
-      gap: t.spacing[4],
-    },
-
-    /** Small uppercase label per i gruppi di controllo (es. schede D&D) */
-    label: {
-      fontSize: fontSizes.xs, // Usa le costanti per coerenza
-      fontWeight: '600' as const,
-      textTransform: 'uppercase' as const,
-      letterSpacing: 0.5,
-      color: t.colors.foregroundTertiary,
-    },
-
-    /** Bottone dello stepper (circolare ±) — flessibile e con colori del tema */
-    stepperBtn: {
-      width: 32,
-      height: 32,
-      borderRadius: 16,
-      alignItems: 'center' as const,
-      justifyContent: 'center' as const,
-    },
-
-    /** Riga per allineare i controlli orizzontalmente */
-    controlsRow: {
-      flexDirection: 'row' as const,
-      justifyContent: 'center' as const,
-      gap: t.spacing[4],
-    },
   };
 }

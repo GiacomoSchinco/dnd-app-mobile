@@ -20,7 +20,9 @@
 - **Scheda personaggio** — PF (danno/cura/temporanei), caratteristiche, risorse
   **interattive** (consuma/recupera, ripristina tutte, spiegazione via info),
   header con CA/PB/Velocità/Iniziativa.
-- **Tab Talenti** — talenti, doni epici, caratteristiche di classe e sottoclasse.
+- **Tab Talenti** — talenti, doni epici, caratteristiche di classe e sottoclasse,
+  con **scelte extra dei talenti** (incantesimi, skill/maestrie, strumenti, tiri
+  salvezza, tipi di danno/resistenza, rituali) sia nel wizard sia nel level-up.
 - **Tab Equipaggiamento** — denaro e oggetti del PG con statistiche inline,
   gestione completa (aggiungi/rimuovi/equipaggia).
 - **Tab Magie** — magie preparate/assegnate del PG, barra slot incantesimi
@@ -245,15 +247,8 @@ L'APK generato → `android\app\build\outputs\apk\release\app-release.apk`
 
 ## 🔲 Gap / roadmap
 
-- Scelte extra dei talenti generali/epici (`choice_config`, es. `spell_selection`,
-  `skill_proficiency_or_expertise`) non ancora collegate al wizard.
 - `knownSpells` di classe non auto-popolati (solo talenti e fonti automatiche
   razza/background).
-- Alcuni PG salvati prima di fix specifici (es. risorse) vanno ricreati o backfillati.
-- Temi `obsidian`, `neon`, `stone`: file presenti ma disattivati (attivi solo
-  `default`, `dark_fantasy`, `light_fantasy`).
-- `utils/styles.ts` duplica valori del tema (refactor noto, non fatto).
-- Umano: effetto "Versatile" (scelta talento di origine) non ancora gestito.
 
 ---
 

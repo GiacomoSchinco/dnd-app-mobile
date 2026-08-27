@@ -19,7 +19,7 @@ export default function CardDetailModal({ item, onClose }: Props) {
   const t = useTokens();
 
   return (
-    <BottomModal visible={item != null} onClose={onClose}>
+    <BottomModal visible={item != null} onClose={onClose} showCloseButton>
       {item && (
         <View style={{ gap: t.spacing[3] }}>
           {item.image && (

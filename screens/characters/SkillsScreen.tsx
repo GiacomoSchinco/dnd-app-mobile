@@ -124,7 +124,7 @@ export default function SkillsScreen() {
         })}
       </ScrollView>
 
-      <BottomModal visible={!!selectedSkill} onClose={() => setSelectedSkill(null)}>
+      <BottomModal visible={!!selectedSkill} onClose={() => setSelectedSkill(null)} showCloseButton>
         {selectedSkill && (
           <SkillDetailCard
             skill={selectedSkill}

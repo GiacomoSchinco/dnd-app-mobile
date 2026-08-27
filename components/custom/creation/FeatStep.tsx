@@ -1,15 +1,16 @@
 import { useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useTokens } from '../../ui/prism-provider';
-import { getFeatAsiOptions } from '../../../lib/rules/feats';
+import { getFeat, getFeatAsiOptions } from '../../../lib/rules/feats';
 import { getAbilityAbbreviation } from '../../../lib/rules/abilities';
 import { s } from '../../../utils/style-helpers';
 import StepLabel from './StepLabel';
 import Chip from './Chip';
+import FeatChoicePicker from './FeatChoicePicker';
 import SectionTitle from '../SectionTitle';
 import CardBox from '../CardBox';
 import { ABILITY_ORDER, FEAT_MODE_PENDING, type AsiAssignment, type AsiMode } from './wizardSteps';
-import type { Ability, AbilityScores, FeatRaw } from '../../../types';
+import type { Ability, AbilityScores, FeatRaw, FeatChoiceSelection, SkillName } from '../../../types';
 
 type Props = {
   level: number;
@@ -30,6 +31,19 @@ type Props = {
   // ASI scelti per i talenti selezionati (chiave = feat id)
   featAsiPicks: Record<number, Ability[]>;
   onToggleFeatAsi: (featId: number, ability: Ability) => void;
+  /** Scelte extra dei talenti selezionati (choice_config, per feat id) */
+  featChoices: Record<number, FeatChoiceSelection>;
+  onFeatChoiceChange: (featId: number, v: FeatChoiceSelection) => void;
+  /** Talento delle origini concesso dalla razza (es. Umano "Versatile") */
+  hasRaceFeat: boolean;
+  raceFeatOptions: { id: number; name: string }[];
+  raceFeatId: number | null;
+  onRaceFeatSelect: (id: number) => void;
+  /** Skill già competenti (per scelte prof/expertise) */
+  knownSkills?: SkillName[];
+  knownExpertise?: SkillName[];
+  /** Bonus di competenza (per il numero di rituali) */
+  proficiencyBonus: number;
   // Dono epico
   epicBoonUnlocked: boolean;
   epicBoonOptions: FeatRaw[];
@@ -47,6 +61,11 @@ function FeatRow({
   asiPicks,
   onToggle,
   onToggleAsi,
+  choiceValue,
+  onChoiceChange,
+  knownSkills,
+  knownExpertise,
+  proficiencyBonus,
 }: {
   feat: FeatRaw;
   selected: boolean;
@@ -54,6 +73,11 @@ function FeatRow({
   asiPicks?: Ability[];
   onToggle: () => void;
   onToggleAsi?: (ability: Ability) => void;
+  choiceValue?: FeatChoiceSelection;
+  onChoiceChange?: (v: FeatChoiceSelection) => void;
+  knownSkills?: SkillName[];
+  knownExpertise?: SkillName[];
+  proficiencyBonus?: number;
 }) {
   const t = useTokens();
   const asiOptions = getFeatAsiOptions(feat);
@@ -114,6 +138,16 @@ function FeatRow({
               </View>
             </View>
           )}
+          {feat.choice_config && onChoiceChange && (
+            <FeatChoicePicker
+              feat={feat}
+              value={choiceValue}
+              onChange={onChoiceChange}
+              knownSkills={knownSkills}
+              knownExpertise={knownExpertise}
+              proficiencyBonus={proficiencyBonus}
+            />
+          )}
         </View>
       )}
     </View>
@@ -136,6 +170,15 @@ export default function FeatStep({
   generalFeatOptions,
   featAsiPicks,
   onToggleFeatAsi,
+  featChoices,
+  onFeatChoiceChange,
+  hasRaceFeat,
+  raceFeatOptions,
+  raceFeatId,
+  onRaceFeatSelect,
+  knownSkills,
+  knownExpertise,
+  proficiencyBonus,
   epicBoonUnlocked,
   epicBoonOptions,
   epicBoonId,
@@ -179,6 +222,35 @@ export default function FeatStep({
                 onPress={() => onSelectFightingStyle(fightingStyleId === f.id ? null : f.id)}
               />
             ))}
+          </View>
+        </View>
+      )}
+
+      {/* Talento delle origini della razza (es. Umano "Versatile") */}
+      {hasRaceFeat && (
+        <View>
+          <SectionTitle
+            large
+            text="TALENTO DELLE ORIGINI"
+            note="La tua razza ti concede un talento delle origini a scelta."
+          />
+          <View style={{ gap: t.spacing[2] }}>
+            {raceFeatOptions.map((f) => {
+              const feat = getFeat(f.id);
+              return feat ? (
+                <FeatRow
+                  key={f.id}
+                  feat={feat}
+                  selected={raceFeatId === f.id}
+                  onToggle={() => onRaceFeatSelect(f.id)}
+                  choiceValue={raceFeatId === f.id ? featChoices[f.id] : undefined}
+                  onChoiceChange={(v) => onFeatChoiceChange(f.id, v)}
+                  knownSkills={knownSkills}
+                  knownExpertise={knownExpertise}
+                  proficiencyBonus={proficiencyBonus}
+                />
+              ) : null;
+            })}
           </View>
         </View>
       )}
@@ -330,6 +402,11 @@ export default function FeatStep({
                                 onSetAsiLevelFeat(asi.key, chosenId === f.id ? FEAT_MODE_PENDING : f.id)
                               }
                               onToggleAsi={(a) => onToggleFeatAsi(f.id, a)}
+                              choiceValue={chosenId === f.id ? featChoices[f.id] : undefined}
+                              onChoiceChange={(v) => onFeatChoiceChange(f.id, v)}
+                              knownSkills={knownSkills}
+                              knownExpertise={knownExpertise}
+                              proficiencyBonus={proficiencyBonus}
                             />
                           ))}
                         </View>
@@ -365,6 +442,11 @@ export default function FeatStep({
                   asiPicks={epicBoonId === f.id ? featAsiPicks[f.id] : undefined}
                   onToggle={() => onSelectEpicBoon(epicBoonId === f.id ? null : f.id)}
                   onToggleAsi={(a) => onToggleFeatAsi(f.id, a)}
+                  choiceValue={epicBoonId === f.id ? featChoices[f.id] : undefined}
+                  onChoiceChange={(v) => onFeatChoiceChange(f.id, v)}
+                  knownSkills={knownSkills}
+                  knownExpertise={knownExpertise}
+                  proficiencyBonus={proficiencyBonus}
                 />
               ))}
             </View>

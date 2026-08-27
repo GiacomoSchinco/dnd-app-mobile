@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { TabToRootNav } from '../../types/navigation';
 import type { CharacterResource } from '../../types';
@@ -10,6 +10,8 @@ import Screen from '../../components/custom/Screen';
 import ScreenHeader from '../../components/custom/ScreenHeader';
 import MissingActiveCharacter from '../../components/custom/MissingActiveCharacter';
 import ManualCheckCard from '../../components/custom/ManualCheckCard';
+import ManualToolsModal from '../../components/custom/ManualToolsModal';
+import DndIcon from '../../components/custom/DndIcon';
 import StatsGrid from '../../components/custom/StatsGrid';
 import ClassAvatar from '../../components/custom/ClassAvatar';
 import CardBox from '../../components/custom/CardBox';
@@ -38,6 +40,8 @@ export default function CharacterDetailScreen() {
   const navigation = useNavigation<TabToRootNav>();
   const { activeChar, updateCharacter, applyLevelUp } = useActiveCharacter();
   const [levelUpVisible, setLevelUpVisible] = useState(false);
+  /** Modale "Regole da verificare" (banner o icona info della card nome) */
+  const [manualToolsVisible, setManualToolsVisible] = useState(false);
   /** Risorsa selezionata per la spiegazione (modale) */
   const [resourceInfo, setResourceInfo] = useState<CharacterResource | null>(null);
 
@@ -95,12 +99,14 @@ export default function CharacterDetailScreen() {
         />
 
       {/* Card informativa "Regole da verificare" — chiudibile per PG (persistita);
-          dopo "Ho capito" resta una riga info compatta per rileggere tutto */}
-      <ManualCheckCard
-        dismissed={!!activeChar.manualCheckDismissed}
-        marginBottom={t.spacing[5]}
-        onDismiss={() => updateCharacter(activeChar.id, { manualCheckDismissed: true })}
-      />
+          dopo "Ho capito" resta l'icona info in alto a destra della card del nome */}
+      {!activeChar.manualCheckDismissed && (
+        <ManualCheckCard
+          marginBottom={t.spacing[5]}
+          onDismiss={() => updateCharacter(activeChar.id, { manualCheckDismissed: true })}
+          onOpenTools={() => setManualToolsVisible(true)}
+        />
+      )}
 
       {/* Card nome e classe — stile HomeScreen */}
       <CardBox padding={t.spacing[5]} radius={t.radius.lg} marginBottom={t.spacing[5]} style={s.fullWidth}>
@@ -121,6 +127,27 @@ export default function CharacterDetailScreen() {
               )}
             </View>
           </View>
+
+          {/* Info "Regole da verificare" — dopo "Ho capito", in alto a destra */}
+          {activeChar.manualCheckDismissed && (
+            <Pressable
+              onPress={() => setManualToolsVisible(true)}
+              hitSlop={8}
+              accessibilityRole="button"
+              accessibilityLabel="Rileggi le regole da verificare e apri gli strumenti manuali"
+              style={({ pressed }) => ({
+                width: 32,
+                height: 32,
+                borderRadius: t.radius.full,
+                backgroundColor: pressed ? t.colors.warningSubtle : t.colors.backgroundTertiary,
+                ...s.center,
+                alignSelf: 'flex-start',
+                marginLeft: t.spacing[2],
+              })}
+            >
+              <DndIcon name="info" size={18} color={t.colors.warning} />
+            </Pressable>
+          )}
         </View>
 
         {/* Statistiche derivate — 4 quadrati in fila */}
@@ -215,8 +242,14 @@ export default function CharacterDetailScreen() {
 
       </Screen>
 
+      {/* Modale "Regole da verificare" (da banner o icona info della card nome) */}
+      <ManualToolsModal
+        visible={manualToolsVisible}
+        onClose={() => setManualToolsVisible(false)}
+      />
+
       {/* Spiegazione risorsa (FUORI dallo Screen, pattern modali) */}
-      <BottomModal visible={resourceInfo != null} onClose={() => setResourceInfo(null)}>
+      <BottomModal visible={resourceInfo != null} onClose={() => setResourceInfo(null)} showCloseButton>
         {resourceInfo && (
           <>
             <Text

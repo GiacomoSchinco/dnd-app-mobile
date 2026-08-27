@@ -158,7 +158,9 @@ function FeatCard({ name, dndIcon, category }: { name: string; dndIcon: IconName
       dndIcon={dndIcon}
       category={category}
       description={feat?.description}
-      effects={(feat?.granted_modifiers ?? []).map((m) => m.description).filter((d) => d.length > 0)}
+      effects={(feat?.granted_modifiers ?? [])
+        .map((m) => m.description)
+        .filter((d): d is string => typeof d === 'string' && d.length > 0)}
     />
   );
 }
