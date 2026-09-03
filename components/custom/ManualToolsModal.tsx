@@ -96,14 +96,14 @@ export default function ManualToolsModal({ visible, onClose }: Props) {
           accessibilityLabel="Chiudi"
           style={s.p(t.spacing[1])}
         >
-          <Text style={{ fontSize: 20, color: t.colors.foregroundTertiary }}>✕</Text>
+          <Text style={{ fontSize: Math.round(20 * (t.scale ?? 1)), color: t.colors.foregroundTertiary }}>✕</Text>
         </Pressable>
       </View>
       <Text
         style={{
           fontSize: t.typography.base,
           color: t.colors.foregroundSecondary,
-          lineHeight: 22,
+          lineHeight: Math.round(22 * (t.scale ?? 1)),
           marginBottom: t.spacing[4],
         }}
       >

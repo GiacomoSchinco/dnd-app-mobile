@@ -68,7 +68,7 @@ export default function ClassiListScreen() {
               }
             />
 
-            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
+            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)), marginTop: t.spacing[3] }}>
               {c.description}
             </Text>
 
@@ -92,7 +92,7 @@ export default function ClassiListScreen() {
                   <Badge variant="subtle" size="sm">{f.level}°</Badge>
                   <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground, flex: 1 }}>{f.name}</Text>
                 </View>
-                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 18, marginTop: t.spacing[1] }}>
+                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: Math.round(18 * (t.scale ?? 1)), marginTop: t.spacing[1] }}>
                   {f.description}
                 </Text>
               </DetailBlock>
@@ -101,7 +101,7 @@ export default function ClassiListScreen() {
             <CompendiumSectionTitle>Sottoclassi</CompendiumSectionTitle>
             {subclasses.map((sc) => (
               <DetailBlock key={sc.id} title={sc.name}>
-                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 18, marginTop: t.spacing[1] }}>
+                <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: Math.round(18 * (t.scale ?? 1)), marginTop: t.spacing[1] }}>
                   {sc.description}
                 </Text>
                 {sc.features.map((f) => (
@@ -109,7 +109,7 @@ export default function ClassiListScreen() {
                     <Text style={{ fontSize: t.typography.xs, fontWeight: '700', color: t.colors.foreground }}>
                       {f.level > 0 ? `${f.level}° — ` : ''}{f.name}
                     </Text>
-                    <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 17, marginTop: t.spacing[0.5] }}>
+                    <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: Math.round(17 * (t.scale ?? 1)), marginTop: t.spacing[0.5] }}>
                       {f.description}
                     </Text>
                   </View>

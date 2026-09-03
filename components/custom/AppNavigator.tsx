@@ -92,7 +92,7 @@ export default function AppNavigator() {
           tabBarActiveTintColor: t.colors.accent,
           tabBarInactiveTintColor: t.colors.foregroundTertiary,
           tabBarLabelStyle: {
-            fontSize: 10,
+            fontSize: Math.round(10 * (t.scale ?? 1)),
             fontWeight: '600',
             letterSpacing: 0.1,
             marginBottom: 2,

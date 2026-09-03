@@ -224,7 +224,7 @@ function SkillDetailCard({
       {/* Descrizione */}
       <View style={{ gap: t.spacing[1] }}>
         <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.foreground }}>A cosa serve</Text>
-        <Text style={{ fontSize: t.typography.sm, lineHeight: 20, color: t.colors.foregroundSecondary }}>{skill.description}</Text>
+        <Text style={{ fontSize: t.typography.sm, lineHeight: Math.round(20 * (t.scale ?? 1)), color: t.colors.foregroundSecondary }}>{skill.description}</Text>
       </View>
     </View>
   );

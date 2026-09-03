@@ -1,8 +1,9 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import { Vibration, Platform } from 'react-native'
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
+import { Vibration, Platform, useWindowDimensions } from 'react-native'
 import defaultTheme from './themes/default.js'
 import { THEMES } from './themes/registry.js'
 import { fileSystemStorage } from '../../store/file-system-storage'
+import { getResponsiveScale, buildResponsiveTheme } from '../../utils/responsive'
 
 const THEME_STORAGE_KEY = 'app-theme'
 
@@ -36,6 +37,18 @@ export function PrismProvider({ theme = defaultTheme, children }) {
   })
   const [transitioning, setTransitioning] = useState(false)
   const [prevTheme, setPrevTheme] = useState(null)
+
+  // ── Responsive scaling (tablet) ──────────────────────────────────
+  // Su schermi larghi (>= breakpoint) i token typography/spacing/radius
+  // vengono moltiplicati per `scale`: la UI "cresce" in modo uniforme,
+  // mentre sui telefoni `scale` resta 1 e il tema è IDENTICO a prima.
+  // Il tema scalato è esposto tramite `useTokens()`/`useTheme()`.
+  const { width } = useWindowDimensions()
+  const scale = useMemo(() => getResponsiveScale(width), [width])
+  const themeForRender = useMemo(
+    () => buildResponsiveTheme(activeTheme, scale),
+    [activeTheme, scale]
+  )
 
   // Su nativo lo storage è asincrono: carica il tema salvato dopo il mount.
   useEffect(() => {
@@ -73,7 +86,7 @@ export function PrismProvider({ theme = defaultTheme, children }) {
   }, [activeTheme])
 
   return (
-    <PrismContext.Provider value={{ theme: activeTheme, setTheme, transitioning, prevTheme }}>
+    <PrismContext.Provider value={{ theme: themeForRender, setTheme, transitioning, prevTheme }}>
       {children}
     </PrismContext.Provider>
   )

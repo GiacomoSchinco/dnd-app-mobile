@@ -133,7 +133,7 @@ export default function NotesScreen() {
                       fontSize: t.typography.base,
                       color: note.done ? t.colors.foregroundTertiary : t.colors.foreground,
                       textDecorationLine: note.done ? 'line-through' : 'none',
-                      lineHeight: 21,
+                      lineHeight: Math.round(21 * (t.scale ?? 1)),
                     }}
                   >
                     {note.text}

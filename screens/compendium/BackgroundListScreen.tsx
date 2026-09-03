@@ -52,7 +52,7 @@ export default function BackgroundListScreen() {
             title={b.name}
             badges={b.feat.name ? <Badge variant="solid" size="sm" color={t.colors.accent}>{b.feat.name}</Badge> : undefined}
           />
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)), marginTop: t.spacing[3] }}>
             {b.description}
           </Text>
 

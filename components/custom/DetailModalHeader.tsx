@@ -38,7 +38,7 @@ export default function DetailModalHeader({ icon, iconBg, title, badges, onClose
             {title}
           </Text>
           <TouchableOpacity onPress={onClose} style={s.p(t.spacing[1])}>
-            <Text style={{ fontSize: 20, color: t.colors.foregroundTertiary }}>✕</Text>
+            <Text style={{ fontSize: Math.round(20 * (t.scale ?? 1)), color: t.colors.foregroundTertiary }}>✕</Text>
           </TouchableOpacity>
         </View>
         {badges && <View style={[s.rowWrap, s.gap(t.spacing[1.5]), s.mt(t.spacing[1])]}>{badges}</View>}

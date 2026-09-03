@@ -84,7 +84,7 @@ export default function SpellCard({
                 accessibilityLabel={isFavorite ? `Rimuovi ${spell.name} dalle preferite` : `Aggiungi ${spell.name} alle preferite`}
                 style={[s.box(40, 20), { backgroundColor: isFavorite ? FAVORITE_COLOR : t.colors.backgroundSecondary, ...s.center }]}
               >
-                <Text style={{ fontSize: 16, color: isFavorite ? t.colors.accentForeground : FAVORITE_COLOR }}>{isFavorite ? '★' : '☆'}</Text>
+                <Text style={{ fontSize: Math.round(16 * (t.scale ?? 1)), color: isFavorite ? t.colors.accentForeground : FAVORITE_COLOR }}>{isFavorite ? '★' : '☆'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={onTogglePrepared}
@@ -93,7 +93,7 @@ export default function SpellCard({
                 accessibilityLabel={isPrepared ? `Rimuovi ${spell.name} dalle preparate` : `Assegna ${spell.name} come preparata`}
                 style={[s.box(40, 20), { backgroundColor: isPrepared ? t.colors.accent : t.colors.backgroundSecondary, ...s.center }]}
               >
-                <Text style={{ fontSize: 14, color: isPrepared ? t.colors.accentForeground : t.colors.foregroundTertiary }}>
+                <Text style={{ fontSize: Math.round(14 * (t.scale ?? 1)), color: isPrepared ? t.colors.accentForeground : t.colors.foregroundTertiary }}>
                   {isPrepared ? '✓' : '+'}
                 </Text>
               </TouchableOpacity>

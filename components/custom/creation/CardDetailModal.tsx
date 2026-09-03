@@ -64,7 +64,7 @@ export default function CardDetailModal({ item, onClose }: Props) {
             </Text>
           )}
 
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)) }}>
             {item.desc}
           </Text>
 

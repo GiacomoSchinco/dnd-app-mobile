@@ -13,6 +13,8 @@ export interface PrismTheme {
   gradients: Record<string, any>;
   transition: { enabled: boolean; duration: number; easing: string };
   haptic: { enabled: boolean; type: string };
+  /** Fattore di scala responsive (>=1). Assente = 1 (telefoni). */
+  scale?: number;
   [key: string]: any;
 }
 

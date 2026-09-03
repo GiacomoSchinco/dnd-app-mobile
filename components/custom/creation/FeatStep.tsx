@@ -117,7 +117,7 @@ function FeatRow({
 
       {selected && (
         <View style={{ paddingHorizontal: t.spacing[3], paddingBottom: t.spacing[3], gap: t.spacing[2] }}>
-          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 17 }}>
+          <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: Math.round(17 * (t.scale ?? 1)) }}>
             {feat.description}
           </Text>
           {showAsi && (

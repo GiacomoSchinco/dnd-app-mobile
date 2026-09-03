@@ -66,7 +66,7 @@ export default function CharacterBar({ activeChar, onPress, spellInformation = t
   return (
     <Pressable onPress={onPress} style={baseStyle}>
       {content}
-      <Text style={{ fontSize: 18, color: t.colors.foregroundTertiary }}>›</Text>
+      <Text style={{ fontSize: Math.round(18 * (t.scale ?? 1)), color: t.colors.foregroundTertiary }}>›</Text>
     </Pressable>
   );
 }

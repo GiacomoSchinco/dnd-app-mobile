@@ -62,7 +62,7 @@ export default function ManualCheckCard({ onDismiss, onOpenTools, marginBottom }
         style={{
           fontSize: t.typography.base,
           color: t.colors.foregroundSecondary,
-          lineHeight: 22,
+          lineHeight: Math.round(22 * (t.scale ?? 1)),
         }}
       >
         Alcune regole non sono automatiche (magie da talenti o sottoclasse, bonus

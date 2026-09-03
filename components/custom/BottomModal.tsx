@@ -91,7 +91,7 @@ export default function BottomModal({
               ...s.center,
             }}
           >
-            <Text style={{ fontSize: 16, fontWeight: '700', color: t.colors.foregroundTertiary }}>✕</Text>
+            <Text style={{ fontSize: Math.round(16 * (t.scale ?? 1)), fontWeight: '700', color: t.colors.foregroundTertiary }}>✕</Text>
           </Pressable>
         )}
         <ScrollView

@@ -274,7 +274,7 @@ export default function CharacterDetailScreen() {
                 ? ` · riposo ${RESET_LABELS[resourceInfo.resetOn] ?? resourceInfo.resetOn}`
                 : ''}
             </Text>
-            <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, lineHeight: 22 }}>
+            <Text style={{ fontSize: t.typography.base, color: t.colors.foregroundSecondary, lineHeight: Math.round(22 * (t.scale ?? 1)) }}>
               {resourceInfo.description}
             </Text>
           </>

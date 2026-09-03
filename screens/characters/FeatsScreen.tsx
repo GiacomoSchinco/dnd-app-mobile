@@ -89,7 +89,7 @@ function FeatureCard({
           <DndIcon name={dndIcon} size={20} color={t.colors.accent} />
         </View>
         <View style={s.flex}>
-          <Text style={{ fontSize: t.typography.md, fontWeight: '700', color: t.colors.foreground, lineHeight: 20 }}>
+          <Text style={{ fontSize: t.typography.md, fontWeight: '700', color: t.colors.foreground, lineHeight: Math.round(20 * (t.scale ?? 1)) }}>
             {title}
           </Text>
           <Text
@@ -107,7 +107,7 @@ function FeatureCard({
       </View>
 
       {description ? (
-        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
+        <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)) }}>
           {description}
         </Text>
       ) : null}
@@ -133,7 +133,7 @@ function FeatureCard({
             Effetti
           </Text>
           {effects.map((e, i) => (
-            <Text key={i} style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 19 }}>
+            <Text key={i} style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(19 * (t.scale ?? 1)) }}>
               • {e}
             </Text>
           ))}
@@ -142,7 +142,7 @@ function FeatureCard({
 
       {table ? (
         <View style={{ backgroundColor: t.colors.backgroundTertiary, borderRadius: t.radius.sm, padding: t.spacing[2] }}>
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 18 }}>{table}</Text>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(18 * (t.scale ?? 1)) }}>{table}</Text>
         </View>
       ) : null}
     </CardBox>

@@ -85,12 +85,12 @@ export default function ItemCard({ item, onPress, isOwned = false, ownedQuantity
                 { backgroundColor: isOwned ? t.colors.accent : t.colors.backgroundSecondary, ...s.center },
               ]}
             >
-              <Text style={{ fontSize: 14, fontWeight: '700', color: isOwned ? t.colors.accentForeground : t.colors.foregroundTertiary }}>
+              <Text style={{ fontSize: Math.round(14 * (t.scale ?? 1)), fontWeight: '700', color: isOwned ? t.colors.accentForeground : t.colors.foregroundTertiary }}>
                 {isOwned ? '✓' : '+'}
               </Text>
             </TouchableOpacity>
           ) : (
-            <Ionicons name="chevron-forward" size={18} color={t.colors.foregroundTertiary} />
+            <Ionicons name="chevron-forward" size={Math.round(18 * (t.scale ?? 1))} color={t.colors.foregroundTertiary} />
           )}
         </View>
       </Card>

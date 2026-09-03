@@ -197,7 +197,7 @@ export default function CharacterFeatAssignScreen() {
                               style={{
                                 fontSize: t.typography.xs,
                                 color: t.colors.foregroundSecondary,
-                                lineHeight: 17,
+                                lineHeight: Math.round(17 * (t.scale ?? 1)),
                               }}
                             >
                               {feat.description}
@@ -245,7 +245,7 @@ export default function CharacterFeatAssignScreen() {
             <Text style={{ fontSize: t.typography.md, fontWeight: '700', color: t.colors.foreground }}>
               {choosing.name}
             </Text>
-            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
+            <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)) }}>
               {choosing.description}
             </Text>
             <FeatChoicePicker

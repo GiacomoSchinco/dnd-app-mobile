@@ -57,7 +57,7 @@ export default function SectionButton({ icon, dndIcon, label, description, onPre
         {dndIcon ? (
           <DndIcon name={dndIcon} size={22} color={accent} />
         ) : (
-          <Text style={{ fontSize: 22 }}>{icon}</Text>
+          <Text style={{ fontSize: Math.round(22 * (t.scale ?? 1)) }}>{icon}</Text>
         )}
       </View>
       <View style={s.flex}>
@@ -70,7 +70,7 @@ export default function SectionButton({ icon, dndIcon, label, description, onPre
           </Text>
         )}
       </View>
-      <Text style={{ color: t.colors.foregroundTertiary, fontSize: 20 }}>›</Text>
+      <Text style={{ color: t.colors.foregroundTertiary, fontSize: Math.round(20 * (t.scale ?? 1)) }}>›</Text>
     </Pressable>
   );
 }

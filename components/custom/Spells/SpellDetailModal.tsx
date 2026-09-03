@@ -81,7 +81,7 @@ export default function SpellDetailModal({
               </View>
 
               {/* Description */}
-              <Text style={{ fontSize: t.typography.base, color: t.colors.foreground, lineHeight: 22 }}>
+              <Text style={{ fontSize: t.typography.base, color: t.colors.foreground, lineHeight: Math.round(22 * (t.scale ?? 1)) }}>
                 {spell.description}
               </Text>
 
@@ -99,7 +99,7 @@ export default function SpellDetailModal({
                   <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: badge.color, marginBottom: t.spacing[1] }}>
                     {badge.label}
                   </Text>
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
+                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)) }}>
                     {badge.source === 'background'
                       ? 'Da talento di origine del background: puoi lanciarla una volta per riposo lungo senza consumare slot.'
                       : badge.source === 'feat'
@@ -116,7 +116,7 @@ export default function SpellDetailModal({
                   <Text style={{ fontSize: t.typography.sm, fontWeight: '600', color: t.colors.accent, marginBottom: t.spacing[1] }}>
                     ↗ Potenziamento
                   </Text>
-                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20 }}>
+                  <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)) }}>
                     {spell.upgrade}
                   </Text>
                 </View>

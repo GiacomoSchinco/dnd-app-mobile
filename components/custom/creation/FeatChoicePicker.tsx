@@ -300,7 +300,7 @@ export default function FeatChoicePicker({
     return (
       <View style={{ gap: t.spacing[1] }}>
         <SectionLabel text="Tiro salvezza" />
-        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 17 }}>
+        <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: Math.round(17 * (t.scale ?? 1)) }}>
           Ottieni la competenza nel tiro salvezza della caratteristica scelta per l'aumento (+1) qui sopra.
         </Text>
       </View>

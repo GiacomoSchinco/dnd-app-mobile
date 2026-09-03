@@ -74,7 +74,7 @@ export default function TalentiListScreen() {
             }
           />
 
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)), marginTop: t.spacing[3] }}>
             {f.description}
           </Text>
 
@@ -91,7 +91,7 @@ export default function TalentiListScreen() {
             <>
               <CompendiumSectionTitle>Effetti</CompendiumSectionTitle>
               {f.granted_modifiers.map((m, i) => (
-                <Text key={i} style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 18, marginTop: t.spacing[1] }}>
+                <Text key={i} style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: Math.round(18 * (t.scale ?? 1)), marginTop: t.spacing[1] }}>
                   • {m.description}
                 </Text>
               ))}

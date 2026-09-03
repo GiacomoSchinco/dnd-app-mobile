@@ -54,14 +54,14 @@ export default function RazzeListScreen() {
               </>
             }
           />
-          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: 20, marginTop: t.spacing[3] }}>
+          <Text style={{ fontSize: t.typography.sm, color: t.colors.foregroundSecondary, lineHeight: Math.round(20 * (t.scale ?? 1)), marginTop: t.spacing[3] }}>
             {r.description}
           </Text>
 
           <CompendiumSectionTitle>Tratti razziali</CompendiumSectionTitle>
           {r.effects.map((e) => (
             <DetailBlock key={e.id} title={e.name}>
-              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 18, marginTop: t.spacing[1] }}>
+              <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: Math.round(18 * (t.scale ?? 1)), marginTop: t.spacing[1] }}>
                 {e.description}
               </Text>
             </DetailBlock>
@@ -75,7 +75,7 @@ export default function RazzeListScreen() {
                   {l.effects.map((e) => (
                     <View key={e.id} style={{ marginTop: t.spacing[2] }}>
                       <Text style={{ fontSize: t.typography.xs, fontWeight: '700', color: t.colors.foreground }}>{e.name}</Text>
-                      <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: 17, marginTop: t.spacing[0.5] }}>
+                      <Text style={{ fontSize: t.typography.xs, color: t.colors.foregroundSecondary, lineHeight: Math.round(17 * (t.scale ?? 1)), marginTop: t.spacing[0.5] }}>
                         {e.description}
                       </Text>
                     </View>
